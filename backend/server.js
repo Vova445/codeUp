@@ -1,29 +1,36 @@
-import express from 'express'
-import { setupMiddlewares } from './src/middlewares/middleware.js'
-import connectDB from './src/database/database.js'
-import morgan from 'morgan'
-import cors from 'cors'
+import express from 'express';
+import { setupMiddlewares } from './src/middlewares/middleware.js';
+import connectDB from './src/database/database.js';
+import morgan from 'morgan';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function createServer() {
-   const app = express()
+    const app = express();
 
-   app.use(
-      cors({
-         exposedHeaders: ['Authorization'],
-      }),
-   )
-   app.use(morgan('dev'))
-   app.use(express.json())
-   app.get('/', (req, res) => {
-    res.send('Welcome to the Home Page!')
- })
+    app.use(
+        cors({
+            exposedHeaders: ['Authorization'],
+        }),
+    );
+    app.use(morgan('dev'));
+    app.use(express.json());
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-   await connectDB()
-   await setupMiddlewares(app)
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+    });
 
-   app.listen(3000, () => {
-      console.log('Server is running on http://localhost:3000')
-   })
+    await connectDB();
+    await setupMiddlewares(app);
+
+    app.listen(3000, () => {
+        console.log('Server is running on http://localhost:3000');
+    });
 }
 
-createServer()
+createServer();

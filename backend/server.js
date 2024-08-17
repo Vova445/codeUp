@@ -14,6 +14,9 @@ async function createServer() {
    )
    app.use(morgan('dev'))
    app.use(express.json())
+   app.get('/', (req, res) => {
+    res.send('Welcome to the Home Page!')
+ })
 
    await connectDB()
    await setupMiddlewares(app)

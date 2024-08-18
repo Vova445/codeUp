@@ -1,5 +1,5 @@
 import express from 'express'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { userSchema, loginSchema } from '../validator/validation.js'
 import { validateRequest } from '../middlewares/validateRequest.js'

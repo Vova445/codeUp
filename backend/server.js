@@ -14,6 +14,7 @@ async function createServer() {
     const app = express();
 
     app.use(cors({
+        origin: 'https://code-up-omega.vercel.app/',
         exposedHeaders: ['Authorization'],
     }));
     app.use(morgan('dev'));

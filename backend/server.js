@@ -2,8 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url'; 
 import { setupMiddlewares } from './src/middlewares/middleware.js';
 import connectDB from './src/database/database.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -25,6 +30,11 @@ async function createServer() {
         },
         exposedHeaders: ['Authorization'],
     }));
+    app.use('/uploads', express.static(path.join(__dirname, '../../uploads')), (req, res, next) => {
+        console.log(`Request for ${req.url}`);
+        next();
+    });    
+
 
     app.use(morgan('dev'));
     app.use(express.json());

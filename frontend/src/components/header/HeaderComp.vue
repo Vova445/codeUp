@@ -21,7 +21,8 @@
          <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
             <img
                v-if="avatar"
-               :src="isAbsoluteURL(avatar) ? avatar : '../../../' + avatar"
+               :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`"
+
                alt="User Avatar"
                class="header__avatar"
             />
@@ -40,28 +41,48 @@ import axios from 'axios'
 
 const isUser = computed(() => localStorage.getItem('authToken'))
 const avatar = ref('')
-const isAbsoluteURL = (url) => /^https?:\/\//.test(url)
+function isAbsoluteURL(url) {
+  return /^https?:\/\//i.test(url);
+}
+const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
 
 onMounted(async () => {
    const token = isUser.value
    if (token) {
       try {
-         const response = await axios.get('/api/user-profile', {
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+         console.log('Fetching user profile for avatar:', `${apiUrl}/api/user-profile`);
+         const response = await axios.get(`${apiUrl}/api/user-profile`, {
             headers: {
-               Authorization: `Bearer ${token}`,
+               Authorization: `Bearer ${localStorage.getItem('authToken')}`
             },
          })
          avatar.value = response.data.avatar || ''
-         console.log('avatar.value')
-         console.log(avatar.value)
+         console.log('Avatar fetched:', avatar.value)
       } catch (err) {
          console.error('Error fetching avatar:', err)
       }
    }
-   window.addEventListener('avatar-updated', (event) => {
-      avatar.value = event.detail.avatar
+   window.addEventListener('avatar-updated', async () => {
+      const token = localStorage.getItem('authToken')
+      if (token) {
+         try {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            const response = await axios.get(`${apiUrl}/api/user-profile`, {
+               headers: {
+                  Authorization: `Bearer ${token}`
+               },
+            })
+            avatar.value = response.data.avatar || ''
+            console.log('Avatar updated:', avatar.value)
+         } catch (err) {
+            console.error('Error updating avatar:', err)
+         }
+      }
    })
+   
 })
+
 </script>
 
 <style lang="scss" scoped>

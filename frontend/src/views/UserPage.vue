@@ -43,103 +43,92 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
-import MainMasterPage from '@/masterPages/MainMasterPage.vue'
+import MainMasterPage from '@/masterPages/MainMasterPage.vue';
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const selectedFile = ref(null)
-const fileName = ref('')
 const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
+const avatar = ref('')
+const selectedFile = ref(null)
+const fileName = ref('')
 
-const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
 
 onMounted(async () => {
-    try {
-        const response = await axios.get(`${apiUrl}/api/user-profile`, {
+   const token = localStorage.getItem('authToken')
+   if (token) {
+      try {
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+         const response = await axios.get(`${apiUrl}/api/user-profile`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+               Authorization: `Bearer ${token}`
             },
-        });
-        const user = response.data;
-        name.value = user.name;
-        email.value = user.email;
-        phoneNumber.value = user.phoneNumber || '';
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-});
+         })
+         name.value = response.data.name || ''
+         email.value = response.data.email || ''
+         phoneNumber.value = response.data.phoneNumber || ''
+         avatar.value = response.data.avatar || ''
+      } catch (err) {
+         console.error('Error fetching profile:', err)
+      }
+   }
+})
 
-function updateProfile() {
-    const token = localStorage.getItem('authToken');
-    const formData = new FormData();
-    formData.append('name', name.value);
-    formData.append('email', email.value);
-    formData.append('phoneNumber', phoneNumber.value);
-    if (selectedFile.value) {
-        formData.append('avatar', selectedFile.value);
-    }
-    axios
-        .post(`${apiUrl}/api/update-profile`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .then((response) => {
-            console.log('Profile updated:', response.data);
-            const event = new CustomEvent('avatar-updated', {
-                detail: { avatar: response.data.avatar },
-            });
-            window.dispatchEvent(event);
-        })
-        .catch((err) => {
-            console.error('Error updating profile:', err);
-        });
+const handleAvatarChange = async (event) => {
+   const file = event.target.files[0]
+   if (!file) return
+
+   const formData = new FormData()
+   formData.append('avatar', file)
+
+   try {
+      const token = localStorage.getItem('authToken')
+      if (!token) return
+
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      await axios.post(`${apiUrl}/api/update-profile`, formData, {
+         headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+         },
+      })
+      window.dispatchEvent(new Event('avatar-updated'))
+   } catch (err) {
+      console.error('Error uploading avatar:', err)
+   }
 }
-
 function onLogout() {
    localStorage.removeItem('authToken')
    router.push({ name: 'home' })
 }
-
 function onFileSelected(event) {
    selectedFile.value = event.target.files[0]
    fileName.value = event.target.files[0] ? event.target.files[0].name : ''
 }
 
-function addTwoFactorAuth() {}
+const updateProfile = async () => {
+   try {
+      const token = localStorage.getItem('authToken')
+      if (!token) return
 
-// function updateProfile() {
-//    const token = localStorage.getItem('authToken')
-//    const formData = new FormData()
-//    formData.append('name', name.value)
-//    formData.append('email', email.value)
-//    formData.append('phoneNumber', phoneNumber.value)
-//    if (selectedFile.value) {
-//       formData.append('avatar', selectedFile.value)
-//    }
-//    axios
-//       .post('http://localhost:3000/api/update-profile', formData, {
-//          headers: {
-//             'Content-Type': 'multipart/form-data',
-//             Authorization: `Bearer ${token}`,
-//          },
-//       })
-//       .then((response) => {
-//          console.log('Profile updated:', response.data)
-//          const event = new CustomEvent('avatar-updated', {
-//             detail: { avatar: response.data.avatar },
-//          })
-//          window.dispatchEvent(event)
-//       })
-//       .catch((err) => {
-//          console.error('Error updating profile:', err)
-//       })
-// }
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      await axios.post(`${apiUrl}/api/update-profile`, {
+         name: name.value,
+         email: email.value,
+         phoneNumber: phoneNumber.value
+      }, {
+         headers: {
+            Authorization: `Bearer ${token}`
+         },
+      })
+      console.log('Profile updated successfully')
+   } catch (err) {
+      console.error('Error updating profile:', err)
+   }
+}
 </script>
 
 <style lang="scss" scoped>

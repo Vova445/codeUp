@@ -55,7 +55,7 @@ const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
 
 onMounted(async () => {
     try {

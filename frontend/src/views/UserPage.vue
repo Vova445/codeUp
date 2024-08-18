@@ -55,21 +55,51 @@ const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 onMounted(async () => {
-   try {
-      const response = await axios.get('http://localhost:3000/api/user-profile', {
-         headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-         },
-      })
-      const user = response.data
-      name.value = user.name
-      email.value = user.email
-      phoneNumber.value = user.phoneNumber || ''
-   } catch (error) {
-      console.error('Error fetching user profile:', error)
-   }
-})
+    try {
+        const response = await axios.get(`${apiUrl}/api/user-profile`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            },
+        });
+        const user = response.data;
+        name.value = user.name;
+        email.value = user.email;
+        phoneNumber.value = user.phoneNumber || '';
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+    }
+});
+
+function updateProfile() {
+    const token = localStorage.getItem('authToken');
+    const formData = new FormData();
+    formData.append('name', name.value);
+    formData.append('email', email.value);
+    formData.append('phoneNumber', phoneNumber.value);
+    if (selectedFile.value) {
+        formData.append('avatar', selectedFile.value);
+    }
+    axios
+        .post(`${apiUrl}/api/update-profile`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            console.log('Profile updated:', response.data);
+            const event = new CustomEvent('avatar-updated', {
+                detail: { avatar: response.data.avatar },
+            });
+            window.dispatchEvent(event);
+        })
+        .catch((err) => {
+            console.error('Error updating profile:', err);
+        });
+}
 
 function onLogout() {
    localStorage.removeItem('authToken')
@@ -83,33 +113,33 @@ function onFileSelected(event) {
 
 function addTwoFactorAuth() {}
 
-function updateProfile() {
-   const token = localStorage.getItem('authToken')
-   const formData = new FormData()
-   formData.append('name', name.value)
-   formData.append('email', email.value)
-   formData.append('phoneNumber', phoneNumber.value)
-   if (selectedFile.value) {
-      formData.append('avatar', selectedFile.value)
-   }
-   axios
-      .post('http://localhost:3000/api/update-profile', formData, {
-         headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-         },
-      })
-      .then((response) => {
-         console.log('Profile updated:', response.data)
-         const event = new CustomEvent('avatar-updated', {
-            detail: { avatar: response.data.avatar },
-         })
-         window.dispatchEvent(event)
-      })
-      .catch((err) => {
-         console.error('Error updating profile:', err)
-      })
-}
+// function updateProfile() {
+//    const token = localStorage.getItem('authToken')
+//    const formData = new FormData()
+//    formData.append('name', name.value)
+//    formData.append('email', email.value)
+//    formData.append('phoneNumber', phoneNumber.value)
+//    if (selectedFile.value) {
+//       formData.append('avatar', selectedFile.value)
+//    }
+//    axios
+//       .post('http://localhost:3000/api/update-profile', formData, {
+//          headers: {
+//             'Content-Type': 'multipart/form-data',
+//             Authorization: `Bearer ${token}`,
+//          },
+//       })
+//       .then((response) => {
+//          console.log('Profile updated:', response.data)
+//          const event = new CustomEvent('avatar-updated', {
+//             detail: { avatar: response.data.avatar },
+//          })
+//          window.dispatchEvent(event)
+//       })
+//       .catch((err) => {
+//          console.error('Error updating profile:', err)
+//       })
+// }
 </script>
 
 <style lang="scss" scoped>

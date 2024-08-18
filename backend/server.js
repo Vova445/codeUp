@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,24 +15,26 @@ const __dirname = path.dirname(__filename);
 async function createServer() {
     const app = express();
 
-    app.use(
-        cors({
-            exposedHeaders: ['Authorization'],
-        }),
-    );
+    app.use(cors({
+        exposedHeaders: ['Authorization'],
+    }));
     app.use(morgan('dev'));
     app.use(express.json());
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-    app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-    });
+    if (process.env.NODE_ENV === 'production') {
+        app.use(express.static(path.join(__dirname, '../frontend/dist')));
+        
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+        });
+    }
 
     await connectDB();
     await setupMiddlewares(app);
 
-    app.listen(3000, () => {
-        console.log('Server is running on http://localhost:3000');
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
     });
 }
 

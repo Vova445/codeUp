@@ -1,22 +1,31 @@
 import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import dotenv from 'dotenv';
 import { setupMiddlewares } from './src/middlewares/middleware.js';
 import connectDB from './src/database/database.js';
-import morgan from 'morgan';
-import cors from 'cors';
-
-import dotenv from 'dotenv';
 
 dotenv.config();
-
-
 
 async function createServer() {
     const app = express();
 
+    const allowedOrigins = [
+        'https://code-up-omega.vercel.app',
+        'http://localhost:3000',
+    ];
+
     app.use(cors({
-        origin: 'https://code-up-omega.vercel.app',
+        origin: function (origin, callback) {
+            if (allowedOrigins.includes(origin) || !origin) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         exposedHeaders: ['Authorization'],
     }));
+
     app.use(morgan('dev'));
     app.use(express.json());
 

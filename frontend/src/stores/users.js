@@ -6,7 +6,7 @@ export const useUsersStore = defineStore('users', () => {
 
     async function onRegister({ name, mail, pass }) {
         try {
-            const response = await axios.post(`${apiUrl}/register`, {
+            const response = await axios.post(`${apiUrl}/api/register`, {
                 name,
                 email: mail,
                 password: pass,
@@ -22,7 +22,7 @@ export const useUsersStore = defineStore('users', () => {
 
     async function onLogin({ mail, pass }) {
         try {
-            const response = await axios.post(`${apiUrl}/login`, {
+            const response = await axios.post(`${apiUrl}/api/login`, {
                 email: mail,
                 password: pass,
             });

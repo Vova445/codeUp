@@ -17,6 +17,12 @@ export default defineConfig({
    build: {
       outDir: 'dist',
    },
+
+   define: {
+      'process.env': {
+        VITE_API_URL: process.env.VITE_API_URL,
+      },
+   }
 })
 //export default defineConfig({
 //   plugins: [vue()],

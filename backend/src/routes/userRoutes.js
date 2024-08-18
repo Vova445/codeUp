@@ -1,5 +1,5 @@
 import express from 'express'
-import bcrypt from 'bcryptjs'
+import argon2 from 'argon2'
 import jwt from 'jsonwebtoken'
 import { userSchema, loginSchema } from '../validator/validation.js'
 import { validateRequest } from '../middlewares/validateRequest.js'
@@ -20,7 +20,9 @@ const userRoutes = express.Router()
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
    try {
       const { name, email, password } = req.body
-      const newUser = new User({ name, email, password })
+      const hashedPassword = await argon2.hash(password)  
+
+      const newUser = new User({ name, email, password: hashedPassword })
       await newUser.save()
 
       const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
@@ -43,7 +45,7 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
          return res.status(404).json({ message: 'User not found' })
       }
 
-      const isMatch = await bcrypt.compare(password, user.password)
+      const isMatch = await argon2.verify(user.password, password)  // Перевіряємо пароль
 
       if (!isMatch) {
          return res.status(400).json({ message: 'Invalid credentials' })

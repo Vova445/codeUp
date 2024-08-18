@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 
 const userSchema = new mongoose.Schema({
    name: { type: String, required: true },
@@ -12,10 +12,25 @@ const userSchema = new mongoose.Schema({
    lastLogin: { type: Date },
 })
 
+const SALT = process.env.SALT || 'default_salt' 
+
+function hashPassword(password) {
+   return new Promise((resolve, reject) => {
+      crypto.pbkdf2(password, SALT, 1000, 64, 'sha512', (err, derivedKey) => {
+         if (err) reject(err)
+         resolve(derivedKey.toString('hex'))
+      })
+   })
+}
+
 userSchema.pre('save', async function (next) {
    if (!this.isModified('password')) return next()
-   this.password = await bcrypt.hash(this.password, 10)
-   next()
+   try {
+      this.password = await hashPassword(this.password)
+      next()
+   } catch (err) {
+      next(err)
+   }
 })
 
 const User = mongoose.model('User', userSchema)

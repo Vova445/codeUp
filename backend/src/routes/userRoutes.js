@@ -1,5 +1,5 @@
 import express from 'express'
-import argon2 from 'argon2'
+import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import { userSchema, loginSchema } from '../validator/validation.js'
 import { validateRequest } from '../middlewares/validateRequest.js'
@@ -17,10 +17,28 @@ const __dirname = path.dirname(__filename)
 
 const userRoutes = express.Router()
 
+function hashPassword(password) {
+   return new Promise((resolve, reject) => {
+      crypto.pbkdf2(password, process.env.SALT, 1000, 64, 'sha512', (err, derivedKey) => {
+         if (err) reject(err)
+         resolve(derivedKey.toString('hex'))
+      })
+   })
+}
+
+function verifyPassword(storedPassword, inputPassword) {
+   return new Promise((resolve, reject) => {
+      crypto.pbkdf2(inputPassword, process.env.SALT, 1000, 64, 'sha512', (err, derivedKey) => {
+         if (err) reject(err)
+         resolve(storedPassword === derivedKey.toString('hex'))
+      })
+   })
+}
+
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
    try {
       const { name, email, password } = req.body
-      const hashedPassword = await argon2.hash(password)  
+      const hashedPassword = await hashPassword(password)  // Хешуємо пароль
 
       const newUser = new User({ name, email, password: hashedPassword })
       await newUser.save()
@@ -45,7 +63,7 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
          return res.status(404).json({ message: 'User not found' })
       }
 
-      const isMatch = await argon2.verify(user.password, password)  // Перевіряємо пароль
+      const isMatch = await verifyPassword(user.password, password) 
 
       if (!isMatch) {
          return res.status(400).json({ message: 'Invalid credentials' })

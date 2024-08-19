@@ -37,10 +37,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
-import { useUsersStore } from '../../stores/users.js'
-import { storeToRefs } from 'pinia'
-const usersStore = useUsersStore()
-const { isUserAuth } = storeToRefs(usersStore)
 
 const isUser = computed(() => localStorage.getItem('authToken'))
 const avatar = ref('')
@@ -51,7 +47,7 @@ const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
 onMounted(async () => {
    const token = isUser.value
-   if (isUserAuth.value) {
+   if (token) {
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
          console.log('Fetching user profile for avatar:', `${apiUrl}/api/user-profile`)
@@ -67,8 +63,8 @@ onMounted(async () => {
       }
    }
    window.addEventListener('avatar-updated', async () => {
-      const token = isUser.value
-      if (isUserAuth.value) {
+      const token = localStorage.getItem('authToken')
+      if (token) {
          try {
             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
             const response = await axios.get(`${apiUrl}/api/user-profile`, {

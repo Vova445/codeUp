@@ -36,7 +36,7 @@ const loginAction = async () => {
       return
    }
 
-   const { success, message } = await usersStore.onLogin(userData)
+   const { success, message } = await onLogin(userData)
    alert(message)
    if (success) {
       router.push({ name: 'user' })

@@ -19,7 +19,7 @@ async function createServer() {
         'https://code-up-omega.vercel.app',
         'http://localhost:3000',
     ];
-
+    
     app.use(cors({
         origin: function (origin, callback) {
             if (allowedOrigins.includes(origin) || !origin) {
@@ -30,7 +30,7 @@ async function createServer() {
         },
         exposedHeaders: ['Authorization'],
     }));
-
+    
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
     app.use(morgan('dev'));

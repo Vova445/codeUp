@@ -23,13 +23,25 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         cb(null, `${Date.now()}-${file.originalname}`);
-    },
+    }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error('Invalid file type'), false);
+        }
+    },
+    limits: { fileSize: 5 * 1024 * 1024 } 
+});
 
 function deleteFile(filePath) {
     const fullPath = path.join(__dirname, '../../uploads', filePath);
+    console.log('Deleting file:', fullPath);
     fs.unlink(fullPath, (err) => {
         if (err) {
             console.error('Error deleting file:', err);
@@ -39,21 +51,32 @@ function deleteFile(filePath) {
     });
 }
 
+
+
+const authenticateToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'No token provided' });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: 'Invalid token' });
+        req.user = user;
+        next();
+    });
+};
+
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        console.log('Registering user:', { name, email });
-        const newUser = new User({ name, email, password });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ name, email, password: hashedPassword });
         await newUser.save();
 
         const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         newUser.token = token;
         await newUser.save();
 
-        console.log('User registered successfully:', { userId: newUser._id, token });
         res.status(201).json({ message: 'User registered successfully!', token });
     } catch (err) {
-        console.error('Error registering user:', err);
         res.status(500).json({ message: 'Error registering user', error: err.message });
     }
 });
@@ -61,49 +84,32 @@ userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
 userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log('Attempting to login user with email:', email);
-        let user = (await User.findOne({ email })) || (await User.findOne({ phoneNumber: email }));
+        let user = await User.findOne({ email }) || await User.findOne({ phoneNumber: email });
 
-        if (!user) {
-            console.warn('User not found:', email);
-            return res.status(404).json({ message: 'User not found' });
-        }
+        if (!user) return res.status(404).json({ message: 'User not found' });
 
         const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            console.warn('Invalid credentials for user:', email);
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
+        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         user.token = token;
         user.lastLogin = new Date();
         await user.save();
 
-        console.log('User logged in successfully:', { userId: user._id, token });
         res.status(200).json({ message: 'Login successful', token });
     } catch (err) {
-        console.error('Error logging in:', err);
         res.status(500).json({ message: 'Error logging in', error: err.message });
     }
 });
 
-userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    console.log('Updating profile with token:', token);
-
-    if (!token) {
-        console.warn('No token provided for profile update');
-        return res.status(401).json({ message: 'No token provided' });
-    }
-
+userRoutes.post('/update-profile', authenticateToken, upload.single('avatar'), async (req, res) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.userId);
-
+        console.log('Updating profile for user:', req.user.userId);
+        console.log('Request body:', req.body);
+        console.log('Uploaded file:', req.file);
+        const user = await User.findById(req.user.userId);
         if (!user) {
-            console.warn('User not found for profile update:', decoded.userId);
+            console.error('User not found');
             return res.status(404).json({ message: 'User not found' });
         }
 
@@ -116,63 +122,38 @@ userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => 
             if (user.avatar) {
                 deleteFile(user.avatar.split('/uploads/')[1]);
             }
-
-            user.avatar = `uploads/${req.file.filename}`;
+            user.avatar = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
         }
 
         await user.save();
-
-        console.log('Profile updated successfully:', { userId: user._id, avatar: user.avatar });
+        console.log('Profile updated successfully for user:', req.user.userId);
         res.status(200).json({ message: 'Profile updated successfully!', avatar: user.avatar });
     } catch (err) {
         console.error('Error updating profile:', err);
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(500).json({ message: 'Error updating profile', error: err.message });
     }
 });
 
-userRoutes.get('/user-profile', async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    console.log('Fetching user profile with token:', token);
 
-    if (!token) {
-        console.warn('No token provided for fetching user profile');
-        return res.status(401).json({ message: 'No token provided' });
-    }
 
+userRoutes.get('/user-profile', authenticateToken, async (req, res) => {
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decoded.userId);
-
-        if (!user) {
-            console.warn('User not found for fetching profile:', decoded.userId);
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        console.log('User profile fetched successfully:', { userId: user._id });
+        const user = await User.findById(req.user.userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
         res.status(200).json(user);
     } catch (err) {
-        console.error('Error fetching user profile:', err);
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(500).json({ message: 'Error fetching user profile', error: err.message });
     }
 });
 
 userRoutes.get('/check-auth', (req, res) => {
     const token = req.headers.authorization?.split(' ')[1];
-    console.log('Checking authentication with token:', token);
+    if (!token) return res.json({ isAuthenticated: false });
 
-    if (!token) {
-        console.log('No token provided for authentication check');
-        return res.json({ isAuthenticated: false });
-    }
-
-    try {
-        jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Token is valid');
-        return res.json({ isAuthenticated: true });
-    } catch (err) {
-        console.error('Invalid token:', err);
-        return res.json({ isAuthenticated: false });
-    }
+    jwt.verify(token, process.env.JWT_SECRET, (err) => {
+        if (err) return res.json({ isAuthenticated: false });
+        res.json({ isAuthenticated: true });
+    });
 });
 
 export default userRoutes;

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { ref } from 'vue'
 
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 

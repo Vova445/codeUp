@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { ref } from 'vue'
 
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
@@ -9,7 +8,6 @@ if (!apiUrl) {
 }
 
 export const useUsersStore = defineStore('users', () => {
-   const isUserAuth = ref(false)
    console.log('API URL:', apiUrl)
 
    async function onRegister({ name, mail, pass }) {
@@ -21,7 +19,6 @@ export const useUsersStore = defineStore('users', () => {
          })
          const { token, message } = response.data
          localStorage.setItem('authToken', token)
-         isUserAuth.value = true
          return { success: true, message }
       } catch (error) {
          const errorMessage = error.response?.data?.message || 'Registration failed: unknown error'
@@ -37,7 +34,6 @@ export const useUsersStore = defineStore('users', () => {
          })
          const { token } = response.data
          localStorage.setItem('authToken', token)
-         isUserAuth.value = false
          return { success: true, message: 'Login successful!' }
       } catch (error) {
          const errorMessage = error.response?.data?.message || 'Login failed: unknown error'
@@ -45,5 +41,5 @@ export const useUsersStore = defineStore('users', () => {
       }
    }
 
-   return { onRegister, onLogin, isUserAuth }
+   return { onRegister, onLogin }
 })

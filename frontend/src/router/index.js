@@ -49,7 +49,7 @@ const router = createRouter({
          name: 'user',
          component: () => import('../views/UserPage.vue'),
          meta: {
-            requireAuth: false,
+            requireAuth: true,
          },
       },
       {
@@ -63,6 +63,9 @@ const router = createRouter({
    ],
 })
 
-//router.beforeEach(async (to) => {})
+router.beforeEach(async (to) => {
+   if (to.meta.requireAuth) {
+   }
+})
 
 export default router

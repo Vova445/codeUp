@@ -22,7 +22,6 @@
             <img
                v-if="avatar"
                :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`"
-
                alt="User Avatar"
                class="header__avatar"
             />
@@ -38,23 +37,27 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
+import { useUsersStore } from '../../stores/users.js'
+import { storeToRefs } from 'pinia'
+const usersStore = useUsersStore()
+const { isUserAuth } = storeToRefs(usersStore)
 
 const isUser = computed(() => localStorage.getItem('authToken'))
 const avatar = ref('')
 function isAbsoluteURL(url) {
-  return /^https?:\/\//i.test(url);
+   return /^https?:\/\//i.test(url)
 }
-const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
 onMounted(async () => {
    const token = isUser.value
-   if (token) {
+   if (isUserAuth.value) {
       try {
-         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-         console.log('Fetching user profile for avatar:', `${apiUrl}/api/user-profile`);
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+         console.log('Fetching user profile for avatar:', `${apiUrl}/api/user-profile`)
          const response = await axios.get(`${apiUrl}/api/user-profile`, {
             headers: {
-               Authorization: `Bearer ${localStorage.getItem('authToken')}`
+               Authorization: `Bearer ${localStorage.getItem('authToken')}`,
             },
          })
          avatar.value = response.data.avatar || ''
@@ -64,13 +67,13 @@ onMounted(async () => {
       }
    }
    window.addEventListener('avatar-updated', async () => {
-      const token = localStorage.getItem('authToken')
-      if (token) {
+      const token = isUser.value
+      if (isUserAuth.value) {
          try {
-            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
             const response = await axios.get(`${apiUrl}/api/user-profile`, {
                headers: {
-                  Authorization: `Bearer ${token}`
+                  Authorization: `Bearer ${token}`,
                },
             })
             avatar.value = response.data.avatar || ''
@@ -80,9 +83,7 @@ onMounted(async () => {
          }
       }
    })
-   
 })
-
 </script>
 
 <style lang="scss" scoped>

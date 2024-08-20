@@ -4,25 +4,28 @@
          <router-link :to="{ name: 'home' }" class="header__logo">
             <img src="../../assets/img/logo.svg" alt="" />
          </router-link>
-         <nav ref="menu" class="header__menu menu-header">
-            <div class="menu-header__menu">
-               <ul class="menu-header__list">
-                  <li ref="menuItem1" class="menu-header__item">{{$t('header.educationalCourses')}}</li>
-                  <li ref="menuItem2" class="menu-header__item">
-                     <router-link :to="{ name: 'news' }">{{$t('header.news')}}</router-link>
-                  </li>
-                  <li ref="menuItem3" class="menu-header__item">
-                     <router-link :to="{ name: 'contacts' }">{{$t('header.contacts')}}</router-link>
-                  </li>
-                  <li ref="menuItem4" class="menu-header__item">
-                     <button>{{$t('header.languages')}}</button>
-                  </li>
-               </ul>
-               <router-link v-if="isMobile" :to="{ name: 'register' }" class="header__login-btn button">
-               {{$t('buttons.registerLogin')}}
-            </router-link>
-            </div>
-         </nav>
+         <div ref="menu" class="header__menu menu-header">
+            <nav class="menu-header__body">
+               <div class="menu-header__menu">
+                  <ul class="menu-header__list">
+                     <li class="menu-header__item">{{$t('header.educationalCourses')}}</li>
+                     <li class="menu-header__item">
+                        <router-link :to="{ name: 'news' }">{{$t('header.news')}}</router-link>
+                     </li>
+                     <li class="menu-header__item">
+                        <router-link :to="{ name: 'contacts' }">{{$t('header.contacts')}}</router-link>
+                     </li>
+                     <li class="menu-header__item">
+                        <button>{{$t('header.languages')}}</button>
+                     </li>
+                  </ul>
+                  
+                  <router-link v-if="isMobile" :to="{ name: 'register' }" class="header__login-btn button">
+                     {{$t('buttons.registerLogin')}}
+                  </router-link>
+               </div>
+            </nav>
+         </div>
          <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
             <img
                v-if="avatar"
@@ -50,6 +53,10 @@ const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 // functions
 const checkWindowSize = () => {
    isMobile.value = window.innerWidth < 501.98
+   
+   if (window.innerWidth > 767) {
+       document.documentElement.classList.remove('menu-open')
+   }
 }
 function isAbsoluteURL(url) {
    return /^https?:\/\//i.test(url)
@@ -119,14 +126,17 @@ onUnmounted(() => {
    transition: opacity 1s ease;
 
    &__container {
-      min-height: 60px;
+      min-height: clamp(3.75rem, 0.936rem + 5.871vw, 5.625rem);      
       display: grid;
       gap: 15px;
       align-items: center;
       grid-template-columns: auto 1fr auto;
        @media (max-width: 767.98px) {
-      grid-template-columns: auto 1fr auto auto;
+         grid-template-columns: auto 1fr auto auto;
 
+       }
+       @media (max-width: 500px){
+           grid-template-columns: auto 1fr auto ;
        }
    }
 
@@ -145,9 +155,9 @@ onUnmounted(() => {
       img {
          width: 100%;
       }
-      @media (max-width: 500px){
-           width: 33px;
-            height: 33px;
+      @media (max-width: 767.98px){
+           width: 36px;
+            height: 36px;
       }
    }
 
@@ -177,20 +187,60 @@ onUnmounted(() => {
             background-color: #1b3a47;
          }
       }
+       @media (max-width: 500px) {
+         font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
+         text-align: center;
+         padding: 20px 5px;
+       }
    }
 }
 
 .menu-header {
-   
-   &__menu {
+   &__body {
+       transition: all 0.3s ease 0s;
       @media (max-width: 767.98px) {
          position: fixed;
-         padding: 100px;
+         z-index: 9;
          left: -100%;
          top: 0;
+         overflow: auto;
+         background-color: #000000d8;
+         padding: 100px 20px 20px 20px;
          width: 100%;
          height: 100%;
+         
+         
+         &::before{
+            content:'';
+            position: fixed;
+            z-index: 10;
+            transition: left 0.3s ease 0s;
+            background-color: #000;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 60px;
+         }
+         .menu-open &{
+            left: 0;
+            top: 0;
+            &::before{
+               left: 0;
+               
+            }
+         }
       }
+   }
+   &__menu {
+        @media (max-width: 767.98px){
+         height: 100%;
+        }
+     @media (max-width: 500px) {
+      display: flex;
+      gap: 40px;
+      flex-direction: column;
+      justify-content: space-between;
+     }
    }
 
    &__list {
@@ -200,6 +250,13 @@ onUnmounted(() => {
       gap: 15px;
       align-items: center;
       justify-content: center;
+       @media (max-width: 767.98px) {
+         text-align: center;
+         font-size: clamp(1.438rem, 1.124rem + 1.566vw, 1.875rem);
+         gap: clamp(2.5rem, 0.98rem + 4.474vw, 3.125rem);
+         //font-size: ;
+       }
+      
    }
 
    &__item {
@@ -227,6 +284,9 @@ onUnmounted(() => {
                height: 2px;
             }
          }
+      }
+      @media (max-width: 767.98px) {
+         width: 100%;
       }
    }
 }

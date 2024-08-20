@@ -51,6 +51,7 @@ const getImagePath = (imgPath) => {
       color: #e0e0e0;
       text-transform: uppercase;
       letter-spacing: 2px;
+      line-height: 1.3;
       font-weight: 700;
       font-size: clamp(1.7rem, 0.312rem + 2.348vw, 2.188rem);
       &:not(:last-child) {
@@ -112,9 +113,6 @@ const getImagePath = (imgPath) => {
       &:not(:last-child) {
          margin-bottom: clamp(0.938rem, -0.001rem + 1.957vw, 1.563rem);
       }
-      @media (max-width: 700px) {
-         padding-bottom: 90%;
-      }
       img {
          position: absolute;
          width: 100%;
@@ -123,6 +121,15 @@ const getImagePath = (imgPath) => {
          left: 0;
          object-fit: contain;
       }
+      //@media (min-width:em()){
+           
+      //}
+         @media (max-width: 700px) {
+            padding-bottom: 70%;
+         }
+         @media (max-width: 500px) {
+            padding-bottom: 60%;
+         }
    }
 
    &__item-info {

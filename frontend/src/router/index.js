@@ -64,6 +64,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+   document.documentElement.classList.remove('menu-open')
    if (to.meta?.requireAuth) {
       const userToken = localStorage.getItem('authToken')
       // console.log('userToken')

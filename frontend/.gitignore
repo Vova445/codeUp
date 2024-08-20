@@ -30,7 +30,4 @@ coverage
 *.sw?
 netlify
 *.tsbuildinfo
-uploads/
-uploads
-uploads/*
 #ff

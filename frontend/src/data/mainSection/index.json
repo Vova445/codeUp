@@ -5,10 +5,10 @@
          "title": "FrontEnd Development",
          "imgSrc": "laptop01.png",
          "courseInfo": [
-            { "title": "topics 40" },
-            { "title": "duration: 6 mounth" },
-            { "title": "step-by-step program" },
-            { "title": "practical tasks" }
+            { "title": "topicsCout40" },
+            { "title": "duration6" },
+            { "title": "stepsInfo" },
+            { "title": "pcatciseInfo" }
          ],
          "buttonTitle": "Detailed about course",
          "price": 50
@@ -18,10 +18,10 @@
          "title": "Backend Development",
          "imgSrc": "laptop02.png",
          "courseInfo": [
-            { "title": "topics 50" },
-            { "title": "duration: 7 mounth" },
-            { "title": "step-by-step program" },
-            { "title": "practical tasks" }
+            { "title": "topicsCout50" },
+            { "title": "duration7" },
+            { "title": "stepsInfo" },
+            { "title": "pcatciseInfo" }
          ],
          "buttonTitle": "Detailed about course",
          "price": 60

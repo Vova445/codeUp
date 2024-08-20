@@ -1,8 +1,29 @@
-{
+{ 
+   "header": {
+   "educationalCourses": "Educational Courses",
+   "news": "News",
+   "contacts": "Contacts",
+   "languages": "Languages"
+ },
+   "infos":{
+      "price": "Price"
+   },
    "titles": {
-      "mainTitle": "Explore Our Top Development Courses"
+     "mainTitle": "Check out our basic courses"
    },
    "buttons": {
-      "detaildedAboutCourse": "Detailed about courses"
+     "detailedAboutCourse": "Detailed about course",
+     "registerLogin":"Login / Register"
+
+   },
+   "mainCourses": {
+     "infos": {
+       "topicsCout40": "Topics: 40",
+       "duration6": "Duration: 6 months",
+       "stepsInfo": "Step-by-step program",
+       "practiseInfo": "Practical tasks",
+       "topicsCout50": "Topics: 50",
+       "duration7": "Duration: 7 months"
+     }
    }
-}
+ }

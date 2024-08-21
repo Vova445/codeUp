@@ -183,7 +183,7 @@ onUnmounted(() => {
       font-size: 20px;
       transition: all 0.4s ease;
       @media (max-width: 500px) {
-         font-size: clamp(1.5rem, 1.036rem + 0.447vw, 2rem);
+         font-size: clamp(2.5rem, 1.036rem + 0.447vw, 3.2rem);
          text-align: center;
          padding: 20px 5px;
       }

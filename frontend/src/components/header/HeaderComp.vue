@@ -182,6 +182,11 @@ onUnmounted(() => {
    &__user-btn {
       font-size: 20px;
       transition: all 0.4s ease;
+      @media (max-width: 500px) {
+         font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
+         text-align: center;
+         padding: 20px 5px;
+      }
    }
 
    &__login-btn {

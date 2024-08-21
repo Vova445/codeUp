@@ -1,4 +1,8 @@
-<template></template>
+<template>
+   <footer class="footer">
+      <div class="footer__container"></div>
+   </footer>
+</template>
 
 <script setup></script>
 

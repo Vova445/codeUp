@@ -5,26 +5,27 @@
          "title": "FrontEnd Development",
          "imgSrc": "laptop01.png",
          "courseInfo": [
-            { "title": "topicsCout40" },
-            { "title": "duration6" },
+            { "title": "videoExamples" },
             { "title": "stepsInfo" },
+            { "title": "durationDepends" },
             { "title": "pcatciseInfo" }
          ],
          "buttonTitle": "Detailed about course",
-         "price": 50
+         "price": 90
       },
       {
          "id": "jljd4lb6nkl34o94",
          "title": "Backend Development",
          "imgSrc": "laptop02.png",
          "courseInfo": [
-            { "title": "topicsCout50" },
-            { "title": "duration7" },
+            { "title": "videoExamples" },
             { "title": "stepsInfo" },
+            { "title": "durationDepends" },
+
             { "title": "pcatciseInfo" }
          ],
          "buttonTitle": "Detailed about course",
-         "price": 60
+         "price": 90
       }
    ],
    "reasonsList": [
@@ -53,7 +54,5 @@
          "title": "our courses are structured in stages",
          "description": "You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
       }
-      
-      
    ]
 }

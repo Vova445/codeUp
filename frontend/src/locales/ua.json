@@ -1,27 +1,27 @@
 {
    "header": {
-      "educationalCourses":"Навчальні Курси",
-      "news":"Новини",
-      "contacts":"Контакти",
-      "languages":"Мови"
+      "educationalCourses": "Навчальні Курси",
+      "news": "Новини",
+      "contacts": "Контакти",
+      "languages": "Мови"
    },
-   "infos":{
-      "price": "Ціна"
+   "infos": {
+      "price": "Ціна",
+      "priceFrom": "Ціна від"
    },
    "titles": {
-      "mainTitle": "Перегляньте наші базові курси"
+      "mainTitle": "Який напрямок цікавить саме вас ?"
    },
    "buttons": {
-      "detaildedAboutCourse": "Детально про курс",
-      "registerLogin":"Увійти / Реєструватися"
+      "detaildedAboutCourse": "Детальніше про курси",
+      "registerLogin": "Увійти / Реєструватися"
    },
    "mainCourses": {
       "infos": {
-         "topicsCout40": "Кількість тем : 40 ",
-         "duration6": "Тривалість : 6 місяців",
+         "durationDepends": "Тривалість навчання залежить від вас",
          "stepsInfo": "Навчання крок за кроком",
-         "pcatciseInfo": "практичні завдання",
-         "topicsCout50": "Кількість тем : 50 ",
+         "pcatciseInfo": "Практичні завдання",
+         "videoExamples": "Відео приклади",
          "duration7": "Тривалість : 7 місяців"
       }
    }

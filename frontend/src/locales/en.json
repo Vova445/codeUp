@@ -1,29 +1,28 @@
-{ 
+{
    "header": {
-   "educationalCourses": "Educational Courses",
-   "news": "News",
-   "contacts": "Contacts",
-   "languages": "Languages"
- },
-   "infos":{
-      "price": "Price"
+      "educationalCourses": "Educational Courses",
+      "news": "News",
+      "contacts": "Contacts",
+      "languages": "Languages"
+   },
+   "infos": {
+      "price": "Price",
+      "priceFrom": "Price from"
    },
    "titles": {
-     "mainTitle": "Check out our basic courses"
+      "mainTitle": "Which direction interests you ?"
    },
    "buttons": {
-     "detailedAboutCourse": "Detailed about course",
-     "registerLogin":"Login / Register"
-
+      "detailedAboutCourse": "Learn more about the courses",
+      "registerLogin": "Login / Register"
    },
    "mainCourses": {
-     "infos": {
-       "topicsCout40": "Topics: 40",
-       "duration6": "Duration: 6 months",
-       "stepsInfo": "Step-by-step program",
-       "practiseInfo": "Practical tasks",
-       "topicsCout50": "Topics: 50",
-       "duration7": "Duration: 7 months"
-     }
+      "infos": {
+         "durationDepends": "The duration of the study depends on you",
+         "stepsInfo": "Step-by-step program",
+         "videoExamples": "Video Examples",
+         "practiseInfo": "Practical tasks",
+         "duration7": "Duration: 7 months"
+      }
    }
- }
+}

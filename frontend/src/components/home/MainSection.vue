@@ -14,7 +14,7 @@
                   </ul>
                </div>
                <button class="item-master__button button">{{ $t('buttons.detaildedAboutCourse') }}</button>
-               <div class="item-master__price">{{ $t('infos.price') }} - {{ courseItem.price }} $</div>
+               <div class="item-master__price">{{ $t('infos.priceFrom') }} - {{ courseItem.price }} $</div>
             </div>
          </div>
       </div>
@@ -23,8 +23,6 @@
 
 <script setup>
 import { defineProps } from 'vue'
-//import { getImagePath } from '../../localScript/functions/index'
-
 const props = defineProps({
    coursesList: {
       type: Array,
@@ -39,7 +37,7 @@ const getImagePath = (imgPath) => {
 <style lang="scss" scoped>
 .master {
    &:not(:last-child) {
-      margin-bottom: clamp(5.625rem, -0.004rem + 11.742vw, 9.375rem);
+      margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 9.375rem);
    }
 
    &__title {
@@ -77,10 +75,13 @@ const getImagePath = (imgPath) => {
    transition:
       transform 0.4s ease,
       box-shadow 0.3s ease;
-   &:hover {
-      transform: translateY(-10px);
-      box-shadow: 7px 7px 10px #464646;
+   @media (any-hover: hover) {
+      &:hover {
+         transform: translateY(-10px);
+         box-shadow: 7px 7px 10px #464646;
+      }
    }
+
    @media (max-width: 700px) {
       width: 100%;
       max-width: 100%;
@@ -119,9 +120,6 @@ const getImagePath = (imgPath) => {
          left: 0;
          object-fit: contain;
       }
-      //@media (min-width:em()){
-
-      //}
       @media (max-width: 700px) {
          padding-bottom: 70%;
       }
@@ -131,10 +129,11 @@ const getImagePath = (imgPath) => {
    }
 
    &__item-info {
+      text-align: left;
       position: relative;
       display: flex;
       align-items: center;
-      line-height: 1.2;
+      line-height: 1.25;
       padding-left: 20px;
       color: #a0a0a0;
       &:not(:last-child) {
@@ -159,7 +158,6 @@ const getImagePath = (imgPath) => {
       width: 100%;
       font-size: clamp(1rem, 0.812rem + 0.391vw, 1.125rem);
       font-weight: 500;
-      //padding: clamp(0.7rem, 0.468rem + 0.978vw, 1.25rem) clamp(1.563rem, 1.093rem + 0.978vw, 1.875rem);
       &:not(:last-child) {
          margin-bottom: clamp(0.625rem, -0.313rem + 1.957vw, 1rem);
       }

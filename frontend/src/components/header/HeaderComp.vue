@@ -1,43 +1,43 @@
 <template>
    <header ref="header" class="header">
       <div class="header__container">
-         <router-link :to="{ name: 'home' }" class="header__logo">
-            <img src="../../assets/img/logo.svg" alt="" />
-         </router-link>
-         <div ref="menu" class="header__menu menu-header">
-            <nav class="menu-header__body">
-               <div class="menu-header__menu">
-                  <ul class="menu-header__list">
-                     <li class="menu-header__item">{{$t('header.educationalCourses')}}</li>
-                     <li class="menu-header__item">
-                        <router-link :to="{ name: 'news' }">{{$t('header.news')}}</router-link>
-                     </li>
-                     <li class="menu-header__item">
-                        <router-link :to="{ name: 'contacts' }">{{$t('header.contacts')}}</router-link>
-                     </li>
-                     <li class="menu-header__item">
-                        <button>{{$t('header.languages')}}</button>
-                     </li>
-                  </ul>
-                  
-                  <router-link v-if="isMobile" :to="{ name: 'register' }" class="header__login-btn button">
-                     {{$t('buttons.registerLogin')}}
-                  </router-link>
-               </div>
-            </nav>
-         </div>
-         <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
-            <img
-               v-if="avatar"
-               :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`"
-               alt="User Avatar"
-               class="header__avatar"
-            />
-            <font-awesome-icon v-else :icon="['fas', 'user']" />
-         </router-link>
-            <router-link v-if="!isMobile" :to="{ name: 'register' }" class="header__login-btn button">
-               {{$t('buttons.registerLogin')}}
+         <div class="header__box">
+            <router-link :to="{ name: 'home' }" class="header__logo">
+               <img src="../../assets/img/logo.svg" alt="" />
             </router-link>
+            <div ref="menu" class="header__menu menu-header">
+               <nav class="menu-header__body">
+                  <div class="menu-header__menu">
+                     <ul class="menu-header__list">
+                        <li class="menu-header__item">{{ $t('header.educationalCourses') }}</li>
+                        <li class="menu-header__item">
+                           <router-link :to="{ name: 'news' }">{{ $t('header.news') }}</router-link>
+                        </li>
+                        <li class="menu-header__item">
+                           <router-link :to="{ name: 'contacts' }">{{ $t('header.contacts') }}</router-link>
+                        </li>
+                        <li class="menu-header__item">
+                           <button>{{ $t('header.languages') }}</button>
+                        </li>
+                     </ul>
+                  </div>
+               </nav>
+            </div>
+            <Teleport v-if="isReady" :to="isMobile ? '.menu-header__menu' : '.header__box'">
+               <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
+                  <img
+                     v-if="avatar"
+                     :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`"
+                     alt="User Avatar"
+                     class="header__avatar"
+                  />
+                  <font-awesome-icon v-else :icon="['fas', 'user']" />
+               </router-link>
+               <router-link v-else :to="{ name: 'register' }" class="header__login-btn button">
+                  {{ $t('buttons.registerLogin') }}
+               </router-link>
+            </Teleport>
+         </div>
          <button @click="onIconMenu" class="icon-menu"><span></span></button>
       </div>
    </header>
@@ -49,13 +49,14 @@ import axios from 'axios'
 // variables
 const isMobile = ref(false)
 const avatar = ref('')
+const isReady = ref(false)
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 // functions
 const checkWindowSize = () => {
    isMobile.value = window.innerWidth < 501.98
-   
+
    if (window.innerWidth > 767) {
-       document.documentElement.classList.remove('menu-open')
+      document.documentElement.classList.remove('menu-open')
    }
 }
 function isAbsoluteURL(url) {
@@ -65,14 +66,11 @@ function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
 }
 
-   //=computeds
+//=computeds
 const isUser = computed(() => localStorage.getItem('authToken'))
 
-
-
-
 onMounted(async () => {
-   
+   isReady.value = true
    checkWindowSize()
    window.addEventListener('resize', checkWindowSize)
    const token = isUser.value
@@ -126,25 +124,34 @@ onUnmounted(() => {
    transition: opacity 1s ease;
 
    &__container {
-      min-height: clamp(3.75rem, 0.936rem + 5.871vw, 5.625rem);      
+      min-height: clamp(3.75rem, 0.936rem + 5.871vw, 5.625rem);
       display: grid;
-      gap: 15px;
+      align-items: center;
+      grid-template-columns: 1fr auto;
+      @media (max-width: 767.98px) {
+         gap: 20px;
+         grid-template-columns: 1fr auto;
+      }
+      @media (max-width: 500px) {
+         justify-content: space-between;
+         grid-template-columns: 1fr auto;
+      }
+   }
+   &__box {
+      display: grid;
       align-items: center;
       grid-template-columns: auto 1fr auto;
-       @media (max-width: 767.98px) {
-         grid-template-columns: auto 1fr auto auto;
-
-       }
-       @media (max-width: 500px){
-           grid-template-columns: auto 1fr auto ;
-       }
+      @media (max-width: 767.98px) {
+         gap: 5px;
+      }
+      @media (max-width: 500px) {
+         grid-template-columns: 1fr;
+      }
    }
-
    &__logo {
       position: relative;
       z-index: 50;
-      width: 43px;
-      height: 43px;
+
       transform: translateX(-20px);
       opacity: 0;
       transition:
@@ -153,11 +160,13 @@ onUnmounted(() => {
       transition-delay: 0.2s;
 
       img {
-         width: 100%;
-      }
-      @media (max-width: 767.98px){
-           width: 36px;
+         //width: 100%;
+         width: 43px;
+         height: 43px;
+         @media (max-width: 767.98px) {
+            width: 36px;
             height: 36px;
+         }
       }
    }
 
@@ -187,17 +196,17 @@ onUnmounted(() => {
             background-color: #1b3a47;
          }
       }
-       @media (max-width: 500px) {
+      @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
          padding: 20px 5px;
-       }
+      }
    }
 }
 
 .menu-header {
    &__body {
-       transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s;
       @media (max-width: 767.98px) {
          position: fixed;
          z-index: 9;
@@ -208,10 +217,9 @@ onUnmounted(() => {
          padding: 100px 20px 20px 20px;
          width: 100%;
          height: 100%;
-         
-         
-         &::before{
-            content:'';
+
+         &::before {
+            content: '';
             position: fixed;
             z-index: 10;
             transition: left 0.3s ease 0s;
@@ -221,26 +229,25 @@ onUnmounted(() => {
             width: 100%;
             height: 60px;
          }
-         .menu-open &{
+         .menu-open & {
             left: 0;
             top: 0;
-            &::before{
+            &::before {
                left: 0;
-               
             }
          }
       }
    }
    &__menu {
-        @media (max-width: 767.98px){
+      @media (max-width: 767.98px) {
          height: 100%;
-        }
-     @media (max-width: 500px) {
-      display: flex;
-      gap: 40px;
-      flex-direction: column;
-      justify-content: space-between;
-     }
+      }
+      @media (max-width: 500px) {
+         display: flex;
+         gap: 40px;
+         flex-direction: column;
+         justify-content: space-between;
+      }
    }
 
    &__list {
@@ -250,13 +257,12 @@ onUnmounted(() => {
       gap: 15px;
       align-items: center;
       justify-content: center;
-       @media (max-width: 767.98px) {
+      @media (max-width: 767.98px) {
          text-align: center;
          font-size: clamp(1.438rem, 1.124rem + 1.566vw, 1.875rem);
          gap: clamp(2.5rem, 0.98rem + 4.474vw, 3.125rem);
          //font-size: ;
-       }
-      
+      }
    }
 
    &__item {
@@ -291,10 +297,9 @@ onUnmounted(() => {
    }
 }
 .icon-menu {
-   
 }
 .icon-menu {
-     display: none;
+   display: none;
    @media (max-width: 767.98px) {
       display: block;
       position: relative;
@@ -340,20 +345,16 @@ onUnmounted(() => {
          //top: 50%;
          //transform: rotate(-45deg) translate(0, -50%);
          transform: rotate(-45deg) translate(0, -50%);
-         top: calc( 50%  - 1px )
-         
+         top: calc(50% - 1px);
       }
       &::after {
          //bottom: 50%;
          //transform: rotate(45deg) translate(0, 50%);
          transform: rotate(45deg) translate(0, 50%);
-         bottom: calc( 50% - 0px ) 
-
+         bottom: calc(50% - 0px);
       }
    }
 }
-
-
 
 .loaded {
    .header {

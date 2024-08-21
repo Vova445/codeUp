@@ -66,7 +66,6 @@ function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
 }
 
-//=computeds
 const isUser = computed(() => localStorage.getItem('authToken'))
 
 onMounted(async () => {
@@ -266,7 +265,6 @@ onUnmounted(() => {
          text-align: center;
          font-size: clamp(1.438rem, 1.124rem + 1.566vw, 1.875rem);
          gap: clamp(2.5rem, 0.98rem + 4.474vw, 3.125rem);
-         //font-size: ;
       }
    }
 
@@ -300,8 +298,6 @@ onUnmounted(() => {
          width: 100%;
       }
    }
-}
-.icon-menu {
 }
 .icon-menu {
    display: none;
@@ -347,14 +343,10 @@ onUnmounted(() => {
          width: 100%;
       }
       &::before {
-         //top: 50%;
-         //transform: rotate(-45deg) translate(0, -50%);
          transform: rotate(-45deg) translate(0, -50%);
          top: calc(50% - 1px);
       }
       &::after {
-         //bottom: 50%;
-         //transform: rotate(45deg) translate(0, 50%);
          transform: rotate(45deg) translate(0, 50%);
          bottom: calc(50% - 0px);
       }

@@ -14,7 +14,7 @@
                   </ul>
                </div>
                <button class="item-master__button button">{{ $t('buttons.detaildedAboutCourse') }}</button>
-               <div class="item-master__price">{{$t('infos.price')}} - {{ courseItem.price }} $</div>
+               <div class="item-master__price">{{ $t('infos.price') }} - {{ courseItem.price }} $</div>
             </div>
          </div>
       </div>
@@ -32,13 +32,9 @@ const props = defineProps({
    },
 })
 const getImagePath = (imgPath) => {
-   return new URL(`../../assets/img/home/${imgPath}`, import.meta.url).href;
- };
+   return new URL(`../../assets/img/home/${imgPath}`, import.meta.url).href
+}
 </script>
-
-
-
-
 
 <style lang="scss" scoped>
 .master {
@@ -53,7 +49,7 @@ const getImagePath = (imgPath) => {
       letter-spacing: 2px;
       line-height: 1.3;
       font-weight: 700;
-      font-size: clamp(1.7rem, 0.312rem + 2.348vw, 2.188rem);
+      font-size: clamp(1.35rem, 0.937rem + 1.174vw, 2rem);
       &:not(:last-child) {
          margin-bottom: clamp(2.5rem, 0.624rem + 3.914vw, 3.75rem);
       }
@@ -70,7 +66,7 @@ const getImagePath = (imgPath) => {
 }
 
 .item-master {
-   position: relative; 
+   position: relative;
    background-color: #2b2b2b;
    padding: 20px;
    border-radius: 8px;
@@ -78,10 +74,12 @@ const getImagePath = (imgPath) => {
    flex-direction: column;
    align-items: center;
    text-align: center;
-   transition: transform 0.4s ease, box-shadow 0.3s ease;
+   transition:
+      transform 0.4s ease,
+      box-shadow 0.3s ease;
    &:hover {
       transform: translateY(-10px);
-      box-shadow: 7px 7px 10px #464646; 
+      box-shadow: 7px 7px 10px #464646;
    }
    @media (max-width: 700px) {
       width: 100%;
@@ -122,14 +120,14 @@ const getImagePath = (imgPath) => {
          object-fit: contain;
       }
       //@media (min-width:em()){
-           
+
       //}
-         @media (max-width: 700px) {
-            padding-bottom: 70%;
-         }
-         @media (max-width: 500px) {
-            padding-bottom: 60%;
-         }
+      @media (max-width: 700px) {
+         padding-bottom: 70%;
+      }
+      @media (max-width: 500px) {
+         padding-bottom: 60%;
+      }
    }
 
    &__item-info {
@@ -152,20 +150,23 @@ const getImagePath = (imgPath) => {
          height: 5px;
          left: 0;
       }
+      @media (max-width: 425px) {
+         font-size: 14px;
+      }
    }
 
    &__button {
       width: 100%;
       font-size: clamp(1rem, 0.812rem + 0.391vw, 1.125rem);
       font-weight: 500;
-      padding: clamp(0.938rem, 0.468rem + 0.978vw, 1.25rem) clamp(1.563rem, 1.093rem + 0.978vw, 1.875rem);
+      //padding: clamp(0.7rem, 0.468rem + 0.978vw, 1.25rem) clamp(1.563rem, 1.093rem + 0.978vw, 1.875rem);
       &:not(:last-child) {
          margin-bottom: clamp(0.625rem, -0.313rem + 1.957vw, 1rem);
       }
    }
 
    &__price {
-      font-size: clamp(1.25rem, 0.468rem + 1.37vw, 1.563rem);
+      font-size: clamp(1.1rem, 0.468rem + 1.37vw, 1.563rem);
       font-weight: 600;
       color: #ffab00;
       margin-top: 1rem;

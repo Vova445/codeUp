@@ -54,5 +54,11 @@
          "title": "our courses are structured in stages",
          "description": "You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
       }
+   ],
+   "stepsList": [
+      {
+         "id":"dmgkln309bl39b3b",
+         "title":""
+      }
    ]
 }

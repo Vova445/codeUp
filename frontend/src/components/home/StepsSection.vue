@@ -1,11 +1,10 @@
 <template>
    <div class="steps">
       <div class="steps__container">
-
+         <h2 class="steps__title title">A Step-by-Step Learning Journey</h2>
       </div>
    </div>
 </template>
-   
 
 <script setup>
 import { defineProps } from 'vue'
@@ -17,6 +16,4 @@ const props = defineProps({
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

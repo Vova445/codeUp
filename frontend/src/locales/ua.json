@@ -10,7 +10,9 @@
       "priceFrom": "Ціна від"
    },
    "titles": {
-      "mainTitle": "Який напрямок цікавить саме вас ?"
+      "mainTitle": "Який напрямок цікавить саме вас ?",
+      "whyCodeUp": "Чому  CodeUp ?",
+      "stepByStep": "Поетапна навчальна подорож"
    },
    "buttons": {
       "detaildedAboutCourse": "Детальніше про курси",
@@ -23,6 +25,12 @@
          "pcatciseInfo": "Практичні завдання",
          "videoExamples": "Відео приклади",
          "duration7": "Тривалість : 7 місяців"
+      }
+   },
+   "stepsSection": {
+      "subtitles": {
+         "theory": "Theory",
+         "Practice with tasks": "Practice with tasks"
       }
    }
 }

@@ -10,7 +10,9 @@
       "priceFrom": "Price from"
    },
    "titles": {
-      "mainTitle": "Which direction interests you ?"
+      "mainTitle": "Which direction interests you ?",
+      "whyCodeUp": "Why  CodeUp ?",
+      "stepByStep": "A Step-by-Step Learning Journey"
    },
    "buttons": {
       "detailedAboutCourse": "Learn more about the courses",

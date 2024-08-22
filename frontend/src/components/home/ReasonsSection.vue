@@ -1,7 +1,7 @@
 <template>
    <section class="reaons">
       <div class="reaons__container">
-         <h3 class="reaons__title title">Why CodeUp ?</h3>
+         <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">
             <div class="list-reasons__item item-reason" v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id">
                <div class="item-reason__number">{{ index + 1 }}</div>
@@ -29,6 +29,9 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .reaons {
+   &:not(:last-child) {
+      margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 9.375rem);
+   }
    background-color: #1a1a1a;
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);
    border-radius: 12px;

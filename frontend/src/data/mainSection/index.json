@@ -31,34 +31,40 @@
    "reasonsList": [
       {
          "id": "ldmmgdmg343g34hsgh",
-         "title": "Not a dry theory",
-         "description": "Our curriculum is designed to provide practical, real-world knowledge that you can immediately apply to your projects and career"
+         "title": "reasonsSection.dryTheory.title",
+         "description": "reasonsSection.dryTheory.text"
       },
       {
          "id": "njb3o489oibvp3934",
-         "title": "Tasks from real life",
-         "description": "We do not create abstract tasks, but take concrete tasks that a developer faces when working with clients, and that await the programmer in the future"
+         "title": "reasonsSection.realTasks.title",
+         "description": "reasonsSection.realTasks.text"
       },
       {
          "id": "sbvji392bmbo4mc343vb",
-         "title": "Always Up-to-Date",
-         "description": "Our course content is continuously updated to ensure you stay ahead of the curve, with the latest industry trends and best practices"
+         "title": "reasonsSection.uptoUpdate.title",
+         "description": "reasonsSection.uptoUpdate.text"
       },
       {
          "id": "ndkfbn94inbmi94nmvk4i",
-         "title": "Practical video examples",
-         "description": "You will have videos with practical tasks and explanations that you can complete on your own"
+         "title": "reasonsSection.practicalVideo.title",
+         "description": "reasonsSection.practicalVideo.text"
       },
       {
          "id": "kngklbervkklgvwpwklvwko943m",
-         "title": "our courses are structured in stages",
-         "description": "You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
+         "title": "reasonsSection.stepByStep.title",
+         "description": "reasonsSection.stepByStep.text"
       }
    ],
    "stepsList": [
       {
          "id":"dmgkln309bl39b3b",
-         "title":""
+         "title":"",
+         "decription":""
+      },
+      {
+         "id":"dmgkln309bl39b3b",
+         "title":"",
+         "decription":""
       }
    ]
 }

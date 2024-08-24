@@ -1,14 +1,14 @@
 <template>
-   <section class="reaons">
+   <section data-watch class="reaons">
       <div class="reaons__container">
          <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">
             <div class="list-reasons__item item-reason" v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
-                  <h4 class="item-reason__title subtitile">{{ reasonItem.title }}</h4>
+                  <h4 class="item-reason__title subtitile">{{ $t(reasonItem.title) }}</h4>
                   <div class="item-reason__text text">
-                     <p>{{ reasonItem.description }}</p>
+                     <p>{{ $t(reasonItem.description) }}</p>
                   </div>
                </div>
             </div>

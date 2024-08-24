@@ -33,7 +33,7 @@
                   />
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
-               <router-link v-else :to="{ name: 'register' }" class="header__login-btn button">
+               <router-link v-else :to="{ name: 'register' }" class="header__login-btn">
                   {{ $t('buttons.registerLogin') }}
                </router-link>
             </Teleport>
@@ -175,7 +175,8 @@ onUnmounted(() => {
       opacity: 0;
       transition:
          transform 0.8s ease,
-         opacity 0.8s ease;
+         opacity 0.8s ease,
+         background-color 0.3s ease;
    }
 
    &__user-btn {
@@ -189,17 +190,14 @@ onUnmounted(() => {
    }
 
    &__login-btn {
+      //transition: background-color 0.3s ease;
       position: relative;
       z-index: 50;
       background-color: #234c5c;
       border-radius: 12px;
       line-height: 1.2;
       padding: 10px 20px;
-      @media (any-hover: hover) {
-         &:hover {
-            background-color: #1b3a47;
-         }
-      }
+     
       @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
@@ -384,12 +382,25 @@ onUnmounted(() => {
          transform: translateY(0);
          opacity: 1;
          transition-delay: 1s;
+                  transition: opacity 0.3s ease 0s;
+
+         @media (any-hover: hover) {
+            &:hover {
+               opacity: 0.8;
+            }
+          }
       }
 
       &__login-btn {
          transform: translateY(0);
          opacity: 1;
          transition-delay: 1.1s;
+         transition: background-color 0.3s ease 0s;
+          @media (any-hover: hover) {
+            &:hover {
+               background-color: #203d48;
+            }
+          }
       }
    }
    .header__avatar {

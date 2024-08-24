@@ -1,19 +1,22 @@
 <template>
-   <div class="form-container">
-      <div class="form-group">
-         <input id="mail" v-model="userData.mail" type="email" class="form-input" />
-         <label v-if="!userData.mail" for="mail" class="form-label">Email</label>
+   <div class="form-login">
+      <div class="form-login__container">
+         <div class="form-login__group">
+            <input id="mail" v-model="userData.mail" type="email" class="form-login__input" />
+            <label v-if="!userData.mail" for="mail" class="form-login__label">Email</label>
+         </div>
+         <div class="form-login__group">
+            <input id="pass" v-model="userData.pass" type="password" class="form-login__input" />
+            <label v-if="!userData.pass" for="pass" class="form-login__label">Password</label>
+         </div>
+         <div class="form-login__group">
+            <input id="passConfirm" v-model="userData.passConfirm" type="password" class="form-login__input" />
+            <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
+         </div>
+         <button class="form-login__button" @click="loginAction">Login</button>
+         <div class="form-login__box-link"></div>
+         <RouterLink :to="{ name: 'register' }" class="form-login__link">Don't have an account? Register</RouterLink>
       </div>
-      <div class="form-group">
-         <input id="pass" v-model="userData.pass" type="password" class="form-input" />
-         <label v-if="!userData.pass" for="pass" class="form-label">Password</label>
-      </div>
-      <div class="form-group">
-         <input id="passConfirm" v-model="userData.passConfirm" type="password" class="form-input" />
-         <label v-if="!userData.passConfirm" for="passConfirm" class="form-label">Confirm Password</label>
-      </div>
-      <button class="form-button" @click="loginAction">Login</button>
-      <RouterLink :to="{ name: 'register' }" class="form-link">Don't have an account? Register</RouterLink>
    </div>
 </template>
 
@@ -45,36 +48,6 @@ const loginAction = async () => {
 </script>
 
 <style lang="scss" scoped>
-.form-container {
-   position: relative;
-   color: #f0f0f0;
-   max-width: 400px;
-   margin: 50px auto;
-   padding: 40px;
-   background-color: #2a2a2a;
-   border-radius: 20px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-   animation: fadeInUp 0.5s ease-out;
-}
-
-.form-container::before {
-   content: '';
-   position: absolute;
-   top: -5px;
-   left: -5px;
-   right: -5px;
-   bottom: -5px;
-   background: linear-gradient(45deg, #161313, #ffffff, #ffffff, #000000);
-   border-radius: 20px;
-   filter: blur(15px);
-   z-index: -1;
-}
-
-.form-group {
-   position: relative;
-   margin-bottom: 25px;
-}
-
 .form-input {
    width: 100%;
    padding: 12px;

@@ -42,7 +42,7 @@ input {
    border-radius: 12px;
    line-height: 1.2;
    padding: clamp(0.76rem, 0.156rem + 0.587vw, 0.625rem) clamp(0.625rem, -0.313rem + 1.957vw, 1.25rem);
-   transition: background-color 0.6s ease 0s;
+   transition: background-color 0.3s ease;
    @media (any-hover: hover) {
       &:hover {
          background-color: #203d48;
@@ -69,5 +69,124 @@ input {
    line-height: 1.2;
    @media (max-width: 425px) {
       font-size: 14px;
+   }
+}
+
+.form-login {
+   position: relative;
+   color: #f0f0f0;
+   max-width: 500px;
+   margin: 50px auto;
+   padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
+   background-color: #2b2b2b;
+   border-radius: 10px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+
+   &__container {
+      position: relative;
+
+      &::before {
+         content: '';
+         position: absolute;
+         top: -5px;
+         left: -5px;
+         right: -5px;
+         bottom: -5px;
+         background: linear-gradient(45deg, #161313, #ffffff, #ffffff, #000000);
+         border-radius: 20px;
+         filter: blur(15px);
+         z-index: -1;
+      }
+   }
+
+   &__group {
+      position: relative;
+      margin-bottom: clamp(1.3rem, 0.616rem + 1.028vw, 1.438rem);
+   }
+
+   &__input {
+      width: 100%;
+      padding: clamp(0.63rem, 0.339rem + 0.514vw, 0.75rem) clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem);
+      font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
+      border: 1px solid #444;
+      border-radius: 8px;
+      outline: none;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      transition:
+         border-color 0.3s,
+         box-shadow 0.3s,
+         background-color 0.3s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+      &:focus {
+         box-shadow: 0 0 7px #234c5c;
+      }
+
+      &:invalid {
+         animation: shake 0.3s ease-out;
+      }
+   }
+
+   &__label {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      left: clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem);
+      padding: 0 8px;
+      font-size: clamp(0.75rem, 0.67rem + 0.257vw, 0.875rem);
+      color: #bbb;
+      transition:
+         color 0.3s,
+         top 0.3s,
+         transform 0.3s,
+         font-size 0.3s;
+
+      .form-login__input:focus + & {
+         color: #b0b0b0;
+         top: 0;
+         transform: translate(0, -110%);
+         font-size: clamp(0.75rem, 0.67rem + 0.257vw, 0.875rem);
+      }
+   }
+
+   &__button {
+      transition:
+         background-color 0.3s ease,
+         transform 0.3s,
+         box-shadow 0.3s;
+      width: 100%;
+      padding: clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem) 15px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #234c5c;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+
+      &:hover {
+         background-color: #203d48;
+         transform: translate(0px, 1px);
+         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      }
+      &:not(:last-child) {
+         margin-bottom: 35px;
+      }
+   }
+   &__box-link {
+      text-align: center;
+   }
+
+   &__link {
+      font-size: clamp(0.875rem, 0.795rem + 0.257vw, 1rem);
+      transition: opacity 0.3s ease 0s;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 1px solid #fff;
+      &:hover {
+         opacity: 0.8;
+      }
    }
 }

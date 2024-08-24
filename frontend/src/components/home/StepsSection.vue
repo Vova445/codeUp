@@ -1,7 +1,7 @@
 <template>
    <div class="steps">
       <div class="steps__container">
-         <h2 class="steps__title title">A Step-by-Step Learning Journey</h2>
+         <h2 class="steps__title title">Як відбуватемется навчання</h2>
       </div>
    </div>
 </template>

@@ -17,9 +17,9 @@
             <input id="passConfirm" v-model="userData.passConfirm" type="password" class="form-login__input" />
             <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
          </div>
-         <button class="form-login__button" @click="registerAction">Register</button>
+         <button class="form-login__button" @click="registerAction">{{ $t('buttons.register') }}</button>
          <div class="form-login__box-link">
-            <RouterLink :to="{ name: 'login' }" class="form-login__link">You have an account? Login</RouterLink>
+            <RouterLink :to="{ name: 'login' }" class="form-login__link">{{ $t('buttons.haveAccount') }}</RouterLink>
          </div>
       </div>
    </div>

@@ -12,34 +12,43 @@
    "titles": {
       "mainTitle": "Which direction interests you ?",
       "whyCodeUp": "Why  CodeUp ?",
-      "stepByStep": "A Step-by-Step Learning Journey"
+      "stepByStep": "A Step-by-Step Learning Journey",
+      "userProfile": "User Profile Settings"
    },
    "buttons": {
       "detailedAboutCourse": "Learn more about the courses",
-      "registerLogin": "Login / Register"
+      "registerLogin": "Login / Register",
+      "login": "Login",
+      "register": "Register",
+      "haveAccount": "You have an account? Login",
+      "noAccount": "Don't have an account? Register",
+      "changeAvatar": "Change Avatar",
+      "chooseFile": "Choose a file",
+      "updateProfile": "Update Profile",
+      "twoFactorAth": "Two-Factor Authentication",
+      "logout": "Log Out"
    },
    "reasonsSection": {
       "dryTheory": {
-         "title":"Not a dry theory",
-         "text":"Our curriculum is designed to provide practical, real-world knowledge that you can immediately apply to your projects and career"
+         "title": "Not a dry theory",
+         "text": "Our curriculum is designed to provide practical, real-world knowledge that you can immediately apply to your projects and career"
       },
       "realTasks": {
-         "title":"Tasks from real life",
-         "text":"We do not create abstract tasks, but take concrete tasks that a developer faces when working with clients, and that await the programmer in the future"
+         "title": "Tasks from real life",
+         "text": "We do not create abstract tasks, but take concrete tasks that a developer faces when working with clients, and that await the programmer in the future"
       },
       "uptoUpdate": {
-         "title":"Always Up-to-Date",
-         "text":"Our course content is continuously updated to ensure you stay ahead of the curve, with the latest industry trends and best practices"
+         "title": "Always Up-to-Date",
+         "text": "Our course content is continuously updated to ensure you stay ahead of the curve, with the latest industry trends and best practices"
       },
       "practicalVideo": {
-         "title":"Practical video examples",
-         "text":"You will have videos with practical tasks and explanations that you can complete on your own"
+         "title": "Practical video examples",
+         "text": "You will have videos with practical tasks and explanations that you can complete on your own"
       },
       "stepByStep": {
-         "title":"Our courses are structured in stages",
-         "text":"You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
+         "title": "Our courses are structured in stages",
+         "text": "You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
       }
-
    },
    "mainCourses": {
       "infos": {
@@ -50,5 +59,4 @@
          "duration7": "Duration: 7 months"
       }
    }
-   
 }

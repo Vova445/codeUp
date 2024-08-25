@@ -63,17 +63,17 @@ const router = createRouter({
    ],
 })
 
-router.beforeEach(async (to) => {
-   document.documentElement.classList.remove('menu-open')
-   if (to.meta?.requireAuth) {
-      const userToken = localStorage.getItem('authToken')
-      // console.log('userToken')
-      // console.log(userToken)
+//router.beforeEach(async (to) => {
+//   document.documentElement.classList.remove('menu-open')
+//   if (to.meta?.requireAuth) {
+//      const userToken = localStorage.getItem('authToken')
+//      // console.log('userToken')
+//      // console.log(userToken)
 
-      if (!userToken) {
-         return { name: 'login' }
-      }
-   }
-})
+//      if (!userToken) {
+//         return { name: 'login' }
+//      }
+//   }
+//})
 
 export default router

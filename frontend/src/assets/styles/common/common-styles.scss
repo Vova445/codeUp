@@ -139,12 +139,14 @@ input {
       transition:
          color 0.3s,
          top 0.3s,
+         left 0.3s,
          transform 0.3s,
          font-size 0.3s;
 
       .form-login__input:focus + & {
          color: #b0b0b0;
          top: 0;
+         left: 0;
          transform: translate(0, -110%);
          font-size: clamp(0.75rem, 0.67rem + 0.257vw, 0.875rem);
       }
@@ -157,12 +159,12 @@ input {
          box-shadow 0.3s;
       width: 100%;
       padding: clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem) 15px;
-      font-size: 18px;
+      font-size: 16px;
       color: #fff;
-      background-color: #234c5c;
-      border: none;
       border-radius: 8px;
+      border: none;
       box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+      background-color: #234c5c;
 
       &:hover {
          background-color: #203d48;

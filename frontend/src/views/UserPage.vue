@@ -2,7 +2,7 @@
    <main-master-page>
       <section class="user-page">
          <div class="user-page__container">
-            <h1 class="user-page__title">User Profile Settings</h1>
+            <h1 class="user-page__title">{{ $t('titles.userProfile') }}</h1>
             <form enctype="multipart/form-data" class="user-page__form" @submit.prevent="updateProfile">
                <label class="user-page__label">
                   <span class="user-page__label-text">Change Name</span>
@@ -25,18 +25,20 @@
                   />
                </label>
                <label class="user-page__label user-page__file-label">
-                  <span class="user-page__label-text">Change Avatar</span>
+                  <span class="user-page__label-text">{{ $t('buttons.changeAvatar') }}</span>
                   <input accept="image/*" class="user-page__file-input" type="file" @change="onFileSelected" />
-                  <span class="user-page__file-label-text">{{ fileName || 'Choose a file' }}</span>
+                  <span class="user-page__file-label-text">{{ fileName || $t('buttons.chooseFile') }}</span>
                </label>
 
-               <button type="submit" class="user-page__button">Update Profile</button>
+               <button type="submit" class="user-page__button">{{ $t('buttons.updateProfile') }}</button>
             </form>
 
             <button class="user-page__button user-page__button--secondary" @click="addTwoFactorAuth">
-               Two-Factor Authentication
+               {{ $t('buttons.twoFactorAth') }}
             </button>
-            <button class="user-page__button user-page__button--logout" @click="onLogout">Log Out</button>
+            <button class="user-page__button user-page__button--logout" @click="onLogout">
+               {{ $t('buttons.logout') }}
+            </button>
          </div>
       </section>
    </main-master-page>
@@ -45,7 +47,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import MainMasterPage from '@/masterPages/MainMasterPage.vue';
+import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -60,10 +62,10 @@ onMounted(async () => {
    const token = localStorage.getItem('authToken')
    if (token) {
       try {
-         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
          const response = await axios.get(`${apiUrl}/api/user-profile`, {
             headers: {
-               Authorization: `Bearer ${token}`
+               Authorization: `Bearer ${token}`,
             },
          })
          name.value = response.data.name || ''
@@ -82,211 +84,178 @@ const onFileSelected = (event) => {
 }
 
 const updateProfile = async () => {
-    try {
-        const token = localStorage.getItem('authToken');
-        if (!token) return;
+   try {
+      const token = localStorage.getItem('authToken')
+      if (!token) return
 
-        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-        console.log('Sending profile update to:', `${apiUrl}/api/update-profile`);
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      console.log('Sending profile update to:', `${apiUrl}/api/update-profile`)
 
-        const formData = new FormData();
-        formData.append('name', name.value);
-        formData.append('email', email.value);
-        formData.append('phoneNumber', phoneNumber.value);
+      const formData = new FormData()
+      formData.append('name', name.value)
+      formData.append('email', email.value)
+      formData.append('phoneNumber', phoneNumber.value)
 
-        if (selectedFile.value) {
-            console.log('Uploading file:', selectedFile.value.name);
-            formData.append('avatar', selectedFile.value);
-        }
+      if (selectedFile.value) {
+         console.log('Uploading file:', selectedFile.value.name)
+         formData.append('avatar', selectedFile.value)
+      }
 
-        await axios.post(`${apiUrl}/api/update-profile`, formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data'
-            },
-        });
+      await axios.post(`${apiUrl}/api/update-profile`, formData, {
+         headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+         },
+      })
 
-        console.log('Profile updated successfully');
-    } catch (err) {
-        console.error('Error updating profile:', err);
-    }
-};
-
+      console.log('Profile updated successfully')
+   } catch (err) {
+      console.error('Error updating profile:', err)
+   }
+}
 
 function onLogout() {
    localStorage.removeItem('authToken')
    router.push({ name: 'home' })
 }
-
 </script>
-
 
 <style lang="scss" scoped>
 .user-page {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   padding: 30px;
-   background-color: #0c0b0b;
+   position: relative;
+   color: #f0f0f0;
+   max-width: 600px;
+   margin: 50px auto;
+   padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
+   background-color: #2b2b2b;
+   border-radius: 10px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
 
    &__container {
-      max-width: 700px;
-      width: 100%;
-      background: #1e1e1e;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      padding: 40px;
+      position: relative;
+
+      &::before {
+         content: '';
+         position: absolute;
+         top: -5px;
+         left: -5px;
+         right: -5px;
+         bottom: -5px;
+         background: linear-gradient(45deg, #161313, #ffffff, #ffffff, #000000);
+         border-radius: 20px;
+         filter: blur(15px);
+         z-index: -1;
+      }
+   }
+
+   &__title {
+      font-size: clamp(1.25rem, 1.089rem + 0.514vw, 1.5rem);
+      line-height: 1.3;
+      margin-bottom: 20px;
+      text-align: center;
+   }
+
+   &__form {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: clamp(1.3rem, 0.616rem + 1.028vw, 1.438rem);
+   }
 
-      .user-page__title {
-         font-size: 28px;
-         font-weight: 700;
-         color: #ecf0f1;
-         text-align: center;
-         margin-bottom: 20px;
-         border-bottom: 2px solid #3498db;
-         padding-bottom: 10px;
-      }
+   &__label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      color: #bbb;
+      font-size: clamp(0.75rem, 0.67rem + 0.257vw, 0.875rem);
+      position: relative;
 
-      .user-page__form {
-         display: grid;
-         gap: 20px;
-      }
-
-      .user-page__label {
-         display: flex;
-         flex-direction: column;
-         font-size: 16px;
-         color: #bdc3c7;
-         font-weight: 500;
-         position: relative;
-         cursor: pointer;
-         transition: color 0.3s;
-      }
-
-      .user-page__file-label {
-         align-items: center;
-         background: #2c3e50;
-         border: 1px solid #444;
-         border-radius: 8px;
-         padding: 12px;
-         gap: 10px;
-         display: flex;
-         cursor: pointer;
-         transition:
-            background-color 0.3s,
-            border-color 0.3s;
-      }
-
-      .user-page__file-label:hover {
-         background-color: #34495e;
-         border-color: #3498db;
-      }
-
-      .user-page__label-text {
-         font-size: 16px;
-         font-weight: 600;
-         color: #ecf0f1;
-         margin-bottom: 5px;
-      }
-
-      .user-page__file-input {
-         display: none;
-      }
-
-      .user-page__file-label-text {
-         font-size: 14px;
-         color: #bdc3c7;
-         margin: 0;
-      }
-
-      .user-page__input {
-         padding: 12px 15px;
-         font-size: 16px;
-         border: 1px solid #444;
-         border-radius: 8px;
-         width: 100%;
-         background: #2c3e50;
-         color: #ecf0f1;
-         transition: border-color 0.3s;
-
-         &:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-         }
-      }
-
-      .user-page__button {
-         background-color: #3498db;
-         color: #ecf0f1;
-         padding: 12px 20px;
-         border: none;
-         border-radius: 8px;
-         font-size: 16px;
-         cursor: pointer;
-         transition:
-            background-color 0.3s,
-            box-shadow 0.3s;
-         text-transform: uppercase;
-
-         &:hover {
-            background-color: #2980b9;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-         }
-
-         &:active {
-            background-color: #1f6f9f;
-         }
-      }
-
-      .user-page__button--secondary {
-         background-color: #2ecc71;
-
-         &:hover {
-            background-color: #27ae60;
-         }
-      }
-
-      .user-page__button--logout {
-         background-color: #e74c3c;
-
-         &:hover {
-            background-color: #c0392b;
-         }
-      }
-
-      .user-page__button--edit {
-         background-color: #f39c12;
-         color: #fff;
-         font-size: 14px;
-         padding: 8px 12px;
-         margin-top: 5px;
-         transition: background-color 0.3s;
-
-         &:hover {
-            background-color: #e67e22;
-         }
+      &-text {
+         margin-bottom: 2px;
       }
    }
-   .user-page__file-label {
-      align-items: center;
-      background: #2c3e50;
+
+   &__input {
+      width: 100%;
+      padding: clamp(0.63rem, 0.339rem + 0.514vw, 0.75rem) clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem);
+      font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
       border: 1px solid #444;
       border-radius: 8px;
-      padding: 12px;
-      gap: 10px;
-      display: flex;
-      cursor: pointer;
+      outline: none;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
       transition:
-         background-color 0.3s,
-         border-color 0.3s;
+         border-color 0.3s,
+         box-shadow 0.3s,
+         background-color 0.3s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+      &:focus {
+         box-shadow: 0 0 7px #234c5c;
+      }
+
+      &:invalid {
+         animation: shake 0.3s ease-out;
+      }
    }
-   .user-page__file-label:hover {
-      background-color: #34495e;
-      border-color: #3498db;
+
+   &__file-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: clamp(0.63rem, 0.339rem + 0.514vw, 0.75rem);
+      border: 1px solid #444;
+      border-radius: 8px;
+      background-color: #1e1e1e;
+      cursor: pointer;
+
+      &-text {
+         color: #f0f0f0;
+      }
+   }
+
+   &__file-input {
+      display: none;
+   }
+
+   &__button {
+      transition:
+         background-color 0.3s ease,
+         transform 0.3s,
+         box-shadow 0.3s;
+      width: 100%;
+      padding: clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem) 15px;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+      background-color: #234c5c;
+      @media (any-hover: hover) {
+         &:hover {
+            background-color: #203d48;
+            transform: translate(0px, 1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+         }
+      }
+
+      &--secondary {
+         margin-top: 20px;
+         background-color: #5a5a5a;
+         @media (any-hover: hover) {
+            &:hover {
+               background-color: #494949;
+            }
+         }
+      }
+
+      &--logout {
+         margin-top: 20px;
+         background-color: #d9534f;
+
+         &:hover {
+            background-color: #c9302c;
+         }
+      }
    }
 }
 </style>

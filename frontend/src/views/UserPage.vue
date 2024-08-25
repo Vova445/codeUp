@@ -129,7 +129,9 @@ function onLogout() {
    padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
    background-color: #2b2b2b;
    border-radius: 10px;
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+   box-shadow: 0px 0px 0px #999cb0;
+
+   animation: formLogin 0.6s ease forwards;
 
    &__container {
       position: relative;
@@ -256,6 +258,15 @@ function onLogout() {
             background-color: #c9302c;
          }
       }
+   }
+}
+@keyframes formLogin {
+   0% {
+      box-shadow: 0px 0px 0px #999cb0;
+   }
+
+   100% {
+      box-shadow: 3px 3px 20px #999cb0;
    }
 }
 </style>

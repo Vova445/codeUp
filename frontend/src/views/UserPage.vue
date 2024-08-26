@@ -73,7 +73,13 @@ onMounted(async () => {
          phoneNumber.value = response.data.phoneNumber || ''
          avatar.value = response.data.avatar || ''
       } catch (err) {
-         console.error('Error fetching profile:', err)
+         if (err.response?.status === 401) {
+            console.error('Session expired. Please log in again.')
+            localStorage.removeItem('authToken')
+            router.push({ name: 'home' })
+         } else {
+            console.error('Error fetching profile:', err)
+         }
       }
    }
 })
@@ -85,7 +91,7 @@ const onFileSelected = (event) => {
 
 const updateProfile = async () => {
    try {
-      const token = localStorage.getItem('authToken')
+      let token = localStorage.getItem('authToken')
       if (!token) return
 
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -114,10 +120,40 @@ const updateProfile = async () => {
    }
 }
 
-function onLogout() {
+async function onLogout() {
    localStorage.removeItem('authToken')
    router.push({ name: 'home' })
 }
+
+async function refreshToken() {
+   const refreshToken = localStorage.getItem('refreshToken')
+   if (!refreshToken) return
+
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const response = await axios.post(`${apiUrl}/api/refresh-token`, { refreshToken })
+      const { accessToken } = response.data
+      localStorage.setItem('authToken', accessToken)
+   } catch (err) {
+      console.error('Error refreshing token:', err)
+      localStorage.removeItem('authToken')
+      localStorage.removeItem('refreshToken')
+      router.push({ name: 'home' })
+   }
+}
+
+axios.interceptors.response.use(
+   response => response,
+   async error => {
+      const { config, response } = error
+      if (response?.status === 401 && !config.__isRetryRequest) {
+         config.__isRetryRequest = true
+         await refreshToken()
+         return axios(config)
+      }
+      return Promise.reject(error)
+   }
+)
 </script>
 
 <style lang="scss" scoped>

@@ -17,17 +17,25 @@ const __dirname = path.dirname(__filename)
 
 const userRoutes = express.Router()
 
+
+const generateToken = (userId, secret, expiresIn) => {
+   return jwt.sign({ userId }, secret, { expiresIn })
+}
+
+
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
    try {
       const { name, email, password } = req.body
       const newUser = new User({ name, email, password })
       await newUser.save()
 
-      const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+      const token = generateToken(newUser._id, process.env.JWT_SECRET, '1h')
+      const refreshToken = generateToken(newUser._id, process.env.JWT_REFRESH_SECRET, '30d')
       newUser.token = token
+      newUser.refreshToken = refreshToken
       await newUser.save()
 
-      res.status(201).json({ message: 'User registered successfully!', token })
+      res.status(201).json({ message: 'User registered successfully!', token, refreshToken })
    } catch (err) {
       console.error('Error registering user:', err)
       res.status(500).json({ message: 'Error registering user', error: err.message })
@@ -49,12 +57,14 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
          return res.status(400).json({ message: 'Invalid credentials' })
       }
 
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+      const token = generateToken(user._id, process.env.JWT_SECRET, '1h')
+      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d')
       user.token = token
+      user.refreshToken = refreshToken
       user.lastLogin = new Date()
       await user.save()
 
-      res.status(200).json({ message: 'Login successful', token })
+      res.status(200).json({ message: 'Login successful', token, refreshToken })
    } catch (err) {
       console.error('Error logging in:', err)
       res.status(500).json({ message: 'Error logging in', error: err.message })
@@ -151,6 +161,25 @@ userRoutes.get('/check-auth', (req, res) => {
       return res.json({ isAuthenticated: true })
    } catch (err) {
       return res.json({ isAuthenticated: false })
+   }
+})
+
+
+
+userRoutes.post('/refresh-token', async (req, res) => {
+   try {
+      const { refreshToken } = req.body
+      if (!refreshToken) return res.status(400).json({ message: 'No refresh token provided' })
+
+      jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
+         if (err) return res.status(403).json({ message: 'Invalid refresh token' })
+
+         const token = generateToken(decoded.userId, process.env.JWT_SECRET, '5m')
+         res.status(200).json({ accessToken: token })
+      })
+   } catch (err) {
+      console.error('Error refreshing token:', err)
+      res.status(500).json({ message: 'Error refreshing token', error: err.message })
    }
 })
 

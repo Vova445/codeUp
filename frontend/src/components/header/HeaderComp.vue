@@ -216,7 +216,7 @@ onUnmounted(() => {
          top: 0;
          overflow: auto;
          background-color: #000000d8;
-         padding: 100px 20px 20px 20px;
+         padding: 180px 20px 20px 20px;
          width: 100%;
          height: 100%;
 

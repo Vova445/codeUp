@@ -58,5 +58,19 @@
          "practiseInfo": "Practical tasks",
          "duration7": "Duration: 7 months"
       }
+   },
+   "questionsSection": {
+      "schedule": {
+         "title": "What is the study schedule?",
+         "text": "The study schedule is completely flexible. You can study whenever you want at your own pace."
+      },
+      "whenCourseStarts": {
+         "title": "When does the course start?",
+         "text": "The course starts whenever it's convenient for you and when you're ready to learn something new."
+      },
+      "studyingFormat": {
+         "title": "What study formats do we offer?",
+         "text": "We offer two study formats. In the first format, you will have materials, video examples, and practical tasks. In the second format, you will also have the opportunity to ask additional questions."
+      }
    }
 }

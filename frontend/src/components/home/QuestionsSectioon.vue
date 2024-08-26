@@ -52,6 +52,7 @@ const isActive = computed(() => (index) => activeIndex.value === index)
 
    &__item {
       background-color: #2b2b2b;
+      border-radius: 8px;
       padding: 20px;
       cursor: pointer;
       transition: background-color 0.3s, margin-bottom 0.5s ease;

@@ -53,6 +53,14 @@ const router = createRouter({
          },
       },
       {
+         path: '/faq',
+         name: 'faq',
+         component: () => import('../views/FaqPage.vue'),
+         meta: {
+            requireAuth: false,
+         },
+      },
+      {
          path: '/:pathMatch(.*)*',
          name: 'notFound',
          component: () => import('../components/error/ErrorComp.vue'),
@@ -63,17 +71,17 @@ const router = createRouter({
    ],
 })
 
-//router.beforeEach(async (to) => {
-//   document.documentElement.classList.remove('menu-open')
-//   if (to.meta?.requireAuth) {
-//      const userToken = localStorage.getItem('authToken')
-//      // console.log('userToken')
-//      // console.log(userToken)
+router.beforeEach(async (to) => {
+   document.documentElement.classList.remove('menu-open')
+   if (to.meta?.requireAuth) {
+      const userToken = localStorage.getItem('authToken')
+      // console.log('userToken')
+      // console.log(userToken)
 
-//      if (!userToken) {
-//         return { name: 'login' }
-//      }
-//   }
-//})
+      if (!userToken) {
+         return { name: 'login' }
+      }
+   }
+})
 
 export default router

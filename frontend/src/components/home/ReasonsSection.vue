@@ -30,7 +30,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .reaons {
    &:not(:last-child) {
-      margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 9.375rem);
+      margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 7rem);
    }
    background-color: #1a1a1a;
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);

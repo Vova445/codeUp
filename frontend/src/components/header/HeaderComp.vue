@@ -25,12 +25,7 @@
             </div>
             <Teleport v-if="isReady" :to="isMobile ? '.menu-header__menu' : '.header__box'">
                <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
-                  <img
-                     v-if="avatar"
-                     :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`"
-                     alt="User Avatar"
-                     class="header__avatar"
-                  />
+                  <img v-if="avatar" :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`" alt="User Avatar" class="header__avatar" />
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
                <router-link v-else :to="{ name: 'register' }" class="header__login-btn">
@@ -193,11 +188,11 @@ onUnmounted(() => {
       //transition: background-color 0.3s ease;
       position: relative;
       z-index: 50;
-      background-color: #234c5c;
+      background-color: #3c776f;
       border-radius: 12px;
       line-height: 1.2;
       padding: 10px 20px;
-     
+
       @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
@@ -382,13 +377,13 @@ onUnmounted(() => {
          transform: translateY(0);
          opacity: 1;
          transition-delay: 1s;
-                  transition: opacity 0.3s ease 0s;
+         transition: opacity 0.3s ease 0s;
 
          @media (any-hover: hover) {
             &:hover {
                opacity: 0.8;
             }
-          }
+         }
       }
 
       &__login-btn {
@@ -396,11 +391,11 @@ onUnmounted(() => {
          opacity: 1;
          transition-delay: 1.1s;
          transition: background-color 0.3s ease 0s;
-          @media (any-hover: hover) {
+         @media (any-hover: hover) {
             &:hover {
-               background-color: #203d48;
+               background-color: #2c5852;
             }
-          }
+         }
       }
    }
    .header__avatar {

@@ -4,12 +4,7 @@
          "id": "mlsldlvl435mllg3",
          "title": "FrontEnd Development",
          "imgSrc": "laptop01.png",
-         "courseInfo": [
-            { "title": "videoExamples" },
-            { "title": "stepsInfo" },
-            { "title": "durationDepends" },
-            { "title": "pcatciseInfo" }
-         ],
+         "courseInfo": [{ "title": "videoExamples" }, { "title": "stepsInfo" }, { "title": "durationDepends" }, { "title": "pcatciseInfo" }],
          "buttonTitle": "Detailed about course",
          "price": 90
       },
@@ -17,13 +12,7 @@
          "id": "jljd4lb6nkl34o94",
          "title": "Backend Development",
          "imgSrc": "laptop02.png",
-         "courseInfo": [
-            { "title": "videoExamples" },
-            { "title": "stepsInfo" },
-            { "title": "durationDepends" },
-
-            { "title": "pcatciseInfo" }
-         ],
+         "courseInfo": [{ "title": "videoExamples" }, { "title": "stepsInfo" }, { "title": "durationDepends" }, { "title": "pcatciseInfo" }],
          "buttonTitle": "Detailed about course",
          "price": 90
       }
@@ -57,31 +46,124 @@
    ],
    "stepsList": [
       {
-         "id":"dmgkln309bl39b3b",
-         "title":"",
-         "decription":""
+         "id": "dmgkln309bl39b3b",
+         "title": "",
+         "decription": ""
       },
       {
-         "id":"dbmldl3kk3kg3k",
-         "title":"",
-         "decription":""
+         "id": "dbmldl3kk3kg3k",
+         "title": "",
+         "decription": ""
       }
    ],
    "questionsList": [
       {
-         "id":"knkldvnl303nbkk3",
-         "question":"questionsSection.shedule.title",
-         "answer":"questionsSection.shedule.text"
+         "id": "knkldvnl303nbkk3",
+         "question": "questionsSection.shedule.title",
+         "answer": "questionsSection.shedule.text"
       },
       {
-         "id":"dbmldmlfmbo34m3dfll4",
-         "question":"questionsSection.whenCourseStarts.title",
-         "answer":"questionsSection.whenCourseStarts.text"
+         "id": "dbmldmlfmbo34m3dfll4",
+         "question": "questionsSection.whenCourseStarts.title",
+         "answer": "questionsSection.whenCourseStarts.text"
       },
       {
-         "id":"lflrk34otrmgk4kltr,g",
-         "question":"questionsSection.studingFormat.title",
-         "answer":"questionsSection.studingFormat.text"
+         "id": "lflrk34otrmgk4kltr,g",
+         "question": "questionsSection.studingFormat.title",
+         "answer": "questionsSection.studingFormat.text"
+      },
+      {
+         "id": "lflrk34otrmgk4kltr,g",
+         "question": "questionsSection.studingFormat.title",
+         "answer": "questionsSection.studingFormat.text"
+      },
+      {
+         "id": "lflrk34otrmgk4kltr,g",
+         "question": "questionsSection.studingFormat.title",
+         "answer": "questionsSection.studingFormat.text"
+      },
+      {
+         "id": "lflrk34otrmgk4kltr,g",
+         "question": "questionsSection.studingFormat.title",
+         "answer": "questionsSection.studingFormat.text"
+      }
+   ],
+   "carouselCoursesList": [
+      {
+         "id": "fmgkkemgn3io443",
+         "toName": "home",
+         "images": [
+            {
+               "id": "fgeji3i43393m",
+               "color": "#f5f532",
+               "icon": ["fab", "square-js"]
+            }
+         ]
+      },
+      {
+         "id": "lemrlvle4km3mbldv",
+         "toName": "home",
+         "images": [
+            {
+               "id": "v34ldlf3mf3pfm3f3",
+               "color": "#00b8e6",
+               "icon": ["fab", "golang"]
+            }
+         ]
+      },
+      {
+         "id": "dkboebl3kk3k4k4",
+         "toName": "home",
+         "images": [
+            {
+               "id": "ldfo4p399304gh49g",
+               "color": "#00b359",
+               "icon": ["fab", "vuejs"]
+            }
+         ]
+      },
+      {
+         "id": "dlmflvpoerkvmlrv",
+         "toName": "home",
+         "images": [
+            {
+               "id": "lg34o4kjfmoom4m4mg",
+               "color": "#cc7a00",
+               "icon": ["fab", "html5"]
+            },
+            {
+               "id": "ekrkbkk4i4ktk3flf",
+               "color": "#0066ff",
+               "icon": ["fab", "css3-alt"]
+            },
+            {
+               "id": "mfllf34o3krflf3o4,",
+               "color": "#cc3399",
+               "icon": ["fab", "sass"]
+            }
+         ]
+      },
+      {
+         "id": "kgrt4k34vkero4m4v4kd4lf",
+         "toName": "home",
+         "images": [
+            {
+               "id": "g4l44mmvvdlmfvppins",
+               "color": "#33b5e1",
+               "icon": ["fab", "react"]
+            }
+         ]
+      },
+      {
+         "id": "eerkmbeorpneiberpber",
+         "toName": "home",
+         "images": [
+            {
+               "id": "mll34ponkndkfbdopo",
+               "color": "#8c1aff",
+               "icon": ["fab", "unity"]
+            }
+         ]
       }
    ]
 }

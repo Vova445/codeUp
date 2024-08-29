@@ -18,7 +18,7 @@ onMounted(() => {
       }, 100)
    })
    const updateResponsiveClass = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 1025) {
          document.documentElement.classList.add('mobile')
          document.documentElement.classList.remove('pc')
       } else {

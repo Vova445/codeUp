@@ -45,9 +45,25 @@ const router = createRouter({
          },
       },
       {
+         path: '/about',
+         name: 'about',
+         component: () => import('../views/AboutCodeUp.vue'),
+         meta: {
+            requireAuth: false,
+         },
+      },
+      {
          path: '/user',
          name: 'user',
          component: () => import('../views/UserPage.vue'),
+         meta: {
+            requireAuth: true,
+         },
+      },
+      {
+         path: '/two-factor-auth',
+         name: 'twoFactorAuth',
+         component: () => import('../views/TwoFactorAuthPage.vue'),
          meta: {
             requireAuth: true,
          },
@@ -72,16 +88,13 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-   document.documentElement.classList.remove('menu-open')
-   if (to.meta?.requireAuth) {
-      const userToken = localStorage.getItem('authToken')
-      // console.log('userToken')
-      // console.log(userToken)
-
-      if (!userToken) {
-         return { name: 'login' }
-      }
-   }
+   //document.documentElement.classList.remove('menu-open')
+   //if (to.meta?.requireAuth) {
+   //   const userToken = localStorage.getItem('authToken')
+   //   if (!userToken) {
+   //      return { name: 'login' }
+   //   }
+   //}
 })
 
 export default router

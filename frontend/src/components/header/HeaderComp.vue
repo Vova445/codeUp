@@ -11,13 +11,31 @@
                      <ul class="menu-header__list">
                         <li class="menu-header__item">{{ $t('header.educationalCourses') }}</li>
                         <li class="menu-header__item">
-                           <router-link :to="{ name: 'news' }">{{ $t('header.news') }}</router-link>
+                           <router-link class="menu-header__btn-item" :to="{ name: 'news' }">{{ $t('header.news') }}</router-link>
                         </li>
                         <li class="menu-header__item">
                            <router-link :to="{ name: 'contacts' }">{{ $t('header.contacts') }}</router-link>
                         </li>
                         <li class="menu-header__item">
-                           <button>{{ $t('header.languages') }}</button>
+                           <button class="menu-header__btn-item" @click="openSubList">
+                              {{ $t('header.aboutUs') }} <span><font-awesome-icon :icon="['fas', 'chevron-down']" /></span>
+                           </button>
+                           <ul class="sub-list">
+                              <li class="sub-list__item"><router-link class="sub-list__btn" :to="{ name: 'faq' }">FAQ</router-link></li>
+                              <li class="sub-list__item">
+                                 <router-link class="sub-list__btn" :to="{ name: 'about' }">{{ $t('header.aboutCodeUp') }}</router-link>
+                              </li>
+                              <li class="sub-list__item">3</li>
+                           </ul>
+                        </li>
+                        <li class="menu-header__item">
+                           <button class="menu-header__btn-item" @click="openSubList">
+                              {{ $t('header.languages') }} <span><font-awesome-icon :icon="['fas', 'chevron-down']" /></span>
+                           </button>
+                           <ul class="sub-list sub-list--small">
+                              <li class="sub-list__item"><button @click="setLocale('en')" class="sub-list__btn">en</button></li>
+                              <li class="sub-list__item"><button @click="setLocale('ua')" class="sub-list__btn">укр</button></li>
+                           </ul>
                         </li>
                      </ul>
                   </div>
@@ -41,7 +59,9 @@
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import axios from 'axios'
+import { useLocales } from '../../moduleHelpers/i18n.js'
 // variables
+const { setLocale } = useLocales()
 const isMobile = ref(false)
 const avatar = ref('')
 const isReady = ref(false)
@@ -50,7 +70,7 @@ const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 const checkWindowSize = () => {
    isMobile.value = window.innerWidth < 501.98
 
-   if (window.innerWidth > 767) {
+   if (window.innerWidth > 1024) {
       document.documentElement.classList.remove('menu-open')
    }
 }
@@ -60,10 +80,26 @@ function isAbsoluteURL(url) {
 function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
 }
-
+// burger_menu_functions
+function openSubList(e) {
+   const targetElement = e.target.closest('li')
+   document.querySelectorAll('.menu-header__item.open').forEach((item) => {
+      if (item !== targetElement) item.classList.remove('open')
+   })
+   targetElement.classList.toggle('open')
+}
+function closeSubListOnClickOutside(e) {
+   if (!e.target.closest('.menu-header__item')) {
+      document.querySelectorAll('.menu-header__item.open').forEach((item) => {
+         item.classList.remove('open')
+      })
+   }
+}
+// computed
 const isUser = computed(() => localStorage.getItem('authToken'))
 
 onMounted(async () => {
+   document.addEventListener('click', closeSubListOnClickOutside)
    isReady.value = true
    checkWindowSize()
    window.addEventListener('resize', checkWindowSize)
@@ -102,6 +138,7 @@ onMounted(async () => {
    })
 })
 onUnmounted(() => {
+   document.removeEventListener('click', closeSubListOnClickOutside)
    window.removeEventListener('resize', checkWindowSize)
 })
 </script>
@@ -114,7 +151,6 @@ onUnmounted(() => {
    top: 0;
    left: 0;
    width: 100%;
-   opacity: 0;
    transition: opacity 1s ease;
 
    &__container {
@@ -122,7 +158,7 @@ onUnmounted(() => {
       display: grid;
       align-items: center;
       grid-template-columns: 1fr auto;
-      @media (max-width: 767.98px) {
+      @media (max-width: 1024px) {
          gap: 20px;
          grid-template-columns: 1fr auto;
       }
@@ -135,7 +171,7 @@ onUnmounted(() => {
       display: grid;
       align-items: center;
       grid-template-columns: auto 1fr auto;
-      @media (max-width: 767.98px) {
+      @media (max-width: 1024px) {
          gap: 5px;
       }
       @media (max-width: 500px) {
@@ -143,38 +179,30 @@ onUnmounted(() => {
       }
    }
    &__logo {
+      transition: opacity 0.3s ease 0s;
       position: relative;
       z-index: 50;
-
-      transform: translateX(-20px);
-      opacity: 0;
-      transition:
-         transform 0.8s ease,
-         opacity 0.8s ease;
-      transition-delay: 0.2s;
-
       img {
-         //width: 100%;
          width: 43px;
          height: 43px;
-         @media (max-width: 767.98px) {
+         @media (max-width: 1024px) {
             width: 36px;
             height: 36px;
+         }
+      }
+      @media (any-hover: hover) {
+         &:hover {
+            opacity: 0.8;
          }
       }
    }
 
    &__user-btn,
    &__login-btn {
-      transform: translateY(-20px);
-      opacity: 0;
-      transition:
-         transform 0.8s ease,
-         opacity 0.8s ease,
-         background-color 0.3s ease;
    }
 
    &__user-btn {
+      transition: all 0.3s ease 0s;
       font-size: 20px;
       transition: all 0.4s ease;
       @media (max-width: 500px) {
@@ -182,17 +210,27 @@ onUnmounted(() => {
          text-align: center;
          padding: 20px 5px;
       }
+      @media (any-hover: hover) {
+         &:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+         }
+      }
    }
 
    &__login-btn {
-      //transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease;
       position: relative;
       z-index: 50;
       background-color: #3c776f;
       border-radius: 12px;
       line-height: 1.2;
       padding: 10px 20px;
-
+      @media (any-hover: hover) {
+         &:hover {
+            background-color: #2c5852;
+         }
+      }
       @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
@@ -204,7 +242,7 @@ onUnmounted(() => {
 .menu-header {
    &__body {
       transition: all 0.3s ease 0s;
-      @media (max-width: 767.98px) {
+      @media (max-width: 1024px) {
          position: fixed;
          z-index: 9;
          left: -100%;
@@ -236,7 +274,7 @@ onUnmounted(() => {
       }
    }
    &__menu {
-      @media (max-width: 767.98px) {
+      @media (max-width: 1024px) {
          height: 100%;
       }
       @media (max-width: 500px) {
@@ -254,7 +292,7 @@ onUnmounted(() => {
       gap: 15px;
       align-items: center;
       justify-content: center;
-      @media (max-width: 767.98px) {
+      @media (max-width: 1024px) {
          text-align: center;
          font-size: clamp(1.438rem, 1.124rem + 1.566vw, 1.875rem);
          gap: clamp(2.5rem, 0.98rem + 4.474vw, 3.125rem);
@@ -262,39 +300,33 @@ onUnmounted(() => {
    }
 
    &__item {
-      transform: translateY(-20px);
-      opacity: 0;
-      transition:
-         transform 0.8s ease,
-         opacity 0.8s ease;
-      transition-delay: 0.4s;
       position: relative;
-
-      &::before {
-         content: '';
-         transition: height 0.3s ease;
-         position: absolute;
-         width: 100%;
-         left: 0;
-         bottom: 0;
-         height: 0;
-         background-color: #fff;
-      }
+      transition: color 0.3s ease 0s;
+      position: relative;
       @media (any-hover: hover) {
          &:hover {
-            &::before {
-               height: 2px;
-            }
+            color: #f9cf39;
          }
       }
-      @media (max-width: 767.98px) {
+      &.open {
+         color: #f9cf39;
+      }
+      @media (max-width: 1024px) {
          width: 100%;
+      }
+   }
+   &__btn-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      span {
+         transition: all 0.3s ease 0s;
       }
    }
 }
 .icon-menu {
    display: none;
-   @media (max-width: 767.98px) {
+   @media (max-width: 1024px) {
       display: block;
       position: relative;
       width: 25px;
@@ -345,64 +377,83 @@ onUnmounted(() => {
       }
    }
 }
-
-.loaded {
-   .header {
-      opacity: 1;
-
-      &__logo {
-         transform: translateX(0);
-         opacity: 1;
-      }
-
-      .menu-header__item {
-         transform: translateY(0);
-         opacity: 1;
-      }
-
-      .menu-header__item:nth-child(1) {
-         transition-delay: 0.4s;
-      }
-      .menu-header__item:nth-child(2) {
-         transition-delay: 0.5s;
-      }
-      .menu-header__item:nth-child(3) {
-         transition-delay: 0.6s;
-      }
-      .menu-header__item:nth-child(4) {
-         transition-delay: 0.7s;
-      }
-
-      &__user-btn {
-         transform: translateY(0);
-         opacity: 1;
-         transition-delay: 1s;
-         transition: opacity 0.3s ease 0s;
-
-         @media (any-hover: hover) {
-            &:hover {
-               opacity: 0.8;
-            }
+.menu-header__list {
+   @media (any-hover: hover) {
+      & > li:hover {
+         .sub-list {
+            pointer-events: auto;
+            opacity: 1;
+            visibility: visible;
+            //transform: translate(0, 0);
+            box-shadow: 0 10px 20px #000;
          }
-      }
-
-      &__login-btn {
-         transform: translateY(0);
-         opacity: 1;
-         transition-delay: 1.1s;
-         transition: background-color 0.3s ease 0s;
-         @media (any-hover: hover) {
-            &:hover {
-               background-color: #2c5852;
-            }
+         span {
+            transform: rotate(180deg);
          }
       }
    }
-   .header__avatar {
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      object-fit: cover;
+   .open {
+      .sub-list {
+         pointer-events: auto;
+         opacity: 1;
+         visibility: visible;
+         transform: translate(0, 0);
+         box-shadow: 0 10px 20px #000;
+      }
+      span {
+         transform: rotate(180deg);
+      }
+   }
+}
+
+.sub-list > li {
+}
+.sub-list {
+   transition: all 0.3s ease 0s;
+   overflow: hidden;
+   pointer-events: none;
+   opacity: 0;
+   visibility: hidden;
+   transform: translate(0, -20%);
+   border-radius: 8px;
+   min-width: 300px;
+   padding: 10px 0 0 0;
+   position: absolute;
+   z-index: 50;
+   top: 80%;
+   left: 0;
+   color: #fff;
+   min-width: 150px;
+   &--small {
+      min-width: 80px;
+      .sub-list__item {
+         padding: 5px 8px;
+         &:first-child {
+            padding-top: 5px;
+         }
+         &:last-child {
+            padding-bottom: 5px;
+         }
+      }
+   }
+   &__item {
+      padding: 7px 5px;
+      transition: all 0.3s ease 0s;
+      background-color: #2b2b2b;
+      &:first-child {
+         border-radius: 8px 8px 0px 0;
+      }
+      @media (any-hover: hover) {
+         &:hover {
+            background-color: #1e1e1e;
+         }
+      }
+   }
+   &__btn {
+      display: inline-block;
+      text-align-last: left;
+      width: 100%;
+      height: 100%;
    }
 }
 </style>

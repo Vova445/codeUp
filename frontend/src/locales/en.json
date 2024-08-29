@@ -3,7 +3,9 @@
       "educationalCourses": "Educational Courses",
       "news": "News",
       "contacts": "Contacts",
-      "languages": "Languages"
+      "languages": "Languages",
+      "aboutUs": "About us",
+      "aboutCodeUp": "About CodeUp"
    },
    "infos": {
       "price": "Price",
@@ -72,5 +74,9 @@
          "title": "What study formats do we offer?",
          "text": "We offer two study formats. In the first format, you will have materials, video examples, and practical tasks. In the second format, you will also have the opportunity to ask additional questions."
       }
+   },
+   "twoFactorAuth": {
+      "byPhoneTitle": "Confirm using phone number",
+      "byEmailTitle": "Confirm using email"
    }
 }

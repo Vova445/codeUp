@@ -88,7 +88,9 @@ const onFileSelected = (event) => {
    selectedFile.value = event.target.files[0]
    fileName.value = event.target.files[0] ? event.target.files[0].name : ''
 }
-
+function addTwoFactorAuth() {
+   router.push({ name: 'twoFactorAuth' })
+}
 const updateProfile = async () => {
    try {
       let token = localStorage.getItem('authToken')
@@ -143,8 +145,8 @@ async function refreshToken() {
 }
 
 axios.interceptors.response.use(
-   response => response,
-   async error => {
+   (response) => response,
+   async (error) => {
       const { config, response } = error
       if (response?.status === 401 && !config.__isRetryRequest) {
          config.__isRetryRequest = true
@@ -152,7 +154,7 @@ axios.interceptors.response.use(
          return axios(config)
       }
       return Promise.reject(error)
-   }
+   },
 )
 </script>
 

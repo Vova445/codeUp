@@ -166,7 +166,7 @@ const getImagePath = (imgPath) => {
    &__price {
       font-size: clamp(1.1rem, 0.468rem + 1.37vw, 1.563rem);
       font-weight: 600;
-      color: #ffab00;
+      color: #f9cf39;
       margin-top: 1rem;
    }
 }

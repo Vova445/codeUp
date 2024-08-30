@@ -26,6 +26,14 @@
             </button>
          </div>
       </div>
+      <div class="two-factor-auth">
+      <div class="two-factor-auth__container">
+        <button @click="generateQRCode">Generate QR Code</button>
+        <img id="qrCode" src="" alt="QR Code" />
+        <input v-model="qrCode" placeholder="Enter code from app" />
+        <button @click="verifyQRCode">Verify QR Code</button>
+      </div>
+    </div>
    </main-master-page>
 </template>
 
@@ -35,6 +43,7 @@ import axios from 'axios';
 import MainMasterPage from '@/masterPages/MainMasterPage.vue';
 
 const phoneNumber = ref('');
+const qrCode = ref('');
 
 onMounted(async () => {
    const token = localStorage.getItem('authToken');
@@ -75,7 +84,38 @@ async function confirmByEmail() {
    }
 }
 
-function confirmByQR() {
+async function confirmByQR() {
+   const token = localStorage.getItem('authToken');
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    const response = await axios.post(`${apiUrl}/api/generate-qr`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { qrCodeUrl } = response.data;
+    document.getElementById('qrCode').src = qrCodeUrl;
+  } catch (err) {
+    console.error('Error generating QR code:', err);
+  }
+}
+
+
+async function verifyQRCode() {
+  const token = localStorage.getItem('authToken');
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    const response = await axios.post(`${apiUrl}/api/verify-qr`, {
+      code: qrCode.value,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    alert('QR Code verified successfully!');
+  } catch (err) {
+    console.error('Error verifying QR code:', err);
+  }
 }
 
 function confirmByPhone() {
@@ -158,5 +198,12 @@ function confirmByPhone() {
       text-align: center;
       width: 100%;
    }
+   .two-factor-auth {
+  text-align: center;
+}
+#qrCode {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+}
 }
 </style>

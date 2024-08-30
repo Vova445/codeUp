@@ -1,10 +1,11 @@
 import express from 'express'
 import { errorHandler } from '../error/errorHandler.js'
 import userRoutes from '../routes/userRoutes.js'
-import twoFactorRoutes from '../routes/twoFactorRoutes.js'
+import emailTwoFactorRoutes from '../routes/2fa/emailTwoFactorRoutes.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import qrRoutes from '../routes/2fa/QRTwoFactorRoutes.js';
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ export async function setupMiddlewares(app) {
   
 
    app.use('/api', userRoutes)
-   app.use('/api', twoFactorRoutes);
+   app.use('/api', emailTwoFactorRoutes);
+   app.use('/api', qrRoutes);
 
    if (process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, '../../../frontend/dist')));

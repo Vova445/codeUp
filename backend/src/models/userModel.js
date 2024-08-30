@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String },
   isTwoFAEnabled: { type: Boolean, default: false },
   twoFASecret: { type: String },
-  twoFACode: { type: Number },
   token: { type: String },
   lastLogin: { type: Date },
 });

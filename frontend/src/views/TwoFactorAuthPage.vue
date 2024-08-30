@@ -22,13 +22,11 @@
          </button>
        </div>
        <div class="two-factor-auth__qr-section">
-         <button class="two-factor-auth__generate-btn" @click="generateQRCode">
-           Generate QR Code
-         </button>
+        
          <div class="two-factor-auth__qr-code">
            <img id="qrCode" src="" alt="QR Code" />
          </div>
-         <input class="two-factor-auth__input" v-model="qrCode" placeholder="Enter code from app" />
+         <input class="two-factor-auth__inputQR" v-model="qrCode" placeholder="Enter code from app" />
          <button class="two-factor-auth__verify-btn" @click="verifyQRCode">
            Verify QR Code
          </button>
@@ -170,7 +168,6 @@
      width: 100%;
      max-width: 500px;
  
-     &__generate-btn,
      &__verify-btn {
        background-color: #007bff ;
        color: #ffffff;
@@ -215,6 +212,9 @@
        &::placeholder {
          color: #666;
        }
+     }
+     &__inputQR{
+      color:#1d1c1c !important;
      }
    }
  

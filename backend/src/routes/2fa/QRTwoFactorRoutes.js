@@ -52,18 +52,41 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     const verified = speakeasy.totp.verify({
       secret: user.twoFASecret,
       encoding: 'base32',
-      token: code
+      token: code,
     });
 
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      res.status(200).send('Account verified successfully!');
+      res.status(200).json({ message: 'QR Code verified successfully' });
     } else {
-      res.status(400).send('Invalid verification code');
+      res.status(400).json({ message: 'Invalid QR Code' });
     }
+  } catch (err) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+});
+
+qrRoutes.get('/check-qr-verification', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isVerified = user.isTwoFAEnabled;
+
+    res.status(200).json({ isVerified });
   } catch (error) {
-    res.status(400).send('Invalid or expired token');
+    res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
 

@@ -21,13 +21,17 @@
            <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byPhoneTitle') }}</span>
          </button>
        </div>
-     </div>
-     <div class="two-factor-auth">
-       <div class="two-factor-auth__container">
-         <button @click="generateQRCode">Generate QR Code</button>
-         <img id="qrCode" src="" alt="QR Code" />
-         <input v-model="qrCode" placeholder="Enter code from app" />
-         <button @click="verifyQRCode">Verify QR Code</button>
+       <div class="two-factor-auth__qr-section">
+         <button class="two-factor-auth__generate-btn" @click="generateQRCode">
+           Generate QR Code
+         </button>
+         <div class="two-factor-auth__qr-code">
+           <img id="qrCode" src="" alt="QR Code" />
+         </div>
+         <input class="two-factor-auth__input" v-model="qrCode" placeholder="Enter code from app" />
+         <button class="two-factor-auth__verify-btn" @click="verifyQRCode">
+           Verify QR Code
+         </button>
        </div>
      </div>
    </main-master-page>
@@ -123,7 +127,7 @@
  }
  
  function showModal(message) {
-   alert(message); 
+   alert(message);
  }
  
  function confirmByPhone() {}
@@ -132,9 +136,10 @@
  <style lang="scss" scoped>
  .two-factor-auth {
    display: flex;
-   justify-content: center;
+   flex-direction: column;
    align-items: center;
    min-height: 100vh;
+   padding: 20px;
  
    &__container {
      display: flex;
@@ -149,6 +154,67 @@
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
      @media (max-width: 700px) {
        flex-direction: column;
+     }
+   }
+ 
+   &__qr-section {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 20px;
+     margin-top: 30px;
+     background-color: #1d1c1c;
+     padding: 20px;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     width: 100%;
+     max-width: 500px;
+ 
+     &__generate-btn,
+     &__verify-btn {
+       background-color: #007bff ;
+       color: #ffffff;
+       border: none;
+       padding: 10px 20px;
+       border-radius: 8px;
+       font-size: 1rem;
+       cursor: pointer;
+       transition: background-color 0.3s, transform 0.3s;
+ 
+       &:hover {
+         background-color: #0056b3;
+         transform: translateY(-3px);
+       }
+     }
+ 
+     &__qr-code {
+       margin-top: 20px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       width: 100%;
+       height: auto;
+ 
+       img {
+         max-width: 100%;
+         border: 2px solid #ccc;
+         border-radius: 8px;
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+       }
+     }
+ 
+     &__input {
+       margin-top: 10px;
+       padding: 10px;
+       width: 100%;
+       border: 1px solid #ccc;
+       border-radius: 8px;
+       font-size: 1rem;
+       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+       &::placeholder {
+         color: #666;
+       }
      }
    }
  
@@ -205,10 +271,6 @@
      text-align: center;
      width: 100%;
    }
- }
- #qrCode {
-   margin-top: 20px;
-   border: 1px solid #ccc;
  }
  </style>
  

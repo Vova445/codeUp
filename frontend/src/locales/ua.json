@@ -86,7 +86,8 @@
       }
    },
    "twoFactorAuth": {
-      "byPhoneTitle": "Підтвердити за номером телефону",
-      "byEmailTitle": "Підтвердити за email"
+      "byEmailTitle": "Підтвердити за електронною поштою",
+      "byQRTitle": "Підтвердити за QR-кодом",
+      "byPhoneTitle": "Підтвердити за номером телефону"
    }
 }

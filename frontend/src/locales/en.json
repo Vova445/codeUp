@@ -76,7 +76,8 @@
       }
    },
    "twoFactorAuth": {
-      "byPhoneTitle": "Confirm using phone number",
-      "byEmailTitle": "Confirm using email"
+      "byEmailTitle": "Confirm using email",
+      "byQRTitle": "Confirm using QR-code",
+      "byPhoneTitle": "Confirm using phone number"
    }
 }

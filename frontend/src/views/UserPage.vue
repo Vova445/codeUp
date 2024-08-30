@@ -93,20 +93,19 @@ function addTwoFactorAuth() {
 }
 const updateProfile = async () => {
    try {
-      let token = localStorage.getItem('authToken')
-      if (!token) return
+      let token = localStorage.getItem('authToken');
+      if (!token) return;
 
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-      console.log('Sending profile update to:', `${apiUrl}/api/update-profile`)
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
 
-      const formData = new FormData()
-      formData.append('name', name.value)
-      formData.append('email', email.value)
-      formData.append('phoneNumber', phoneNumber.value)
+      const formData = new FormData();
+      formData.append('name', name.value);
+      formData.append('email', email.value);
+      
+      formData.append('phoneNumber', phoneNumber.value || '');
 
       if (selectedFile.value) {
-         console.log('Uploading file:', selectedFile.value.name)
-         formData.append('avatar', selectedFile.value)
+         formData.append('avatar', selectedFile.value);
       }
 
       await axios.post(`${apiUrl}/api/update-profile`, formData, {
@@ -114,13 +113,14 @@ const updateProfile = async () => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
          },
-      })
+      });
 
-      console.log('Profile updated successfully')
+      console.log('Profile updated successfully');
    } catch (err) {
-      console.error('Error updating profile:', err)
+      console.error('Error updating profile:', err);
    }
-}
+};
+
 
 async function onLogout() {
    localStorage.removeItem('authToken')

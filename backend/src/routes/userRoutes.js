@@ -91,42 +91,52 @@ function deleteFile(filePath) {
 }
 
 userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => {
-   const token = req.headers.authorization?.split(' ')[1]
+   const token = req.headers.authorization?.split(' ')[1];
 
    if (!token) {
-      return res.status(401).json({ message: 'No token provided' })
+      return res.status(401).json({ message: 'No token provided' });
    }
 
    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      const user = await User.findById(decoded.userId)
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
 
       if (!user) {
-         return res.status(404).json({ message: 'User not found' })
+         return res.status(404).json({ message: 'User not found' });
       }
 
-      const { name, email, phoneNumber } = req.body
+      const { name, email, phoneNumber } = req.body;
 
-      if (name) user.name = name
-      if (email) user.email = email
-      if (phoneNumber) user.phoneNumber = phoneNumber
+      if (name !== undefined) user.name = name;
+      if (email !== undefined) user.email = email;
+
+      if (phoneNumber !== undefined) {
+         const cleanedPhoneNumber = phoneNumber.replace(/\s+/g, ''); 
+         if (cleanedPhoneNumber === '') {
+            user.phoneNumber = undefined; 
+         } else {
+            user.phoneNumber = cleanedPhoneNumber;
+         }
+      }
+
       if (req.file) {
          if (user.avatar) {
-            deleteFile(user.avatar.split('/uploads/')[1])
+            deleteFile(user.avatar.split('/uploads/')[1]);
          }
 
-         const baseURL = process.env.BASE_URL
-
-         user.avatar = `${baseURL}/uploads/${req.file.filename}`
+         const baseURL = process.env.BASE_URL;
+         user.avatar = `${baseURL}/uploads/${req.file.filename}`;
       }
 
-      await user.save()
+      await user.save();
 
-      res.status(200).json({ message: 'Profile updated successfully!', avatar: user.avatar })
+      res.status(200).json({ message: 'Profile updated successfully!', avatar: user.avatar });
    } catch (err) {
-      res.status(401).json({ message: 'Invalid token' })
+      res.status(401).json({ message: 'Invalid token' });
    }
-})
+});
+
+
 
 userRoutes.get('/user-profile', async (req, res) => {
    const token = req.headers.authorization?.split(' ')[1]

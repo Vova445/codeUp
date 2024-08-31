@@ -9,12 +9,17 @@
                <nav class="menu-header__body">
                   <div class="menu-header__menu">
                      <ul class="menu-header__list">
-                        <li class="menu-header__item">{{ $t('header.educationalCourses') }}</li>
+                        <li class="menu-header__item">
+                           <button class="menu-header__btn-item">
+                              {{ $t('header.educationalCourses') }}
+                           </button>
+                        </li>
+
                         <li class="menu-header__item">
                            <router-link class="menu-header__btn-item" :to="{ name: 'news' }">{{ $t('header.news') }}</router-link>
                         </li>
                         <li class="menu-header__item">
-                           <router-link :to="{ name: 'contacts' }">{{ $t('header.contacts') }}</router-link>
+                           <router-link class="menu-header__btn-item" :to="{ name: 'contacts' }">{{ $t('header.contacts') }}</router-link>
                         </li>
                         <li class="menu-header__item">
                            <button class="menu-header__btn-item" @click="openSubList">
@@ -82,11 +87,14 @@ function onIconMenu() {
 }
 // burger_menu_functions
 function openSubList(e) {
-   const targetElement = e.target.closest('li')
-   document.querySelectorAll('.menu-header__item.open').forEach((item) => {
-      if (item !== targetElement) item.classList.remove('open')
-   })
-   targetElement.classList.toggle('open')
+   const isTouch = document.documentElement.classList.contains('touch')
+   if (isTouch) {
+      const targetElement = e.target.closest('li')
+      document.querySelectorAll('.menu-header__item.open').forEach((item) => {
+         if (item !== targetElement) item.classList.remove('open')
+      })
+      targetElement.classList.toggle('open')
+   }
 }
 function closeSubListOnClickOutside(e) {
    if (!e.target.closest('.menu-header__item')) {
@@ -276,6 +284,7 @@ onUnmounted(() => {
    &__menu {
       @media (max-width: 1024px) {
          height: 100%;
+         text-align: center;
       }
       @media (max-width: 500px) {
          display: flex;
@@ -293,6 +302,8 @@ onUnmounted(() => {
       align-items: center;
       justify-content: center;
       @media (max-width: 1024px) {
+         flex-direction: column;
+
          text-align: center;
          font-size: clamp(1.438rem, 1.124rem + 1.566vw, 1.875rem);
          gap: clamp(2.5rem, 0.98rem + 4.474vw, 3.125rem);
@@ -300,6 +311,7 @@ onUnmounted(() => {
    }
 
    &__item {
+      cursor: pointer;
       position: relative;
       transition: color 0.3s ease 0s;
       position: relative;
@@ -310,9 +322,6 @@ onUnmounted(() => {
       }
       &.open {
          color: #f9cf39;
-      }
-      @media (max-width: 1024px) {
-         width: 100%;
       }
    }
    &__btn-item {
@@ -384,21 +393,27 @@ onUnmounted(() => {
             pointer-events: auto;
             opacity: 1;
             visibility: visible;
-            //transform: translate(0, 0);
+            transform: translate(0, 0);
             box-shadow: 0 10px 20px #000;
+            @media (max-width: 1024px) {
+               transform: translate(-50%, 0);
+            }
          }
          span {
             transform: rotate(180deg);
          }
       }
    }
-   .open {
+   & > li.open {
       .sub-list {
          pointer-events: auto;
          opacity: 1;
          visibility: visible;
          transform: translate(0, 0);
          box-shadow: 0 10px 20px #000;
+         @media (max-width: 1024px) {
+            transform: translate(-50%, 0);
+         }
       }
       span {
          transform: rotate(180deg);
@@ -424,6 +439,13 @@ onUnmounted(() => {
    left: 0;
    color: #fff;
    min-width: 150px;
+   @media (max-width: 1024px) {
+      padding: 15px 0 0 0;
+
+      min-width: 500px;
+      left: 50%;
+      transform: translate(-50%, -20%);
+   }
    &--small {
       min-width: 80px;
       .sub-list__item {
@@ -440,6 +462,7 @@ onUnmounted(() => {
       padding: 7px 5px;
       transition: all 0.3s ease 0s;
       background-color: #2b2b2b;
+
       &:first-child {
          border-radius: 8px 8px 0px 0;
       }
@@ -447,6 +470,12 @@ onUnmounted(() => {
          &:hover {
             background-color: #1e1e1e;
          }
+      }
+      &:not(:last-child) {
+         border-bottom: 1px solid #8d8d8d;
+      }
+      @media (max-width: 1024px) {
+         font-size: 20px;
       }
    }
    &__btn {

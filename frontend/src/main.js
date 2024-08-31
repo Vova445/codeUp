@@ -7,6 +7,17 @@ import './localScript/watcher/watcher.js'
 //import i18n
 import i18n from './plugins/i18n'
 
+// vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+   components,
+   directives,
+})
+
 //font-awesome
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -30,5 +41,6 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(vuetify)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

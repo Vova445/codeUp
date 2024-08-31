@@ -63,7 +63,23 @@ const router = createRouter({
       {
          path: '/two-factor-auth',
          name: 'twoFactorAuth',
-         component: () => import('../views/TwoFactorAuthPage.vue'),
+         component: () => import('../views/TwoFactorAuth/TwoFactorAuthPage.vue'),
+         meta: {
+            requireAuth: true,
+         },
+      },
+      {
+         path: '/two-factor-auth/qr-code',
+         name: 'qrCode',
+         component: () => import('../views/TwoFactorAuth/QrCodePage.vue'),
+         meta: {
+            requireAuth: true,
+         },
+      },
+      {
+         path: '/two-factor-auth/phone',
+         name: 'phoneAuth',
+         component: () => import('../views/TwoFactorAuth/PhonePage.vue'),
          meta: {
             requireAuth: true,
          },

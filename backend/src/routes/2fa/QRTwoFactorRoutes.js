@@ -19,8 +19,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    // Генеруємо 8-значний рандомний код
+    
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
     await user.save();

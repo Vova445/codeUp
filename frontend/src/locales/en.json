@@ -7,6 +7,12 @@
       "aboutUs": "About us",
       "aboutCodeUp": "About CodeUp"
    },
+   "footer": {
+      "goUp": "Up",
+      "courses": "Courses",
+      "usingConditions": "Using conditions",
+      "privacyPolicy": "Privacy policy"
+   },
    "infos": {
       "price": "Price",
       "priceFrom": "Price from"

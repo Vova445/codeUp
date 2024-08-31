@@ -4,11 +4,13 @@
       <main class="main">
          <slot></slot>
       </main>
+      <footer-comp />
    </div>
 </template>
 
 <script setup>
 import HeaderComp from '../components/header/HeaderComp.vue'
+import FooterComp from '../components/footer/FooterComp.vue'
 import { onMounted, nextTick, onUnmounted } from 'vue'
 
 onMounted(() => {

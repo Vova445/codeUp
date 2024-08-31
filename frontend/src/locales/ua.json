@@ -7,6 +7,12 @@
       "aboutUs": "Про нас",
       "aboutCodeUp": "Про CodeUp"
    },
+   "footer": {
+      "goUp": "Вгору",
+      "courses": "Курси",
+      "usingConditions": "Умови використання",
+      "privacyPolicy": "Політика конфіденційності"
+   },
    "infos": {
       "price": "Ціна",
       "priceFrom": "Ціна від"

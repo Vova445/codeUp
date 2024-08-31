@@ -6,10 +6,11 @@ import { User } from '../../models/userModel.js';
 const emailTwoFactorRoutes = express.Router();
 
 const transporter = nodemailer.createTransport({
-  service: 'Gmail',
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
   auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD
+    user: process.env.MAILTRAP_USER,
+    pass: process.env.MAILTRAP_PASS
   }
 });
 

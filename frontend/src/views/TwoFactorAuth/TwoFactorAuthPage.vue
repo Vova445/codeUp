@@ -8,30 +8,22 @@
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byEmailTitle') }}</span>
             </button>
-            <router-link class="two-factor-auth__button two-factor-auth__button--number" :to="{ name: 'qrCode' }" @click="confirmByQR">
+            <router-link :to="{ name: 'qrCode' }" class="two-factor-auth__button two-factor-auth__button--number">
                <span class="two-factor-auth__icon">
                   <font-awesome-icon :icon="['fas', 'qrcode']" />
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byQRTitle') }}</span>
             </router-link>
-            <button
+            <router-link 
                v-if="phoneNumber"
                class="two-factor-auth__button two-factor-auth__button--phone"
                :to="{ name: 'phoneAuth' }"
-               @click="confirmByPhone"
             >
                <span class="two-factor-auth__icon">
                   <font-awesome-icon :icon="['fas', 'phone']" />
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byPhoneTitle') }}</span>
-            </button>
-         </div>
-         <div class="two-factor-auth__qr-section section-qr">
-            <div class="section-qr__qr-code">
-               <img id="qrCode" src="" alt="QR Code" />
-            </div>
-            <input class="section-qr__input" v-model="qrCode" placeholder="Enter code from app" />
-            <button class="section-qr__btn" @click="verifyQRCode">Verify QR Code</button>
+            </router-link>
          </div>
       </div>
    </main-master-page>
@@ -43,7 +35,6 @@ import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 
 const phoneNumber = ref('')
-const qrCode = ref('')
 
 onMounted(async () => {
    const token = localStorage.getItem('authToken')
@@ -56,17 +47,8 @@ onMounted(async () => {
             },
          })
          phoneNumber.value = response.data.phoneNumber || ''
-         const verificationResponse = await axios.get(`${apiUrl}/api/check-qr-verification`, {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         })
-
-         if (verificationResponse.data.isVerified) {
-            showModal('Ваш аккаунт підтверджено')
-         }
       } catch (err) {
-         console.error('Error fetching profile or verifying QR code:', err)
+         console.error('Error fetching profile:', err)
       }
    }
 })
@@ -96,53 +78,6 @@ async function confirmByEmail() {
       }
    }
 }
-
-async function confirmByQR() {
-   const token = localStorage.getItem('authToken')
-   try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-      const response = await axios.post(
-         `${apiUrl}/api/generate-qr`,
-         {},
-         {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         },
-      )
-      const { qrCodeUrl } = response.data
-      document.getElementById('qrCode').src = qrCodeUrl
-   } catch (err) {
-      console.error('Error generating QR code:', err)
-   }
-}
-
-async function verifyQRCode() {
-   const token = localStorage.getItem('authToken')
-   try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-      const response = await axios.post(
-         `${apiUrl}/api/verify-qr`,
-         {
-            code: qrCode.value,
-         },
-         {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         },
-      )
-      alert('QR Code verified successfully!')
-   } catch (err) {
-      console.error('Error verifying QR code:', err)
-   }
-}
-
-function showModal(message) {
-   alert(message)
-}
-
-function confirmByPhone() {}
 </script>
 
 <style lang="scss" scoped>
@@ -165,59 +100,6 @@ function confirmByPhone() {}
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       @media (max-width: 700px) {
          flex-direction: column;
-      }
-   }
-
-   &__qr-section {
-      //display: flex;
-      //flex-direction: column;
-      //align-items: center;
-      //gap: 20px;
-      //margin-top: 30px;
-      //background-color: #1d1c1c;
-      //padding: 20px;
-      //border-radius: 10px;
-      //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      //width: 100%;
-      //max-width: 500px;
-
-      &__verify-btn {
-         background-color: #007bff;
-         color: #ffffff;
-         border: none;
-         padding: 10px 20px;
-         border-radius: 8px;
-         font-size: 1rem;
-         cursor: pointer;
-         transition:
-            background-color 0.3s,
-            transform 0.3s;
-
-         &:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-         }
-      }
-
-      //&__qr-code {
-      //   margin-top: 20px;
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      //   width: 100%;
-      //   height: auto;
-
-      //   img {
-      //      max-width: 100%;
-      //      border: 2px solid #ccc;
-      //      border-radius: 8px;
-      //      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      //   }
-      //}
-
-      &__input {
-         padding: 7px;
-         color: #1d1c1c !important;
       }
    }
 
@@ -275,43 +157,6 @@ function confirmByPhone() {}
       bottom: 10px;
       text-align: center;
       width: 100%;
-   }
-}
-
-.two-factor-auth {
-   // .two-factor-auth__qr-section
-   &__qr-section {
-   }
-}
-.section-qr {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   gap: 20px;
-   background-color: #1d1c1c;
-   padding: 20px;
-   border-radius: 10px;
-   width: 100%;
-   // .section-qr__qr-code
-   &__qr-code {
-      width: 100px;
-      height: 100px;
-      border: 1px solid #fff;
-      img {
-         width: 100px;
-         height: 100px;
-         padding: 5px;
-      }
-   }
-   // .section-qr__input
-   &__input {
-      color: #000;
-      padding: 10px;
-   }
-   // .section-qr__btn
-   &__btn {
-      background-color: #28a745;
-      padding: 5px;
    }
 }
 </style>

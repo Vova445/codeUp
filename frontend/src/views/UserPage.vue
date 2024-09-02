@@ -33,8 +33,11 @@
                <button type="submit" class="user-page__button">{{ $t('buttons.updateProfile') }}</button>
             </form>
 
-            <button class="user-page__button user-page__button--secondary" @click="addTwoFactorAuth">
-               {{ $t('buttons.twoFactorAth') }}
+            <button 
+               :disabled="isTwoFAEnabled"
+               class="user-page__button user-page__button--secondary" 
+               @click="addTwoFactorAuth">
+               {{ twoFactorAuthText }} 
             </button>
             <button class="user-page__button user-page__button--logout" @click="onLogout">
                {{ $t('buttons.logout') }}
@@ -45,18 +48,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { useRouter } from 'vue-router'
+import { useLocales } from '../moduleHelpers/i18n.js';
 
 const router = useRouter()
+const { t } = useLocales();
 const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
 const avatar = ref('')
 const selectedFile = ref(null)
 const fileName = ref('')
+const isTwoFAEnabled = ref(false);
+const twoFactorAuthText = computed(() => {
+   return isTwoFAEnabled.value ? t("buttons.alreadyAuth") : t("buttons.twoFactorAth");
+})
 
 onMounted(async () => {
    const token = localStorage.getItem('authToken')
@@ -72,6 +81,7 @@ onMounted(async () => {
          email.value = response.data.email || ''
          phoneNumber.value = response.data.phoneNumber || ''
          avatar.value = response.data.avatar || ''
+         isTwoFAEnabled.value = response.data.isTwoFAEnabled;
       } catch (err) {
          if (err.response?.status === 401) {
             console.error('Session expired. Please log in again.')
@@ -295,6 +305,11 @@ axios.interceptors.response.use(
          &:hover {
             background-color: #c9302c;
          }
+      }
+      &--confirmed {
+         margin-top: 20px;
+         background-color: #28a745; 
+         cursor: not-allowed;
       }
    }
 }

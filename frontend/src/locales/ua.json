@@ -34,6 +34,7 @@
       "chooseFile": "Вибрати файл",
       "updateProfile": "Оновити профіль",
       "twoFactorAth": "Двофакторна аутентифікація",
+      "alreadyAuth": "Ви вже були підтвердили аккаунт",
       "logout": "Вийти"
    },
    "mainCourses": {

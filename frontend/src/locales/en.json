@@ -34,6 +34,7 @@
       "chooseFile": "Choose a file",
       "updateProfile": "Update Profile",
       "twoFactorAth": "Two-Factor Authentication",
+      "alreadyAuth": "You have already confirmed account",
       "logout": "Log Out"
    },
    "reasonsSection": {
@@ -86,4 +87,5 @@
       "byQRTitle": "Confirm using QR-code",
       "byPhoneTitle": "Confirm using phone number"
    }
+   
 }

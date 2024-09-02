@@ -6,31 +6,33 @@
 }
 
 .wrapper {
-   position: relative;
-   min-height: 100%;
-   display: flex;
-   flex-direction: column;
-   overflow: hidden;
-   //@supports (overflow: clip) {
-   //   overflow: clip;
-   //}
-   // Притискаємо footer
-   > main {
-      padding-top: 110px;
-      flex: 1 1 auto;
-   }
-   // Фікс для слайдерів
-   > * {
-      min-width: 0;
-   }
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	@supports (overflow: clip) {
+		overflow: clip;
+	}
+	// Притискаємо footer
+	> main {
+      padding-top: clamp(5rem, 4.582rem + 2.088vw, 6.25rem);
+		flex: 1 1 auto;
+	}
+	// Фікс для слайдерів
+	> * {
+		min-width: 0;
+	}
 }
+
 body {
    background-color: #0c0b0b;
    color: #fff;
    font-family: 'Inter';
-   .menu-open & {
-      overflow: hidden;
-   }
+   .lock & {
+		overflow: hidden;
+		touch-action: none;
+		overscroll-behavior: none;
+	}
 }
 
 input {

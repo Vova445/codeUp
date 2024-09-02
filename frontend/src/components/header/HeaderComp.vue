@@ -84,6 +84,7 @@ function isAbsoluteURL(url) {
 }
 function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
+   document.documentElement.classList.toggle('lock')
 }
 // burger_menu_functions
 function openSubList(e) {
@@ -252,14 +253,14 @@ onUnmounted(() => {
       transition: all 0.3s ease 0s;
       @media (max-width: 1024px) {
          position: fixed;
+         width: 100%;
+         height: 100%;
          z-index: 9;
          left: -100%;
          top: 0;
          overflow: auto;
          background-color: #000000d8;
          padding: 180px 20px 20px 20px;
-         width: 100%;
-         height: 100%;
 
          &::before {
             content: '';
@@ -410,7 +411,8 @@ onUnmounted(() => {
          opacity: 1;
          visibility: visible;
          transform: translate(0, 0);
-         box-shadow: 0 10px 20px #000;
+         //box-shadow: 0 10px 20px #6b6b6b;
+         
          @media (max-width: 1024px) {
             transform: translate(-50%, 0);
          }
@@ -442,7 +444,7 @@ onUnmounted(() => {
    @media (max-width: 1024px) {
       padding: 15px 0 0 0;
 
-      min-width: 500px;
+      min-width: clamp(15.625rem, 9.969rem + 28.281vw, 31.25rem);
       left: 50%;
       transform: translate(-50%, -20%);
    }
@@ -457,12 +459,14 @@ onUnmounted(() => {
             padding-bottom: 5px;
          }
       }
+       @media (max-width: 1024px) {
+         min-width: 120px;
+       }
    }
    &__item {
       padding: 7px 5px;
       transition: all 0.3s ease 0s;
       background-color: #2b2b2b;
-
       &:first-child {
          border-radius: 8px 8px 0px 0;
       }
@@ -472,11 +476,12 @@ onUnmounted(() => {
          }
       }
       &:not(:last-child) {
-         border-bottom: 1px solid #8d8d8d;
+         border-bottom: 1px solid #474747;
       }
       @media (max-width: 1024px) {
          font-size: 20px;
       }
+      
    }
    &__btn {
       display: inline-block;

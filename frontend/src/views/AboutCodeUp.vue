@@ -3,6 +3,9 @@
       <section class="about">
          <div class="about__container">
             <h2 class="about__title title">About CodeUp</h2>
+            <div class="about__box">
+               
+            </div>
          </div>
       </section>
    </main-master-page>

@@ -73,22 +73,24 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
 
 const storage = multer.diskStorage({
    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
+       cb(null, 'uploads/');
    },
    filename: function (req, file, cb) {
-      cb(null, `${Date.now()}-${file.originalname}`)
+       cb(null, `${Date.now()}-${file.originalname}`);
    },
-})
+});
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
+
 function deleteFile(filePath) {
-   const fullPath = path.join(__dirname, '../../uploads', filePath)
+   const fullPath = path.join(__dirname, 'uploads', filePath);
    fs.unlink(fullPath, (err) => {
-      if (err) {
-         console.error('Error deleting file:', err)
-      }
-   })
+       if (err) {
+           console.error('Error deleting file:', err);
+       }
+   });
 }
+
 
 userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => {
    const token = req.headers.authorization?.split(' ')[1];

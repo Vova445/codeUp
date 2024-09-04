@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String },
   isTwoFAEnabled: { type: Boolean, default: false },
   twoFASecret: { type: String },
+  twoFAMethod: { type: String, enum: ['email', 'phone', 'qr'], default: 'none' },
   token: { type: String },
   lastLogin: { type: Date },
 });

@@ -22,6 +22,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
+    user.twoFAMethod = 'qr'; // Встановлюємо метод
     await user.save();
 
     const qrCodeUrl = await QRCode.toDataURL(randomCode);

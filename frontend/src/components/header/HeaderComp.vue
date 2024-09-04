@@ -250,7 +250,7 @@ onUnmounted(() => {
 
 .menu-header {
    &__body {
-      transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0.1s;
       @media (max-width: 1024px) {
          position: fixed;
          width: 100%;
@@ -261,7 +261,7 @@ onUnmounted(() => {
          overflow: auto;
          background-color: #000000d8;
          padding: 180px 20px 20px 20px;
-
+         
          &::before {
             content: '';
             position: fixed;
@@ -277,7 +277,9 @@ onUnmounted(() => {
             left: 0;
             top: 0;
             &::before {
+               transition: all 0.3s ease 0.1s;
                left: 0;
+               top: 0;
             }
          }
       }
@@ -490,4 +492,6 @@ onUnmounted(() => {
       height: 100%;
    }
 }
+
+
 </style>

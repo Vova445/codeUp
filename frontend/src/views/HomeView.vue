@@ -2,7 +2,7 @@
    <main-master-page>
       <main-section :coursesList="coursesData.mainCourses" />
       <reasons-section :reasonsList="coursesData.reasonsList" />
-      <!--<steps-section />-->
+      <steps-section :stepsList="coursesData.stepsList" />
 
       <carousal-section :courses-list="coursesData.carouselCoursesList" />
 

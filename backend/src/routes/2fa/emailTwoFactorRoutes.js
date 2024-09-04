@@ -31,7 +31,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
   
       const twoFACode = Math.floor(100000 + Math.random() * 900000);
       user.twoFACode = twoFACode;
-      user.twoFAMethod = 'email'; // Встановлюємо метод
+      user.twoFAMethod = 'email';
       await user.save();
   
       const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });

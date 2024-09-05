@@ -14,11 +14,7 @@
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byQRTitle') }}</span>
             </router-link>
-            <router-link 
-               v-if="phoneNumber"
-               class="two-factor-auth__button two-factor-auth__button--phone"
-               :to="{ name: 'phoneAuth' }"
-            >
+            <router-link v-if="phoneNumber" class="two-factor-auth__button two-factor-auth__button--phone" :to="{ name: 'phoneAuth' }">
                <span class="two-factor-auth__icon">
                   <font-awesome-icon :icon="['fas', 'phone']" />
                </span>
@@ -85,8 +81,10 @@ async function confirmByEmail() {
    display: flex;
    flex-direction: column;
    align-items: center;
-   min-height: 100vh;
-   padding: 20px;
+   //padding: clamp(0.625rem, -1.251rem + 3.914vw, 1.875rem);
+   padding: 70px 0;
+   margin-bottom: 200px;
+   background-color: #2b2b2b;
 
    &__container {
       display: flex;
@@ -94,13 +92,12 @@ async function confirmByEmail() {
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      background-color: #f0f0f0;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       @media (max-width: 700px) {
          flex-direction: column;
       }
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
    }
 
    &__button {
@@ -116,17 +113,16 @@ async function confirmByEmail() {
       color: #fff;
       font-weight: bold;
       text-transform: uppercase;
-      transition:
-         transform 0.3s,
-         box-shadow 0.3s;
+      transition: all 0.3s ease 0s;
 
       &:hover {
          transform: translateY(-5px);
          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+         opacity: 0.9;
       }
 
       &--email {
-         background-color: #6c757d;
+         background-color: #cc4400;
          .two-factor-auth__icon {
             color: #ffffff;
          }
@@ -140,7 +136,7 @@ async function confirmByEmail() {
       }
 
       &--phone {
-         background-color: #28a745;
+         background-color: #1f7a1f;
          .two-factor-auth__icon {
             color: #ffffff;
          }
@@ -148,11 +144,11 @@ async function confirmByEmail() {
    }
 
    &__icon {
-      font-size: clamp(1.563rem, 0.96rem + 1.928vw, 2.5rem);
+      font-size: clamp(1.875rem, -0.939rem + 5.871vw, 3.75rem);
    }
 
    &__text {
-      font-size: clamp(1rem, 0.839rem + 0.514vw, 1.25rem);
+      font-size: clamp(0.75rem, 0.839rem + 0.514vw, 1.25rem);
       position: absolute;
       bottom: 10px;
       text-align: center;

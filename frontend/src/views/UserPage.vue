@@ -170,6 +170,7 @@ axios.interceptors.response.use(
    color: #f0f0f0;
    max-width: 600px;
    margin: 50px auto;
+   margin-bottom: 100px;
    padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
    background-color: #2b2b2b;
    border-radius: 10px;

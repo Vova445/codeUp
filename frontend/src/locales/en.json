@@ -60,6 +60,24 @@
          "text": "You will learn everything step by step topic by topic, in the process of learning new topics you will learn topics that you have already studied"
       }
    },
+   "stepsSection": {
+      "familiarization": {
+         "title": "Familiarization with the Topic",
+         "description": "When starting a new topic, you should first familiarize yourself with the new material. This is to ensure that you understand why this topic is important and where to apply it."
+      },
+      "videoExamples": {
+         "title": "Video Examples",
+         "description": "After familiarizing yourself, you should watch visual examples that will help you better grasp the topic. However, it's even better if you not only watch them but also try to repeat the steps."
+      },
+      "practice": {
+         "title": "Practice",
+         "description": "The main stage of learning is practice, and you will have plenty of opportunities for that, as you'll be provided with numerous practical tasks of varying difficulty."
+      },
+      "nextTopics": {
+         "title": "Moving on to the Next Topics",
+         "description": "Once you’ve completed all the tasks and feel confident that you fully understand the topic, it's time to move on to the next one. Good luck!"
+      }
+   },
    "mainCourses": {
       "infos": {
          "durationDepends": "The duration of the study depends on you",
@@ -88,5 +106,4 @@
       "byQRTitle": "Confirm using QR-code",
       "byPhoneTitle": "Confirm using phone number"
    }
-   
 }

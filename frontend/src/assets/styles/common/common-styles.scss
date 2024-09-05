@@ -6,22 +6,22 @@
 }
 
 .wrapper {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-	@supports (overflow: clip) {
-		overflow: clip;
-	}
-	// Притискаємо footer
-	> main {
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   overflow: hidden;
+   @supports (overflow: clip) {
+      overflow: clip;
+   }
+   // Притискаємо footer
+   > main {
       padding-top: clamp(5rem, 4.582rem + 2.088vw, 6.25rem);
-		flex: 1 1 auto;
-	}
-	// Фікс для слайдерів
-	> * {
-		min-width: 0;
-	}
+      flex: 1 1 auto;
+   }
+   // Фікс для слайдерів
+   > * {
+      min-width: 0;
+   }
 }
 
 body {
@@ -29,10 +29,10 @@ body {
    color: #fff;
    font-family: 'Inter';
    .lock & {
-		overflow: hidden;
-		touch-action: none;
-		overscroll-behavior: none;
-	}
+      overflow: hidden;
+      touch-action: none;
+      overscroll-behavior: none;
+   }
 }
 
 input {
@@ -79,7 +79,9 @@ input {
    position: relative;
    color: #f0f0f0;
    max-width: 500px;
-   margin: 50px auto;
+   margin: 0 auto;
+   margin-top: 50px;
+   margin-bottom: 100px;
    padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
    background-color: #2b2b2b;
    border-radius: 10px;

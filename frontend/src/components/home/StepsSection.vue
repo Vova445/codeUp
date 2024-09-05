@@ -5,8 +5,8 @@
             <v-timeline-item v-for="stepItem in stepsList" :key="stepItem.id">
                <template v-slot:opposite> </template>
                <div :style="{ backgroundColor: stepItem.color, padding: '10px 10px', borderRadius: '8px', height: '100%' }">
-                  <div class="text-h6">{{ stepItem.title }}</div>
-                  <p>{{ stepItem.description }}</p>
+                  <div class="text-h6">{{ $t(stepItem.title) }}</div>
+                  <p>{{ $t(stepItem.description) }}</p>
                </div>
             </v-timeline-item>
          </v-timeline>
@@ -14,9 +14,9 @@
          <v-timeline v-else align="start" side="end">
             <v-timeline-item v-for="stepItem in stepsList" dot-color="pink" size="small" :key="stepItem.id">
                <div class="d-flex" :style="{ backgroundColor: stepItem.color, padding: '20px 10px', borderRadius: '8px' }">
-                  <strong class="me-4">{{ stepItem.title }}</strong>
+                  <strong class="me-4">{{ $t(stepItem.title) }}</strong>
                   <div>
-                     <div class="text-caption">{{ stepItem.description }}</div>
+                     <div class="text-caption">{{ $t(stepItem.description) }}</div>
                   </div>
                </div>
             </v-timeline-item>
@@ -79,7 +79,7 @@ onMounted(() => {
       background-color: #3c776f;
       border-radius: 8px;
       //padding: 20px 5px !important;
-      box-shadow: 0px 1px 10px #12584d;
+      box-shadow: 4px 4px 7px #5b5b5b;
       p {
          color: #e6e6e6;
          font-size: clamp(0.75rem, 0.469rem + 0.587vw, 0.938rem);
@@ -87,10 +87,10 @@ onMounted(() => {
       }
    }
    .text-h6 {
-      font-size: 16px !important;
+      font-size: clamp(0.75rem, 0.687rem + 0.391vw, 1rem) !important;
       line-height: 1.3;
-      letter-spacing: 1.3px !important;
-      font-weight: 500;
+      letter-spacing: 1px !important;
+      font-weight: 600;
       &:not(:last-child) {
          margin-bottom: clamp(0.625rem, 0.156rem + 0.978vw, 0.938rem);
       }
@@ -105,7 +105,7 @@ onMounted(() => {
       }
    }
    .v-timeline-divider .v-timeline-divider__dot {
-      background: #3c776f !important; // Overrides any previous settings
+      background: #3c776f !important;
    }
    .d-flex {
       strong {
@@ -142,6 +142,11 @@ onMounted(() => {
    .v-timeline--vertical.v-timeline .v-timeline-item:last-child .v-timeline-item__body {
       @media (max-width: 767.98px) {
          padding-block-end: 0;
+      }
+   }
+   .v-timeline-divider {
+      @media (max-width: 767.98px) {
+         padding-block-start: 0 !important;
       }
    }
 }

@@ -1,13 +1,14 @@
 <template>
    <main-master-page>
       <div class="two-factor-auth__qr-section section-qr">
-         <button @click="generateQRCode" class="section-qr__btn button">Generate QR Code</button>
+         <button @click="generateQRCode" class="section-qr__btn button">{{ $t('twoFactorAuth.generateGrCode') }}</button>
          <div class="section-qr__qr-code">
             <img v-if="qrCodeUrl" id="qrCode" :src="qrCodeUrl" alt="QR Code" />
             <font-awesome-icon v-else :icon="['fas', 'image']" />
          </div>
-
-         <button class="section-qr__btn-verify button" @click="verifyQRCode">Verify QR Code</button>
+         <v-otp-input focus-all ref="inputCode" :length="8" v-model="qrCode" placeholder="0" variant="underlined"></v-otp-input>
+         <button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode">Verify QR Code</button>
+         <!--<button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode">{{$t(twoFactorAuth.confirmCode)}}</button>-->
       </div>
    </main-master-page>
 </template>
@@ -19,7 +20,7 @@ import axios from 'axios'
 
 const qrCode = ref('')
 const qrCodeUrl = ref('')
-
+const inputCode = ref()
 async function generateQRCode() {
    const token = localStorage.getItem('authToken')
    try {
@@ -38,9 +39,11 @@ async function generateQRCode() {
       console.error('Error generating QR code:', err)
    }
 }
-
 onMounted(() => {
    generateQRCode()
+   console.log(inputCode.value)
+
+   inputCode.value.focus()
 })
 
 async function verifyQRCode() {
@@ -76,15 +79,20 @@ async function verifyQRCode() {
    border-radius: 10px;
    width: 100%;
    margin-bottom: 50px;
+   &__btn {
+      padding-left: 50px;
+      padding-right: 50px;
+   }
    &__qr-code {
-      width: 150px;
-      height: 150px;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       img {
-         width: 150px;
-         height: 150px;
+         width: 200px;
+         height: 200px;
       }
       .svg-inline--fa {
          font-size: 50px;

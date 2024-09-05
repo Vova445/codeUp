@@ -2,14 +2,14 @@
    <main-master-page>
       <section class="news">
          <div class="news__container">
-            <h2 class="news__title title">Here are the latest innovations in the field of IT</h2>
+            <h2 class="news__title title">{{ $t('titles.innovationsNews') }}</h2>
             <div class="news__items">
-               <template  v-for="newsItem in newsList" :key="newsItem.id"  >
-                     <a v-if="newsItem.cover_image" class=" news__item item-news" target='_blank' :href="newsItem.url" >
-                     <div class="item-news__image"><img :src="newsItem.cover_image" alt=""></div>
-                     <h4 class="item-news__title">{{newsItem.title}}</h4>
-                     <div class="item-news__date">published : {{formatDate(newsItem.published_at) }}</div>
-                     </a>
+               <template v-for="newsItem in newsList">
+                  <a v-if="newsItem.cover_image" class="news__item item-news" target="_blank" :href="newsItem.url" :key="newsItem.id">
+                     <div class="item-news__image"><img :src="newsItem.cover_image" alt="" /></div>
+                     <h4 class="item-news__title">{{ newsItem.title }}</h4>
+                     <div class="item-news__date">published : {{ formatDate(newsItem.published_at) }}</div>
+                  </a>
                </template>
             </div>
          </div>
@@ -23,12 +23,12 @@ import MainMasterPage from '../masterPages/MainMasterPage.vue'
 
 let newsList = ref([])
 function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  
-  return `${year}-${month}-${day}`;
+   const date = new Date(dateString)
+   const year = date.getFullYear()
+   const month = String(date.getMonth() + 1).padStart(2, '0')
+   const day = String(date.getDate()).padStart(2, '0')
+
+   return `${year}-${month}-${day}`
 }
 onMounted(() => {
    const apiUrl = 'https://dev.to/api/articles?per_page=10&tag=programming&top=1'
@@ -37,7 +37,6 @@ onMounted(() => {
          const response = await fetch(apiUrl)
          const newsData = await response.json()
          const topNews = newsData.slice(0, 10)
-         console.log(topNews)
          newsList.value = topNews
       } catch (error) {
          console.error('Помилка при отриманні новин:', error)
@@ -53,9 +52,9 @@ onMounted(() => {
    }
    &__title {
       text-align: center;
-      color: #f2f2f2; 
-      font-weight: 700; 
-      text-transform: uppercase; 
+      color: #f2f2f2;
+      font-weight: 700;
+      text-transform: uppercase;
       letter-spacing: 1.5px;
       &:not(:last-child) {
          margin-bottom: 20px;
@@ -66,37 +65,36 @@ onMounted(() => {
       gap: 30px;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
    }
-  
 }
 
 .item-news {
+   background-color: #1a1a1a;
+   border-radius: 8px;
 
-       background-color: #1a1a1a; 
-      border-radius: 8px;
-
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      &:hover {
-         transform: translateY(-7px);
-        img {
-            transform: scale(1.015);
-         }
+   transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+   &:hover {
+      transform: translateY(-7px);
+      img {
+         transform: scale(1.015);
       }
-      
-   
+   }
+
    display: block;
    padding: 20px;
    display: flex;
    flex-direction: column;
    &__image {
       overflow: hidden;
-         border-radius: 8px;
+      border-radius: 8px;
 
       img {
          max-width: 100%;
          object-fit: cover;
          transition: transform 0.3s ease;
       }
-     
+
       &:not(:last-child) {
          margin-bottom: 15px;
       }
@@ -107,7 +105,7 @@ onMounted(() => {
       letter-spacing: 1px;
       font-size: 14px;
       font-weight: 500;
-      margin-bottom: 15px;      
+      margin-bottom: 15px;
       flex: 1 1 auto;
    }
    &__date {

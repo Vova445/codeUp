@@ -21,6 +21,7 @@
       "mainTitle": "Which direction interests you ?",
       "whyCodeUp": "Why  CodeUp ?",
       "stepByStep": "A Step-by-Step Learning Journey",
+      "innovationsNews": "Here are the latest innovations in the field of IT",
       "userProfile": "User Profile Settings",
       "stepsSection": "How is learning? step by step)"
    },
@@ -104,6 +105,8 @@
    "twoFactorAuth": {
       "byEmailTitle": "Confirm using email",
       "byQRTitle": "Confirm using QR-code",
-      "byPhoneTitle": "Confirm using phone number"
+      "byPhoneTitle": "Confirm using phone number",
+      "generateGrCode": "Generate GR Code",
+      "confirmCode": "Confirm code"
    }
 }

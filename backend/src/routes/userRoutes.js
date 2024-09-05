@@ -44,33 +44,37 @@ userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
 
 userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
    try {
-      const { email, password } = req.body
-      let user = (await User.findOne({ email })) || (await User.findOne({ phoneNumber: email }))
-
-      if (!user) {
-         return res.status(404).json({ message: 'User not found' })
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password)
-
-      if (!isMatch) {
-         return res.status(400).json({ message: 'Invalid credentials' })
-      }
-
-      const token = generateToken(user._id, process.env.JWT_SECRET, '1h')
-      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d')
-      user.token = token
-      user.refreshToken = refreshToken
-      user.lastLogin = new Date()
-      await user.save()
-
-      res.status(200).json({ message: 'Login successful', token, refreshToken })
+     const { email, password } = req.body;
+     let user = (await User.findOne({ email })) || (await User.findOne({ phoneNumber: email }));
+ 
+     if (!user) {
+       return res.status(404).json({ message: 'User not found' });
+     }
+ 
+     const isMatch = await bcrypt.compare(password, user.password);
+ 
+     if (!isMatch) {
+       return res.status(400).json({ message: 'Invalid credentials' });
+     }
+ 
+     if (!user.isTwoFAEnabled) {
+       return res.status(401).json({ message: 'User not verified' });
+     }
+ 
+     const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
+     const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+     user.token = token;
+     user.refreshToken = refreshToken;
+     user.lastLogin = new Date();
+     await user.save();
+ 
+     res.status(200).json({ message: 'Login successful', token, refreshToken });
    } catch (err) {
-      console.error('Error logging in:', err)
-      res.status(500).json({ message: 'Error logging in', error: err.message })
+     console.error('Error logging in:', err);
+     res.status(500).json({ message: 'Error logging in', error: err.message });
    }
-})
-
+ });
+ 
 const storage = multer.diskStorage({
    destination: function (req, file, cb) {
        cb(null, 'uploads/');
@@ -194,5 +198,39 @@ userRoutes.post('/refresh-token', async (req, res) => {
       res.status(500).json({ message: 'Error refreshing token', error: err.message })
    }
 })
+
+
+
+userRoutes.post('/verify', async (req, res) => {
+   const { code } = req.body;
+   const token = req.headers.authorization?.split(' ')[1];
+ 
+   if (!token) {
+     return res.status(401).json({ message: 'No token provided' });
+   }
+ 
+   try {
+     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+     const user = await User.findById(decoded.userId);
+ 
+     if (!user) {
+       return res.status(404).json({ message: 'User not found' });
+     }
+ 
+     const verified = user.twoFASecret === code;
+ 
+     if (verified) {
+       user.isTwoFAEnabled = true;
+       await user.save();
+       res.status(200).json({ message: 'Verification successful' });
+     } else {
+       res.status(400).json({ message: 'Invalid code' });
+     }
+   } catch (err) {
+     res.status(401).json({ message: 'Invalid token' });
+   }
+ });
+
+ 
 
 export default userRoutes

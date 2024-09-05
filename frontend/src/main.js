@@ -3,7 +3,10 @@ import './assets/styles/index.scss'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+// localScript
 import './localScript/watcher/watcher.js'
+import './localScript/localScript.js'
+
 //import i18n
 import i18n from './plugins/i18n'
 

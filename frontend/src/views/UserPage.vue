@@ -33,11 +33,8 @@
                <button type="submit" class="user-page__button">{{ $t('buttons.updateProfile') }}</button>
             </form>
 
-            <button 
-               :disabled="isTwoFAEnabled"
-               class="user-page__button user-page__button--secondary" 
-               @click="addTwoFactorAuth">
-               {{ twoFactorAuthText }} 
+            <button :disabled="isTwoFAEnabled" class="user-page__button user-page__button--secondary" @click="addTwoFactorAuth">
+               {{ twoFactorAuthText }}
             </button>
             <button class="user-page__button user-page__button--logout" @click="onLogout">
                {{ $t('buttons.logout') }}
@@ -52,19 +49,19 @@ import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { useRouter } from 'vue-router'
-import { useLocales } from '../moduleHelpers/i18n.js';
+import { useLocales } from '../moduleHelpers/i18n.js'
 
 const router = useRouter()
-const { t } = useLocales();
+const { t } = useLocales()
 const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
 const avatar = ref('')
 const selectedFile = ref(null)
 const fileName = ref('')
-const isTwoFAEnabled = ref(false);
+const isTwoFAEnabled = ref(false)
 const twoFactorAuthText = computed(() => {
-   return isTwoFAEnabled.value ? t("buttons.alreadyAuth") : t("buttons.twoFactorAth");
+   return isTwoFAEnabled.value ? t('buttons.alreadyAuth') : t('buttons.twoFactorAth')
 })
 
 onMounted(async () => {
@@ -81,7 +78,7 @@ onMounted(async () => {
          email.value = response.data.email || ''
          phoneNumber.value = response.data.phoneNumber || ''
          avatar.value = response.data.avatar || ''
-         isTwoFAEnabled.value = response.data.isTwoFAEnabled;
+         isTwoFAEnabled.value = response.data.isTwoFAEnabled
       } catch (err) {
          if (err.response?.status === 401) {
             console.error('Session expired. Please log in again.')
@@ -103,19 +100,19 @@ function addTwoFactorAuth() {
 }
 const updateProfile = async () => {
    try {
-      let token = localStorage.getItem('authToken');
-      if (!token) return;
+      let token = localStorage.getItem('authToken')
+      if (!token) return
 
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
-      const formData = new FormData();
-      formData.append('name', name.value);
-      formData.append('email', email.value);
-      
-      formData.append('phoneNumber', phoneNumber.value || '');
+      const formData = new FormData()
+      formData.append('name', name.value)
+      formData.append('email', email.value)
+
+      formData.append('phoneNumber', phoneNumber.value || '')
 
       if (selectedFile.value) {
-         formData.append('avatar', selectedFile.value);
+         formData.append('avatar', selectedFile.value)
       }
 
       await axios.post(`${apiUrl}/api/update-profile`, formData, {
@@ -123,14 +120,13 @@ const updateProfile = async () => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
          },
-      });
+      })
 
-      console.log('Profile updated successfully');
+      console.log('Profile updated successfully')
    } catch (err) {
-      console.error('Error updating profile:', err);
+      console.error('Error updating profile:', err)
    }
-};
-
+}
 
 async function onLogout() {
    localStorage.removeItem('authToken')
@@ -302,13 +298,15 @@ axios.interceptors.response.use(
          margin-top: 20px;
          background-color: #d9534f;
 
-         &:hover {
-            background-color: #c9302c;
+         @media (any-hover: hover) {
+            &:hover {
+               background-color: #c9302c;
+            }
          }
       }
       &--confirmed {
          margin-top: 20px;
-         background-color: #28a745; 
+         background-color: #28a745;
          cursor: not-allowed;
       }
    }

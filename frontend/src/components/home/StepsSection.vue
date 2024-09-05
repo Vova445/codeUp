@@ -89,7 +89,7 @@ onMounted(() => {
    .text-h6 {
       font-size: 16px !important;
       line-height: 1.3;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.3px !important;
       font-weight: 500;
       &:not(:last-child) {
          margin-bottom: clamp(0.625rem, 0.156rem + 0.978vw, 0.938rem);

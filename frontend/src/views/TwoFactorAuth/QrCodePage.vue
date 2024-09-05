@@ -1,28 +1,29 @@
 <template>
    <main-master-page>
       <div class="two-factor-auth__qr-section section-qr">
-         <button @click="generateQRCode" class="section-qr__btn">Generate QR Code</button>
+         <button @click="generateQRCode" class="section-qr__btn button">Generate QR Code</button>
          <div class="section-qr__qr-code">
-            <img id="qrCode" :src="qrCodeUrl" alt="QR Code" />
+            <img v-if="qrCodeUrl" id="qrCode" :src="qrCodeUrl" alt="QR Code" />
+            <font-awesome-icon v-else :icon="['fas', 'image']" />
          </div>
-         <input class="section-qr__input" v-model="qrCode" placeholder="Enter code from app" />
-         <button class="section-qr__btn" @click="verifyQRCode">Verify QR Code</button>
+
+         <button class="section-qr__btn-verify button" @click="verifyQRCode">Verify QR Code</button>
       </div>
    </main-master-page>
 </template>
- 
+
 <script setup>
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
-const qrCode = ref('');
-const qrCodeUrl = ref('');
+const qrCode = ref('')
+const qrCodeUrl = ref('')
 
 async function generateQRCode() {
-   const token = localStorage.getItem('authToken');
+   const token = localStorage.getItem('authToken')
    try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
       const response = await axios.post(
          `${apiUrl}/api/generate-qr`,
          {},
@@ -30,22 +31,22 @@ async function generateQRCode() {
             headers: {
                Authorization: `Bearer ${token}`,
             },
-         }
-      );
-      qrCodeUrl.value = response.data.qrCodeUrl;
+         },
+      )
+      qrCodeUrl.value = response.data.qrCodeUrl
    } catch (err) {
-      console.error('Error generating QR code:', err);
+      console.error('Error generating QR code:', err)
    }
 }
 
 onMounted(() => {
-   generateQRCode();
-});
+   generateQRCode()
+})
 
 async function verifyQRCode() {
-   const token = localStorage.getItem('authToken');
+   const token = localStorage.getItem('authToken')
    try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
       await axios.post(
          `${apiUrl}/api/verify-qr`,
          {
@@ -55,11 +56,11 @@ async function verifyQRCode() {
             headers: {
                Authorization: `Bearer ${token}`,
             },
-         }
-      );
-      alert('QR Code verified successfully!');
+         },
+      )
+      alert('QR Code verified successfully!')
    } catch (err) {
-      console.error('Error verifying QR code:', err);
+      console.error('Error verifying QR code:', err)
    }
 }
 </script>
@@ -71,18 +72,22 @@ async function verifyQRCode() {
    align-items: center;
    gap: 20px;
    background-color: #1d1c1c;
-   padding: 20px;
+   padding: 100px 0;
    border-radius: 10px;
    width: 100%;
-
+   margin-bottom: 50px;
    &__qr-code {
-      width: 100px;
-      height: 100px;
-      border: 1px solid #fff;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       img {
-         width: 100px;
-         height: 100px;
-         padding: 5px;
+         width: 150px;
+         height: 150px;
+      }
+      .svg-inline--fa {
+         font-size: 50px;
       }
    }
 
@@ -91,9 +96,15 @@ async function verifyQRCode() {
       padding: 10px;
    }
 
-   &__btn {
-      background-color: #28a745;
-      padding: 5px;
+   &__btn-verify {
+      padding-left: 50px;
+      padding-right: 50px;
+      background-color: #d9534f;
+      @media (any-hover: hover) {
+         &:hover {
+            background-color: #c9302c;
+         }
+      }
    }
 }
 </style>

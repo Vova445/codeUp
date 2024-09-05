@@ -57,10 +57,6 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
        return res.status(400).json({ message: 'Invalid credentials' });
      }
  
-     if (!user.isTwoFAEnabled) {
-       return res.status(401).json({ message: 'User not verified' });
-     }
- 
      const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
      user.token = token;
@@ -198,38 +194,6 @@ userRoutes.post('/refresh-token', async (req, res) => {
       res.status(500).json({ message: 'Error refreshing token', error: err.message })
    }
 })
-
-
-
-userRoutes.post('/verify', async (req, res) => {
-   const { code } = req.body;
-   const token = req.headers.authorization?.split(' ')[1];
- 
-   if (!token) {
-     return res.status(401).json({ message: 'No token provided' });
-   }
- 
-   try {
-     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-     const user = await User.findById(decoded.userId);
- 
-     if (!user) {
-       return res.status(404).json({ message: 'User not found' });
-     }
- 
-     const verified = user.twoFASecret === code;
- 
-     if (verified) {
-       user.isTwoFAEnabled = true;
-       await user.save();
-       res.status(200).json({ message: 'Verification successful' });
-     } else {
-       res.status(400).json({ message: 'Invalid code' });
-     }
-   } catch (err) {
-     res.status(401).json({ message: 'Invalid token' });
-   }
- });
 
  
 

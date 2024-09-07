@@ -19,10 +19,14 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    
+
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
     user.twoFAMethod = 'qr';
+
+    const userIpAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    user.qrCodeGeneratedIp = userIpAddress;
+
     await user.save();
 
     const qrCodeUrl = await QRCode.toDataURL(randomCode);
@@ -32,6 +36,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
@@ -49,6 +54,12 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    const userIpAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    if (user.qrCodeGeneratedIp !== userIpAddress) {
+      return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
+    }
+
     const verified = user.twoFASecret === code;
 
     if (verified) {
@@ -62,6 +73,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];

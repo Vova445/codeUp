@@ -14,7 +14,6 @@
                               {{ $t('header.educationalCourses') }}
                            </button>
                         </li>
-
                         <li class="menu-header__item">
                            <router-link class="menu-header__btn-item" :to="{ name: 'news' }">{{ $t('header.news') }}</router-link>
                         </li>
@@ -65,28 +64,29 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import axios from 'axios'
 import { useLocales } from '../../moduleHelpers/i18n.js'
-// variables
+
 const { setLocale } = useLocales()
 const isMobile = ref(false)
 const avatar = ref('')
 const isReady = ref(false)
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-// functions
+
 const checkWindowSize = () => {
    isMobile.value = window.innerWidth < 501.98
-
    if (window.innerWidth > 1024) {
       document.documentElement.classList.remove('menu-open')
    }
 }
+
 function isAbsoluteURL(url) {
    return /^https?:\/\//i.test(url)
 }
+
 function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
    document.documentElement.classList.toggle('lock')
 }
-// burger_menu_functions
+
 function openSubList(e) {
    const isTouch = document.documentElement.classList.contains('touch')
    if (isTouch) {
@@ -97,6 +97,7 @@ function openSubList(e) {
       targetElement.classList.toggle('open')
    }
 }
+
 function closeSubListOnClickOutside(e) {
    if (!e.target.closest('.menu-header__item')) {
       document.querySelectorAll('.menu-header__item.open').forEach((item) => {
@@ -104,53 +105,52 @@ function closeSubListOnClickOutside(e) {
       })
    }
 }
-// computed
-const isUser = computed(() => localStorage.getItem('authToken'))
+
+const isUser = computed(() => !!localStorage.getItem('authToken'))
 
 onMounted(async () => {
    document.addEventListener('click', closeSubListOnClickOutside)
    isReady.value = true
    checkWindowSize()
    window.addEventListener('resize', checkWindowSize)
-   const token = isUser.value
+
+   const token = localStorage.getItem('authToken')
    if (token) {
       try {
-         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-         console.log('Fetching user profile for avatar:', `${apiUrl}/api/user-profile`)
          const response = await axios.get(`${apiUrl}/api/user-profile`, {
             headers: {
-               Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+               Authorization: `Bearer ${token}`,
             },
          })
          avatar.value = response.data.avatar || ''
-         console.log('Avatar fetched:', avatar.value)
       } catch (err) {
          console.error('Error fetching avatar:', err)
       }
    }
+
    window.addEventListener('avatar-updated', async () => {
       const token = localStorage.getItem('authToken')
       if (token) {
          try {
-            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
             const response = await axios.get(`${apiUrl}/api/user-profile`, {
                headers: {
                   Authorization: `Bearer ${token}`,
                },
             })
             avatar.value = response.data.avatar || ''
-            console.log('Avatar updated:', avatar.value)
          } catch (err) {
             console.error('Error updating avatar:', err)
          }
       }
    })
 })
+
 onUnmounted(() => {
    document.removeEventListener('click', closeSubListOnClickOutside)
    window.removeEventListener('resize', checkWindowSize)
 })
 </script>
+
 
 <style lang="scss" scoped>
 .header {

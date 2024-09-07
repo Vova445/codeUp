@@ -91,10 +91,11 @@ onMounted(async () => {
    }
 })
 
-const onFileSelected = (event) => {
+function onFileSelected(event) {
    selectedFile.value = event.target.files[0]
-   fileName.value = event.target.files[0] ? event.target.files[0].name : ''
+   fileName.value = selectedFile.value.name
 }
+
 function addTwoFactorAuth() {
    router.push({ name: 'twoFactorAuth' })
 }
@@ -106,14 +107,10 @@ const updateProfile = async () => {
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
       const formData = new FormData()
-      formData.append('name', name.value)
-      formData.append('email', email.value)
-
-      formData.append('phoneNumber', phoneNumber.value || '')
-
-      if (selectedFile.value) {
-         formData.append('avatar', selectedFile.value)
-      }
+   formData.append('name', name.value)
+   formData.append('email', email.value)
+   formData.append('phoneNumber', phoneNumber.value)
+   if (selectedFile.value) formData.append('avatar', selectedFile.value)
 
       await axios.post(`${apiUrl}/api/update-profile`, formData, {
          headers: {
@@ -121,6 +118,8 @@ const updateProfile = async () => {
             'Content-Type': 'multipart/form-data',
          },
       })
+      const event = new Event('avatar-updated')
+      window.dispatchEvent(event)
 
       console.log('Profile updated successfully')
    } catch (err) {

@@ -29,6 +29,7 @@
     "path": "^0.12.7",
     "qrcode": "^1.5.4",
     "speakeasy": "^2.0.0",
+    "twilio": "^5.3.0",
     "vue": "^3.4.38"
   },
   "devDependencies": {

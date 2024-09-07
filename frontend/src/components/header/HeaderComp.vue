@@ -47,7 +47,7 @@
             </div>
             <Teleport v-if="isReady" :to="isMobile ? '.menu-header__menu' : '.header__box'">
                <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
-                  <img v-if="avatar" :src="isAbsoluteURL(avatar) ? avatar : `${apiUrl}/${avatar}`" alt="User Avatar" class="header__avatar" />
+                  <img v-if="avatar" :src="avatar" alt="User Avatar" class="header__avatar" />
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
                <router-link v-else :to="{ name: 'register' }" class="header__login-btn">

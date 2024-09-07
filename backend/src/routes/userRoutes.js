@@ -6,7 +6,6 @@ import { validateRequest } from '../middlewares/validateRequest.js';
 import { User } from '../models/userModel.js';
 import dotenv from 'dotenv';
 import multer from 'multer';
-import { Buffer } from 'buffer';
 
 dotenv.config();
 
@@ -123,8 +122,11 @@ userRoutes.get('/user-profile', async (req, res) => {
       if (!user) {
          return res.status(404).json({ message: 'User not found' });
       }
+      const avatarBase64 = user.avatar
+         ? `data:${user.avatarContentType};base64,${user.avatar.toString('base64')}`
+         : '';
 
-      res.status(200).json(user);
+      res.status(200).json({ ...user.toObject(), avatar: avatarBase64 });
    } catch (err) {
       res.status(401).json({ message: 'Invalid token' });
    }

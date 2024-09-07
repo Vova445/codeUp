@@ -5,6 +5,12 @@ import { User } from '../../models/userModel.js';
 
 const qrRoutes = express.Router();
 
+const getClientIp = (req) => {
+  const forwarded = req.headers['x-forwarded-for'];
+  return forwarded ? forwarded.split(',')[0] : req.connection.remoteAddress;
+};
+
+
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
@@ -52,8 +58,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    const userIpAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const userIpAddress = getClientIp(req);
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;

@@ -17,6 +17,7 @@
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 const qrCode = ref('')
 const qrCodeUrl = ref('')
@@ -62,6 +63,7 @@ async function verifyQRCode() {
          },
       )
       alert('QR Code verified successfully!')
+      router.push({ name: 'user' })
    } catch (err) {
       console.error('Error verifying QR code:', err)
    }

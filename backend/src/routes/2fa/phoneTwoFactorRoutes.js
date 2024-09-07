@@ -1,6 +1,6 @@
 import express from 'express';
 import twilio from 'twilio';
-import { User } from '../../models/User.js';
+import { User } from '../../models/userModel.js';
 
 const router = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;

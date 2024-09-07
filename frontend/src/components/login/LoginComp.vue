@@ -35,17 +35,30 @@ const userData = reactive({
 })
 
 const loginAction = async () => {
-   if (userData.pass !== userData.passConfirm) {
-      alert('Passwords do not match!')
-      return
-   }
+  if (userData.pass !== userData.passConfirm) {
+    alert('Passwords do not match!');
+    return;
+  }
 
-   const { success, message } = await onLogin(userData)
-   alert(message)
-   if (success) {
-      router.push({ name: 'user' })
-   }
-}
+  const { success, message, user } = await onLogin(userData);
+  console.log('Login response:', { success, message, user });
+  alert(message);
+  if (success) {
+    if (user && user.isTwoFAEnabled) {
+      if (user.twoFAMethod === 'email') {
+        router.push({ name: 'emailAuth' });
+      } else if (user.twoFAMethod === 'phone') {
+        router.push({ name: 'phoneAuth' });
+      } else if (user.twoFAMethod === 'qr') {
+        router.push({ name: 'qrCode' });
+      }
+    } else {
+      router.push({ name: 'user' });
+    }
+  }
+};
+
+
 </script>
 
 <style lang="scss" scoped>

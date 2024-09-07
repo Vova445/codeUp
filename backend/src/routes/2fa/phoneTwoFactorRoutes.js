@@ -26,6 +26,7 @@ phoneTwoFactorRoutes.post('/send-2fa-sms', async (req, res) => {
     const user = await User.findOne({ phoneNumber });
     if (user) {
       user.twoFASecret = code.toString();
+      user.twoFAMethod = 'phone';
       await user.save();
     }
 

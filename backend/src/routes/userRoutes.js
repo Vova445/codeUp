@@ -59,12 +59,35 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
      user.lastLogin = new Date();
      await user.save();
  
-     res.status(200).json({ message: 'Login successful', token, refreshToken });
+     if (user.isTwoFAEnabled) {
+       return res.status(200).json({
+         message: 'Two-factor authentication required',
+         token,
+         refreshToken,
+         user: {
+           isTwoFAEnabled: user.isTwoFAEnabled,
+           twoFAMethod: user.twoFAMethod,
+         },
+       });
+     } else {
+       return res.status(200).json({
+         message: 'Login successful',
+         token,
+         refreshToken,
+         user: {
+           isTwoFAEnabled: user.isTwoFAEnabled,
+           twoFAMethod: user.twoFAMethod,
+         },
+       });
+     }
    } catch (err) {
      console.error('Error logging in:', err);
      res.status(500).json({ message: 'Error logging in', error: err.message });
    }
-});
+ });
+ 
+
+
 
 userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => {
    const token = req.headers.authorization?.split(' ')[1];

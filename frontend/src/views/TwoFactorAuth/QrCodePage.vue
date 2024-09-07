@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router'
 const qrCode = ref('')
 const qrCodeUrl = ref('')
 const inputCode = ref()
+const router = useRouter()
 async function generateQRCode() {
    const token = localStorage.getItem('authToken')
    try {

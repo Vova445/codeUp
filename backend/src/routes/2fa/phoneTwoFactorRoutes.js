@@ -2,12 +2,12 @@ import express from 'express';
 import twilio from 'twilio';
 import { User } from '../../models/userModel.js';
 
-const router = express.Router();
+const phoneTwoFactorRoutes = express.Router();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-router.post('/send-2fa-sms', async (req, res) => {
+phoneTwoFactorRoutes.post('/send-2fa-sms', async (req, res) => {
   const { phoneNumber } = req.body;
 
   if (!phoneNumber) {
@@ -36,4 +36,4 @@ router.post('/send-2fa-sms', async (req, res) => {
   }
 });
 
-export default router;
+export default phoneTwoFactorRoutes;

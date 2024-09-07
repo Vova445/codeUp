@@ -20,7 +20,7 @@ export async function setupMiddlewares(app) {
    app.use('/api', emailTwoFactorRoutes);
    app.use('/api', qrRoutes);
    app.use('/api', phoneTwoFactorRoutes);
-   
+
    if (process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, '../../../frontend/dist')));
       

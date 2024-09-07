@@ -58,7 +58,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const userIpAddress = getClientIp(req);
+    const forwardedIps = req.headers['x-forwarded-for'];
+    const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
@@ -82,6 +83,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {

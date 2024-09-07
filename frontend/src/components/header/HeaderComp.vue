@@ -47,7 +47,7 @@
             </div>
             <Teleport v-if="isReady" :to="isMobile ? '.menu-header__menu' : '.header__box'">
                <router-link v-if="isUser" :to="{ name: 'user' }" class="header__user-btn">
-                  <img v-if="avatar" :src="avatar" alt="User Avatar" class="header__avatar" width="50"/>
+                  <img v-if="avatar" :src="avatar" alt="User Avatar" class="header__avatar" />
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
                <router-link v-else :to="{ name: 'register' }" class="header__login-btn">
@@ -151,7 +151,6 @@ onUnmounted(() => {
 })
 </script>
 
-
 <style lang="scss" scoped>
 .header {
    position: fixed;
@@ -225,10 +224,11 @@ onUnmounted(() => {
             transform: scale(1.1);
          }
       }
-      img{
-         /* width: 50px; */
-         /* height: 50px; */
+      img {
+         width: 50px;
+         height: 50px;
          border-radius: 50%;
+         object-fit: contain;
       }
    }
 
@@ -266,7 +266,7 @@ onUnmounted(() => {
          overflow: auto;
          background-color: #000000d8;
          padding: 180px 20px 20px 20px;
-         
+
          &::before {
             content: '';
             position: fixed;
@@ -419,7 +419,7 @@ onUnmounted(() => {
          visibility: visible;
          transform: translate(0, 0);
          //box-shadow: 0 10px 20px #6b6b6b;
-         
+
          @media (max-width: 1024px) {
             transform: translate(-50%, 0);
          }
@@ -466,9 +466,9 @@ onUnmounted(() => {
             padding-bottom: 5px;
          }
       }
-       @media (max-width: 1024px) {
+      @media (max-width: 1024px) {
          min-width: 120px;
-       }
+      }
    }
    &__item {
       padding: 7px 5px;
@@ -488,7 +488,6 @@ onUnmounted(() => {
       @media (max-width: 1024px) {
          font-size: 20px;
       }
-      
    }
    &__btn {
       display: inline-block;
@@ -497,6 +496,4 @@ onUnmounted(() => {
       height: 100%;
    }
 }
-
-
 </style>

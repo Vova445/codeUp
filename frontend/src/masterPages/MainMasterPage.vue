@@ -9,11 +9,20 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
+import { onMounted, nextTick, onUnmounted } from 'vue'
 import HeaderComp from '../components/header/HeaderComp.vue'
 import FooterComp from '../components/footer/FooterComp.vue'
-import { onMounted, nextTick, onUnmounted } from 'vue'
+import { useLocales } from '../moduleHelpers/i18n.js'
+const { locale } = storeToRefs(useLocales())
+const { setLocale } = useLocales()
 
 onMounted(() => {
+   const expectedLocale = localStorage.getItem('lastLocale')
+   if (expectedLocale !== locale.value) {
+      setLocale(expectedLocale)
+   }
+
    nextTick(() => {
       setTimeout(() => {
          document.documentElement.classList.add('loaded')

@@ -22,13 +22,16 @@
             <RouterLink :to="{ name: 'login' }" class="form-login__link">{{ $t('buttons.haveAccount') }}</RouterLink>
          </div>
       </div>
+      <main-alert />
    </div>
 </template>
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router'
 import { reactive } from 'vue'
+import MainAlert from '../../components/alerts/MainAlert.vue'
 import { useUsersStore } from '../../stores/users.js'
+
 const usersStore = useUsersStore()
 const { onRegister } = usersStore
 const router = useRouter()

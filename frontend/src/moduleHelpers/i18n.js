@@ -9,7 +9,10 @@ export function useLocales() {
       localStorage.setItem('lastLocale', lang)
    }
    function checkLocale() {
+      console.log('1111')
       const lastLocale = localStorage.getItem('lastLocale')
+      console.log('locale.value')
+      console.log(locale.value)
       if (lastLocale && lastLocale !== locale.value) {
          setLocale(localStorage.getItem('lastLocale'))
          useRouter().go()

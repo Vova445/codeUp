@@ -4,13 +4,16 @@ import { defineStore } from 'pinia'
 export const useAlertStore = defineStore('alert', () => {
    const alertText = ref('')
    const isAlertActive = ref(false)
-   function runAlert(message) {
+   const alertType = ref('success')
+   function runAlert(message, type) {
+      alertType.value = type
       alertText.value = message
       isAlertActive.value = true
       setTimeout(() => {
          isAlertActive.value = false
-      }, 3000)
+         //alertText.value = ''
+      }, 2000)
    }
 
-   return { alertText, isAlertActive, runAlert }
+   return { alertText, isAlertActive, runAlert, alertType }
 })

@@ -108,5 +108,17 @@
       "byPhoneTitle": "Confirm using phone number",
       "generateGrCode": "Generate GR Code",
       "confirmCode": "Confirm code"
+   },
+   "twoFactorAuth": {
+      "byEmailTitle": "Confirm by Email",
+      "byQRTitle": "Confirm by QR Code",
+      "byPhoneTitle": "Confirm by Phone Number",
+      "generateGrCode": "Generate QR Code",
+      "confirmCode": "Confirm Code",
+      "loginedSuccessfully": "You have registered successfully",
+      "passNotMach": "Passwords do not match",
+      "passIncorrect": "Password must be at least 8 characters long and contain numbers",
+      "nameIncorrect": "Name must be at least 3 characters long",
+      "emailIncorrect": "Invalid email address ("
    }
 }

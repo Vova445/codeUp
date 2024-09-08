@@ -107,6 +107,11 @@
       "byQRTitle": "Підтвердити за QR-кодом",
       "byPhoneTitle": "Підтвердити за номером телефону",
       "generateGrCode": "Згенерувати QR Code",
-      "confirmCode": "Підтвердити код"
+      "confirmCode": "Підтвердити код",
+      "loginedSuccessfully": "Ви зарєєструвались успішно",
+      "passNotMach": "Паролі не співпадають",
+      "passIncorrect": "Пароль мусить містити 8 символів та цифри",
+      "nameIncorrect": "Імя мусить мати що найменше 3 симоли",
+      "emailIncorrect": "Некоректна електронна адреса ("
    }
 }

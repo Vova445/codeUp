@@ -22,17 +22,16 @@
             <RouterLink :to="{ name: 'login' }" class="form-login__link">{{ $t('buttons.haveAccount') }}</RouterLink>
          </div>
       </div>
-      <main-alert />
    </div>
 </template>
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router'
 import { reactive } from 'vue'
-import MainAlert from '../../components/alerts/MainAlert.vue'
 import { useUsersStore } from '../../stores/users.js'
-
+import { useAlertStore } from '../../stores/alert.js'
 const usersStore = useUsersStore()
+const { runAlert } = useAlertStore()
 const { onRegister } = usersStore
 const router = useRouter()
 
@@ -44,12 +43,35 @@ const userData = reactive({
 })
 
 const registerAction = async () => {
-   if (userData.pass !== userData.passConfirm) {
-      alert('Passwords do not match!')
+   const passRegex = /^(?=.*[0-9])[A-Za-z\d]{8,}$/
+   const nameRegex = /^[A-Za-z0-9]{3,}$/
+   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+   if (!nameRegex.test(userData.name)) {
+      runAlert('twoFactorAuth.nameIncorrect', 'problem')
       return
    }
+   if (!emailRegex.test(userData.mail)) {
+      runAlert('twoFactorAuth.emailIncorrect', 'problem')
+      return
+   }
+   if (!passRegex.test(userData.pass)) {
+      runAlert('twoFactorAuth.passIncorrect', 'problem')
+      return
+   }
+   if (userData.pass !== userData.passConfirm) {
+      runAlert('twoFactorAuth.passNotMach', 'problem')
+      return
+   }
+
    const { success, message } = await usersStore.onRegister(userData)
-   alert(message)
+   console.log('message', success)
+   console.log(message)
+   if (success) {
+      runAlert('twoFactorAuth.loginedSuccessfully', 'problem')
+   }
+
+   runAlert('twoFactorAuth.loginedSuccessfully', 'success')
    if (success) {
       router.push({ name: 'user' })
    }

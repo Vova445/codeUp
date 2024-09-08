@@ -3,6 +3,7 @@
       <header-comp />
       <main class="main">
          <slot></slot>
+         <main-alert />
       </main>
       <footer-comp />
    </div>
@@ -11,6 +12,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { onMounted, nextTick, onUnmounted } from 'vue'
+import MainAlert from '../components/alerts/MainAlert.vue'
 import HeaderComp from '../components/header/HeaderComp.vue'
 import FooterComp from '../components/footer/FooterComp.vue'
 import { useLocales } from '../moduleHelpers/i18n.js'

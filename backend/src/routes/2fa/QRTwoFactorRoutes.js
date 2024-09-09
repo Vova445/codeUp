@@ -57,7 +57,10 @@ qrRoutes.post('/verify-qr', async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     } else {
-      return res.status(401).json({ message: 'No token provided' });
+      user = await User.findOne({ isTwoFAEnabled: true });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
     }
 
     const forwardedIps = req.headers['x-forwarded-for'];
@@ -69,7 +72,11 @@ qrRoutes.post('/verify-qr', async (req, res) => {
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
-      user.newQrCodeScannedIp = userIpAddress;
+      user.newQrCodeScannedIp = userIpAddress; 
+      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
+      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+      user.token = newToken;
+      user.refreshToken = refreshToken;
       await user.save();
     }
 
@@ -84,17 +91,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
-      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
-      user.token = newToken;
-      user.refreshToken = refreshToken;
-      await user.save();
-
-      res.status(200).json({
-        message: 'Code verified successfully',
-        newToken,
-        refreshToken,
-      });
+      res.status(200).json({ message: 'Code verified successfully' });
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }
@@ -102,7 +99,6 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
 
 
 

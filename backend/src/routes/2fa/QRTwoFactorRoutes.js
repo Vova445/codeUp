@@ -11,9 +11,11 @@ const isIPv4 = (ip) => {
 }
 
 const extractIPv4 = (header) => {
+  if (!header) return '';
   const ips = header.split(',').map(ip => ip.trim());
-  return ips.filter(ip => isIPv4(ip))[0] || '';
+  return ips.find(ip => isIPv4(ip)) || '';
 }
+
 
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -77,6 +79,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     }
 
     if (user.qrCodeScannedIp !== userIpAddress) {
+      console.log(`QR code scanned from IP: ${userIpAddress}`);
+      console.log(`Expected IP: ${user.qrCodeScannedIp}`);
       return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
     }
 
@@ -90,9 +94,11 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       res.status(400).json({ message: 'Invalid code' });
     }
   } catch (err) {
+    console.error(err);
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];

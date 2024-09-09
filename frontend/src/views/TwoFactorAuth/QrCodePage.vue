@@ -53,7 +53,7 @@ onMounted(() => {
 })
 
 async function verifyQRCode() {
-  const token = localStorage.getItem('authToken'); 
+  const token = localStorage.getItem('authToken');
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const response = await axios.post(
@@ -63,6 +63,7 @@ async function verifyQRCode() {
     );
     if (response.data.newToken) {
       localStorage.setItem('authToken', response.data.newToken);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
     }
 
     runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
@@ -71,6 +72,7 @@ async function verifyQRCode() {
     runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
   }
 }
+
 
 
 

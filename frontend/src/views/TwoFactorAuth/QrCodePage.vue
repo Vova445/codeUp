@@ -34,17 +34,16 @@ async function generateQRCode() {
       },
     });
 
-    const isTwoFAEnabled = checkResponse.data.isVerified;
+    const isTwoFAEnabled = checkResponse.data.isTwoFAEnabled;
 
     if (isTwoFAEnabled) {
-
-      token = null;
+      token = null;  
     }
 
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.post(
       `${apiUrl}/api/generate-qr`,
-      {},
+      {},  
       { headers }
     );
 
@@ -53,6 +52,8 @@ async function generateQRCode() {
     console.error('Error generating QR code:', err);
   }
 }
+
+
 
 onMounted(() => {
   generateQRCode();

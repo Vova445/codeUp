@@ -61,8 +61,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const forwardedIps = req.headers['x-forwarded-for'];
-    const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
+
+    const userIpAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
@@ -78,12 +78,12 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      res.status(200).json({ message: 'Code verified successfully' });
+      return res.status(200).json({ message: 'Code verified successfully' });
     } else {
-      res.status(400).json({ message: 'Invalid code' });
+      return res.status(400).json({ message: 'Invalid code' });
     }
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Invalid token' });
   }
 });
 
@@ -104,12 +104,11 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isVerified = user.isTwoFAEnabled;
-
-    res.status(200).json({ isVerified });
+    res.status(200).json({ isTwoFAEnabled: user.isTwoFAEnabled });
   } catch (error) {
-    res.status(400).json({ message: 'Invalid or expired token' });
+    return res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
+
 
 export default qrRoutes;

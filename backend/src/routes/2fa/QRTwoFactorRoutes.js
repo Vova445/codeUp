@@ -5,6 +5,9 @@ import { User } from '../../models/userModel.js';
 
 const qrRoutes = express.Router();
 
+const generateToken = (userId, secret, expiresIn) => {
+  return jwt.sign({ userId }, secret, { expiresIn });
+};
 
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];

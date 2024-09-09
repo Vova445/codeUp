@@ -72,6 +72,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     }
 
     if (user.qrCodeScannedIp !== userIpAddress) {
+      console.log(`QR code scanned from IP: ${userIpAddress}`);
+      console.log(`Expected IP: ${user.qrCodeScannedIp}`);
       return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
     }
 

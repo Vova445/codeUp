@@ -91,6 +91,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       user.isTwoFAEnabled = true;
       await user.save();
       const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
+      console.log('Generated token:', token);
         res.status(200).json({
         message: 'Code verified successfully',
         token,

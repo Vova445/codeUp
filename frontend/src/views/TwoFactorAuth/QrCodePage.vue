@@ -62,13 +62,11 @@ async function verifyQRCode() {
       { headers: { Authorization: token ? `Bearer ${token}` : '' } },
     );
     if (response.data.token) {
-   localStorage.setItem('authToken', response.data.token);
-   localStorage.setItem('refreshToken', response.data.refreshToken);
-} else {
-   console.error('Token not received:', response.data);
-}
-
-
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
+    } else {
+      console.error('Token not received:', response.data);
+    }
 
     runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
     router.push({ name: 'user' });
@@ -76,6 +74,7 @@ async function verifyQRCode() {
     runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
   }
 }
+
 
 
 

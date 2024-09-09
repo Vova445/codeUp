@@ -52,22 +52,24 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
        return res.status(400).json({ message: 'Invalid credentials' });
      }
  
+     const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
+     const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+     user.token = token;
+     user.refreshToken = refreshToken;
+     user.lastLogin = new Date();
+     await user.save();
+ 
      if (user.isTwoFAEnabled) {
        return res.status(200).json({
          message: 'Two-factor authentication required',
+         token,
+         refreshToken,
          user: {
            isTwoFAEnabled: user.isTwoFAEnabled,
            twoFAMethod: user.twoFAMethod,
          },
        });
      } else {
-       const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
-       const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
-       user.token = token;
-       user.refreshToken = refreshToken;
-       user.lastLogin = new Date();
-       await user.save();
- 
        return res.status(200).json({
          message: 'Login successful',
          token,
@@ -83,7 +85,6 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
      res.status(500).json({ message: 'Error logging in', error: err.message });
    }
  });
- 
  
 
 

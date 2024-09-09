@@ -26,23 +26,24 @@ const inputCode = ref()
 const router = useRouter()
 
 async function generateQRCode() {
-   const token = localStorage.getItem('authToken')
-   try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-      const response = await axios.post(
-         `${apiUrl}/api/generate-qr`,
-         {},
-         {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         },
-      )
-      qrCodeUrl.value = response.data.qrCodeUrl
-   } catch (err) {
-      console.error('Error generating QR code:', err)
-   }
+  const token = localStorage.getItem('authToken');
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    const response = await axios.post(
+      `${apiUrl}/api/generate-qr`,
+      {},
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      },
+    );
+    qrCodeUrl.value = response.data.qrCodeUrl;
+  } catch (err) {
+    console.error('Error generating QR code:', err);
+  }
 }
+
 
 onMounted(() => {
    generateQRCode()
@@ -52,27 +53,27 @@ onMounted(() => {
 })
 
 async function verifyQRCode() {
-   const token = localStorage.getItem('authToken')
-   try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-      await axios.post(
-         `${apiUrl}/api/verify-qr`,
-         {
-            code: qrCode.value,
-         },
-         {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         },
-      )
-      runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success')
-
-      router.push({ name: 'user' })
-   } catch (err) {
-      runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
-   }
+  const token = localStorage.getItem('authToken');
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    await axios.post(
+      `${apiUrl}/api/verify-qr`,
+      {
+        code: qrCode.value,
+      },
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      },
+    );
+    runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
+    router.push({ name: 'user' });
+  } catch (err) {
+    runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>

@@ -65,7 +65,7 @@ const router = createRouter({
          name: 'twoFactorAuth',
          component: () => import('../views/TwoFactorAuth/TwoFactorAuthPage.vue'),
          meta: {
-            requireAuth: true,
+            // requireAuth: true,
          },
       },
       {
@@ -73,7 +73,7 @@ const router = createRouter({
          name: 'qrCode',
          component: () => import('../views/TwoFactorAuth/QrCodePage.vue'),
          meta: {
-            requireAuth: true,
+            // requireAuth: true,
          },
       },
       {
@@ -81,7 +81,7 @@ const router = createRouter({
          name: 'phoneAuth',
          component: () => import('../views/TwoFactorAuth/PhonePage.vue'),
          meta: {
-            requireAuth: true,
+            // requireAuth: true,
          },
       },
       {

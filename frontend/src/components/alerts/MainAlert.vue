@@ -38,6 +38,7 @@ function getText(text) {
    top: 0;
    left: 0;
    opacity: 0;
+   visibility: hidden;
    z-index: 99;
    background-color: #139013;
    color: #fff;

@@ -25,6 +25,7 @@
 import { reactive } from 'vue'
 import { useUsersStore } from '@/stores/users'
 import { useRouter } from 'vue-router'
+
 const usersStore = useUsersStore()
 const router = useRouter()
 const { onLogin } = usersStore
@@ -40,9 +41,10 @@ const loginAction = async () => {
     return;
   }
 
-  const { success, message, user } = await onLogin(userData);
+  const { success, token, user, message } = await onLogin(userData);
   console.log('Login response:', { success, message, user });
   alert(message);
+
   if (success) {
     if (user && user.isTwoFAEnabled) {
       if (user.twoFAMethod === 'email') {
@@ -53,12 +55,11 @@ const loginAction = async () => {
         router.push({ name: 'qrCode' });
       }
     } else {
+      localStorage.setItem('authToken', token)
       router.push({ name: 'user' });
     }
   }
 };
-
-
 </script>
 
 <style lang="scss" scoped>

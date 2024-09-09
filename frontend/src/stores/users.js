@@ -26,26 +26,22 @@ export const useUsersStore = defineStore('users', () => {
 
    async function onLogin({ mail, pass }) {
       try {
-        const response = await axios.post(`${apiUrl}/api/login`, {
-          email: mail,
-          password: pass,
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-    
-        const { token, user } = response.data; 
-        localStorage.setItem('authToken', token);
-        return { success: true, message: 'Login successful!', user };
+         const response = await axios.post(`${apiUrl}/api/login`, {
+            email: mail,
+            password: pass,
+         }, {
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         })
+
+         const { token, user } = response.data
+         return { success: true, token, user, message: 'Login successful' }
       } catch (error) {
-        const errorMessage = error.response ? error.response.data.message : 'Login failed';
-        return { success: false, message: errorMessage };
+         const errorMessage = error.response ? error.response.data.message : 'Login failed'
+         return { success: false, message: errorMessage }
       }
-    }
-    
-   
-   
+   }
 
    return { onRegister, onLogin }
 })

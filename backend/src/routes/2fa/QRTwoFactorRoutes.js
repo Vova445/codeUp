@@ -9,34 +9,34 @@ const qrRoutes = express.Router();
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
+      user.twoFASecret = randomCode;
+      user.twoFAMethod = 'qr';
+      user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+      await user.save();
+
+      const qrCodeUrl = await QRCode.toDataURL(randomCode);
+
+      return res.status(200).json({ qrCodeUrl });
+    } catch (err) {
+      return res.status(401).json({ message: 'Invalid token' });
     }
-
+  } else {
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
-    user.twoFASecret = randomCode;
-    user.twoFAMethod = 'qr';
-
-    user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-    await user.save();
-
     const qrCodeUrl = await QRCode.toDataURL(randomCode);
-
-    res.status(200).json({ qrCodeUrl });
-  } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    return res.status(200).json({ qrCodeUrl });
   }
 });
-
 
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
@@ -53,6 +53,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
@@ -70,12 +71,12 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      res.status(200).json({ message: 'Code verified successfully' });
+      return res.status(200).json({ message: 'Code verified successfully' });
     } else {
-      res.status(400).json({ message: 'Invalid code' });
+      return res.status(400).json({ message: 'Invalid code' });
     }
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Invalid token' });
   }
 });
 

@@ -67,12 +67,15 @@ async function verifyQRCode() {
         },
       },
     );
+
+    localStorage.setItem('authToken', token);
     runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
     router.push({ name: 'user' });
   } catch (err) {
     runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
   }
 }
+
 
 </script>
 

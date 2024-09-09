@@ -59,12 +59,8 @@ const loginAction = async () => {
    console.log('Login response:', { success, message, user })
    if (success) {
       runAlert('twoFactorAuth.loginedSuccessfully', 'success')
-   } else {
-      runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
-   }
 
-   if (success) {
-      if (user && user.isTwoFAEnabled) {
+      if (user.isTwoFAEnabled) {
          if (user.twoFAMethod === 'email') {
             router.push({ name: 'emailAuth' })
          } else if (user.twoFAMethod === 'phone') {
@@ -76,7 +72,10 @@ const loginAction = async () => {
          localStorage.setItem('authToken', token)
          router.push({ name: 'user' })
       }
+   } else {
+      runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
    }
 }
+
 </script>
 <style lang="scss" scoped></style>

@@ -28,7 +28,13 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
     user.twoFAMethod = 'qr';
-    user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    
+    const currentIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (user.qrCodeGeneratedIp) {
+      user.qrCodeGeneratedIp = `${user.qrCodeGeneratedIp},${currentIp}`;
+    } else {
+      user.qrCodeGeneratedIp = currentIp;
+    }
 
     await user.save();
 
@@ -63,18 +69,17 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       }
     }
 
-    const forwardedIps = req.headers['x-forwarded-for'];
-    const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
+    const currentIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const ipAddresses = user.qrCodeGeneratedIp.split(',');
+    const userIpAddress = ipAddresses[0].trim(); 
 
-    if (!user.qrCodeScannedIp) {
-      user.qrCodeScannedIp = userIpAddress;
-      await user.save();
+    if (user.qrCodeScannedIp && user.qrCodeScannedIp !== currentIp) {
+      return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
     }
 
-    if (user.qrCodeScannedIp !== userIpAddress) {
-      console.log(`QR code scanned from IP: ${userIpAddress}`);
-      console.log(`Expected IP: ${user.qrCodeScannedIp}`);
-      return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
+    if (!user.qrCodeScannedIp) {
+      user.qrCodeScannedIp = currentIp;
+      await user.save();
     }
 
     const verified = user.twoFASecret === code;
@@ -90,6 +95,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 

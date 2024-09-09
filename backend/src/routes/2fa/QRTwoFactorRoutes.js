@@ -5,6 +5,15 @@ import { User } from '../../models/userModel.js';
 
 const qrRoutes = express.Router();
 
+// Функція для перевірки, чи є IP адреса IPv4
+const isIPv4 = (ip) => {
+  return /^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$/.test(ip);
+}
+
+const extractIPv4 = (header) => {
+  const ips = header.split(',').map(ip => ip.trim());
+  return ips.filter(ip => isIPv4(ip))[0] || '';
+}
 
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -28,7 +37,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
     user.twoFAMethod = 'qr';
-    user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    user.qrCodeGeneratedIp = extractIPv4(req.headers['x-forwarded-for']) || req.connection.remoteAddress;
 
     await user.save();
 
@@ -39,9 +48,6 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
-
-
 
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
@@ -63,8 +69,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       }
     }
 
-    const forwardedIps = req.headers['x-forwarded-for'];
-    const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
+    const userIpAddress = extractIPv4(req.headers['x-forwarded-for']) || req.connection.remoteAddress;
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
@@ -88,8 +93,6 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
-
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -117,6 +120,5 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
-
 
 export default qrRoutes;

@@ -13,12 +13,10 @@
    @supports (overflow: clip) {
       overflow: clip;
    }
-   // Притискаємо footer
    > main {
       padding-top: clamp(5rem, 4.582rem + 2.088vw, 6.25rem);
       flex: 1 1 auto;
    }
-   // Фікс для слайдерів
    > * {
       min-width: 0;
    }

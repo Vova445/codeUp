@@ -29,7 +29,8 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
-
+import { useAlertStore } from '../../stores/alert.js'
+const { runAlert } = useAlertStore()
 const phoneNumber = ref('')
 
 onMounted(async () => {
@@ -66,11 +67,11 @@ async function confirmByEmail() {
          if (response.data.token) {
             window.location.href = `${apiUrl}/api/verify-2fa/${response.data.token}`
          } else {
-            alert('Код підтвердження було надіслано на вашу електронну пошту.')
+            runAlert('twoFactorAuth.codeSentOnEmail', 'success')
          }
       } catch (err) {
          console.error('Error sending 2FA email:', err)
-         alert('Помилка при відправленні коду підтвердження на електронну пошту.')
+         runAlert('twoFactorAuth.codeSentOnEmailProblem', 'problem')
       }
    }
 }

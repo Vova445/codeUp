@@ -53,6 +53,7 @@ function getText(text) {
    gap: 10px;
    &.active {
       opacity: 0.93;
+      visibility: visible;
       top: 0;
    }
    &__icon {

@@ -119,6 +119,11 @@
       "passNotMach": "Passwords do not match",
       "passIncorrect": "Password must be at least 8 characters long and contain numbers",
       "nameIncorrect": "Name must be at least 3 characters long",
-      "emailIncorrect": "Invalid email address ("
+      "emailIncorrect": "Invalid email address",
+      "loginPassOrEmailProblem": "Verify your email address or password",
+      "codeSentOnEmail": "A verification code has been sent to your email address",
+      "codeSentOnEmailProblem": "Error sending verification code to email",
+      "qrcodeСonfirmationSuccess": "Account verification was successful",
+      "qrcodeСonfirmationProblem": "Account verification error"
    }
 }

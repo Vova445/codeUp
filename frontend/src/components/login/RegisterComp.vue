@@ -30,8 +30,8 @@ import { RouterLink, useRouter } from 'vue-router'
 import { reactive } from 'vue'
 import { useUsersStore } from '../../stores/users.js'
 import { useAlertStore } from '../../stores/alert.js'
-const usersStore = useUsersStore()
 const { runAlert } = useAlertStore()
+const usersStore = useUsersStore()
 const { onRegister } = usersStore
 const router = useRouter()
 
@@ -68,10 +68,11 @@ const registerAction = async () => {
    console.log('message', success)
    console.log(message)
    if (success) {
-      runAlert('twoFactorAuth.loginedSuccessfully', 'problem')
+      runAlert('twoFactorAuth.loginedSuccessfully', 'success')
+   } else {
+      runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
    }
 
-   runAlert('twoFactorAuth.loginedSuccessfully', 'success')
    if (success) {
       router.push({ name: 'user' })
    }

@@ -25,7 +25,8 @@
 import { reactive } from 'vue'
 import { useUsersStore } from '@/stores/users'
 import { useRouter } from 'vue-router'
-
+import { useAlertStore } from '../../stores/alert.js'
+const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 const { onLogin } = usersStore
@@ -36,30 +37,38 @@ const userData = reactive({
 })
 
 const loginAction = async () => {
-  if (userData.pass !== userData.passConfirm) {
-    alert('Passwords do not match!');
-    return;
-  }
+   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+   if (!emailRegex.test(userData.mail)) {
+      runAlert('twoFactorAuth.emailIncorrect', 'problem')
+      return
+   }
+   if (userData.pass !== userData.passConfirm) {
+      runAlert('twoFactorAuth.passNotMach', 'problem')
+      return
+   }
+   const { success, token, user, message } = await onLogin(userData)
+   console.log('Login response:', { success, message, user })
+   if (success) {
+      runAlert('twoFactorAuth.loginedSuccessfully', 'success')
+   } else {
+      runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
+   }
 
-  const { success, token, user, message } = await onLogin(userData);
-  console.log('Login response:', { success, message, user });
-  alert(message);
-
-  if (success) {
-    if (user && user.isTwoFAEnabled) {
-      if (user.twoFAMethod === 'email') {
-        router.push({ name: 'emailAuth' });
-      } else if (user.twoFAMethod === 'phone') {
-        router.push({ name: 'phoneAuth' });
-      } else if (user.twoFAMethod === 'qr') {
-        router.push({ name: 'qrCode' });
+   if (success) {
+      if (user && user.isTwoFAEnabled) {
+         if (user.twoFAMethod === 'email') {
+            router.push({ name: 'emailAuth' })
+         } else if (user.twoFAMethod === 'phone') {
+            router.push({ name: 'phoneAuth' })
+         } else if (user.twoFAMethod === 'qr') {
+            router.push({ name: 'qrCode' })
+         }
+      } else {
+         localStorage.setItem('authToken', token)
+         router.push({ name: 'user' })
       }
-    } else {
-      localStorage.setItem('authToken', token)
-      router.push({ name: 'user' });
-    }
-  }
-};
+   }
+}
 </script>
 
 <style lang="scss" scoped>

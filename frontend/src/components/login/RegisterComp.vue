@@ -9,13 +9,15 @@
             <input id="mail" v-model="userData.mail" type="email" class="form-login__input" />
             <label v-if="!userData.mail" for="mail" class="form-login__label">Email</label>
          </div>
-         <div class="form-login__group">
-            <input id="pass" v-model="userData.pass" type="password" class="form-login__input" />
+         <div class="form-login__group form-login__group--password">
+            <input :type="showPassword ? 'text' : 'password'" id="pass" v-model="userData.pass" class="form-login__input" />
             <label v-if="!userData.pass" for="pass" class="form-login__label">Password</label>
+            <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
-         <div class="form-login__group">
-            <input id="passConfirm" v-model="userData.passConfirm" type="password" class="form-login__input" />
+         <div class="form-login__group form-login__group--password">
+            <input :type="showPassword ? 'text' : 'password'" id="passConfirm" v-model="userData.passConfirm" class="form-login__input" />
             <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
+            <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
          <button class="form-login__button" @click="registerAction">{{ $t('buttons.register') }}</button>
          <div class="form-login__box-link">
@@ -27,7 +29,7 @@
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router'
-import { reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useUsersStore } from '../../stores/users.js'
 import { useAlertStore } from '../../stores/alert.js'
 const { runAlert } = useAlertStore()
@@ -41,6 +43,13 @@ const userData = reactive({
    pass: '',
    passConfirm: '',
 })
+
+const showPassword = ref(false)
+const getEyeCode = computed(() => (showPassword.value ? 'eye-slash' : 'eye'))
+
+function togglePassword() {
+   showPassword.value = !showPassword.value
+}
 
 const registerAction = async () => {
    const passRegex = /^(?=.*[0-9])[A-Za-z\d]{8,}$/

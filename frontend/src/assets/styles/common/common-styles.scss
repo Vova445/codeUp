@@ -96,7 +96,26 @@ input {
       position: relative;
       margin-bottom: clamp(1.3rem, 0.616rem + 1.028vw, 1.438rem);
    }
+   &__group--password {
+      display: flex;
+      align-items: center;
+   }
 
+   .password-toggle {
+      font-size: clamp(0.938rem, 0.817rem + 0.386vw, 1.125rem);
+      position: absolute;
+      right: 10px;
+      //width: clamp(0.938rem, 0.817rem + 0.386vw, 1.125rem);
+      //height: clamp(0.938rem, 0.817rem + 0.386vw, 1.125rem);
+      //background-color: white;
+      //border-radius: 50%;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+      .svg-inline--fa {
+         width: clamp(0.938rem, 0.817rem + 0.386vw, 1.125rem);
+         height: clamp(0.938rem, 0.817rem + 0.386vw, 1.125rem);
+      }
+   }
    &__input {
       width: 100%;
       padding: clamp(0.63rem, 0.339rem + 0.514vw, 0.75rem) clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem);

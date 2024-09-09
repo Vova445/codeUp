@@ -73,10 +73,6 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
       user.newQrCodeScannedIp = userIpAddress; 
-      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
-      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
-      user.token = newToken;
-      user.refreshToken = refreshToken;
       await user.save();
     }
 

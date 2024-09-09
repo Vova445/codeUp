@@ -61,10 +61,11 @@ async function verifyQRCode() {
       { code: qrCode.value },
       { headers: { Authorization: token ? `Bearer ${token}` : '' } },
     );
-    if (response.data.newToken) {
-      localStorage.setItem('authToken', response.data.newToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
-    }
+    if (response.data.token) {
+  localStorage.setItem('authToken', response.data.token);
+  localStorage.setItem('refreshToken', response.data.refreshToken);
+}
+
 
     runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
     router.push({ name: 'user' });

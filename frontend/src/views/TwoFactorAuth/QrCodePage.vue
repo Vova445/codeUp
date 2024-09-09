@@ -8,80 +8,68 @@
          </div>
          <v-otp-input focus-all ref="inputCode" :length="8" v-model="qrCode" placeholder="0" variant="underlined"></v-otp-input>
          <button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode">Verify QR Code</button>
+         <!--<button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode">{{$t(twoFactorAuth.confirmCode)}}</button>-->
       </div>
    </main-master-page>
 </template>
 
 <script setup>
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-const qrCode = ref('');
-const qrCodeUrl = ref('');
-const inputCode = ref();
-const router = useRouter();
-
+const qrCode = ref('')
+const qrCodeUrl = ref('')
+const inputCode = ref()
+const router = useRouter()
 async function generateQRCode() {
-  let token = localStorage.getItem('authToken');
-  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-
-  try {
-    const checkResponse = await axios.get(`${apiUrl}/api/check-qr-verification`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const isTwoFAEnabled = checkResponse.data.isTwoFAEnabled;
-
-    if (isTwoFAEnabled) {
-      token = null;  
-    }
-
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const response = await axios.post(
-      `${apiUrl}/api/generate-qr`,
-      {},  
-      { headers }
-    );
-
-    qrCodeUrl.value = response.data.qrCodeUrl;
-  } catch (err) {
-    console.error('Error generating QR code:', err);
-  }
+   const token = localStorage.getItem('authToken')
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const response = await axios.post(
+         `${apiUrl}/api/generate-qr`,
+         {},
+         {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         },
+      )
+      qrCodeUrl.value = response.data.qrCodeUrl
+   } catch (err) {
+      console.error('Error generating QR code:', err)
+   }
 }
-
-
-
 onMounted(() => {
-  generateQRCode();
-  inputCode.value.focus();
-});
+   generateQRCode()
+   console.log(inputCode.value)
+
+   inputCode.value.focus()
+})
 
 async function verifyQRCode() {
-  const token = localStorage.getItem('authToken');
-  try {
-    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-    await axios.post(
-      `${apiUrl}/api/verify-qr`,
-      { code: qrCode.value },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    alert('QR Code verified successfully!');
-    router.push({ name: 'user' });
-  } catch (err) {
-    console.error('Error verifying QR code:', err);
-  }
+   const token = localStorage.getItem('authToken')
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      await axios.post(
+         `${apiUrl}/api/verify-qr`,
+         {
+            code: qrCode.value,
+         },
+         {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         },
+      )
+      alert('QR Code verified successfully!')
+      router.push({ name: 'user' })
+   } catch (err) {
+      console.error('Error verifying QR code:', err)
+   }
 }
-
 </script>
-
 
 <style lang="scss" scoped>
 .section-qr {

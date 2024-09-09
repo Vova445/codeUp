@@ -66,8 +66,13 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
+    if (user.newQrCodeScannedIp === userIpAddress) {
+      return res.status(200).json({ message: 'QR code verified successfully' });
+    }
+
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
+      user.newQrCodeScannedIp = userIpAddress; 
       await user.save();
     }
 
@@ -90,6 +95,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 

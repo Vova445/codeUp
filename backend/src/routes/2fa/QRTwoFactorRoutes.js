@@ -87,7 +87,12 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      res.status(200).json({ message: 'Code verified successfully' });
+      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
+      res.status(200).json({
+        message: 'Code verified successfully',
+        newToken,
+        refreshToken: user.refreshToken
+      });
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }
@@ -95,6 +100,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 

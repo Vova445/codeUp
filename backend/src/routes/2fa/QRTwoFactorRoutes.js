@@ -5,36 +5,33 @@ import { User } from '../../models/userModel.js';
 
 const qrRoutes = express.Router();
 
-
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId);
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
 
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
 
-      const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
-      user.twoFASecret = randomCode;
-      user.twoFAMethod = 'qr';
-      user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-      await user.save();
-
-      const qrCodeUrl = await QRCode.toDataURL(randomCode);
-
-      return res.status(200).json({ qrCodeUrl });
-    } catch (err) {
-      return res.status(401).json({ message: 'Invalid token' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  } else {
+
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
+    user.twoFASecret = randomCode;
+    user.twoFAMethod = 'qr';
+    user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    await user.save();
+
     const qrCodeUrl = await QRCode.toDataURL(randomCode);
-    return res.status(200).json({ qrCodeUrl });
+    res.status(200).json({ qrCodeUrl });
+  } catch (err) {
+    console.error('Error generating QR code:', err);
+    res.status(401).json({ message: 'Invalid token or error generating QR code' });
   }
 });
 
@@ -71,16 +68,16 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      return res.status(200).json({ message: 'Code verified successfully' });
+      const newToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.status(200).json({ message: 'Code verified successfully', token: newToken });
     } else {
-      return res.status(400).json({ message: 'Invalid code' });
+      res.status(400).json({ message: 'Invalid code' });
     }
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid token' });
+    console.error('Error verifying QR code:', err);
+    res.status(401).json({ message: 'Invalid token or error verifying QR code' });
   }
 });
-
-
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -98,9 +95,9 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
     }
 
     const isVerified = user.isTwoFAEnabled;
-
     res.status(200).json({ isVerified });
   } catch (error) {
+    console.error('Error checking QR verification status:', error);
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 });

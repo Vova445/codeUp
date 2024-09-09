@@ -65,7 +65,7 @@ const router = createRouter({
          name: 'twoFactorAuth',
          component: () => import('../views/TwoFactorAuth/TwoFactorAuthPage.vue'),
          meta: {
-            // requireAuth: true,
+            requireAuth: true,
          },
       },
       {

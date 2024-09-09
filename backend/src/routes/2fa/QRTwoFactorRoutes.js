@@ -9,16 +9,25 @@ const qrRoutes = express.Router();
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId);
+    let user;
+    if (!token) {
+      const { email } = req.body;
+      if (!email) {
+        return res.status(401).json({ message: 'No token or email provided' });
+      }
+      user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      if (!user || !user.isTwoFAEnabled) {
+        return res.status(401).json({ message: 'Account is not verified for Two-Factor Authentication' });
+      }
+    } else {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      user = await User.findById(decoded.userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
     }
 
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
@@ -33,9 +42,10 @@ qrRoutes.post('/generate-qr', async (req, res) => {
 
     res.status(200).json({ qrCodeUrl });
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    res.status(401).json({ message: 'Invalid token or request' });
   }
 });
+
 
 
 qrRoutes.post('/verify-qr', async (req, res) => {

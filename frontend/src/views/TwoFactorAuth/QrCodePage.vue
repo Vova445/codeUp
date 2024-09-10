@@ -61,6 +61,7 @@ async function verifyQRCode() {
       { code: qrCode.value },
       { headers: { Authorization: token ? `Bearer ${token}` : '' } },
     );
+    console.log(`Response data: ${response.data.token}`);
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('refreshToken', response.data.refreshToken);

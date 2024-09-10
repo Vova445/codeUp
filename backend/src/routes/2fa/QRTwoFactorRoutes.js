@@ -52,7 +52,6 @@ qrRoutes.post('/verify-qr', async (req, res) => {
 
   try {
     let user;
-
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       user = await User.findById(decoded.userId);
@@ -65,7 +64,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     }
-
+    console.log(token)
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 

@@ -45,7 +45,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
   const token = req.headers.authorization?.split(' ')[1] || '';
-
+  console.log(req.headers.authorization)
   try {
     let user;
     if (token) {

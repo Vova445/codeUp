@@ -10,11 +10,10 @@ const generateToken = (userId, secret, expiresIn) => {
 };
 
 qrRoutes.post('/generate-qr', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
   try {
-    let user;
+    const token = req.headers.authorization?.split(' ')[1] || '';
 
+    let user;
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       user = await User.findById(decoded.userId);
@@ -43,12 +42,9 @@ qrRoutes.post('/generate-qr', async (req, res) => {
   }
 });
 
-
-
-
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(' ')[1] || '';
 
   try {
     let user;
@@ -64,7 +60,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     }
-    console.log(token)
+
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
@@ -74,7 +70,7 @@ qrRoutes.post('/verify-qr', async (req, res) => {
 
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
-      user.newQrCodeScannedIp = userIpAddress; 
+      user.newQrCodeScannedIp = userIpAddress;
       await user.save();
     }
 
@@ -90,12 +86,11 @@ qrRoutes.post('/verify-qr', async (req, res) => {
       user.isTwoFAEnabled = true;
       await user.save();
       const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
-        res.status(200).json({
+      res.status(200).json({
         message: 'Code verified successfully',
         token,
         refreshToken: user.refreshToken
-    });
-
+      });
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }
@@ -104,12 +99,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
   }
 });
 
-
-
-
-
 qrRoutes.get('/check-qr-verification', async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(' ')[1] || '';
 
   try {
     let user;
@@ -134,6 +125,5 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
-
 
 export default qrRoutes;

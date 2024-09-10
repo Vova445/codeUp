@@ -43,6 +43,9 @@ qrRoutes.post('/generate-qr', async (req, res) => {
   }
 });
 
+
+
+
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
   const token = req.headers.authorization?.split(' ')[1];
@@ -66,26 +69,34 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
-    user.newQrCodeScannedIp = userIpAddress;
-    await user.save();
-
+    if (!user.qrCodeScannedIp) {
+      user.qrCodeScannedIp = userIpAddress;
+      user.newQrCodeScannedIp = userIpAddress;
+      await user.save();
+    }
+    
     if (user.qrCodeScannedIp !== userIpAddress) {
+      console.log(`QR code scanned from IP: ${userIpAddress}`);
+      console.log(`Expected IP: ${user.qrCodeScannedIp}`);
       return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
     }
-
+    
+    if (user.newQrCodeScannedIp === userIpAddress) {
+      return res.status(200).json({ message: 'QR code verified successfully' });
+    }
     const verified = user.twoFASecret === code;
 
     if (verified) {
       user.isTwoFAEnabled = true;
-      user.qrCodeScannedIp = userIpAddress; 
       await user.save();
-      
       const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
-      res.status(200).json({
+      console.log('Generated token:', token);
+        res.status(200).json({
         message: 'Code verified successfully',
         token,
         refreshToken: user.refreshToken
-      });
+    });
+
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }
@@ -93,6 +104,10 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
+
+
+
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -120,5 +135,6 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
+
 
 export default qrRoutes;

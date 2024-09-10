@@ -27,11 +27,6 @@ const router = useRouter()
 
 async function generateQRCode() {
   const token = localStorage.getItem('authToken');
-  if (!token) {
-    console.error('No authentication token found');
-    return;
-  }
-
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const response = await axios.post(
@@ -39,7 +34,7 @@ async function generateQRCode() {
       {},
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token ? `Bearer ${token}` : '',
         },
       },
     );
@@ -48,7 +43,6 @@ async function generateQRCode() {
     console.error('Error generating QR code:', err);
   }
 }
-
 
 
 onMounted(() => {

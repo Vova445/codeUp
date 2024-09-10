@@ -14,6 +14,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
 
   try {
     let user;
+
     if (token) {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       user = await User.findById(decoded.userId);
@@ -21,7 +22,10 @@ qrRoutes.post('/generate-qr', async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     } else {
-      return res.status(401).json({ message: 'No authentication token found' });
+      user = await User.findOne({ isTwoFAEnabled: true });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
     }
 
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();

@@ -33,21 +33,15 @@ export const useUsersStore = defineStore('users', () => {
             headers: {
                'Content-Type': 'application/json'
             }
-         });
-   
-         const { token, user } = response.data;
-         if (user.isTwoFAEnabled) {
-            return { success: true, token, user, message: 'Two-factor authentication required' };
-         } else {
-            localStorage.setItem('authToken', token);
-            return { success: true, token, user, message: 'Login successful' };
-         }
+         })
+
+         const { token, user } = response.data
+         return { success: true, token, user, message: 'Login successful' }
       } catch (error) {
-         const errorMessage = error.response ? error.response.data.message : 'Login failed';
-         return { success: false, message: errorMessage };
+         const errorMessage = error.response ? error.response.data.message : 'Login failed'
+         return { success: false, message: errorMessage }
       }
    }
-   
 
    return { onRegister, onLogin }
 })

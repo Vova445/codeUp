@@ -36,6 +36,7 @@ export const useUsersStore = defineStore('users', () => {
          })
 
          const { token, user } = response.data
+         localStorage.setItem('authToken', token)
          return { success: true, token, user, message: 'Login successful' }
       } catch (error) {
          const errorMessage = error.response ? error.response.data.message : 'Login failed'

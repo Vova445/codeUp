@@ -71,6 +71,9 @@ input {
    @media (max-width: 500px) {
       font-size: 14px;
    }
+   &--adaptive {
+      font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
+   }
 }
 
 .form-login {

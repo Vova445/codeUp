@@ -51,10 +51,9 @@ onMounted(() => {
 
    inputCode.value.focus()
 })
-
 async function verifyQRCode() {
   const token = localStorage.getItem('authToken');
-  console.log('Generated Token:', token);
+  console.log('Retrieved Token:', token);
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const response = await axios.post(
@@ -62,7 +61,7 @@ async function verifyQRCode() {
       { code: qrCode.value },
       { headers: { Authorization: token ? `Bearer ${token}` : '' } },
     );
-    console.log(`Response data: ${response.data.token}`);
+    console.log(`Response data: ${JSON.stringify(response.data)}`);
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('refreshToken', response.data.refreshToken);
@@ -76,6 +75,7 @@ async function verifyQRCode() {
     runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
   }
 }
+
 
 
 

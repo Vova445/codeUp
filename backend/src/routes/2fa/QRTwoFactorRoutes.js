@@ -64,10 +64,9 @@ qrRoutes.post('/verify-qr', async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     }
-    console.log(token)
-    const forwardedIps = req.headers['x-forwarded-for'];
-    const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
+    const userIpAddress = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress;
+    
     if (user.newQrCodeScannedIp === userIpAddress) {
       return res.status(200).json({ message: 'QR code verified successfully' });
     }
@@ -89,13 +88,12 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
-        res.status(200).json({
+      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
+      res.status(200).json({
         message: 'Code verified successfully',
-        token,
+        token: newToken,
         refreshToken: user.refreshToken
-    });
-
+      });
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }

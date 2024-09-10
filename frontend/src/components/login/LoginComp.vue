@@ -65,7 +65,6 @@ const loginAction = async () => {
             router.push({ name: 'emailAuth' })
          } else if (user.twoFAMethod === 'phone') {
             router.push({ name: 'phoneAuth' })
-            localStorage.setItem('authToken', token);
          } else if (user.twoFAMethod === 'qr') {
             router.push({ name: 'qrCode' })
          }

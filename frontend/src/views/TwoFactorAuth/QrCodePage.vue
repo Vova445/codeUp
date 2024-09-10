@@ -52,7 +52,7 @@ onMounted(() => {
    inputCode.value.focus()
 })
 async function verifyQRCode() {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.setItem('authToken', "");
   console.log('Retrieved Token:', token);
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -63,7 +63,7 @@ async function verifyQRCode() {
     );
     console.log(`Response data: ${JSON.stringify(response.data)}`);
     if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token);
+      // localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('refreshToken', response.data.refreshToken);
     } else {
       console.error('Token not received:', response.data);

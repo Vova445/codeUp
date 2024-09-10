@@ -27,6 +27,11 @@ const router = useRouter()
 
 async function generateQRCode() {
   const token = localStorage.getItem('authToken');
+  if (!token) {
+    console.error('No authentication token found');
+    return;
+  }
+
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const response = await axios.post(
@@ -34,7 +39,7 @@ async function generateQRCode() {
       {},
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+          Authorization: `Bearer ${token}`,
         },
       },
     );
@@ -45,6 +50,7 @@ async function generateQRCode() {
 }
 
 
+
 onMounted(() => {
    generateQRCode()
    console.log(inputCode.value)
@@ -53,19 +59,15 @@ onMounted(() => {
 })
 async function verifyQRCode() {
   const token = localStorage.getItem('authToken');
-  if (!token) {
-    console.error('No authentication token found');
-    return;
-  }
-
+  console.log('Retrieved Token:', token);
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const response = await axios.post(
       `${apiUrl}/api/verify-qr`,
       { code: qrCode.value },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: token ? `Bearer ${token}` : '' } },
     );
-
+    console.log(`Response data: ${JSON.stringify(response.data)}`);
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('refreshToken', response.data.refreshToken);
@@ -79,6 +81,7 @@ async function verifyQRCode() {
     runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
   }
 }
+
 
 
 

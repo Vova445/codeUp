@@ -5,6 +5,9 @@ import { User } from '../../models/userModel.js';
 
 const qrRoutes = express.Router();
 
+const generateToken = (userId, secret, expiresIn) => {
+  return jwt.sign({ userId }, secret, { expiresIn });
+};
 
 qrRoutes.post('/generate-qr', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -66,8 +69,13 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     const forwardedIps = req.headers['x-forwarded-for'];
     const userIpAddress = forwardedIps ? forwardedIps.split(',')[0].trim() : req.connection.remoteAddress;
 
+    if (user.newQrCodeScannedIp === userIpAddress) {
+      return res.status(200).json({ message: 'QR code verified successfully' });
+    }
+
     if (!user.qrCodeScannedIp) {
       user.qrCodeScannedIp = userIpAddress;
+      user.newQrCodeScannedIp = userIpAddress; 
       await user.save();
     }
 
@@ -82,7 +90,13 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     if (verified) {
       user.isTwoFAEnabled = true;
       await user.save();
-      res.status(200).json({ message: 'Code verified successfully' });
+      const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
+        res.status(200).json({
+        message: 'Code verified successfully',
+        token,
+        refreshToken: user.refreshToken
+    });
+
     } else {
       res.status(400).json({ message: 'Invalid code' });
     }
@@ -90,6 +104,8 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
+
 
 
 

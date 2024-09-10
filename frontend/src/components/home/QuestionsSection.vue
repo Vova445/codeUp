@@ -34,13 +34,10 @@ const props = defineProps({
       required: true,
    },
 })
-
 const activeIndex = ref(null)
 const toggleFaq = (index) => {
    activeIndex.value = activeIndex.value === index ? null : index
 }
-//const isActive = (index) => activeIndex.value === index
-
 const isActive = computed(() => (index) => activeIndex.value === index)
 </script>
 
@@ -82,20 +79,17 @@ const isActive = computed(() => (index) => activeIndex.value === index)
       gap: 10px;
       justify-content: space-between;
    }
-
    &__sub-title {
       color: #f0f0f0;
       @media (max-width: 500px) {
          font-size: 16px;
       }
    }
-
    &__arrow {
       font-size: clamp(1rem, 0.625rem + 0.783vw, 1.25rem);
       color: #f0f0f0;
       transition: transform 0.5s ease;
    }
-
    &__text {
       color: #ccc;
       font-size: 16px;
@@ -107,14 +101,10 @@ const isActive = computed(() => (index) => activeIndex.value === index)
    }
 
    &__item--active {
-      .faq__header-item {
-      }
-
       .faq__text {
          padding: 20px 0;
          max-height: 200px;
       }
-
       .faq__arrow {
          transform: rotate(180deg);
       }

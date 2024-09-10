@@ -3,17 +3,15 @@
       {
          "id": "mlsldlvl435mllg3",
          "title": "FrontEnd Development",
-         "imgSrc": "laptop01.png",
+         "imgSrc": "laptop01.webp",
          "courseInfo": [{ "title": "videoExamples" }, { "title": "stepsInfo" }, { "title": "durationDepends" }, { "title": "pcatciseInfo" }],
-         "buttonTitle": "Detailed about course",
          "price": 90
       },
       {
          "id": "jljd4lb6nkl34o94",
          "title": "Backend Development",
-         "imgSrc": "laptop02.png",
+         "imgSrc": "laptop02.webp",
          "courseInfo": [{ "title": "videoExamples" }, { "title": "stepsInfo" }, { "title": "durationDepends" }, { "title": "pcatciseInfo" }],
-         "buttonTitle": "Detailed about course",
          "price": 90
       }
    ],

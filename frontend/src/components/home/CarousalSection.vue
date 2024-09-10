@@ -3,9 +3,10 @@
       <div class="courses-carousal__container">
          <div class="courses-carousal__list">
             <div class="courses-carousal__item" v-for="courseItem in coursesList" :key="courseItem.id">
-               <router-link :to="{ name: courseItem.toName }" class="courses-carousal__link">
+               <router-link :to="{ name: courseItem.toName }" class="courses-carousal__link" >
                   <template v-for="image in courseItem.images" :key="image.id">
-                     <font-awesome-icon :icon="image.icon" :style="{ color: image.color }" />
+                     
+                     <font-awesome-icon :icon="image.icon" loading="lazy" :style="{ color: image.color }" />
                   </template>
                </router-link>
             </div>

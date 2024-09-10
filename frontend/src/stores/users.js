@@ -36,8 +36,12 @@ export const useUsersStore = defineStore('users', () => {
          })
 
          const { token, user } = response.data
-         localStorage.setItem('authToken', token)
-         return { success: true, token, user, message: 'Login successful' }
+         if (user.isTwoFAEnabled) {
+            return { success: true, token, user, message: 'Two-factor authentication required' };
+          } else {
+            localStorage.setItem('authToken', token);
+            return { success: true, token, user, message: 'Login successful' };
+          }
       } catch (error) {
          const errorMessage = error.response ? error.response.data.message : 'Login failed'
          return { success: false, message: errorMessage }

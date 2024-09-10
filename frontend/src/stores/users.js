@@ -34,7 +34,7 @@ export const useUsersStore = defineStore('users', () => {
                'Content-Type': 'application/json'
             }
          })
-
+         
          const { token, user } = response.data
          return { success: true, token, user, message: 'Login successful' }
       } catch (error) {

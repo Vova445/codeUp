@@ -5,7 +5,7 @@
             <div v-for="courseItem in coursesList" :key="courseItem.id" class="courses-carousal__item">
                <router-link :to="{ name: courseItem.toName }" class="courses-carousal__link">
                   <span v-for="image in courseItem.images" :key="image.id">
-                     <font-awesome-icon :icon="image.icon" loading="lazy" :style="{ color: image.color }" />
+                     <font-awesome-icon :icon="image.icon" :style="{ color: image.color }" />
                   </span>
                </router-link>
             </div>

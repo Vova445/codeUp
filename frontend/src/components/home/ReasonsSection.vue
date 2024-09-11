@@ -3,7 +3,7 @@
       <div class="reaons__container">
          <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">
-            <div class="list-reasons__item item-reason" v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id">
+            <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
                   <h4 class="item-reason__title subtitile">{{ $t(reasonItem.title) }}</h4>
@@ -26,9 +26,8 @@ const props = defineProps({
    },
 })
 </script>
-
 <style lang="scss" scoped>
-.reasons {
+.reaons {
    &:not(:last-child) {
       margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 7rem);
    }
@@ -48,12 +47,10 @@ const props = defineProps({
          margin-bottom: clamp(1.875rem, 0.67rem + 3.856vw, 3.75rem);
       }
    }
-
    &__list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: clamp(1.25rem, 0.045rem + 3.856vw, 3.125rem);
-
       @media (max-width: 500px) {
          grid-template-columns: 1fr;
       }
@@ -65,19 +62,19 @@ const props = defineProps({
       display: flex;
       gap: 20px;
       align-items: start;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition:
+         transform 0.3s ease,
+         box-shadow 0.3s ease;
       background-color: #2b2b2b;
       border-radius: 8px;
       padding: 20px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
-
       @media (any-hover: hover) {
          &:hover {
             transform: translateY(-10px);
             box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.9);
          }
       }
-
       @media (max-width: 500px) {
          gap: 15px;
          font-size: 16px;
@@ -99,32 +96,27 @@ const props = defineProps({
       font-weight: 700;
       border-radius: 50%;
       box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
-
       @media (max-width: 500px) {
          width: 40px;
          height: 40px;
          flex: 0 0 40px;
       }
    }
-
    &__content {
       max-width: 400px;
    }
-
    &__title {
       color: #ffffff;
       font-weight: 600;
       &:not(:last-child) {
          margin-bottom: 15px;
       }
-
       @media (max-width: 767px) {
          &:not(:last-child) {
             margin-bottom: 8px;
          }
       }
    }
-
    &__text {
       color: #b0b0b0;
       line-height: 1.5;

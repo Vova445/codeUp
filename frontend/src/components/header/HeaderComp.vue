@@ -204,11 +204,6 @@ onUnmounted(() => {
          }
       }
    }
-
-   &__user-btn,
-   &__login-btn {
-   }
-
    &__user-btn {
       transition: all 0.3s ease 0s;
       font-size: 20px;
@@ -418,8 +413,6 @@ onUnmounted(() => {
          opacity: 1;
          visibility: visible;
          transform: translate(0, 0);
-         //box-shadow: 0 10px 20px #6b6b6b;
-
          @media (max-width: 1024px) {
             transform: translate(-50%, 0);
          }
@@ -428,9 +421,6 @@ onUnmounted(() => {
          transform: rotate(180deg);
       }
    }
-}
-
-.sub-list > li {
 }
 .sub-list {
    transition: all 0.3s ease 0s;

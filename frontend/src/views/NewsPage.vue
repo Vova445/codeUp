@@ -66,7 +66,6 @@ onMounted(() => {
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
    }
 }
-
 .item-news {
    background-color: #1a1a1a;
    border-radius: 8px;

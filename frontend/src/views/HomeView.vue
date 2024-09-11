@@ -55,7 +55,5 @@ const getQuestionsList = computed(() => {
          }
       }
    }
-   &__text-more {
-   }
 }
 </style>

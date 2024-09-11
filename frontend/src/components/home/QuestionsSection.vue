@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, computed } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
    questionsList: {

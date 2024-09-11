@@ -107,10 +107,10 @@ const updateProfile = async () => {
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
       const formData = new FormData()
-   formData.append('name', name.value)
-   formData.append('email', email.value)
-   formData.append('phoneNumber', phoneNumber.value)
-   if (selectedFile.value) formData.append('avatar', selectedFile.value)
+      formData.append('name', name.value)
+      formData.append('email', email.value)
+      formData.append('phoneNumber', phoneNumber.value)
+      if (selectedFile.value) formData.append('avatar', selectedFile.value)
 
       await axios.post(`${apiUrl}/api/update-profile`, formData, {
          headers: {
@@ -174,12 +174,9 @@ axios.interceptors.response.use(
    background-color: #2b2b2b;
    border-radius: 10px;
    box-shadow: 0px 0px 0px #999cb0;
-
    animation: formLogin 0.6s ease forwards;
-
    &__container {
       position: relative;
-
       &::before {
          content: '';
          position: absolute;

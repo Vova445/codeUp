@@ -18,31 +18,31 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import MainMasterPage from '@/masterPages/MainMasterPage.vue';
+import { onMounted } from 'vue'
+import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 
 onMounted(async () => {
-  const phoneNumber = '1234567890'; 
+   const phoneNumber = '1234567890'
 
-  try {
-   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-    const response = await fetch(`${apiUrl}/api/send-2fa-sms`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ phoneNumber }),
-    });
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const response = await fetch(`${apiUrl}/api/send-2fa-sms`, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ phoneNumber }),
+      })
 
-    if (response.ok) {
-      console.log('SMS sent successfully');
-    } else {
-      console.error('Failed to send SMS');
-    }
-  } catch (error) {
-    console.error('Error sending SMS:', error);
-  }
-});
+      if (response.ok) {
+         console.log('SMS sent successfully')
+      } else {
+         console.error('Failed to send SMS')
+      }
+   } catch (error) {
+      console.error('Error sending SMS:', error)
+   }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -79,7 +79,5 @@ onMounted(async () => {
       padding-right: 40px;
       font-size: clamp(1rem, 0.812rem + 0.391vw, 1.125rem);
    }
-}
-.button {
 }
 </style>

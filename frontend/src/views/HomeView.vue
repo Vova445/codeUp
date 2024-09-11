@@ -4,7 +4,7 @@
       <reasons-section :reasonsList="coursesData.reasonsList" />
       <steps-section :stepsList="coursesData.stepsList" />
 
-      <carousal-section :courses-list="coursesData.carouselCoursesList" />
+      <!-- <carousal-section :courses-list="coursesData.carouselCoursesList" /> -->
 
       <questions-section :questionsList="getQuestionsList">
          <div class="faq__footer">
@@ -24,7 +24,7 @@ import MainSection from '../components/home/MainSection.vue'
 import ReasonsSection from '../components/home/ReasonsSection.vue'
 import StepsSection from '../components/home/StepsSection.vue'
 import QuestionsSection from '../components/home/QuestionsSection.vue'
-import coursesData from '../data/mainSection/index'
+// import coursesData from '../data/mainSection/index'
 import CarousalSection from '../components/home/CarousalSection.vue'
 
 const getQuestionsList = computed(() => {

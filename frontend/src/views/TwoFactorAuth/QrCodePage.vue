@@ -26,7 +26,7 @@ const inputCode = ref()
 const router = useRouter()
 
 async function generateQRCode() {
-   const token = localStorage.getItem('authToken')
+   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken');
    try {
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
       const response = await axios.post(
@@ -44,6 +44,7 @@ async function generateQRCode() {
    }
 }
 
+
 onMounted(() => {
    generateQRCode()
    console.log(inputCode.value)
@@ -51,29 +52,32 @@ onMounted(() => {
    inputCode.value.focus()
 })
 async function verifyQRCode() {
-   console.log('1111111111111')
-   const token = localStorage.setItem('authToken', '')
-   console.log('Retrieved Token:', token)
+   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken');
    try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
       const response = await axios.post(
          `${apiUrl}/api/verify-qr`,
          { code: qrCode.value },
-         { headers: { Authorization: token ? `Bearer ${token}` : '' } },
-      )
-      if (response.data.token) {
-         // localStorage.setItem('authToken', response.data.token);
-         localStorage.setItem('refreshToken', response.data.refreshToken)
-      } else {
-         console.error('Token not received:', response.data)
+         {
+            headers: {
+               Authorization: token ? `Bearer ${token}` : '',
+            },
+         }
+      );
+      const tempAuthToken = localStorage.getItem('tempAuthToken');
+      if (tempAuthToken) {
+         localStorage.setItem('authToken', tempAuthToken);
+         localStorage.removeItem('tempAuthToken'); 
       }
 
-      runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success')
-      router.push({ name: 'user' })
+      runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success');
+      router.push({ name: 'user' });
    } catch (err) {
-      runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
+      runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem');
    }
 }
+
+
 </script>
 
 <style lang="scss" scoped>

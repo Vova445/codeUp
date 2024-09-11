@@ -61,6 +61,7 @@ const loginAction = async () => {
       runAlert('twoFactorAuth.loginedSuccessfully', 'success')
 
       if (user.isTwoFAEnabled) {
+         localStorage.setItem('tempAuthToken', token);
          if (user.twoFAMethod === 'email') {
             router.push({ name: 'emailAuth' })
          } else if (user.twoFAMethod === 'phone') {
@@ -69,7 +70,7 @@ const loginAction = async () => {
             router.push({ name: 'qrCode' })
          }
       } else {
-         //localStorage.setItem('authToken', token)
+         localStorage.setItem('authToken', token)
          router.push({ name: 'user' })
       }
    } else {

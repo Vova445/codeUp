@@ -69,13 +69,12 @@ const loginAction = async () => {
             router.push({ name: 'qrCode' })
          }
       } else {
-         localStorage.setItem('authToken', token)
+         //localStorage.setItem('authToken', token)
          router.push({ name: 'user' })
       }
    } else {
       runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
    }
 }
-
 </script>
 <style lang="scss" scoped></style>

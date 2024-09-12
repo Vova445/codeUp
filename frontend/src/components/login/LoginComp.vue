@@ -1,6 +1,6 @@
 <template>
    <div class="form-login">
-      <form class="form-login__container">
+      <div class="form-login__container">
          <div class="form-login__group">
             <input id="mail" v-model="userData.mail" required type="email" class="form-login__input" />
             <label v-if="!userData.mail" for="mail" class="form-login__label">Email</label>
@@ -19,7 +19,7 @@
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
          </div>
-      </form>
+      </div>
    </div>
 </template>
 <script setup>

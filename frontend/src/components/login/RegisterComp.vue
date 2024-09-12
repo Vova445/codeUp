@@ -1,6 +1,6 @@
 <template>
    <div class="form-login">
-      <div class="form-login__container">
+      <form class="form-login__container" @submit.prevent="registerAction">
          <div class="form-login__group">
             <input id="name" v-model="userData.name" required type="text" class="form-login__input" autocomplete="off" />
             <label v-if="!userData.name" for="name" class="form-login__label">Name</label>
@@ -19,11 +19,11 @@
             <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
-         <button class="form-login__button" @click="registerAction">{{ $t('buttons.register') }}</button>
+         <button type="submit" class="form-login__button">{{ $t('buttons.register') }}</button>
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'login' }" class="form-login__link">{{ $t('buttons.haveAccount') }}</RouterLink>
          </div>
-      </div>
+      </form>
    </div>
 </template>
 

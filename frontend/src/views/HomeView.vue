@@ -1,10 +1,10 @@
 <template>
    <main-master-page>
-      <main-section :coursesList="coursesData.mainCourses" />
-      <reasons-section :reasonsList="coursesData.reasonsList" />
-      <steps-section :stepsList="coursesData.stepsList" />
+      <main-section :courses-list="coursesData.mainCourses" />
+      <reasons-section :reasons-list="coursesData.reasonsList" />
+      <steps-section :steps-list="coursesData.stepsList" />
       <carousal-section :courses-list="coursesData.carouselCoursesList" />
-      <questions-section :questionsList="getQuestionsList">
+      <questions-section :questions-list="getQuestionsList">
          <div class="faq__footer">
             <router-link :to="{ name: 'faq' }" class="faq__more">
                <div class="faq__text-more">more FAQ</div>

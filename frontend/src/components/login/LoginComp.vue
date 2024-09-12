@@ -1,17 +1,17 @@
 <template>
    <div class="form-login">
-      <div class="form-login__container">
+      <form class="form-login__container">
          <div class="form-login__group">
-            <input id="mail" v-model="userData.mail" type="email" class="form-login__input" />
+            <input id="mail" v-model="userData.mail" required type="email" class="form-login__input" />
             <label v-if="!userData.mail" for="mail" class="form-login__label">Email</label>
          </div>
          <div class="form-login__group form-login__group--password">
-            <input id="pass" v-model="userData.pass" :type="showPassword ? 'text' : 'password'" class="form-login__input" />
+            <input id="pass" v-model="userData.pass" required :type="showPassword ? 'text' : 'password'" class="form-login__input" />
             <label v-if="!userData.pass" for="pass" class="form-login__label">Password</label>
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
          <div class="form-login__group form-login__group--password">
-            <input id="passConfirm" v-model="userData.passConfirm" :type="showPassword ? 'text' : 'password'" class="form-login__input" />
+            <input id="passConfirm" v-model="userData.passConfirm" required :type="showPassword ? 'text' : 'password'" class="form-login__input" />
             <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
@@ -19,7 +19,7 @@
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
          </div>
-      </div>
+      </form>
    </div>
 </template>
 <script setup>
@@ -61,7 +61,7 @@ const loginAction = async () => {
       runAlert('twoFactorAuth.loginedSuccessfully', 'success')
 
       if (user.isTwoFAEnabled) {
-         localStorage.setItem('tempAuthToken', token);
+         localStorage.setItem('tempAuthToken', token)
          if (user.twoFAMethod === 'email') {
             router.push({ name: 'emailAuth' })
          } else if (user.twoFAMethod === 'phone') {

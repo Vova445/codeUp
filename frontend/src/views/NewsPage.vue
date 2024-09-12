@@ -5,7 +5,7 @@
             <h2 class="news__title title">{{ $t('titles.innovationsNews') }}</h2>
             <div class="news__items">
                <template v-for="newsItem in newsList">
-                  <a v-if="newsItem.cover_image" class="news__item item-news" target="_blank" :href="newsItem.url" :key="newsItem.id">
+                  <a v-if="newsItem.cover_image" :key="newsItem.id" class="news__item item-news" target="_blank" :href="newsItem.url">
                      <div class="item-news__image"><img :src="newsItem.cover_image" alt="" /></div>
                      <h4 class="item-news__title">{{ newsItem.title }}</h4>
                      <div class="item-news__date">published : {{ formatDate(newsItem.published_at) }}</div>
@@ -48,7 +48,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .news {
-   &__container {
+   &:not(:last-child) {
+      margin-bottom: 70px;
    }
    &__title {
       text-align: center;
@@ -69,7 +70,6 @@ onMounted(() => {
 .item-news {
    background-color: #1a1a1a;
    border-radius: 8px;
-
    transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
@@ -79,7 +79,6 @@ onMounted(() => {
          transform: scale(1.015);
       }
    }
-
    display: block;
    padding: 20px;
    display: flex;
@@ -87,13 +86,11 @@ onMounted(() => {
    &__image {
       overflow: hidden;
       border-radius: 8px;
-
       img {
          max-width: 100%;
          object-fit: cover;
          transition: transform 0.3s ease;
       }
-
       &:not(:last-child) {
          margin-bottom: 15px;
       }

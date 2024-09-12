@@ -37,8 +37,8 @@
                               {{ $t('header.languages') }} <span><font-awesome-icon :icon="['fas', 'chevron-down']" /></span>
                            </button>
                            <ul class="sub-list sub-list--small">
-                              <li class="sub-list__item"><button @click="setLocale('en')" class="sub-list__btn">en</button></li>
-                              <li class="sub-list__item"><button @click="setLocale('ua')" class="sub-list__btn">укр</button></li>
+                              <li class="sub-list__item"><button class="sub-list__btn" @click="setLocale('en')">en</button></li>
+                              <li class="sub-list__item"><button class="sub-list__btn" @click="setLocale('ua')">укр</button></li>
                            </ul>
                         </li>
                      </ul>
@@ -55,7 +55,7 @@
                </router-link>
             </Teleport>
          </div>
-         <button @click="onIconMenu" class="icon-menu"><span></span></button>
+         <button class="icon-menu" @click="onIconMenu"><span></span></button>
       </div>
    </header>
 </template>
@@ -64,7 +64,6 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import axios from 'axios'
 import { useLocales } from '../../moduleHelpers/i18n.js'
-
 const { setLocale } = useLocales()
 const isMobile = ref(false)
 const avatar = ref('')
@@ -77,16 +76,22 @@ const checkWindowSize = () => {
       document.documentElement.classList.remove('menu-open')
    }
 }
-
-function isAbsoluteURL(url) {
-   return /^https?:\/\//i.test(url)
+const debounce = (func, wait = 100) => {
+   let timeout
+   return function () {
+      const later = () => {
+         clearTimeout(timeout)
+         func()
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+   }
 }
-
+debounce
 function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
    document.documentElement.classList.toggle('lock')
 }
-
 function openSubList(e) {
    const isTouch = document.documentElement.classList.contains('touch')
    if (isTouch) {
@@ -97,7 +102,6 @@ function openSubList(e) {
       targetElement.classList.toggle('open')
    }
 }
-
 function closeSubListOnClickOutside(e) {
    if (!e.target.closest('.menu-header__item')) {
       document.querySelectorAll('.menu-header__item.open').forEach((item) => {
@@ -107,13 +111,7 @@ function closeSubListOnClickOutside(e) {
 }
 
 const isUser = computed(() => !!localStorage.getItem('authToken'))
-
-onMounted(async () => {
-   document.addEventListener('click', closeSubListOnClickOutside)
-   isReady.value = true
-   checkWindowSize()
-   window.addEventListener('resize', checkWindowSize)
-
+async function fetchAvatar() {
    const token = localStorage.getItem('authToken')
    if (token) {
       try {
@@ -127,22 +125,16 @@ onMounted(async () => {
          console.error('Error fetching avatar:', err)
       }
    }
+}
 
-   window.addEventListener('avatar-updated', async () => {
-      const token = localStorage.getItem('authToken')
-      if (token) {
-         try {
-            const response = await axios.get(`${apiUrl}/api/user-profile`, {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            })
-            avatar.value = response.data.avatar || ''
-         } catch (err) {
-            console.error('Error updating avatar:', err)
-         }
-      }
-   })
+onMounted(async () => {
+   document.addEventListener('click', closeSubListOnClickOutside)
+   isReady.value = true
+   checkWindowSize()
+   const debouncedCheckWindowSize = debounce(checkWindowSize, 200)
+   window.addEventListener('resize', debouncedCheckWindowSize)
+   await fetchAvatar()
+   window.addEventListener('avatar-updated', fetchAvatar)
 })
 
 onUnmounted(() => {
@@ -223,7 +215,7 @@ onUnmounted(() => {
          width: 50px;
          height: 50px;
          border-radius: 50%;
-         object-fit: contain;
+         object-fit: cover;
       }
    }
 

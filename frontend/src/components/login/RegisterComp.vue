@@ -2,20 +2,20 @@
    <div class="form-login">
       <div class="form-login__container">
          <div class="form-login__group">
-            <input id="name" v-model="userData.name" type="text" class="form-login__input" autocomplete="off" />
+            <input id="name" v-model="userData.name" required type="text" class="form-login__input" autocomplete="off" />
             <label v-if="!userData.name" for="name" class="form-login__label">Name</label>
          </div>
          <div class="form-login__group">
-            <input id="mail" v-model="userData.mail" type="email" class="form-login__input" />
+            <input id="mail" v-model="userData.mail" required type="email" class="form-login__input" />
             <label v-if="!userData.mail" for="mail" class="form-login__label">Email</label>
          </div>
          <div class="form-login__group form-login__group--password">
-            <input id="pass" v-model="userData.pass" :type="showPassword ? 'text' : 'password'" class="form-login__input" />
+            <input id="pass" v-model="userData.pass" required :type="showPassword ? 'text' : 'password'" class="form-login__input" />
             <label v-if="!userData.pass" for="pass" class="form-login__label">Password</label>
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
          <div class="form-login__group form-login__group--password">
-            <input id="passConfirm" v-model="userData.passConfirm" :type="showPassword ? 'text' : 'password'" class="form-login__input" />
+            <input id="passConfirm" v-model="userData.passConfirm" required :type="showPassword ? 'text' : 'password'" class="form-login__input" />
             <label v-if="!userData.passConfirm" for="passConfirm" class="form-login__label">Confirm Password</label>
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>

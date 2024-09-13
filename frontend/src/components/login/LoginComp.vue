@@ -67,7 +67,7 @@ const loginAction = async () => {
       if (user.isTwoFAEnabled) {
          localStorage.setItem('tempAuthToken', token)
          if (user.twoFAMethod === 'email') {
-            router.push({ name: 'emailAuth' })
+            router.push({ name: 'email' })
          } else if (user.twoFAMethod === 'phone') {
             router.push({ name: 'phoneAuth' })
          } else if (user.twoFAMethod === 'qr') {

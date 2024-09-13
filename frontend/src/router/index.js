@@ -86,7 +86,7 @@ const router = createRouter({
       },
       {
          path: '/two-factor-auth/email',
-         name: 'phoneAuth',
+         name: 'email',
          component: () => import('../views/TwoFactorAuth/EmailPage.vue'),
          meta: {
             // requireAuth: true,

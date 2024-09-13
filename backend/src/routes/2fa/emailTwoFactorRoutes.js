@@ -76,7 +76,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
             <p style="font-size: 14px; color: #004d40; margin-top: 20px;">This link will be valid for 15 minutes. If you did not request this, please ignore this email.</p>
             <div style="margin-top: 40px; padding: 20px; background: #ffffff; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
               <h3 style="color: #00796b; font-size: 22px;">Need Assistance?</h3>
-              <p style="font-size: 16px; color: #004d40;">For support, reach out to us at <a href="mailto:support@example.com" style="color: #004d40; text-decoration: underline;">support@example.com</a>.</p>
+              <p style="font-size: 16px; color: #004d40;">For support, reach out to us at <a href="mailto:mycodup@gmail.com" style="color: #004d40; text-decoration: underline;">mycodup@gmail.com</a>.</p>
             </div>
           </div>
         `

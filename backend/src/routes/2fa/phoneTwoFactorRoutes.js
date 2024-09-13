@@ -21,6 +21,7 @@ phoneTwoFactorRoutes.post('/send-2fa-sms', async (req, res) => {
   }
 
   const formattedNumber = parsedNumber.format('E.164');
+  console.log(`Formatted Number: ${formattedNumber}`);
 
   try {
     const code = Math.floor(100000 + Math.random() * 900000);
@@ -45,8 +46,10 @@ phoneTwoFactorRoutes.post('/send-2fa-sms', async (req, res) => {
       stack: error.stack,
       code: error.code,
       moreInfo: error.moreInfo,
+      requestBody: req.body,
+      phoneNumber: formattedNumber,
     });
-    res.status(500).json({ message: 'Error sending SMS' });
+    res.status(500).json({ message: 'Error sending SMS', error: error.message });
   }
 });
 

@@ -46,20 +46,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
         to: user.email,
         subject: 'Your Two-Factor Authentication Code',
         html: `
-          <div style="font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 40px; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 20px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); max-width: 600px; margin: auto;">
-            <h2 style="color: #00796b; font-size: 30px; margin-bottom: 20px; animation: slideInFromTop 1s ease-out;">🔐 Two-Factor Authentication</h2>
-            <p style="font-size: 18px; color: #004d40; margin-bottom: 20px; animation: fadeInUp 1s ease-out;">To ensure the security of your account, please verify your email address by clicking the button below:</p>
-            <a href="${process.env.VITE_API_URL}/api/verify-2fa/${confirmationToken}" 
-               style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #004d40, #00796b); color: white; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; box-shadow: 0px 12px 25px rgba(0, 77, 64, 0.3); transition: all 0.4s ease; text-transform: uppercase;">
-               Verify Email
-            </a>
-            <p style="font-size: 14px; color: #004d40; margin-top: 20px;">This link will be valid for 15 minutes. If you did not request this, please ignore this email.</p>
-            <div style="margin-top: 40px; padding: 20px; background: #ffffff; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
-              <h3 style="color: #00796b; font-size: 22px;">Need Assistance?</h3>
-              <p style="font-size: 16px; color: #004d40;">For support, reach out to us at <a href="mailto:support@example.com" style="color: #004d40; text-decoration: underline;">support@example.com</a>.</p>
-            </div>
-          </div>
-          <style>
+            <style>
             @keyframes slideInFromTop {
               0% { transform: translateY(-50px); opacity: 0; }
               100% { transform: translateY(0); opacity: 1; }
@@ -79,6 +66,19 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
               100% { transform: scale(1); }
             }
           </style>
+          <div style="font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 40px; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 20px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); max-width: 600px; margin: auto;">
+            <h2 style="color: #00796b; font-size: 30px; margin-bottom: 20px; animation: slideInFromTop 1s ease-out;">🔐 Two-Factor Authentication</h2>
+            <p style="font-size: 18px; color: #004d40; margin-bottom: 20px; animation: fadeInUp 1s ease-out;">To ensure the security of your account, please verify your email address by clicking the button below:</p>
+            <a href="${process.env.VITE_API_URL}/api/verify-2fa/${confirmationToken}" 
+               style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #004d40, #00796b); color: white; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; box-shadow: 0px 12px 25px rgba(0, 77, 64, 0.3); transition: all 0.4s ease; text-transform: uppercase;">
+               Verify Email
+            </a>
+            <p style="font-size: 14px; color: #004d40; margin-top: 20px;">This link will be valid for 15 minutes. If you did not request this, please ignore this email.</p>
+            <div style="margin-top: 40px; padding: 20px; background: #ffffff; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
+              <h3 style="color: #00796b; font-size: 22px;">Need Assistance?</h3>
+              <p style="font-size: 16px; color: #004d40;">For support, reach out to us at <a href="mailto:support@example.com" style="color: #004d40; text-decoration: underline;">support@example.com</a>.</p>
+            </div>
+          </div>
         `
       };
       

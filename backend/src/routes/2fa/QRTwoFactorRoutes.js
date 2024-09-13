@@ -31,6 +31,7 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     const randomCode = Math.floor(10000000 + Math.random() * 90000000).toString();
     user.twoFASecret = randomCode;
     user.twoFAMethod = 'qr';
+    
     user.qrCodeGeneratedIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     await user.save();
@@ -42,9 +43,6 @@ qrRoutes.post('/generate-qr', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
-
-
 
 qrRoutes.post('/verify-qr', async (req, res) => {
   const { code } = req.body;
@@ -66,45 +64,32 @@ qrRoutes.post('/verify-qr', async (req, res) => {
     }
 
     const userIpAddress = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress;
-    
-    if (user.newQrCodeScannedIp === userIpAddress) {
-      return res.status(200).json({ message: 'QR code verified successfully' });
-    }
 
-    if (!user.qrCodeScannedIp) {
-      user.qrCodeScannedIp = userIpAddress;
-      user.newQrCodeScannedIp = userIpAddress; 
-      await user.save();
-    }
+    user.newQrCodeScannedIp = userIpAddress;
+    await user.save();
 
-    if (user.qrCodeScannedIp !== userIpAddress) {
-      console.log(`QR code scanned from IP: ${userIpAddress}`);
-      console.log(`Expected IP: ${user.qrCodeScannedIp}`);
-      return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
-    }
+    if (user.qrCodeScannedIp === userIpAddress || !user.qrCodeScannedIp) {
+      const verified = user.twoFASecret === code;
 
-    const verified = user.twoFASecret === code;
-
-    if (verified) {
-      user.isTwoFAEnabled = true;
-      await user.save();
-      const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
-      res.status(200).json({
-        message: 'Code verified successfully',
-        token: newToken,
-        refreshToken: user.refreshToken
-      });
+      if (verified) {
+        user.isTwoFAEnabled = true;
+        await user.save();
+        const newToken = generateToken(user._id, process.env.JWT_SECRET, '1h');
+        return res.status(200).json({
+          message: 'Code verified successfully',
+          token: newToken,
+          refreshToken: user.refreshToken
+        });
+      } else {
+        return res.status(400).json({ message: 'Invalid code' });
+      }
     } else {
-      res.status(400).json({ message: 'Invalid code' });
+      return res.status(403).json({ message: 'QR code scanned from an unauthorized device' });
     }
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
-
-
-
 
 qrRoutes.get('/check-qr-verification', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -132,6 +117,5 @@ qrRoutes.get('/check-qr-verification', async (req, res) => {
     res.status(400).json({ message: 'Invalid or expired token' });
   }
 });
-
 
 export default qrRoutes;

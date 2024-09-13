@@ -13,6 +13,9 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
@@ -54,8 +57,10 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
   
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          return res.status(500).json({ message: 'Error sending email' });
+          console.error('Error sending email:', error);
+          return res.status(500).json({ message: 'Error sending email', error: error.toString() });
         }
+        console.log('Email sent:', info.response);
         res.status(200).json({ message: '2FA email sent successfully' });
       });
     } catch (err) {

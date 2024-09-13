@@ -4,7 +4,7 @@
          <font-awesome-icon v-if="alertType === 'success'" :icon="['fas', 'check']" />
          <font-awesome-icon v-else :icon="['fas', 'xmark']" />
       </span>
-      <span> {{ $t(alertText) }} </span>
+      <span v-if="alertText"> {{ $t(alertText) }} </span>
    </div>
 </template>
 
@@ -56,8 +56,6 @@ function getText(text) {
    }
    &.success {
       background-color: #32c682;
-      &__icon {
-      }
    }
    &.problem {
       background-color: #ff5549;

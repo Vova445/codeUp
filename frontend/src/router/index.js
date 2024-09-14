@@ -82,7 +82,7 @@ const router = createRouter({
          name: 'qrCode',
          component: () => import('../views/TwoFactorAuth/QrCodePage.vue'),
          meta: {
-            // requireAuth: true,
+            requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
             const isTwoFAEnabled = await checkTwoFAStatus();
@@ -98,7 +98,7 @@ const router = createRouter({
          name: 'phoneAuth',
          component: () => import('../views/TwoFactorAuth/PhonePage.vue'),
          meta: {
-            // requireAuth: true,
+            requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
             const isTwoFAEnabled = await checkTwoFAStatus();
@@ -114,7 +114,7 @@ const router = createRouter({
          name: 'email',
          component: () => import('../views/TwoFactorAuth/EmailPage.vue'),
          meta: {
-            // requireAuth: true,
+            requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
             const isTwoFAEnabled = await checkTwoFAStatus();
@@ -130,7 +130,7 @@ const router = createRouter({
          name: 'loadingEmail',
          component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
          meta: {
-            // requireAuth: true,
+            requireAuth: false,
          },
       },
       {
@@ -153,14 +153,14 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-   //document.documentElement.classList.remove('menu-open')
-   //document.documentElement.classList.remove('lock')
-   //if (to.meta?.requireAuth) {
-   //   const userToken = localStorage.getItem('authToken')
-   //   if (!userToken) {
-   //      return { name: 'login' }
-   //   }
-   //}
+   document.documentElement.classList.remove('menu-open')
+   document.documentElement.classList.remove('lock')
+   if (to.meta?.requireAuth) {
+     const userToken = localStorage.getItem('authToken')
+     if (!userToken) {
+        return { name: 'login' }
+     }
+   }
 })
 
 export default router

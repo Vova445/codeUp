@@ -34,7 +34,7 @@ onMounted(() => {
          valueToShow.value = 5
          value.value = 0
          elapsed = 0
-         //window.location.href = 'https://code-up-omega.vercel.app/user'
+         window.location.href = 'https://code-up-omega.vercel.app/user'
          clearInterval(interval)
       }
    }, intervalDuration)
@@ -64,12 +64,19 @@ onMounted(() => {
    }
    &__title {
       line-height: 1.3;
-      color: #fff;
-      font-size: clamp(1rem, 0.156rem + 1.761vw, 1.563rem);
+      color: #cecece;
+      font-size: clamp(0.875rem, -0.157rem + 2.153vw, 1.563rem);
+      letter-spacing: 1.3px;
+      word-spacing: 1.2px;
+      text-shadow: 1.5px 1px 1px rgb(172, 172, 172),
+      1.5px 1px 1px rgb(172, 172, 172);
+   
+      
       span {
          padding: 0 5px;
          font-weight: 600;
          color: #3c776f;
+         text-shadow: none;
       }
    }
 }

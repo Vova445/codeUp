@@ -20,30 +20,33 @@ const transporter = nodemailer.createTransport({
 });
 
 emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-  
-    if (!token) { 
-      return res.status(401).json({ message: 'No token provided' });
+  const token = req.headers.authorization?.split(' ')[1];
+  console.log('Authorization Token:', token);
+
+  if (!token) { 
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded Token:', decoded);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId);
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      const twoFACode = Math.floor(100000 + Math.random() * 900000);
-      user.twoFACode = twoFACode;
-      user.twoFAMethod = 'email';
-      await user.save();
-  
-      const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-      const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
-      const mailOptions = {
-        from: process.env.EMAIL_USERNAME,
-        to: user.email,
+
+    const twoFACode = Math.floor(100000 + Math.random() * 900000);
+    user.twoFACode = twoFACode;
+    user.twoFAMethod = 'email';
+    await user.save();
+
+    const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    console.log('API URL:', apiUrl);
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: user.email,
         subject: 'Your Two-Factor Authentication Code',
         html: `
             <style>
@@ -81,6 +84,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
         res.status(200).json({ message: '2FA email sent successfully' });
       });
     } catch (err) {
+      console.error('Token verification error:', err);
       res.status(401).json({ message: 'Invalid token' });
     }
   });

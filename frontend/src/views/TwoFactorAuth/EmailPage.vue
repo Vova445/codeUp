@@ -16,33 +16,34 @@
 <script setup>
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
 import axios from 'axios';
-// const { runAlert } = useAlertStore();
 
 async function sendEmailLetter() {
    console.log('Button clicked');
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-      await axios.post(
-        `${apiUrl}/api/send-2fa-email`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
-    } catch (err) {
-      console.error('Error sending email:', err);
-      // runAlert('twoFactorAuth.emailSentFailed', 'problem');
-    }
-  } else {
-   //  runAlert('twoFactorAuth.noAuthToken', 'problem');
-  }
+   const token = localStorage.getItem('authToken');
+   console.log('Auth Token:', token);
+   if (token) {
+     try {
+       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+       console.log('API URL:', apiUrl);
+       await axios.post(
+         `${apiUrl}/api/send-2fa-email`,
+         {},
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         }
+       );
+       console.log('Email sent successfully');
+     } catch (err) {
+       console.error('Error sending email:', err);
+     }
+   } else {
+     console.warn('No auth token found');
+   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 .email-auth {

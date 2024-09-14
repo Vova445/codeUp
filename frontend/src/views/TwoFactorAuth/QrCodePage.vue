@@ -7,74 +7,73 @@
             <font-awesome-icon v-else :icon="['fas', 'image']" />
          </div>
          <v-otp-input ref="inputCode" v-model="qrCode" focus-all :length="8" placeholder="0" variant="underlined"></v-otp-input>
-         <button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode(qrCode)">Verify QR Code</button>
+         <button :disabled="qrCode.length < 8" class="section-qr__btn-verify button" @click="verifyQRCode">Verify QR Code</button>
       </div>
    </main-master-page>
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useAlertStore } from '../../stores/alert.js'
-import { useTwoFactorAuthStore } from '../../stores/twoFactorAuth.js'
-const { qrCodeUrl } = storeToRefs(useTwoFactorAuthStore())
-const { generateQRCode, verifyQRCode } = useTwoFactorAuthStore()
 const { runAlert } = useAlertStore()
 const qrCode = ref('')
+const qrCodeUrl = ref('')
 const inputCode = ref()
 const router = useRouter()
 
-//async function generateQRCode() {
-//   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
-//   try {
-//      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-//      const response = await axios.post(
-//         `${apiUrl}/api/generate-qr`,
-//         {},
-//         {
-//            headers: {
-//               Authorization: token ? `Bearer ${token}` : '',
-//            },
-//         },
-//      )
-//      qrCodeUrl.value = response.data.qrCodeUrl
-//   } catch (err) {
-//      console.error('Error generating QR code:', err)
-//   }
-//}
+async function generateQRCode() {
+   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const response = await axios.post(
+         `${apiUrl}/api/generate-qr`,
+         {},
+         {
+            headers: {
+               Authorization: token ? `Bearer ${token}` : '',
+            },
+         },
+      )
+      qrCodeUrl.value = response.data.qrCodeUrl
+   } catch (err) {
+      console.error('Error generating QR code:', err)
+   }
+}
 
 onMounted(() => {
    generateQRCode()
+   console.log(inputCode.value)
+
    inputCode.value.focus()
 })
-//async function verifyQRCode() {
-//   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
-//   try {
-//      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-//      const response = await axios.post(
-//         `${apiUrl}/api/verify-qr`,
-//         { code: qrCode.value },
-//         {
-//            headers: {
-//               Authorization: token ? `Bearer ${token}` : '',
-//            },
-//         },
-//      )
-//      const tempAuthToken = localStorage.getItem('tempAuthToken')
-//      if (tempAuthToken) {
-//         localStorage.setItem('authToken', tempAuthToken)
-//         localStorage.removeItem('tempAuthToken')
-//      }
+async function verifyQRCode() {
+   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
+   try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      const response = await axios.post(
+         `${apiUrl}/api/verify-qr`,
+         { code: qrCode.value },
+         {
+            headers: {
+               Authorization: token ? `Bearer ${token}` : '',
+            },
+         },
+      )
+      const tempAuthToken = localStorage.getItem('tempAuthToken')
+      if (tempAuthToken) {
+         localStorage.setItem('authToken', tempAuthToken)
+         localStorage.removeItem('tempAuthToken')
+      }
 
-//      runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success')
-//      router.push({ name: 'user' })
-//   } catch (err) {
-//      runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
-//   }
-//}
+      runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success')
+      router.push({ name: 'user' })
+   } catch (err) {
+      runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
+   }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,16 +1,15 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { useRoute } from 'vue-router'
 import { useAlertStore } from './alert.js'
 
 export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
+   const router = useRoute()
    const { runAlert } = useAlertStore()
    const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
    //const apiUrl = meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
    const qrCodeUrl = ref('')
-
    async function sendEmailLetter() {
       console.log('Button clicked')
       let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken')
@@ -90,5 +89,5 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
       }
    }
 
-   return { sendEmailLetter, verifyQRCode, generateQRCode, qrCodeUrl }
+   return { sendEmailLetter, verifyQRCode, generateQRCode, qrCodeUrl, qrCode }
 })

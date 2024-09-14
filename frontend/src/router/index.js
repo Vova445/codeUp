@@ -93,6 +93,14 @@ const router = createRouter({
          },
       },
       {
+         path: '/twoFactorAuth/loading',
+         name: 'loadingEmail',
+         component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
+         meta: {
+            // requireAuth: true,
+         },
+      },
+      {
          path: '/faq',
          name: 'faq',
          component: () => import('../views/FaqPage.vue'),

@@ -99,28 +99,24 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
   
 
   emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
-  const { token } = req.params;
+    const { token } = req.params;
+  
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
+  
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+  
+      user.isTwoFAEnabled = true;
+      await user.save();
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId);
-
-    if (!user) {
-      return res.status(404).send('User not found');
+      res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
+    } catch (error) {
+      res.status(400).send('Invalid or expired token');
     }
-
-    user.isTwoFAEnabled = true;
-    await user.save();
-
-    res.send(`<script>
-      setTimeout(() => {
-        window.location.href = 'https://code-up-omega.vercel.app/user';
-      }, 5000);
-    </script>
-    <p>Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через кілька секунд.</p>`);
-  } catch (error) {
-    res.status(400).send('Invalid or expired token');
-  }
-});
+  });
+  
 
 export default emailTwoFactorRoutes;

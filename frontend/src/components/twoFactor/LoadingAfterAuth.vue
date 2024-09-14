@@ -15,8 +15,7 @@ const valueToShow = ref(5)
 onMounted(() => {
    interval.value = setInterval(() => {
       if (value.value === 100) {
-         valueToShow.value = 5
-         return (value.value = 0)
+         window.location.href = 'https://code-up-omega.vercel.app/user';
       }
       valueToShow.value -= 1
       value.value += 20

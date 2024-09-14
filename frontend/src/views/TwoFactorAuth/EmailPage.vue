@@ -32,7 +32,7 @@ async function sendEmailLetter() {
             {},
             {
                headers: {
-                  Authorization: `Bearer ${token}`,
+                  Authorization: token ? `Bearer ${token}` : '',
                },
             },
          )

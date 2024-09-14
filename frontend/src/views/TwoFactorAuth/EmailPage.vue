@@ -15,7 +15,7 @@
 
 <script setup>
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
-const { runAlert } = useAlertStore();
+// const { runAlert } = useAlertStore();
 
 async function sendEmailLetter() {
   const token = localStorage.getItem('authToken');
@@ -31,13 +31,13 @@ async function sendEmailLetter() {
           },
         }
       );
-      runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
+      // runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
     } catch (err) {
       console.error('Error sending email:', err);
-      runAlert('twoFactorAuth.emailSentFailed', 'problem');
+      // runAlert('twoFactorAuth.emailSentFailed', 'problem');
     }
   } else {
-    runAlert('twoFactorAuth.noAuthToken', 'problem');
+   //  runAlert('twoFactorAuth.noAuthToken', 'problem');
   }
 }
 </script>

@@ -66,7 +66,6 @@ async function confirmByEmail() {
          )
          if (response.data.token) {
             await axios.get(`${apiUrl}/api/verify-2fa/${response.data.token}`)
-            router.push({ name: 'user' })
          } else {
             runAlert('twoFactorAuth.codeSentOnEmail', 'success')
          }

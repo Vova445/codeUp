@@ -40,7 +40,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
       await user.save();
   
       const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-  
+      const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: user.email,
@@ -69,7 +69,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
           <div style="font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 40px; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 20px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); max-width: 600px; margin: auto;">
             <h2 style="color: #00796b; font-size: 30px; margin-bottom: 20px; animation: slideInFromTop 1s ease-out;">🔐 Two-Factor Authentication</h2>
             <p style="font-size: 18px; color: #004d40; margin-bottom: 20px; animation: fadeInUp 1s ease-out;">To ensure the security of your account, please verify your email address by clicking the button below:</p>
-            <a href="${process.env.VITE_API_URL}/api/verify-2fa/${confirmationToken}" 
+           <a href="${apiUrl}/api/verify-2fa/${confirmationToken}" 
                style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #004d40, #00796b); color: white; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; box-shadow: 0px 12px 25px rgba(0, 77, 64, 0.3); transition: all 0.4s ease; text-transform: uppercase;">
                Verify Email
             </a>

@@ -1,42 +1,74 @@
 <template>
    <div class="loading-auth">
-      <v-progress-circular :model-value="value" :rotate="0" :size="100" :width="10" color="#3c776f">
-         {{ valueToShow }}
-      </v-progress-circular>
-      <h3 class="loading-auth__title">
-         Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через <span> {{ valueToShow }} </span> секунд.
-      </h3>
+      <div class="loading-auth__box">
+         <v-progress-circular :model-value="value" :rotate="0" :size="150" :width="10" color="#3c776f">
+            {{ valueToShow }}
+         </v-progress-circular>
+         <h3 class="loading-auth__title">
+            Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через <span> {{ valueToShow }} </span> секунд.
+         </h3>
+      </div>
    </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-const interval = reactive({})
+import { onMounted, ref } from 'vue'
+
 const value = ref(0)
 const valueToShow = ref(5)
 
 onMounted(() => {
-   interval.value = setInterval(() => {
-      if (value.value === 100) {
-         valueToShow.value = 5
-         window.location.href = 'https://code-up-omega.vercel.app/user'
-         return (value.value = 0)
+   const totalTime = 5000
+   const intervalDuration = 50
+   let elapsed = 0
+
+   const interval = setInterval(() => {
+      elapsed += intervalDuration
+      value.value = (elapsed / totalTime) * 100
+
+      if (elapsed % 1000 === 0) {
+         valueToShow.value -= 1
       }
-      valueToShow.value -= 1
-      value.value += 20
-   }, 1000)
+
+      if (valueToShow.value === -1) {
+         valueToShow.value = 5
+         value.value = 0
+         elapsed = 0
+         //window.location.href = 'https://code-up-omega.vercel.app/user'
+         clearInterval(interval)
+      }
+   }, intervalDuration)
 })
 </script>
-
 <style lang="scss" scoped>
-//.v-progress-circular {
-//   margin: 1rem;
-//}
+:deep() {
+   .v-progress-circular__underlay {
+      color: #8b8b8b;
+   }
+}
+
+.v-progress-circular {
+   margin: 1rem;
+}
 .loading-auth {
+   text-align: center;
+   max-width: 900px;
+   margin: 0 auto;
+   padding: 40px 15px;
+   &__box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+   }
    &__title {
+      line-height: 1.3;
       color: #fff;
-      font-size: clamp(1.25rem, 0.312rem + 1.957vw, 1.875rem);
+      font-size: clamp(1rem, 0.156rem + 1.761vw, 1.563rem);
       span {
+         padding: 0 5px;
+         font-weight: 600;
          color: #3c776f;
       }
    }

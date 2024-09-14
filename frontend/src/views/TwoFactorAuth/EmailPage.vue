@@ -15,9 +15,11 @@
 
 <script setup>
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
+import axios from 'axios';
 // const { runAlert } = useAlertStore();
 
 async function sendEmailLetter() {
+   console.log('Button clicked');
   const token = localStorage.getItem('authToken');
   if (token) {
     try {

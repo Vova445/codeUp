@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { checkTwoFAStatus } from '../../utils/auth.js';
+import { checkTwoFAStatus } from '../../utils/auth.js'
 
 const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,13 +69,13 @@ const router = createRouter({
             requireAuth: true,
          },
          beforeEnter: async (to, from, next) => {
-            const isTwoFAEnabled = await checkTwoFAStatus();
+            const isTwoFAEnabled = await checkTwoFAStatus()
             if (isTwoFAEnabled) {
-              next({ name: 'user' });
+               next({ name: 'user' })
             } else {
-              next();
+               next()
             }
-         }
+         },
       },
       {
          path: '/two-factor-auth/qr-code',
@@ -85,13 +85,13 @@ const router = createRouter({
             requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
-            const isTwoFAEnabled = await checkTwoFAStatus();
+            const isTwoFAEnabled = await checkTwoFAStatus()
             if (isTwoFAEnabled) {
-              next({ name: 'user' });
+               next({ name: 'user' })
             } else {
-              next();
+               next()
             }
-          },
+         },
       },
       {
          path: '/two-factor-auth/phone',
@@ -101,13 +101,13 @@ const router = createRouter({
             requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
-            const isTwoFAEnabled = await checkTwoFAStatus();
+            const isTwoFAEnabled = await checkTwoFAStatus()
             if (isTwoFAEnabled) {
-              next({ name: 'user' });
+               next({ name: 'user' })
             } else {
-              next();
+               next()
             }
-          },
+         },
       },
       {
          path: '/two-factor-auth/email',
@@ -117,20 +117,20 @@ const router = createRouter({
             requireAuth: false,
          },
          beforeEnter: async (to, from, next) => {
-            const isTwoFAEnabled = await checkTwoFAStatus();
+            const isTwoFAEnabled = await checkTwoFAStatus()
             if (isTwoFAEnabled) {
-              next({ name: 'user' });
+               next({ name: 'user' })
             } else {
-              next();
+               next()
             }
-          },
+         },
       },
       {
          path: '/twoFactorAuth/loading',
          name: 'loadingEmail',
          component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
          meta: {
-            requireAuth: false,
+            requireAuth: true,
          },
       },
       {
@@ -156,10 +156,10 @@ router.beforeEach(async (to) => {
    document.documentElement.classList.remove('menu-open')
    document.documentElement.classList.remove('lock')
    if (to.meta?.requireAuth) {
-     const userToken = localStorage.getItem('authToken')
-     if (!userToken) {
-        return { name: 'login' }
-     }
+      const userToken = localStorage.getItem('authToken')
+      if (!userToken) {
+         return { name: 'login' }
+      }
    }
 })
 

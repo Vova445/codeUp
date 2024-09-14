@@ -114,8 +114,8 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
 
     res.send(`<script>
       setTimeout(() => {
-        window.location.href = '${process.env.VITE_API_URL}/two-factor-auth-success';
-      }, 3000);
+        window.location.href = '${process.env.VITE_API_URL}/user';
+      }, 5000);
     </script>
     <p>Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через кілька секунд.</p>`);
   } catch (error) {

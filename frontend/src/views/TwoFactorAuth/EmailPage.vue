@@ -5,7 +5,9 @@
             <div class="email-auth__title title">
                {{ $t('twoFactorAuth.sendEmailLetterTitle') }} <span><font-awesome-icon :icon="['fas', 'envelope']" /></span>
             </div>
-            <button class="email-auth__button button button--big">{{ $t('twoFactorAuth.sendEmailLetterButton') }}</button>
+            <button class="email-auth__button button button--big" @click="sendEmailLetter">
+          {{ $t('twoFactorAuth.sendEmailLetterButton') }}
+        </button>
          </div>
       </div>
    </main-master-page>
@@ -13,6 +15,31 @@
 
 <script setup>
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
+const { runAlert } = useAlertStore();
+
+async function sendEmailLetter() {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      await axios.post(
+        `${apiUrl}/api/send-2fa-email`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
+    } catch (err) {
+      console.error('Error sending email:', err);
+      runAlert('twoFactorAuth.emailSentFailed', 'problem');
+    }
+  } else {
+    runAlert('twoFactorAuth.noAuthToken', 'problem');
+  }
+}
 </script>
 
 <style lang="scss" scoped>

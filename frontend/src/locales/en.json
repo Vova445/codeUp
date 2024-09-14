@@ -124,6 +124,8 @@
       "codeSentOnEmail": "A verification code has been sent to your email address",
       "codeSentOnEmailProblem": "Error sending verification code to email",
       "qrcodeСonfirmationSuccess": "Account verification was successful",
-      "qrcodeСonfirmationProblem": "Account verification error"
+      "qrcodeСonfirmationProblem": "Account verification error",
+      "sendEmailLetterTitle": "Send an email to your address and confirm it",
+      "sendEmailLetterButton": "Send letter"
    }
 }

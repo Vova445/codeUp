@@ -4,6 +4,11 @@
    margin: 0 auto;
    padding: 0 15px;
 }
+[class*='__container--small'] {
+   max-width: 900px;
+   margin: 0 auto;
+   padding: 0 15px;
+}
 
 .wrapper {
    min-height: 100vh;
@@ -38,7 +43,6 @@ input {
 }
 .button {
    background-color: #3c776f;
-   //background-color: #ab8116;
    border-radius: 12px;
    line-height: 1.2;
    padding: clamp(0.76rem, 0.156rem + 0.587vw, 0.625rem) clamp(0.625rem, -0.313rem + 1.957vw, 1.25rem);
@@ -51,6 +55,9 @@ input {
 
    @media (max-width: 425px) {
       font-size: 14px;
+   }
+   &--big {
+      padding: clamp(0.938rem, 0.468rem + 0.978vw, 1.25rem) clamp(1.875rem, -0.001rem + 3.914vw, 3.125rem);
    }
 }
 .title {

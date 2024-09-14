@@ -13,14 +13,12 @@
                </template>
             </div>
          </div>
-         <loading-after-auth />
       </section>
    </main-master-page>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import LoadingAfterAuth from '../components/twoFactor/LoadingAfterAuth.vue'
 import MainMasterPage from '../masterPages/MainMasterPage.vue'
 
 let newsList = ref([])

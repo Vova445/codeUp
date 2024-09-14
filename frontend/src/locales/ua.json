@@ -117,6 +117,8 @@
       "codeSentOnEmail": "Код пвідтверження було надісланно на вашу електронну адресу",
       "codeSentOnEmailProblem": "Помилка при відправленні коду підтвердження на електронну пошту",
       "qrcodeСonfirmationSuccess": "Підтвердження акаунту відбулось успішно",
-      "qrcodeСonfirmationProblem": "Помилка при підтвердженні акаунту"
+      "qrcodeСonfirmationProblem": "Помилка при підтвердженні акаунту",
+      "sendEmailLetterTitle": "Надішліть лист на вашу електронну адресу та підтвердіть її",
+      "sendEmailLetterButton": "Надіслати лист"
    }
 }

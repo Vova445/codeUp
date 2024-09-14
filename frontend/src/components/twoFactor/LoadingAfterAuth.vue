@@ -3,7 +3,9 @@
       <v-progress-circular :model-value="value" :rotate="0" :size="100" :width="10" color="#3c776f">
          {{ valueToShow }}
       </v-progress-circular>
-      <p>Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через {{ valueToShow }} секунд.</p>
+      <h3 class="loading-auth__title">
+         Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через <span> {{ valueToShow }} </span> секунд.
+      </h3>
    </div>
 </template>
 
@@ -17,7 +19,7 @@ onMounted(() => {
    interval.value = setInterval(() => {
       if (value.value === 100) {
          valueToShow.value = 5
-         window.location.href = 'https://code-up-omega.vercel.app/user';
+         window.location.href = 'https://code-up-omega.vercel.app/user'
          return (value.value = 0)
       }
       valueToShow.value -= 1
@@ -27,7 +29,16 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.v-progress-circular {
-   margin: 1rem;
+//.v-progress-circular {
+//   margin: 1rem;
+//}
+.loading-auth {
+   &__title {
+      color: #fff;
+      font-size: clamp(1.25rem, 0.312rem + 1.957vw, 1.875rem);
+      span {
+         color: #3c776f;
+      }
+   }
 }
 </style>

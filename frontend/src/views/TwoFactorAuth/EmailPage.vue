@@ -16,34 +16,42 @@
 <script setup>
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
 import axios from 'axios';
+import { useAlertStore } from '../../stores/alert.js'
+
+// const { runAlert } = useAlertStore()
 
 async function sendEmailLetter() {
-   console.log('Button clicked');
-   const token = localStorage.getItem('authToken');
-   console.log('Auth Token:', token);
-   if (token) {
-     try {
-       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-       console.log('API URL:', apiUrl);
-       await axios.post(
-         `${apiUrl}/api/send-2fa-email`,
-         {},
-         {
-           headers: {
-             Authorization: `Bearer ${token}`,
-           },
-         }
-       );
-       console.log('Email sent successfully');
-     } catch (err) {
-       console.error('Error sending email:', err);
-     }
-   } else {
-     console.warn('No auth token found');
-   }
+  console.log('Button clicked');
+  let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken');
+  
+  if (token) {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+      const response = await axios.post(
+        `${apiUrl}/api/send-2fa-email`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
+        localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'));
+        localStorage.removeItem('tempAuthToken');
+      }
+
+      // runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
+    } catch (err) {
+      console.error('Error sending email:', err);
+      // runAlert('twoFactorAuth.emailSentFailed', 'problem');
+    }
+  } else {
+   //  runAlert('twoFactorAuth.noAuthToken', 'problem');
+  }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .email-auth {

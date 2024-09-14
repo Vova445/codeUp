@@ -68,8 +68,8 @@ onMounted(() => {
       font-size: clamp(0.875rem, -0.157rem + 2.153vw, 1.563rem);
       letter-spacing: 1.3px;
       word-spacing: 1.2px;
-      text-shadow: 1.5px 1px 1px rgb(172, 172, 172),
-      1.5px 1px 1px rgb(172, 172, 172);
+      text-shadow: 0.9px 1px 1px rgb(172, 172, 172),
+      0.9px 1px 1px rgb(172, 172, 172);
    
       
       span {

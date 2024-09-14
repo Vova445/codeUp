@@ -3,6 +3,7 @@
       <v-progress-circular :model-value="value" :rotate="0" :size="100" :width="10" color="#3c776f">
          {{ valueToShow }}
       </v-progress-circular>
+      <p>Ваш обліковий запис успішно підтверджено! Ви будете перенаправлені назад через {{ valueToShow }} секунд.</p>
    </div>
 </template>
 

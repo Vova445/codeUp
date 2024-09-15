@@ -102,13 +102,7 @@
          "text": "We offer two study formats. In the first format, you will have materials, video examples, and practical tasks. In the second format, you will also have the opportunity to ask additional questions."
       }
    },
-   "twoFactorAuth": {
-      "byEmailTitle": "Confirm using email",
-      "byQRTitle": "Confirm using QR-code",
-      "byPhoneTitle": "Confirm using phone number",
-      "generateGrCode": "Generate GR Code",
-      "confirmCode": "Confirm code"
-   },
+
    "twoFactorAuth": {
       "byEmailTitle": "Confirm by Email",
       "byQRTitle": "Confirm by QR Code",

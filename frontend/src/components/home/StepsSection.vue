@@ -1,6 +1,7 @@
 <template>
    <div class="steps">
       <div class="steps__container">
+         <h2 class="steps__title title">{{ $t('titles.stepsSection') }}</h2>
          <v-timeline v-if="windowWidth > 767" direction="horizontal">
             <v-timeline-item v-for="stepItem in stepsList" :key="stepItem.id">
                <template #opposite> </template>
@@ -144,9 +145,13 @@ onMounted(() => {
    &:not(:last-child) {
       margin-bottom: clamp(6.25rem, 1.559rem + 9.785vw, 9.375rem);
    }
+   &__title {
+      &:not(:last-child) {
+         margin-bottom: clamp(2.188rem, 0.78rem + 2.935vw, 3.125rem);
+      }
+   }
    &__container {
       text-align: center;
-
       &__wrapper {
          position: relative;
 

@@ -5,54 +5,34 @@
             <div class="email-auth__title title">
                {{ $t('twoFactorAuth.sendEmailLetterTitle') }} <span><font-awesome-icon :icon="['fas', 'envelope']" /></span>
             </div>
-            <button class="email-auth__button button button--big" @click="sendEmailLetter">
+            <button class="email-auth__button button button--big" :disabled="countToSentAgain < 10" @click="sendEmail">
                {{ $t('twoFactorAuth.sendEmailLetterButton') }}
             </button>
+            <div class="email-auth__info-in">
+               {{ $t('twoFactorAuth.sentLetterAgain') }} <span> {{ countToSentAgain }} </span>
+            </div>
          </div>
       </div>
    </main-master-page>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
-import axios from 'axios'
-import { useAlertStore } from '../../stores/alert.js'
-
-// const { runAlert } = useAlertStore()
-
-async function sendEmailLetter() {
-   console.log('Button clicked')
-   let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken')
-
-   if (token) {
-      try {
-         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-         const response = await axios.post(
-            `${apiUrl}/api/send-2fa-email`,
-            {},
-            {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            },
-         )
-
-         if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
-            localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'))
-            localStorage.removeItem('tempAuthToken')
-         }
-
-         // runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
-      } catch (err) {
-         console.error('Error sending email:', err)
-         // runAlert('twoFactorAuth.emailSentFailed', 'problem');
+import { useTwoFactorAuthStore } from '../../stores/twoFactorAuth.js'
+const { sendEmailLetter } = useTwoFactorAuthStore()
+const countToSentAgain = ref(10)
+function sendEmail() {
+   sendEmailLetter()
+   const intervalToSent = setInterval(() => {
+      if (countToSentAgain.value === 0) {
+         countToSentAgain.value = 10
+         clearInterval(intervalToSent)
       }
-   } else {
-      //  runAlert('twoFactorAuth.noAuthToken', 'problem');
-   }
+      countToSentAgain.value -= 1
+   }, 1000)
 }
 </script>
-
 <style lang="scss" scoped>
 .email-auth {
    background-color: #1d1c1c;
@@ -73,6 +53,18 @@ async function sendEmailLetter() {
       }
    }
    &__button {
+      &:not(:last-child) {
+         margin-bottom: 15px;
+      }
+   }
+   &__info-in {
+      line-height: 1.2;
+      color: #909090;
+      font-size: 12px;
+      span {
+         color: #3c776f;
+         font-weight: 600;
+      }
    }
 }
 </style>

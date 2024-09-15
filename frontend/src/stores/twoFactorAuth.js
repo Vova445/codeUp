@@ -1,48 +1,14 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
 import { useAlertStore } from './alert.js'
 
 export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
-   const router = useRoute()
-   const { runAlert } = useAlertStore()
-   const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
-   //const apiUrl = meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
    const qrCodeUrl = ref('')
-   async function sendEmailLetter() {
-      console.log('Button clicked')
-      let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken')
+   const qrCode = ref('')
+   const { runAlert } = useAlertStore()
 
-      if (token) {
-         try {
-            const apiUrl = meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-            const response = await axios.post(
-               `${apiUrl}/api/send-2fa-email`,
-               {},
-               {
-                  headers: {
-                     Authorization: token ? `Bearer ${token}` : '',
-                  },
-               },
-            )
-
-            if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
-               localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'))
-               localStorage.removeItem('tempAuthToken')
-            }
-
-            // runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
-         } catch (err) {
-            console.error('Error sending email:', err)
-            // runAlert('twoFactorAuth.emailSentFailed', 'problem');
-         }
-      } else {
-         //  runAlert('twoFactorAuth.noAuthToken', 'problem');
-      }
-   }
-
-   async function generateQRCode() {
+   const generateQRCode = async () => {
       const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -61,21 +27,20 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
       }
    }
 
-   async function verifyQRCode(qrCode) {
+   const verifyQRCode = async (inputCode, router) => {
       const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-         console.log('apiUrl')
-         console.log(apiUrl)
          const response = await axios.post(
             `${apiUrl}/api/verify-qr`,
-            { code: qrCode },
+            { code: inputCode },
             {
                headers: {
                   Authorization: token ? `Bearer ${token}` : '',
                },
             },
          )
+
          const tempAuthToken = localStorage.getItem('tempAuthToken')
          if (tempAuthToken) {
             localStorage.setItem('authToken', tempAuthToken)
@@ -88,6 +53,41 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
          runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
       }
    }
+   const sendEmailLetter = async () => {
+      let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken')
 
-   return { sendEmailLetter, verifyQRCode, generateQRCode, qrCodeUrl, qrCode }
+      if (token) {
+         try {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+            const response = await axios.post(
+               `${apiUrl}/api/send-2fa-email`,
+               {},
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               },
+            )
+
+            if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
+               localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'))
+               localStorage.removeItem('tempAuthToken')
+            }
+
+            runAlert('twoFactorAuth.emailSentSuccessfully', 'success')
+         } catch (err) {
+            console.error('Error sending email:', err)
+            runAlert('twoFactorAuth.emailSentFailed', 'problem')
+         }
+      } else {
+         runAlert('twoFactorAuth.emailSentFailed', 'problem')
+      }
+   }
+   return {
+      qrCodeUrl,
+      qrCode,
+      generateQRCode,
+      verifyQRCode,
+      sendEmailLetter,
+   }
 })

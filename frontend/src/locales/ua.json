@@ -119,6 +119,9 @@
       "qrcodeСonfirmationSuccess": "Підтвердження акаунту відбулось успішно",
       "qrcodeСonfirmationProblem": "Помилка при підтвердженні акаунту",
       "sendEmailLetterTitle": "Надішліть лист на вашу електронну адресу та підтвердіть її",
-      "sendEmailLetterButton": "Надіслати лист"
+      "sendEmailLetterButton": "Надіслати лист",
+      "emailSentSuccessfully": "Лист підтвердження надіслано успішно",
+      "emailSentFailed": "Сталась помилка при надсиланні листа",
+      "sentLetterAgain": "Ви можете надіслати лист через"
    }
 }

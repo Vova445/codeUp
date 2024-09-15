@@ -126,6 +126,9 @@
       "qrcodeСonfirmationSuccess": "Account verification was successful",
       "qrcodeСonfirmationProblem": "Account verification error",
       "sendEmailLetterTitle": "Send an email to your address and confirm it",
-      "sendEmailLetterButton": "Send letter"
+      "sendEmailLetterButton": "Send letter",
+      "emailSentSuccessfully": "The confirmation email was sent successfully",
+      "emailSentFailed": "An error occurred while sending the email",
+      "sentLetterAgain": "You can send a letter in"
    }
 }

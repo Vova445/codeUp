@@ -3,8 +3,6 @@
      <div class="google-auth">
        <div class="google-auth__container">
          <h4 class="google-auth__title">{{ $t('twoFactorAuth.selectOneOfTwoAuth') }}</h4>
-         
-         <!-- QR Code Authentication -->
          <div class="google-auth__box">
            <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byQRTitle') }}</div>
            <div class="google-auth__qr-code">
@@ -12,8 +10,6 @@
            </div>
            <button @click="generateQRCode">Generate QR Code</button>
          </div>
-         
-         <!-- Google Authenticator Code Entry -->
          <div class="google-auth__box">
            <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
            <input v-model="googleCode" placeholder="Enter Google Authenticator Code" />

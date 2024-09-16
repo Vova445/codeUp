@@ -100,6 +100,13 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
             console.log('Auth token has been updated');
           }
          }
+         else {
+            await axios.post(`${apiUrl}/api/update-token-email`, {}, {
+               headers: {
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+            }       
       } catch (err) {
         console.error('Error checking token email:', err);
       }

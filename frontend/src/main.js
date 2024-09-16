@@ -45,7 +45,7 @@ app.use(createPinia())
 app.use(router)
 app.use(i18n)
 app.use(vuetify)
-app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('FontAwesomeIcon', FontAwesomeIcon)
 app.mount('#app')
 
 

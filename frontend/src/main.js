@@ -49,10 +49,15 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 
 
-window.addEventListener('storage', (event) => {
-   if (event.key === 'twoFactorAuthConfirmed' && event.newValue === 'true') {
-      location.reload();
-   }
-});
+const channel = new BroadcastChannel('page-update-channel');
 
-localStorage.setItem('twoFactorAuthConfirmed', 'true');
+channel.onmessage = (event) => {
+  if (event.data === 'update') {
+    location.reload();
+  }
+};
+
+function notifyTabs() {
+  channel.postMessage('update');
+}
+

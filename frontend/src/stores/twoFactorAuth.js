@@ -55,7 +55,8 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
    }
    const sendEmailLetter = async () => {
       let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken');
-      
+      console.log('Current token:', token);
+
       if (token) {
         try {
           const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -68,6 +69,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
               },
             }
           );
+          console.log('Send email response:', response.data);
     
           runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
           checkTokenEmail(token);
@@ -88,12 +90,15 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('Verify token response:', response.data);
     
         if (response.data.isValid) {
-          const newAuthToken = jwt.sign({ userId: response.data.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-          localStorage.setItem('authToken', newAuthToken);
-          localStorage.removeItem('tempAuthToken');
-        }
+         const oldToken = localStorage.getItem('tempAuthToken');
+         if (oldToken) {
+            localStorage.setItem('authToken', oldToken);
+            localStorage.removeItem('tempAuthToken');
+          }
+         }
       } catch (err) {
         console.error('Error checking token email:', err);
       }

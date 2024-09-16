@@ -49,15 +49,3 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 
 
-const channel = new BroadcastChannel('page-update-channel');
-
-channel.onmessage = (event) => {
-  if (event.data === 'update') {
-    location.reload();
-  }
-};
-
-function notifyTabs() {
-  channel.postMessage('update');
-}
-

@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) {
+  if (!token) { 
     return res.status(401).json({ message: 'No token provided' });
   }
 
@@ -34,9 +34,13 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    user.tokenEmail = confirmationToken;
+    await user.save();
+
     const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const mailOptions = {
-      from: process.env.EMAIL_USERNAME,
+      from: process.env.EMAIL_USER,
       to: user.email,
       subject: 'Your Two-Factor Authentication Code',
       html: `
@@ -51,7 +55,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 40px; background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 20px; box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); max-width: 600px; margin: auto;">
           <h2 style="color: #00796b; font-size: 30px; margin-bottom: 20px; animation: slideInFromTop 1s ease-out;">🔐 Two-Factor Authentication</h2>
           <p style="font-size: 18px; color: #004d40; margin-bottom: 20px; animation: fadeInUp 1s ease-out;">To ensure the security of your account, please verify your email address by clicking the button below:</p>
-          <a href="${apiUrl}/api/verify-2fa/${token}" 
+          <a href="${apiUrl}/api/verify-2fa/${confirmationToken}" 
               style="display: inline-block; padding: 15px 35px; background: linear-gradient(45deg, #004d40, #00796b); color: white; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; box-shadow: 0px 12px 25px rgba(0, 77, 64, 0.3); transition: all 0.6s ease; text-transform: uppercase;">
               Verify Email
            </a>
@@ -61,7 +65,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
             <p style="font-size: 16px; color: #004d40;">For support, reach out to us at <a href="mailto:mycodup@gmail.com" style="color: #004d40; text-decoration: underline;">mycodup@gmail.com</a>.</p>
           </div>
         </div>
-      `,
+      `
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -78,6 +82,7 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
 });
 
 
+
   
 
 emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
@@ -90,7 +95,8 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-    if (user.tokenEmail === token || user.token === token) {
+
+    if (user.tokenEmail === token) {
       user.isTwoFAEnabled = true;
       user.tokenEmail = null;
       await user.save();
@@ -120,7 +126,7 @@ emailTwoFactorRoutes.get('/verify-token-email', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json({ isValid: user.tokenEmail === token });
+    res.status(200).json({ isValid: user.tokenEmail !== null });
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
   }

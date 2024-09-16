@@ -80,9 +80,10 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
     
           if (verifyResponse.data.isValid) {
             if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
-              localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'));
-              localStorage.removeItem('tempAuthToken');
-            }
+               localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'));
+               localStorage.removeItem('tempAuthToken');
+             }
+             
             runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
           } else {
             runAlert('twoFactorAuth.emailSentFailed', 'problem');

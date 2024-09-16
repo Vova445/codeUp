@@ -1,60 +1,81 @@
 <template>
    <main-master-page>
-      <div class="google-auth">
-         <div class="google-auth__container">
-            <h4 class="google-auth__title">{{ $t('twoFactorAuth.selectOneOfTwoAuth') }}</h4>
-            <div class="google-auth__box">
-               <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byQRTitle') }}</div>
-               <div class="google-auth__qr-code" v-if="qrCodeUrl">
-                  <img :src="qrCodeUrl" alt="QR Code" />
-               </div>
-            </div>
-            <div class="google-auth__box">
-               <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
-               <div class="google-auth__code">
-                  <input v-model="code" placeholder="Enter code" />
-                  <button @click="verifyCode">Verify</button>
-               </div>
-            </div>
+     <div class="google-auth">
+       <div class="google-auth__container">
+         <h4 class="google-auth__title">{{ $t('twoFactorAuth.selectOneOfTwoAuth') }}</h4>
+         
+         <!-- QR Code Authentication -->
+         <div class="google-auth__box">
+           <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byQRTitle') }}</div>
+           <div class="google-auth__qr-code">
+             <img :src="qrCodeUrl" alt="QR Code" v-if="qrCodeUrl" />
+           </div>
+           <button @click="generateQRCode">Generate QR Code</button>
          </div>
-      </div>
+         
+         <!-- Google Authenticator Code Entry -->
+         <div class="google-auth__box">
+           <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
+           <input v-model="googleCode" placeholder="Enter Google Authenticator Code" />
+           <button @click="verifyGoogleCode">Verify Code</button>
+         </div>
+       </div>
+     </div>
    </main-master-page>
-</template>
-
-<script setup>
-import MainMasterPage from '@/masterPages/MainMasterPage.vue'
-import { ref } from 'vue';
-import axios from 'axios';
-
-const qrCodeUrl = ref('');
-const code = ref('');
-const secret = ref('');
-const fetchQRCode = async () => {
+ </template>
+ 
+ <script setup>
+ import { ref } from 'vue';
+ import axios from 'axios';
+ import MainMasterPage from '@/masterPages/MainMasterPage.vue';
+ 
+ const qrCodeUrl = ref('');
+ const googleCode = ref('');
+ const userId = ref('');
+ 
+ const generateQRCode = async () => {
    try {
-      const response = await axios.post('/auth/generate-secret');
-      qrCodeUrl.value = response.data.qrCodeUrl;
-      secret.value = response.data.secret; 
+     const response = await axios.post('/api/generate-qr-code', { userId: userId.value });
+     qrCodeUrl.value = response.data.qrCodeUrl;
    } catch (error) {
-      console.error('Error fetching QR code:', error);
+     console.error('Error generating QR code:', error);
    }
-};
-const verifyCode = async () => {
+ };
+ 
+ const verifyGoogleCode = async () => {
    try {
-      const response = await axios.post('/auth/verify-code', {
-         secret: secret.value, 
-         token: code.value
-      });
-      if (response.data.verified) {
-         alert('Code verified successfully!');
-      } else {
-         alert('Invalid code.');
-      }
+     const response = await axios.post('/api/verify-google-code', {
+       userId: userId.value,
+       token: googleCode.value,
+     });
+     if (response.data.message === 'Code is valid') {
+       alert('Code verified successfully!');
+     } else {
+       alert('Invalid code!');
+     }
    } catch (error) {
-      console.error('Error verifying code:', error);
+     console.error('Error verifying code:', error);
    }
-};
-
-fetchQRCode();
-</script>
-
-<style lang="scss" scoped></style>
+ };
+ </script>
+ 
+ <style lang="scss" scoped>
+ .google-auth {
+   &__container {
+     max-width: 400px;
+     margin: 0 auto;
+     padding: 2rem;
+     border: 1px solid #ccc;
+     border-radius: 8px;
+   }
+   &__title, &__sub-title {
+     text-align: center;
+     margin-bottom: 1rem;
+   }
+   &__qr-code {
+     text-align: center;
+     margin-bottom: 1rem;
+   }
+ }
+ </style>
+ 

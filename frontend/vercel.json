@@ -4,5 +4,20 @@
          "source": "/(.*)",
          "destination": "/index.html"
       }
+   ],
+   "version": 2,
+   "name": "codeUp",
+   "alias": "code-up-omega.vercel.app",
+   "builds": [
+     {
+       "src": "package.json",
+       "use": "@vercel/node"
+     }
+   ],
+   "routes": [
+     {
+       "src": "/(.*)",
+       "dest": "/$1"
+     }
    ]
 }

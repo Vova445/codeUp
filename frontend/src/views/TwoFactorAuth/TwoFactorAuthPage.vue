@@ -14,9 +14,9 @@
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byQRTitle') }}</span>
             </router-link>
-            <router-link v-if="phoneNumber" class="two-factor-auth__button two-factor-auth__button--phone" :to="{ name: 'phoneAuth' }">
+            <router-link v-if="phoneNumber" class="two-factor-auth__button two-factor-auth__button--google" :to="{ name: 'googleAuth' }">
                <span class="two-factor-auth__icon">
-                  <font-awesome-icon :icon="['fas', 'phone']" />
+                  <font-awesome-icon :icon="['fab', 'google']" />
                </span>
                <span class="two-factor-auth__text">{{ $t('twoFactorAuth.byPhoneTitle') }}</span>
             </router-link>
@@ -136,8 +136,8 @@ async function confirmByEmail() {
          }
       }
 
-      &--phone {
-         background-color: #1f7a1f;
+      &--google {
+         background-color: #ffffff;
          .two-factor-auth__icon {
             color: #ffffff;
          }

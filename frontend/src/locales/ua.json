@@ -122,6 +122,8 @@
       "sendEmailLetterButton": "Надіслати лист",
       "emailSentSuccessfully": "Лист підтвердження надіслано успішно",
       "emailSentFailed": "Сталась помилка при надсиланні листа",
-      "sentLetterAgain": "Ви можете надіслати лист через"
+      "sentLetterAgain": "Ви можете надіслати лист через",
+      "selectOneOfTwoAuth": "Виберіть один з двох способів підтвердження акаунту",
+      "byGoogleCode": "Підтвердити за ключем налаштування"
    }
 }

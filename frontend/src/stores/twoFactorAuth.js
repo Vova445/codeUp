@@ -69,25 +69,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
             }
           );
     
-          const verifyResponse = await axios.get(
-            `${apiUrl}/api/verify-token-email`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-    
-          if (verifyResponse.data.isValid) {
-            if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
-               localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'));
-               localStorage.removeItem('tempAuthToken');
-             }
-             
-            runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
-          } else {
-            runAlert('twoFactorAuth.emailSentFailed', 'problem');
-          }
+          runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
         } catch (err) {
           console.error('Error sending email:', err);
           runAlert('twoFactorAuth.emailSentFailed', 'problem');
@@ -96,6 +78,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
         runAlert('twoFactorAuth.emailSentFailed', 'problem');
       }
     };
+    
     
     
    return {

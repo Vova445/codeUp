@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) { 
+  if (!token) {
     return res.status(401).json({ message: 'No token provided' });
   }
 
@@ -93,19 +93,16 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-    if (user.tokenEmail !== null) {
-      user.isTwoFAEnabled = true;
-      user.tokenEmail = null;
-      await user.save();
-      
-      res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
-    } else {
-      res.status(400).send('Invalid or missing token');
-    }
+    user.isTwoFAEnabled = true;
+    user.tokenEmail = token; 
+    await user.save();
+
+    res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
   } catch (error) {
     res.status(400).send('Invalid or expired token');
   }
 });
+
 
 
 

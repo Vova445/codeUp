@@ -68,6 +68,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
               },
             }
           );
+    
           const verifyResponse = await axios.get(
             `${apiUrl}/api/verify-token-email`,
             {
@@ -94,6 +95,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
         runAlert('twoFactorAuth.emailSentFailed', 'problem');
       }
     };
+    
     
    return {
       qrCodeUrl,

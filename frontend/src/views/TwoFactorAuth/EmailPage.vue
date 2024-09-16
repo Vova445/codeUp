@@ -8,7 +8,7 @@
             <button class="email-auth__button button button--big" :disabled="countToSentAgain < 10" @click="sendEmail">
                {{ $t('twoFactorAuth.sendEmailLetterButton') }}
             </button>
-            <div class="email-auth__info-in" v-if="countToSentAgain < 10">
+            <div v-if="countToSentAgain < 10" class="email-auth__info-in">
                {{ $t('twoFactorAuth.sentLetterAgain') }} <span> {{ countToSentAgain }} </span>
             </div>
          </div>

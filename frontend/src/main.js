@@ -47,3 +47,12 @@ app.use(i18n)
 app.use(vuetify)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
+
+
+window.addEventListener('storage', (event) => {
+   if (event.key === 'twoFactorAuthConfirmed' && event.newValue === 'true') {
+      location.reload();
+   }
+});
+
+localStorage.setItem('twoFactorAuthConfirmed', 'true');

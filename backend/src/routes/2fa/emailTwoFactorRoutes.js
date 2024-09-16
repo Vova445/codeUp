@@ -97,7 +97,8 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     user.isTwoFAEnabled = true;
     user.tokenEmail = token;
     await user.save();
-
+    res.cookie('twoFactorAuthConfirmed', true, { httpOnly: false });
+    
     res.redirect(`https://code-up-omega.vercel.app/twoFactorAuth/loading?token=${token}`);
   } catch (error) {
     res.status(400).send('Invalid or expired token');

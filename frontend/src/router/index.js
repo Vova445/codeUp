@@ -130,7 +130,7 @@ const router = createRouter({
          name: 'loadingEmail',
          component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
          meta: {
-            requireAuth: true,
+            requireAuth: false,
          },
       },
       {

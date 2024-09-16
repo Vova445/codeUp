@@ -54,35 +54,47 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
       }
    }
    const sendEmailLetter = async () => {
-      let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken')
-
+      let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken');
+    
       if (token) {
-         try {
-            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-            const response = await axios.post(
-               `${apiUrl}/api/send-2fa-email`,
-               {},
-               {
-                  headers: {
-                     Authorization: `Bearer ${token}`,
-                  },
-               },
-            )
-
-            if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
-               localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'))
-               localStorage.removeItem('tempAuthToken')
+        try {
+          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+          const response = await axios.post(
+            `${apiUrl}/api/send-2fa-email`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-
-            runAlert('twoFactorAuth.emailSentSuccessfully', 'success')
-         } catch (err) {
-            console.error('Error sending email:', err)
-            runAlert('twoFactorAuth.emailSentFailed', 'problem')
-         }
+          );
+          const verifyResponse = await axios.get(
+            `${apiUrl}/api/verify-token-email`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+    
+          if (verifyResponse.data.isValid) {
+            if (!localStorage.getItem('authToken') && localStorage.getItem('tempAuthToken')) {
+              localStorage.setItem('authToken', localStorage.getItem('tempAuthToken'));
+              localStorage.removeItem('tempAuthToken');
+            }
+            runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
+          } else {
+            runAlert('twoFactorAuth.emailSentFailed', 'problem');
+          }
+        } catch (err) {
+          console.error('Error sending email:', err);
+          runAlert('twoFactorAuth.emailSentFailed', 'problem');
+        }
       } else {
-         runAlert('twoFactorAuth.emailSentFailed', 'problem')
+        runAlert('twoFactorAuth.emailSentFailed', 'problem');
       }
-   }
+    };
+    
    return {
       qrCodeUrl,
       qrCode,

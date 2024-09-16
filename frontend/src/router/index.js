@@ -94,9 +94,9 @@ const router = createRouter({
          },
       },
       {
-         path: '/two-factor-auth/phone',
-         name: 'phoneAuth',
-         component: () => import('../views/TwoFactorAuth/PhonePage.vue'),
+         path: '/two-factor-auth/googleAuth',
+         name: 'googleAuth',
+         component: () => import('../views/TwoFactorAuth/GoogleAuthPage.vue'),
          meta: {
             requireAuth: false,
          },

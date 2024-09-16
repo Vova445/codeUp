@@ -123,6 +123,8 @@
       "sendEmailLetterButton": "Send letter",
       "emailSentSuccessfully": "The confirmation email was sent successfully",
       "emailSentFailed": "An error occurred while sending the email",
-      "sentLetterAgain": "You can send a letter in"
+      "sentLetterAgain": "You can send a letter in",
+      "selectOneOfTwoAuth": "Select one of the two account confirmation methods",
+      "byGoogleCode": "Confirm using the setup key"
    }
 }

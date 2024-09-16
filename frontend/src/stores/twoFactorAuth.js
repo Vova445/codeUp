@@ -55,7 +55,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
    }
    const sendEmailLetter = async () => {
       let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken');
-    
+      
       if (token) {
         try {
           const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -70,12 +70,32 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
           );
     
           runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
+          checkTokenEmail(token);
         } catch (err) {
           console.error('Error sending email:', err);
           runAlert('twoFactorAuth.emailSentFailed', 'problem');
         }
       } else {
         runAlert('twoFactorAuth.emailSentFailed', 'problem');
+      }
+    };
+    
+    const checkTokenEmail = async (token) => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+        const response = await axios.get(`${apiUrl}/api/verify-token-email`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        if (response.data.isValid) {
+          const newAuthToken = jwt.sign({ userId: response.data.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+          localStorage.setItem('authToken', newAuthToken);
+          localStorage.removeItem('tempAuthToken');
+        }
+      } catch (err) {
+        console.error('Error checking token email:', err);
       }
     };
     

@@ -96,7 +96,7 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     user.isTwoFAEnabled = true;
     user.tokenEmail = token; 
     await user.save();
-
+    res.json({ success: true });
     res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
   } catch (error) {
     res.status(400).send('Invalid or expired token');
@@ -121,11 +121,12 @@ emailTwoFactorRoutes.get('/verify-token-email', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(200).json({ isValid: user.tokenEmail !== null });
+    res.status(200).json({ isValid: user.tokenEmail !== null, userId: user._id });
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
   

@@ -52,7 +52,7 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
        return res.status(400).json({ message: 'Invalid credentials' });
      }
  
-     const token = generateToken(user._id, process.env.JWT_SECRET, '1h');
+     const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
      const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
      user.token = token;
      user.refreshToken = refreshToken;

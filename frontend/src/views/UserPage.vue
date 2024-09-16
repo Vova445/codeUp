@@ -128,7 +128,20 @@ const updateProfile = async () => {
 }
 
 async function onLogout() {
-   localStorage.removeItem('authToken')
+   const token = localStorage.getItem('authToken');
+   if (token) {
+     try {
+       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+       await axios.post(`${apiUrl}/api/logout`, null, {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       });
+     } catch (err) {
+       console.error('Error logging out:', err);
+     }
+   }
+   localStorage.removeItem('authToken');
    router.push({ name: 'home' })
 }
 

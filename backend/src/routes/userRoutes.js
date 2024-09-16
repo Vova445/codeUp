@@ -24,7 +24,7 @@ userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
       const newUser = new User({ name, email, password });
       await newUser.save();
 
-      const token = generateToken(newUser._id, process.env.JWT_SECRET, '1h');
+      const token = generateToken(newUser._id, process.env.JWT_SECRET, '24h');
       const refreshToken = generateToken(newUser._id, process.env.JWT_REFRESH_SECRET, '30d');
       newUser.token = token;
       newUser.refreshToken = refreshToken;

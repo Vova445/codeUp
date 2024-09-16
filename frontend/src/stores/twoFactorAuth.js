@@ -97,6 +97,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
          if (oldToken) {
             localStorage.setItem('authToken', oldToken);
             localStorage.removeItem('tempAuthToken');
+            console.log('Auth token has been updated');
           }
          }
       } catch (err) {

@@ -28,10 +28,10 @@
  const qrCodeUrl = ref('');
  const googleCode = ref('');
  const userId = ref('');
- 
+ const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
  const generateQRCode = async () => {
    try {
-     const response = await axios.post('/api/generate-qr-code', { userId: userId.value });
+     const response = await axios.post(`${apiUrl}/api/generate-qr-code`, { userId: userId.value });
      qrCodeUrl.value = response.data.qrCodeUrl;
    } catch (error) {
      console.error('Error generating QR code:', error);
@@ -40,7 +40,7 @@
  
  const verifyGoogleCode = async () => {
    try {
-     const response = await axios.post('/api/verify-google-code', {
+     const response = await axios.post(`${apiUrl}/api/verify-google-code`, {
        userId: userId.value,
        token: googleCode.value,
      });

@@ -35,8 +35,6 @@ emailTwoFactorRoutes.post('/send-2fa-email', async (req, res) => {
     }
 
     const confirmationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
-    user.tokenEmail = confirmationToken;
-    await user.save();
 
     const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
     const mailOptions = {
@@ -95,20 +93,20 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
-
-    if (user.tokenEmail === token) {
+    if (user.tokenEmail !== null) {
       user.isTwoFAEnabled = true;
       user.tokenEmail = null;
       await user.save();
       
       res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
     } else {
-      res.status(400).send('Invalid token');
+      res.status(400).send('Invalid or missing token');
     }
   } catch (error) {
     res.status(400).send('Invalid or expired token');
   }
 });
+
 
 
 emailTwoFactorRoutes.get('/verify-token-email', async (req, res) => {

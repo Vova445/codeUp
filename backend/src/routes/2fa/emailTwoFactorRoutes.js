@@ -93,11 +93,12 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
+
     user.isTwoFAEnabled = true;
-    user.tokenEmail = token; 
+    user.tokenEmail = token;
     await user.save();
-    // res.json({ success: true });
-    res.redirect('https://code-up-omega.vercel.app/twoFactorAuth/loading');
+
+    res.redirect(`https://code-up-omega.vercel.app/twoFactorAuth/loading?token=${token}`);
   } catch (error) {
     res.status(400).send('Invalid or expired token');
   }

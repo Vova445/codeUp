@@ -34,6 +34,13 @@ onMounted(() => {
          valueToShow.value = 5
          value.value = 0
          elapsed = 0
+         const urlParams = new URLSearchParams(window.location.search);
+         const token = urlParams.get('token');
+         if (token) {
+            localStorage.setItem('authToken', token);
+            localStorage.removeItem('tempAuthToken');
+         }
+
          window.location.href = 'https://code-up-omega.vercel.app/user'
          clearInterval(interval)
       }

@@ -35,7 +35,7 @@ userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
       console.error('Error registering user:', err);
       res.status(500).json({ message: 'Error registering user', error: err.message });
    }
-});
+});  
 
 userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
    try {

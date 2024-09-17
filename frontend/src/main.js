@@ -3,6 +3,9 @@ import './assets/styles/index.scss'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+//swiper
+import './moduleHelpers/swiper.js'
+
 // localScript
 import './localScript/watcher/watcher.js'
 import './localScript/localScript.js'
@@ -47,5 +50,3 @@ app.use(i18n)
 app.use(vuetify)
 app.component('FontAwesomeIcon', FontAwesomeIcon)
 app.mount('#app')
-
-

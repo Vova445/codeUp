@@ -2,7 +2,7 @@
    <section data-watch class="master">
       <div class="master__container">
          <h1 class="master__title">{{ $t('titles.mainTitle') }}</h1>
-         <div class="master__items">
+         <!--<div class="master__items">
             <div v-for="courseItem in coursesList" :key="courseItem.id" class="master__item item-master">
                <div class="item-master__content">
                   <h3 class="item-master__title subtitile">{{ courseItem.title }}</h3>
@@ -16,7 +16,8 @@
                <button class="item-master__button button">{{ $t('buttons.detaildedAboutCourse') }}</button>
                <div class="item-master__price">{{ $t('infos.priceFrom') }} - {{ courseItem.price }} $</div>
             </div>
-         </div>
+         </div>-->
+         
       </div>
    </section>
 </template>

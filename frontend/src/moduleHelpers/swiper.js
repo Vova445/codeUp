@@ -3,7 +3,7 @@ import { Navigation, Autoplay } from 'swiper/modules'
 // import Swiper and modules styles
 import 'swiper/css'
 // init Swiper:
-export function initSliders() {
+export function initSliderCarousal() {
    // Список слайдерів
    // Перевіряємо, чи є слайдер на сторінці
    if (document.querySelector('.courses-carousal__slider')) {
@@ -80,9 +80,4 @@ export function initSliders() {
          on: {},
       })
    }
-   //============
 }
-
-window.addEventListener('DOMContentLoaded', function (e) {
-   initSliders()
-})

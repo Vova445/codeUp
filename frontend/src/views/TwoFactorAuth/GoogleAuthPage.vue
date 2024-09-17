@@ -1,77 +1,119 @@
 <template>
    <main-master-page>
-     <div class="google-auth">
-       <div class="google-auth__container">
-         <h4 class="google-auth__title">{{ $t('twoFactorAuth.selectOneOfTwoAuth') }}</h4>
-         <div class="google-auth__box">
-           <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byQRTitle') }}</div>
-           <div class="google-auth__qr-code">
-             <img :src="qrCodeUrl" alt="QR Code" v-if="qrCodeUrl" />
-           </div>
-           <button @click="generateQRCode">Generate QR Code</button>
+      <div class="google-auth">
+         <div class="google-auth__container">
+            <h4 class="google-auth__title title">{{ $t('twoFactorAuth.selectOneOfTwoAuth') }}</h4>
+            <div class="google-auth__box">
+               <div class="google-auth__sub-title subtitile">{{ $t('twoFactorAuth.byQRTitle') }}</div>
+               <div class="google-auth__qr-code">
+                  <img :src="qrCodeUrl" alt="QR Code" v-if="qrCodeUrl" />
+               </div>
+               <button class="google-auth__button button" @click="generateQRCode">Generate QR Code</button>
+            </div>
+            <div class="google-auth__box">
+               <div class="google-auth__sub-title subtitile">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
+               <v-otp-input
+                  ref="inputCode"
+                  class="google-auth__input"
+                  v-model="googleCode"
+                  focus-all
+                  :length="8"
+                  placeholder="0"
+                  variant="underlined"
+               ></v-otp-input>
+               <button class="google-auth__button button" @click="verifyGoogleCode">Verify Code</button>
+            </div>
          </div>
-         <div class="google-auth__box">
-           <div class="google-auth__sub-title">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
-           <input v-model="googleCode" placeholder="Enter Google Authenticator Code" />
-           <button @click="verifyGoogleCode">Verify Code</button>
-         </div>
-       </div>
-     </div>
+      </div>
    </main-master-page>
- </template>
- 
- <script setup>
- import { ref } from 'vue';
- import axios from 'axios';
- import MainMasterPage from '@/masterPages/MainMasterPage.vue';
- 
- const qrCodeUrl = ref('');
- const googleCode = ref('');
- const userId = ref('');
- const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
- const generateQRCode = async () => {
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+import MainMasterPage from '@/masterPages/MainMasterPage.vue'
+
+const qrCodeUrl = ref('')
+const googleCode = ref('')
+const userId = ref('')
+const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+const generateQRCode = async () => {
    try {
-     const response = await axios.post(`${apiUrl}/api/generate-qr-code`, { userId: userId.value });
-     qrCodeUrl.value = response.data.qrCodeUrl;
+      const response = await axios.post(`${apiUrl}/api/generate-qr-code`, { userId: userId.value })
+      qrCodeUrl.value = response.data.qrCodeUrl
    } catch (error) {
-     console.error('Error generating QR code:', error);
+      console.error('Error generating QR code:', error)
    }
- };
- 
- const verifyGoogleCode = async () => {
+}
+
+const verifyGoogleCode = async () => {
    try {
-     const response = await axios.post(`${apiUrl}/api/verify-google-code`, {
-       userId: userId.value,
-       token: googleCode.value,
-     });
-     if (response.data.message === 'Code is valid') {
-       alert('Code verified successfully!');
-     } else {
-       alert('Invalid code!');
-     }
+      const response = await axios.post(`${apiUrl}/api/verify-google-code`, {
+         userId: userId.value,
+         token: googleCode.value,
+      })
+      if (response.data.message === 'Code is valid') {
+         alert('Code verified successfully!')
+      } else {
+         alert('Invalid code!')
+      }
    } catch (error) {
-     console.error('Error verifying code:', error);
+      console.error('Error verifying code:', error)
    }
- };
- </script>
- 
- <style lang="scss" scoped>
- .google-auth {
+}
+</script>
+
+<style lang="scss" scoped>
+.google-auth {
+   &:not(:last-child) {
+      margin-bottom: 50px;
+   }
+   // .google-auth__container
    &__container {
-     max-width: 400px;
-     margin: 0 auto;
-     padding: 2rem;
-     border: 1px solid #ccc;
-     border-radius: 8px;
+      max-width: 900px;
+      text-align: center;
    }
-   &__title, &__sub-title {
-     text-align: center;
-     margin-bottom: 1rem;
+   // .google-auth__title
+   &__title {
+      &:not(:last-child) {
+         margin-bottom: 40px;
+      }
    }
+   // .google-auth__box
+   &__box {
+      border-radius: 10px;
+      padding: clamp(1.875rem, 1.473rem + 1.285vw, 2.5rem) clamp(0.938rem, 0.226rem + 2.847vw, 2.5rem);
+      background-color: #222222;
+      box-shadow: 0.5px 1px 10px #545454;
+      &:not(:last-child) {
+         margin-bottom: 30px;
+      }
+   }
+   // .google-auth__sub-title
+   &__sub-title {
+      &:not(:last-child) {
+         margin-bottom: 10px;
+      }
+   }
+   // .google-auth__qr-code
    &__qr-code {
-     text-align: center;
-     margin-bottom: 1rem;
+      width: 150px;
+      height: 150px;
+      img {
+         width: 100px;
+         height: 100px;
+      }
    }
- }
- </style>
- 
+   &__input {
+      &:not(:last-child) {
+         margin-bottom: 10px;
+      }
+   }
+   &__button {
+      width: 100%;
+      &:not(:last-child) {
+         margin-bottom: 10px;
+      }
+   }
+}
+</style>

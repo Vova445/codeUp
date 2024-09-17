@@ -17,12 +17,16 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, onMounted } from 'vue'
+import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
 const props = defineProps({
    coursesList: {
       type: Array,
       required: true,
    },
+})
+onMounted(() => {
+   initSliderCarousal()
 })
 </script>
 
@@ -46,7 +50,6 @@ const props = defineProps({
    // .courses-carousal__slide
    &__slide {
       font-size: 40px;
-      //width: 40px;
       height: 40px;
    }
    // .courses-carousal__link

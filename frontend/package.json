@@ -18,7 +18,7 @@
       "@fortawesome/vue-fontawesome": "^3.0.8",
       "animate.css": "^4.1.1",
       "axios": "^1.7.3",
-      "swiper": "latest",
+      "swiper": "^11.0.7",
       "bcrypt": "^5.1.1",
       "bcryptjs": "^2.4.3",
       "cors": "^2.8.5",

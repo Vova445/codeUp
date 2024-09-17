@@ -29,7 +29,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .courses-carousal {
    &:not(:last-child) {
-      margin-bottom: 70px;
+      margin-bottom: clamp(6.25rem, 1.559rem + 9.785vw, 9.375rem);
    }
    // .courses-carousal__container
    &__container {
@@ -46,7 +46,7 @@ const props = defineProps({
    // .courses-carousal__slide
    &__slide {
       font-size: 40px;
-      width: 40px;
+      //width: 40px;
       height: 40px;
    }
    // .courses-carousal__link

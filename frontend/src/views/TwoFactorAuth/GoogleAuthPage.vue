@@ -32,58 +32,32 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
-import Cookies from 'js-cookie';
 
 const qrCodeUrl = ref('')
 const googleCode = ref('')
-const userId = ref('') 
-const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-
-const getToken = () => Cookies.get('tempAuthToken') || Cookies.get('authToken');
 
 const generateQRCode = async () => {
-    try {
-        if (!userId.value) {
-            console.error('User ID is missing');
-            return;
-        }
-        
-        const token = getToken();
-        const response = await axios.post(`${apiUrl}/api/generate-qr-code-for-totp`, 
-            { userId: userId.value },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
-        qrCodeUrl.value = response.data.qrCodeUrl;
-        console.log('API URL:', apiUrl);
-        console.log('Request body:', { userId: userId.value });
-
-    } catch (error) {
-        console.error('Error generating QR code:', error.response ? error.response.data : error.message);
-    }
+  try {
+    const response = await axios.post('/api/generate-qr-code-google');
+    qrCodeUrl.value = response.data.qrCodeUrl;
+  } catch (error) {
+    console.error('Error generating QR code:', error);
+  }
 }
 
 const verifyGoogleCode = async () => {
-    try {
-        if (!userId.value) {
-            console.error('User ID is missing');
-            return;
-        }
-        
-        const token = getToken();
-        const response = await axios.post(`${apiUrl}/api/verify-google-code`, 
-            { userId: userId.value, token: googleCode.value },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        if (response.data.message === 'Code is valid') {
-            alert('Code verified successfully!');
-        } else {
-            alert('Invalid code!');
-        }
-    } catch (error) {
-        console.error('Error verifying code:', error.response ? error.response.data : error.message);
+  try {
+    const response = await axios.post('/api/verify-google-code', { code: googleCode.value });
+    if (response.data.success) {
+      alert('Code verified successfully!');
+    } else {
+      alert('Invalid code');
     }
+  } catch (error) {
+    console.error('Error verifying Google code:', error);
+  }
 }
+
 </script>
 
 <style lang="scss" scoped>

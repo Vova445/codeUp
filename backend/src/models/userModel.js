@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   qrCodeGeneratedIp: { type: String },
   qrCodeScannedIp: { type: String },
   newQrCodeScannedIp: { type: String },
-  twoFAMethod: { type: String, enum: ['email', 'phone', 'qr', 'none'], default: 'none' },
+  twoFAMethod: { type: String, enum: ['email', 'googleAuth', 'qr', 'none'], default: 'none' },
   token: { type: String },
   tokenEmail: {type: String,default: null,},
   lastLogin: { type: Date },

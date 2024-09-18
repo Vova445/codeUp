@@ -1,56 +1,64 @@
 import express from 'express';
-import QRCode from 'qrcode';
 import speakeasy from 'speakeasy';
+import QRCode from 'qrcode';
 import { User } from '../../models/userModel.js';
 import jwt from 'jsonwebtoken';
+
 const authRouter = express.Router();
 
-authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
+authRouter.post('/generate-qr-code-google', async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'No token provided' });
+
   try {
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) return res.status(401).json({ message: 'No token provided' });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId);
-      if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-      const secret = speakeasy.generateSecret();
+    if (!user.twoFaSecretGoogleAuth) {
+      const secret = speakeasy.generateSecret({ name: 'YourAppName' });
       user.twoFaSecretGoogleAuth = secret.base32;
       await user.save();
+    }
 
-      const qrCodeUrl = await QRCode.toDataURL(secret.otpauth_url);
-      res.json({ qrCodeUrl, secret: secret.base32 });
-  } catch (error) {
-      console.error('Error generating QR code:', error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+    const qrCodeUrl = await QRCode.toDataURL(speakeasy.otpauthURL({
+      secret: user.twoFaSecretGoogleAuth,
+      label: 'YourAppName',
+      algorithm: 'sha1'
+    }));
+
+    res.json({ qrCodeUrl });
+  } catch (err) {
+    res.status(401).json({ message: 'Invalid token' });
   }
 });
 
 authRouter.post('/verify-google-code', async (req, res) => {
-    try {
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) return res.status(401).json({ message: 'No token provided' });
+  const { code } = req.body;
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'No token provided' });
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId);
-      if (!user) return res.status(404).json({ message: 'User not found' });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.userId);
 
-      const { token: codeToken } = req.body;
-      const verified = speakeasy.totp.verify({
-        secret: user.twoFaSecretGoogleAuth,
-        encoding: 'base32',
-        token: codeToken
-      });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-      if (verified) {
-        res.json({ message: 'Code is valid' });
-      } else {
-        res.status(400).json({ message: 'Invalid code' });
-      }
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    const verified = speakeasy.totp.verify({
+      secret: user.twoFaSecretGoogleAuth,
+      encoding: 'base32',
+      token: code
+    });
+
+    if (verified) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
     }
+  } catch (err) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
 });
-
 
 export default authRouter;

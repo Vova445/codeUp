@@ -5,22 +5,30 @@ import { User } from '../../models/userModel.js';
 
 const authRouter = express.Router();
 
-authRouter.post('/generate-qr-code', async (req, res) => {
-    try {
+authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
+  try {
       const { userId } = req.body;
+      if (!userId) {
+          return res.status(400).json({ message: 'User ID is required' });
+      }
+
       const user = await User.findById(userId);
-      if (!user) return res.status(404).json({ message: 'User not found' });
-  
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
       const secret = speakeasy.generateSecret();
       user.twoFaSecretGoogleAuth = secret.base32;
       await user.save();
-  
+
       const qrCodeUrl = await QRCode.toDataURL(secret.otpauth_url);
       res.json({ qrCodeUrl, secret: secret.base32 });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  });
+  } catch (error) {
+      console.error('Error generating QR code:', error);
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
   
   authRouter.post('/verify-google-code', async (req, res) => {
     try {

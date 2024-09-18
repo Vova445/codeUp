@@ -32,14 +32,20 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
+import Cookies from 'js-cookie';
 
 const qrCodeUrl = ref('')
 const googleCode = ref('')
 
 const generateQRCode = async () => {
   try {
-   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-    const response = await axios.post(`${apiUrl}/api/generate-qr-code-google`);
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    const token = Cookies.get('authToken');
+    const response = await axios.post(`${apiUrl}/api/generate-qr-code-google`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     qrCodeUrl.value = response.data.qrCodeUrl;
   } catch (error) {
     console.error('Error generating QR code:', error);
@@ -48,8 +54,13 @@ const generateQRCode = async () => {
 
 const verifyGoogleCode = async () => {
   try {
-   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-    const response = await axios.post(`${apiUrl}/api/verify-google-code`, { code: googleCode.value });
+    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+    const token = Cookies.get('authToken'); 
+    const response = await axios.post(`${apiUrl}/api/verify-google-code`, { code: googleCode.value }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     if (response.data.success) {
       alert('Code verified successfully!');
     } else {

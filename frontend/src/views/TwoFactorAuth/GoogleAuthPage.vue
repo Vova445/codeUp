@@ -70,7 +70,6 @@ const verifyGoogleCode = async () => {
     console.error('Error verifying Google code:', error);
   }
 }
-
 </script>
 
 <style lang="scss" scoped>

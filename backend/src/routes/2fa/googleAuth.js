@@ -45,16 +45,17 @@ authRouter.post('/verify-google-code', async (req, res) => {
     const user = await User.findById(decoded.userId);
 
     if (!user) return res.status(404).json({ message: 'User not found' });
-    console.log('Secret:', user.twoFaSecretGoogleAuth);
-    console.log('Code:', code);
+
     const verified = speakeasy.totp.verify({
       secret: user.twoFaSecretGoogleAuth,
       encoding: 'base32',
-      token: code
+      token: code,
+      window: 1 
     });
 
     if (verified) {
       user.isTwoFAEnabled = true;
+      user.currentGoogleAuthCode = code;
       await user.save();
       res.json({ success: true });
     } else {
@@ -64,5 +65,6 @@ authRouter.post('/verify-google-code', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 export default authRouter;

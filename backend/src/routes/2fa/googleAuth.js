@@ -45,7 +45,8 @@ authRouter.post('/verify-google-code', async (req, res) => {
     const user = await User.findById(decoded.userId);
 
     if (!user) return res.status(404).json({ message: 'User not found' });
-
+    console.log('Secret:', user.twoFaSecretGoogleAuth);
+    console.log('Code:', code);
     const verified = speakeasy.totp.verify({
       secret: user.twoFaSecretGoogleAuth,
       encoding: 'base32',

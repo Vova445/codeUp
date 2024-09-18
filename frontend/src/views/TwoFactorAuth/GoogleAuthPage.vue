@@ -38,13 +38,22 @@ const googleCode = ref('')
 const userId = ref('')
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 const generateQRCode = async () => {
-   try {
-      const response = await axios.post(`${apiUrl}/api/generate-qr-code-for-totp`, { userId: userId.value })
-      qrCodeUrl.value = response.data.qrCodeUrl
-   } catch (error) {
-      console.error('Error generating QR code:', error)
-   }
+    try {
+        if (!userId.value) {
+            console.error('User ID is missing');
+            return;
+        }
+        
+        const response = await axios.post(`${apiUrl}/api/generate-qr-code-for-totp`, { userId: userId.value });
+        qrCodeUrl.value = response.data.qrCodeUrl;
+        console.log('API URL:', apiUrl);
+        console.log('Request body:', { userId: userId.value });
+
+    } catch (error) {
+        console.error('Error generating QR code:', error.response ? error.response.data : error.message);
+    }
 }
+
 
 const verifyGoogleCode = async () => {
    try {

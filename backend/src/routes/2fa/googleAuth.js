@@ -8,6 +8,7 @@ const authRouter = express.Router();
 authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
   try {
       const { userId } = req.body;
+      console.log('Received userId:', userId);
       if (!userId) {
           return res.status(400).json({ message: 'User ID is required' });
       }
@@ -16,6 +17,8 @@ authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
       if (!user) {
           return res.status(404).json({ message: 'User not found' });
       }
+
+      console.log('Found user:', user);
 
       const secret = speakeasy.generateSecret();
       user.twoFaSecretGoogleAuth = secret.base32;
@@ -28,6 +31,7 @@ authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
       res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+
 
   
   authRouter.post('/verify-google-code', async (req, res) => {

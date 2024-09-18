@@ -54,6 +54,8 @@ authRouter.post('/verify-google-code', async (req, res) => {
     });
 
     if (verified) {
+      user.isTwoFAEnabled = true;
+      await user.save();
       res.json({ success: true });
     } else {
       res.json({ success: false });

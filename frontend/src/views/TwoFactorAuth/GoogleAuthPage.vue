@@ -107,11 +107,16 @@ const verifyGoogleCode = async () => {
    }
    // .google-auth__qr-code
    &__qr-code {
-      width: 150px;
-      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
       img {
-         width: 100px;
-         height: 100px;
+         width: 250px;
+         height: 250px;
+         border: 5px solid #000000;
+         border-radius: 10px;
+         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
       }
    }
    &__input {

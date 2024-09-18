@@ -19,12 +19,13 @@ authRouter.post('/generate-qr-code-google', async (req, res) => {
     if (!user.twoFaSecretGoogleAuth) {
       const secret = speakeasy.generateSecret({ name: 'YourAppName' });
       user.twoFaSecretGoogleAuth = secret.base32;
+      user.twoFAMethod = 'googleAuth';
       await user.save();
     }
 
     const qrCodeUrl = await QRCode.toDataURL(speakeasy.otpauthURL({
       secret: user.twoFaSecretGoogleAuth,
-      label: 'YourAppName',
+      label: 'codeUp',
       algorithm: 'sha1'
     }));
 

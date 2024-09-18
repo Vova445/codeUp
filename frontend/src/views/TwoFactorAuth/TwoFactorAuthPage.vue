@@ -138,7 +138,7 @@ async function confirmByEmail() {
       }
 
       &--google {
-         background-color: #ffffff;
+         /* background-color: #ffffff; */
          .two-factor-auth__icon {
             color: #ffffff;
          }

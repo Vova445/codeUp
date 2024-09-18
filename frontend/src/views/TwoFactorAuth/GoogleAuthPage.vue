@@ -32,11 +32,15 @@
 import { ref } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
+import Cookies from 'js-cookie';
 
 const qrCodeUrl = ref('')
 const googleCode = ref('')
-const userId = ref('')
+const userId = ref('') 
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+
+const getToken = () => Cookies.get('tempAuthToken') || Cookies.get('authToken');
+
 const generateQRCode = async () => {
     try {
         if (!userId.value) {
@@ -44,7 +48,11 @@ const generateQRCode = async () => {
             return;
         }
         
-        const response = await axios.post(`${apiUrl}/api/generate-qr-code-for-totp`, { userId: userId.value });
+        const token = getToken();
+        const response = await axios.post(`${apiUrl}/api/generate-qr-code-for-totp`, 
+            { userId: userId.value },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
         qrCodeUrl.value = response.data.qrCodeUrl;
         console.log('API URL:', apiUrl);
         console.log('Request body:', { userId: userId.value });
@@ -54,21 +62,27 @@ const generateQRCode = async () => {
     }
 }
 
-
 const verifyGoogleCode = async () => {
-   try {
-      const response = await axios.post(`${apiUrl}/api/verify-google-code`, {
-         userId: userId.value,
-         token: googleCode.value,
-      })
-      if (response.data.message === 'Code is valid') {
-         alert('Code verified successfully!')
-      } else {
-         alert('Invalid code!')
-      }
-   } catch (error) {
-      console.error('Error verifying code:', error)
-   }
+    try {
+        if (!userId.value) {
+            console.error('User ID is missing');
+            return;
+        }
+        
+        const token = getToken();
+        const response = await axios.post(`${apiUrl}/api/verify-google-code`, 
+            { userId: userId.value, token: googleCode.value },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (response.data.message === 'Code is valid') {
+            alert('Code verified successfully!');
+        } else {
+            alert('Invalid code!');
+        }
+    } catch (error) {
+        console.error('Error verifying code:', error.response ? error.response.data : error.message);
+    }
 }
 </script>
 

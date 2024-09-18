@@ -2,23 +2,17 @@ import express from 'express';
 import QRCode from 'qrcode';
 import speakeasy from 'speakeasy';
 import { User } from '../../models/userModel.js';
-
+import jwt from 'jsonwebtoken';
 const authRouter = express.Router();
 
 authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
   try {
-      const { userId } = req.body;
-      console.log('Received userId:', userId);
-      if (!userId) {
-          return res.status(400).json({ message: 'User ID is required' });
-      }
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) return res.status(401).json({ message: 'No token provided' });
 
-      const user = await User.findById(userId);
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-
-      console.log('Found user:', user);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
+      if (!user) return res.status(404).json({ message: 'User not found' });
 
       const secret = speakeasy.generateSecret();
       user.twoFaSecretGoogleAuth = secret.base32;
@@ -32,20 +26,22 @@ authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
   }
 });
 
-
-  
-  authRouter.post('/verify-google-code', async (req, res) => {
+authRouter.post('/verify-google-code', async (req, res) => {
     try {
-      const { userId, token } = req.body;
-      const user = await User.findById(userId);
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) return res.status(401).json({ message: 'No token provided' });
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId);
       if (!user) return res.status(404).json({ message: 'User not found' });
-  
+
+      const { token: codeToken } = req.body;
       const verified = speakeasy.totp.verify({
-        secret: user.twoFaSecretGoogleAuth, 
+        secret: user.twoFaSecretGoogleAuth,
         encoding: 'base32',
-        token
+        token: codeToken
       });
-  
+
       if (verified) {
         res.json({ message: 'Code is valid' });
       } else {
@@ -54,6 +50,7 @@ authRouter.post('/generate-qr-code-for-totp', async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  });
+});
+
 
 export default authRouter;

@@ -1,7 +1,77 @@
 {
    "mainCourses": [
-      
-
+      {
+         "id": "fmgkkemgn3io443",
+         "toName": "home",
+         "title": "Python",
+         "classAdd": "python",
+         "image": ["fab", "square-js"],
+         "scale": "1",
+         "background": "#ffc107"
+      },
+      {
+         "id": "rkeknrenl34knb3",
+         "toName": "home",
+         "title": "Vue.js",
+         "classAdd": "vue",
+         "image": ["fab", "square-js"],
+         "scale": "0.9",
+         "background": "#2eb82e"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "JavaScript",
+         "classAdd": "js",
+         "image": ["fab", "square-js"],
+         "scale": "1.1",
+         "background": "#ffc107"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "React",
+         "classAdd": "react",
+         "image": ["fab", "square-js"],
+         "scale": "1",
+         "background": "#0066ff"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "Node.js",
+         "classAdd": "node",
+         "image": ["fab", "square-js"],
+         "scale": "0.8",
+         "background": "#cc3300"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "Html,Css",
+         "classAdd": "html-css",
+         "image": ["fab", "square-js"],
+         "scale": "0.8",
+         "background": "#ffc107"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "C#",
+         "classAdd": "c-sharp",
+         "image": ["fab", "square-js"],
+         "scale": "0.8",
+         "background": "#0033cc"
+      },
+      {
+         "id": "3l4m39jglbmm4kbm04",
+         "toName": "home",
+         "title": "C++",
+         "classAdd": "c-plus",
+         "image": ["fab", "square-js"],
+         "scale": "0.9",
+         "background": "#5c00e6"
+      }
    ],
    "reasonsList": [
       {

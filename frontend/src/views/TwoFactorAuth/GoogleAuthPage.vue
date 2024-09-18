@@ -17,7 +17,7 @@
                   class="google-auth__input"
                   v-model="googleCode"
                   focus-all
-                  :length="8"
+                  :length="6"
                   placeholder="0"
                   variant="underlined"
                ></v-otp-input>

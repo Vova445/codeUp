@@ -50,6 +50,7 @@ import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { useRouter } from 'vue-router'
 import { useLocales } from '../moduleHelpers/i18n.js'
+import Cookies from 'js-cookie'
 
 const router = useRouter()
 const { t } = useLocales()
@@ -65,7 +66,7 @@ const twoFactorAuthText = computed(() => {
 })
 
 onMounted(async () => {
-   const token = localStorage.getItem('authToken')
+   const token = Cookies.get('authToken')
    if (token) {
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -82,7 +83,7 @@ onMounted(async () => {
       } catch (err) {
          if (err.response?.status === 401) {
             console.error('Session expired. Please log in again.')
-            localStorage.removeItem('authToken')
+            Cookies.remove('authToken')
             router.push({ name: 'home' })
          } else {
             console.error('Error fetching profile:', err)
@@ -101,7 +102,7 @@ function addTwoFactorAuth() {
 }
 const updateProfile = async () => {
    try {
-      let token = localStorage.getItem('authToken')
+      let token = Cookies.get('authToken')
       if (!token) return
 
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -128,7 +129,7 @@ const updateProfile = async () => {
 }
 
 async function onLogout() {
-   const token = localStorage.getItem('authToken');
+   const token = Cookies.get('authToken');
    if (token) {
      try {
        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -141,23 +142,23 @@ async function onLogout() {
        console.error('Error logging out:', err);
      }
    }
-   localStorage.removeItem('authToken');
+   Cookies.remove('authToken');
    router.push({ name: 'home' })
 }
 
 async function refreshToken() {
-   const refreshToken = localStorage.getItem('refreshToken')
+   const refreshToken = Cookies.get('refreshToken')
    if (!refreshToken) return
 
    try {
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
       const response = await axios.post(`${apiUrl}/api/refresh-token`, { refreshToken })
       const { accessToken } = response.data
-      localStorage.setItem('authToken', accessToken)
+      Cookies.set('authToken', accessToken)
    } catch (err) {
       console.error('Error refreshing token:', err)
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
+      Cookies.remove('authToken')
+      Cookies.remove('refreshToken')
       router.push({ name: 'home' })
    }
 }

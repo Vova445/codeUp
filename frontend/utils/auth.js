@@ -1,8 +1,8 @@
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 export async function checkTwoFAStatus() {
   try {
-    const token = localStorage.getItem('authToken');
+    const token = Cookies.get('authToken');
     if (!token) return false;
 
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');

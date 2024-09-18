@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useAlertStore } from './alert.js'
+import Cookies from 'js-cookie'
 
 export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
    const qrCodeUrl = ref('')
@@ -9,7 +10,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
    const { runAlert } = useAlertStore()
 
    const generateQRCode = async () => {
-      const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
+      const token = Cookies.get('tempAuthToken') || Cookies.get('authToken')
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
          const response = await axios.post(
@@ -28,7 +29,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
    }
 
    const verifyQRCode = async (inputCode, router) => {
-      const token = localStorage.getItem('tempAuthToken') || localStorage.getItem('authToken')
+      const token = Cookies.get('tempAuthToken') || Cookies.get('authToken')
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
          const response = await axios.post(
@@ -41,10 +42,10 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
             },
          )
 
-         const tempAuthToken = localStorage.getItem('tempAuthToken')
+         const tempAuthToken = Cookies.get('tempAuthToken')
          if (tempAuthToken) {
-            localStorage.setItem('authToken', tempAuthToken)
-            localStorage.removeItem('tempAuthToken')
+            Cookies.set('authToken', tempAuthToken)
+            Cookies.remove('tempAuthToken')
          }
 
          runAlert('twoFactorAuth.qrcodeСonfirmationSuccess', 'success')
@@ -54,7 +55,7 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
       }
    }
    const sendEmailLetter = async () => {
-      let token = localStorage.getItem('authToken') || localStorage.getItem('tempAuthToken');
+      let token = Cookies.get('authToken') || Cookies.get('tempAuthToken');
       console.log('Current token:', token);
 
       if (token) {
@@ -93,10 +94,10 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
         console.log('Verify token response:', response.data);
     
         if (response.data.isValid) {
-         const oldToken = localStorage.getItem('tempAuthToken');
+         const oldToken = Cookies.get('tempAuthToken');
          if (oldToken) {
-            localStorage.setItem('authToken', oldToken);
-            localStorage.removeItem('tempAuthToken');
+            Cookies.set('authToken', oldToken);
+            Cookies.remove('tempAuthToken');
             console.log('Auth token has been updated');
           }
          }

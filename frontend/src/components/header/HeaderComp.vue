@@ -64,6 +64,7 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import axios from 'axios'
 import { useLocales } from '../../moduleHelpers/i18n.js'
+import Cookies from 'js-cookie';
 const { setLocale } = useLocales()
 const isMobile = ref(false)
 const avatar = ref('')
@@ -110,9 +111,9 @@ function closeSubListOnClickOutside(e) {
    }
 }
 
-const isUser = computed(() => !!localStorage.getItem('authToken'))
+const isUser = computed(() => !!Cookies.get('authToken'))
 async function fetchAvatar() {
-   const token = localStorage.getItem('authToken')
+   const token = Cookies.get('authToken')
    if (token) {
       try {
          const response = await axios.get(`${apiUrl}/api/user-profile`, {
@@ -126,7 +127,6 @@ async function fetchAvatar() {
       }
    }
 }
-
 onMounted(async () => {
    document.addEventListener('click', closeSubListOnClickOutside)
    isReady.value = true

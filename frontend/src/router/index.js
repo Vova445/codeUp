@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { checkTwoFAStatus } from '../../utils/auth.js'
+import Cookies from 'js-cookie'
 
 const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
@@ -153,14 +154,14 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-   //document.documentElement.classList.remove('menu-open')
-   //document.documentElement.classList.remove('lock')
-   //if (to.meta?.requireAuth) {
-   //   const userToken = localStorage.getItem('authToken')
-   //   if (!userToken) {
-   //      return { name: 'login' }
-   //   }
-   //}
+   document.documentElement.classList.remove('menu-open')
+   document.documentElement.classList.remove('lock')
+   if (to.meta?.requireAuth) {
+     const userToken = Cookies.get('authToken')
+     if (!userToken) {
+        return { name: 'login' }
+     }
+   }
 })
 
 export default router

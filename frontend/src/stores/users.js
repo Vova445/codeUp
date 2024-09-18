@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
 
 export const useUsersStore = defineStore('users', () => {
@@ -15,7 +16,7 @@ export const useUsersStore = defineStore('users', () => {
             }
          })
          const { token, message } = response.data
-         localStorage.setItem('authToken', token)
+         Cookies.set('authToken', token)
 
          return { success: true, message }
       } catch (error) {

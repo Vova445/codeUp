@@ -30,11 +30,12 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { useAlertStore } from '../../stores/alert.js'
+import Cookies from 'js-cookie'
 const { runAlert } = useAlertStore()
 const phoneNumber = ref('')
 
 onMounted(async () => {
-   const token = localStorage.getItem('authToken')
+   const token = Cookies.get('authToken')
    if (token) {
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -51,7 +52,7 @@ onMounted(async () => {
 })
 
 async function confirmByEmail() {
-   const token = localStorage.getItem('authToken')
+   const token = Cookies.get('authToken')
    if (token) {
       try {
          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')

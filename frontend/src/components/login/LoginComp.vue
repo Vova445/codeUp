@@ -31,7 +31,7 @@ import { computed, reactive, ref } from 'vue'
 import { useUsersStore } from '@/stores/users'
 import { useRouter } from 'vue-router'
 import { useAlertStore } from '../../stores/alert.js'
-
+import Cookies from 'js-cookie'
 const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const router = useRouter()
@@ -65,7 +65,7 @@ const loginAction = async () => {
       runAlert('twoFactorAuth.loginedSuccessfully', 'success')
 
       if (user.isTwoFAEnabled) {
-         localStorage.setItem('tempAuthToken', token)
+         Cookies.set('tempAuthToken', token)
          if (user.twoFAMethod === 'email') {
             router.push({ name: 'email' })
          } else if (user.twoFAMethod === 'phone') {
@@ -74,7 +74,7 @@ const loginAction = async () => {
             router.push({ name: 'qrCode' })
          }
       } else {
-         localStorage.setItem('authToken', token)
+         Cookies.set('authToken', token)
          router.push({ name: 'user' })
       }
    } else {

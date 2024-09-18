@@ -13,7 +13,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-
+import Cookies from 'js-cookie';
 const value = ref(0)
 const valueToShow = ref(5)
 
@@ -37,8 +37,8 @@ onMounted(() => {
          const urlParams = new URLSearchParams(window.location.search);
          const token = urlParams.get('token');
          if (token) {
-            localStorage.setItem('authToken', token);
-            localStorage.removeItem('tempAuthToken');
+            Cookies.set('authToken', token);
+            Cookies.remove('tempAuthToken');
          }
 
          window.location.href = 'https://code-up-omega.vercel.app/user'

@@ -8,7 +8,6 @@
                <div class="google-auth__qr-code">
                   <img :src="qrCodeUrl" alt="QR Code" v-if="qrCodeUrl" />
                </div>
-               <button class="google-auth__button button" @click="generateQRCode">Generate QR Code</button>
             </div>
             <div class="google-auth__box">
                <div class="google-auth__sub-title subtitile">{{ $t('twoFactorAuth.byGoogleCode') }}</div>
@@ -29,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import Cookies from 'js-cookie';
@@ -37,6 +36,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter();
 const qrCodeUrl = ref('')
 const googleCode = ref('')
+
+
 
 const generateQRCode = async () => {
   try {
@@ -77,6 +78,9 @@ const verifyGoogleCode = async () => {
     console.error('Error verifying Google code:', error);
   }
 }
+onMounted (() => {
+   generateQRCode();
+})
 </script>
 
 <style lang="scss" scoped>

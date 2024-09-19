@@ -17,12 +17,14 @@ authRouter.post('/generate-qr-code-google', async (req, res) => {
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const secret = authenticator.generateSecret();
-    user.twoFAMethod = 'googleAuth';
-    user.twoFaSecretGoogleAuth = secret;
-    await user.save();
+    if (!user.twoFaSecretGoogleAuth) {
+      const secret = authenticator.generateSecret();
+      user.twoFAMethod = 'googleAuth';
+      user.twoFaSecretGoogleAuth = secret;
+      await user.save();
+    }
 
-    const qrCodeUrl = await QRCode.toDataURL(authenticator.keyuri(user.email, 'codeUp', secret));
+    const qrCodeUrl = await QRCode.toDataURL(authenticator.keyuri(user.email, 'codeUp', user.twoFaSecretGoogleAuth));
 
     res.json({ qrCodeUrl });
   } catch (err) {

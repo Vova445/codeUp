@@ -33,7 +33,8 @@ import { ref } from 'vue'
 import axios from 'axios'
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import Cookies from 'js-cookie';
-
+import { useRouter } from 'vue-router'
+const router = useRouter();
 const qrCodeUrl = ref('')
 const googleCode = ref('')
 
@@ -63,6 +64,7 @@ const verifyGoogleCode = async () => {
     });
     if (response.data.success) {
       alert('Code verified successfully!');
+      router.push({ name: 'user' })
     } else {
       alert('Invalid code');
     }

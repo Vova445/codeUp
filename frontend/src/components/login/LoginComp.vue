@@ -68,8 +68,8 @@ const loginAction = async () => {
          Cookies.set('tempAuthToken', token)
          if (user.twoFAMethod === 'email') {
             router.push({ name: 'email' })
-         } else if (user.twoFAMethod === 'phone') {
-            router.push({ name: 'phoneAuth' })
+         } else if (user.twoFAMethod === 'googleAuth') {
+            router.push({ name: 'googleAuth' })
          } else if (user.twoFAMethod === 'qr') {
             router.push({ name: 'qrCode' })
          }

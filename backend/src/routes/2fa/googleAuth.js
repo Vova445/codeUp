@@ -26,7 +26,7 @@ authRouter.post('/generate-qr-code-google', async (req, res) => {
       label: 'codeUp',
       algorithm: 'sha1'
     }));
-    console.log('Stored Secret:', user.twoFaSecretGoogleAuth);
+
     res.json({ qrCodeUrl });
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
@@ -48,19 +48,10 @@ authRouter.post('/verify-google-code', async (req, res) => {
       secret: user.twoFaSecretGoogleAuth,
       encoding: 'base32',
       token: code,
-      window: 1
+      window: 10
     });
-    
+    console.log('Google Auth Secret:', user.twoFaSecretGoogleAuth);
     console.log('Code entered by user:', code);
-    console.log('Generated Secret:', secret.base32);
-    console.log('Saved Secret in DB:', user.twoFaSecretGoogleAuth);
-
-    const currentTOTP = speakeasy.totp({
-      secret: user.twoFaSecretGoogleAuth,
-      encoding: 'base32'
-    });
-    console.log('Generated TOTP:', currentTOTP);
-    
 
     if (verified) {
       user.isTwoFAEnabled = true;

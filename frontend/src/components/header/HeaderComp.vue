@@ -64,7 +64,7 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import axios from 'axios'
 import { useLocales } from '../../moduleHelpers/i18n.js'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 const { setLocale } = useLocales()
 const isMobile = ref(false)
 const avatar = ref('')
@@ -252,7 +252,7 @@ onUnmounted(() => {
          top: 0;
          overflow: auto;
          background-color: #000000d8;
-         padding: 180px 20px 20px 20px;
+         padding: 150px 20px 20px 20px;
 
          &::before {
             content: '';
@@ -425,7 +425,7 @@ onUnmounted(() => {
    min-width: 300px;
    padding: 10px 0 0 0;
    position: absolute;
-   z-index: 50;
+   z-index: 60;
    top: 80%;
    left: 0;
    color: #fff;

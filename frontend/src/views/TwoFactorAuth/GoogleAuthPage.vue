@@ -41,7 +41,7 @@ const googleCode = ref('')
 const generateQRCode = async () => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-    const token = Cookies.get('authToken');
+    const token = Cookies.get('tempAuthToken') || Cookies.get('authToken')
     const response = await axios.post(`${apiUrl}/api/generate-qr-code-google`, {}, {
       headers: {
         Authorization: `Bearer ${token}`,

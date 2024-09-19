@@ -48,7 +48,7 @@ authRouter.post('/verify-google-code', async (req, res) => {
       secret: user.twoFaSecretGoogleAuth,
       encoding: 'base32',
       token: code,
-      window: 1 
+      window: 6
     });
 
     if (verified) {

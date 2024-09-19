@@ -22,7 +22,7 @@
                   <font-awesome-icon :icon="course.image" class="icon-center" />
                </div>
             </div>
-            <div class="master__content">
+            <div class="master__content text">
                <div class="master__course-description">
                   <span>CodeUp</span> - Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates, vero magni? Ullam a ex laboriosam esse
                   quasi recusandae eos natus fugit laudantium obcaecati harum, ipsa soluta tempora quaerat dignissimos nobis? Lorem, ipsum dolor sit
@@ -51,9 +51,10 @@ const getImagePath = (imgPath) => {
 <style lang="scss" scoped>
 .master {
    &:not(:last-child) {
-      margin-bottom: clamp(4.375rem, 1.561rem + 5.871vw, 6.25rem);
+      margin-bottom: clamp(3.125rem, 1.249rem + 3.914vw, 4.375rem);
    }
    &__title {
+      font-size: clamp(1.375rem, -0.126rem + 3.131vw, 2.375rem);
       &:not(:last-child) {
          margin-bottom: 40px;
       }
@@ -63,16 +64,13 @@ const getImagePath = (imgPath) => {
    }
    &__icons-container {
       display: flex;
-      gap: 30px;
+      gap: 10px;
 
-      &:not(:last-child) {
-         margin-bottom: 50px;
-      }
-      @media (max-width: 992px) {
+      @media (max-width: 767.98px) {
          overflow: auto;
          overflow-x: auto;
          -webkit-overflow-scrolling: touch;
-         padding-bottom: 15px;
+         padding-bottom: 10px;
          &::-webkit-scrollbar {
             height: 1.5px;
          }
@@ -85,10 +83,15 @@ const getImagePath = (imgPath) => {
          &::-webkit-scrollbar-track {
             background-color: transparent;
          }
+         &:not(:last-child) {
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 25px;
+         }
       }
    }
    &__content {
-      padding: 150px 0;
+      padding: 100px 0;
       max-width: 600px;
       margin: 0 auto;
       color: #e6fefe;
@@ -97,19 +100,22 @@ const getImagePath = (imgPath) => {
       letter-spacing: 0.3px;
 
       @media (max-width: 992px) {
+         padding: 200px 0 0 0;
+      }
+      @media (max-width: 767.98px) {
          padding: 0;
       }
-      @media (max-width: 630px) {
-         text-align: left;
-      }
+
       @media (max-width: 550px) {
-         font-size: 14px;
-         left: 1.5;
+         //font-size: 14px;
       }
    }
    &__course-description {
       &:not(:last-child) {
          margin-bottom: 30px;
+      }
+      @media (max-width: 630px) {
+         text-align: left;
       }
       span {
          font-size: 18px;
@@ -142,6 +148,9 @@ const getImagePath = (imgPath) => {
             background: linear-gradient(110deg, #3c776f, #3c776f, #3c776f);
          }
       }
+      @media (max-width: 630px) {
+         width: 100%;
+      }
    }
 }
 
@@ -151,46 +160,78 @@ const getImagePath = (imgPath) => {
    position: absolute;
    top: 0;
    left: 0;
-   width: 100px;
-   height: 100px;
+   width: 90px;
+   height: 90px;
    display: flex;
    justify-content: center;
    align-items: center;
    background-color: white;
    border-radius: 50%;
    @media (max-width: 992px) {
-      width: clamp(4.375rem, 2.958rem + 4.121vw, 6.25rem);
-      height: clamp(4.375rem, 2.958rem + 4.121vw, 6.25rem);
+      width: clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
+      height: clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
+   }
+   @media (max-width: 550px) {
+      width: clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
+      height: clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
    }
 }
 
 .python {
    left: 15%;
    top: 0;
+   @media (max-width: 992px) {
+      left: 0;
+      top: 0;
+   }
 }
 .vue {
    left: 40%;
-   top: 10%;
+   top: -3%;
+   @media (max-width: 992px) {
+      left: 20%;
+      top: 5%;
+   }
 }
 .react {
    top: 40%;
    left: 5%;
+   @media (max-width: 992px) {
+      left: 40%;
+      top: 2%;
+   }
 }
 .node {
    top: 80%;
    left: 20%;
+   @media (max-width: 992px) {
+      left: 7%;
+      top: 20%;
+   }
 }
 .js {
    top: 85%;
    left: 50%;
+   @media (max-width: 992px) {
+      left: 87%;
+      top: 3%;
+   }
 }
 .html-css {
    top: 80%;
    left: 80%;
+   @media (max-width: 992px) {
+      left: 55%;
+      top: 20%;
+   }
 }
 .c-sharp {
-   top: 5%;
+   top: 2%;
    left: 70%;
+   @media (max-width: 992px) {
+      left: 65%;
+      top: 5%;
+   }
 }
 .circle-svg {
    position: absolute;
@@ -203,20 +244,32 @@ const getImagePath = (imgPath) => {
 .c-plus {
    left: 85%;
    top: 40%;
+   @media (max-width: 992px) {
+      left: 76%;
+      top: 19%;
+   }
 }
 text {
    font-family: Arial, sans-serif;
    font-size: 18px;
    fill: #fff;
+   @media (max-width: 550px) {
+      display: none;
+   }
 }
 
 .circle-container {
    @media (max-width: 992px) {
+      flex: 0 0 clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
+   }
+   @media (max-width: 767.98px) {
       position: relative;
       top: 0;
       left: 0;
       transform: scale(1) !important;
-      flex: 0 0 clamp(4.375rem, 2.958rem + 4.121vw, 6.25rem);
+   }
+   @media (max-width: 550px) {
+      flex: 0 0 clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
    }
 }
 .icon-center {

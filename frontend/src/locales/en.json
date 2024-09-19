@@ -125,6 +125,7 @@
       "emailSentFailed": "An error occurred while sending the email",
       "sentLetterAgain": "You can send a letter in",
       "selectOneOfTwoAuth": "Select one of the two account confirmation methods",
-      "byGoogleCode": "Confirm using the setup key"
+      "byGoogleCode": "Confirm using the setup key",
+      "genrationQrProblem": "Problem generation Qr-code"
    }
 }

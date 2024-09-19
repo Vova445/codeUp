@@ -55,66 +55,64 @@ export const useTwoFactorAuthStore = defineStore('twoFactorAuth', () => {
       }
    }
    const sendEmailLetter = async () => {
-      let token = Cookies.get('authToken') || Cookies.get('tempAuthToken');
-      console.log('Current token:', token);
+      let token = Cookies.get('authToken') || Cookies.get('tempAuthToken')
 
       if (token) {
-        try {
-          const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-          const response = await axios.post(
-            `${apiUrl}/api/send-2fa-email`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          console.log('Send email response:', response.data);
-    
-          runAlert('twoFactorAuth.emailSentSuccessfully', 'success');
-          checkTokenEmail(token);
-        } catch (err) {
-          console.error('Error sending email:', err);
-          runAlert('twoFactorAuth.emailSentFailed', 'problem');
-        }
-      } else {
-        runAlert('twoFactorAuth.emailSentFailed', 'problem');
-      }
-    };
-    
-    const checkTokenEmail = async (token) => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-        const response = await axios.get(`${apiUrl}/api/verify-token-email`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('Verify token response:', response.data);
-    
-        if (response.data.isValid) {
-         const oldToken = Cookies.get('tempAuthToken');
-         if (oldToken) {
-            Cookies.set('authToken', oldToken);
-            Cookies.remove('tempAuthToken');
-            console.log('Auth token has been updated');
-          }
-         }
-         else {
-            await axios.post(`${apiUrl}/api/update-token-email`, {}, {
-               headers: {
-                 Authorization: `Bearer ${token}`,
+         try {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+            const response = await axios.post(
+               `${apiUrl}/api/send-2fa-email`,
+               {},
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
                },
-             });
-            }       
-      } catch (err) {
-        console.error('Error checking token email:', err);
+            )
+            console.log('Send email response:', response.data)
+
+            runAlert('twoFactorAuth.emailSentSuccessfully', 'success')
+            checkTokenEmail(token)
+         } catch (err) {
+            console.error('Error sending email:', err)
+            runAlert('twoFactorAuth.emailSentFailed', 'problem')
+         }
+      } else {
+         runAlert('twoFactorAuth.emailSentFailed', 'problem')
       }
-    };
-    
-    
-    
+   }
+
+   const checkTokenEmail = async (token) => {
+      try {
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+         const response = await axios.get(`${apiUrl}/api/verify-token-email`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         })
+
+         if (response.data.isValid) {
+            const oldToken = Cookies.get('tempAuthToken')
+            if (oldToken) {
+               Cookies.set('authToken', oldToken)
+               Cookies.remove('tempAuthToken')
+            }
+         } else {
+            await axios.post(
+               `${apiUrl}/api/update-token-email`,
+               {},
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               },
+            )
+         }
+      } catch (err) {
+         console.error('Error checking token email:', err)
+      }
+   }
+
    return {
       qrCodeUrl,
       qrCode,

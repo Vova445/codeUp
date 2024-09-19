@@ -19,6 +19,7 @@
                <font-awesome-icon :icon="['far', getEyeCode]" />
             </span>
          </div>
+         <div class="form-login__pass-reset-block"><button class="form-login__forgot-pass">Forgot password</button></div>
          <button type="submit" class="form-login__button">{{ $t('buttons.login') }}</button>
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
@@ -82,4 +83,19 @@ const loginAction = async () => {
    }
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-login__pass-reset-block {
+   &:not(:last-child) {
+      margin-bottom: 20px;
+   }
+   text-align: right;
+}
+.form-login__forgot-pass {
+   font-size: 14px;
+
+   text-decoration: underline;
+   &:hover {
+      text-decoration: none;
+   }
+}
+</style>

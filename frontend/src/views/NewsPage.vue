@@ -6,7 +6,11 @@
             <div class="news__items">
                <template v-for="newsItem in newsList">
                   <a v-if="newsItem.cover_image" :key="newsItem.id" class="news__item item-news" target="_blank" :href="newsItem.url">
-                     <div class="item-news__image"><img :src="newsItem.cover_image" alt="" /></div>
+                     <!--<div class="item-news__image"><img :src="newsItem.social_image" alt="" /></div>
+                     -->
+                     <div class="item-news__image">
+                        <img :src="newsItem.cover_image || newsItem.social_image" alt="" />
+                     </div>
                      <h4 class="item-news__title">{{ newsItem.title }}</h4>
                      <div class="item-news__date">published : {{ formatDate(newsItem.published_at) }}</div>
                   </a>
@@ -20,14 +24,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import MainMasterPage from '../masterPages/MainMasterPage.vue'
-
 let newsList = ref([])
 function formatDate(dateString) {
    const date = new Date(dateString)
    const year = date.getFullYear()
    const month = String(date.getMonth() + 1).padStart(2, '0')
    const day = String(date.getDate()).padStart(2, '0')
-
    return `${year}-${month}-${day}`
 }
 onMounted(() => {
@@ -37,6 +39,8 @@ onMounted(() => {
          const response = await fetch(apiUrl)
          const newsData = await response.json()
          const topNews = newsData.slice(0, 10)
+         console.log('topNews')
+         console.log(topNews)
          newsList.value = topNews
       } catch (error) {
          console.error('Помилка при отриманні новин:', error)

@@ -33,7 +33,7 @@ export function initSliderCarousal() {
          //},
          autoplay: {
             delay: 0,
-            pauseOnMouseEnter: true,
+            pauseOnMouseEnter: false,
          },
          // Пагінація
          /*

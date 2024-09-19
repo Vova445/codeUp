@@ -56,13 +56,18 @@ const generateQRCode = async () => {
 const verifyGoogleCode = async () => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-    const token = Cookies.get('authToken'); 
+    const token = Cookies.get('tempAuthToken') || Cookies.get('authToken')
     const response = await axios.post(`${apiUrl}/api/verify-google-code`, { code: googleCode.value }, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
     });
     if (response.data.success) {
+      const tempAuthToken = Cookies.get('tempAuthToken')
+         if (tempAuthToken) {
+            Cookies.set('authToken', tempAuthToken)
+            Cookies.remove('tempAuthToken')
+         }
       alert('Code verified successfully!');
       router.push({ name: 'user' })
     } else {

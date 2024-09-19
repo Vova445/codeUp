@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   avatarContentType: {type: String},
   isTwoFAEnabled: { type: Boolean, default: false },
   twoFASecret: { type: String },
-  twoFaSecretGoogleAuth: { type: String },
+  // twoFaSecretGoogleAuth: { type: String },
   currentGoogleAuthCode: { type: String },
   qrCodeGeneratedIp: { type: String },
   qrCodeScannedIp: { type: String },

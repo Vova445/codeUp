@@ -16,15 +16,12 @@ authRouter.post('/generate-qr-code-google', async (req, res) => {
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    if (!user.twoFaSecretGoogleAuth) {
-      const secret = speakeasy.generateSecret({ name: 'YourAppName' });
-      user.twoFaSecretGoogleAuth = secret.base32;
-      user.twoFAMethod = 'googleAuth';
-      await user.save();
-    }
+    const secret = speakeasy.generateSecret({ name: 'codeUp' });
+    user.twoFAMethod = 'googleAuth';
+    await user.save();
 
     const qrCodeUrl = await QRCode.toDataURL(speakeasy.otpauthURL({
-      secret: user.twoFaSecretGoogleAuth,
+      secret: secret.base32,
       label: 'codeUp',
       algorithm: 'sha1'
     }));
@@ -47,7 +44,7 @@ authRouter.post('/verify-google-code', async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     const verified = speakeasy.totp.verify({
-      secret: user.twoFaSecretGoogleAuth,
+      secret: user.currentGoogleAuthCode,
       encoding: 'base32',
       token: code,
       window: 1 
@@ -55,7 +52,7 @@ authRouter.post('/verify-google-code', async (req, res) => {
 
     if (verified) {
       user.isTwoFAEnabled = true;
-      user.currentGoogleAuthCode = code;
+      user.currentGoogleAuthCode = code; 
       await user.save();
       res.json({ success: true });
     } else {
@@ -65,6 +62,5 @@ authRouter.post('/verify-google-code', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
-
 
 export default authRouter;

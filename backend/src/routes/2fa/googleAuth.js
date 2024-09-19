@@ -1,8 +1,9 @@
 import express from 'express';
-import speakeasy from 'speakeasy';
+// import speakeasy from 'speakeasy';
 import QRCode from 'qrcode';
 import { User } from '../../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import { authenticator } from 'otplib';
 
 const authRouter = express.Router();
 
@@ -16,22 +17,19 @@ authRouter.post('/generate-qr-code-google', async (req, res) => {
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const secret = speakeasy.generateSecret({ name: 'codeUp' });
+    const secret = authenticator.generateSecret();
     user.twoFAMethod = 'googleAuth';
-    user.twoFaSecretGoogleAuth = secret.base32;
+    user.twoFaSecretGoogleAuth = secret;
     await user.save();
 
-    const qrCodeUrl = await QRCode.toDataURL(speakeasy.otpauthURL({
-      secret: secret.base32,
-      label: 'codeUp',
-      algorithm: 'sha1'
-    }));
+    const qrCodeUrl = await QRCode.toDataURL(authenticator.keyuri(user.email, 'codeUp', secret));
 
     res.json({ qrCodeUrl });
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 authRouter.post('/verify-google-code', async (req, res) => {
@@ -44,16 +42,10 @@ authRouter.post('/verify-google-code', async (req, res) => {
     const user = await User.findById(decoded.userId);
 
     if (!user) return res.status(404).json({ message: 'User not found' });
-    const verified = speakeasy.totp.verify({
-      secret: user.twoFaSecretGoogleAuth,
-      encoding: 'base32',
-      token: code,
-      window: 10
-    });
-    console.log('Google Auth Secret:', user.twoFaSecretGoogleAuth);
-    console.log('Code entered by user:', code);
+    
+    const isVerified = authenticator.check(code, user.twoFaSecretGoogleAuth);
 
-    if (verified) {
+    if (isVerified) {
       user.isTwoFAEnabled = true;
       await user.save();
       res.json({ success: true });
@@ -64,6 +56,7 @@ authRouter.post('/verify-google-code', async (req, res) => {
     res.status(401).json({ message: 'Invalid token' });
   }
 });
+
 
 
 export default authRouter;

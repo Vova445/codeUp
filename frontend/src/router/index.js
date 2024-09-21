@@ -127,6 +127,15 @@ const router = createRouter({
          },
       },
       {
+         path: '/reset-path/:token?',
+         name: 'reset-path',
+         component: () => import('../views/TwoFactorAuth/ResetPassword.vue'),
+         meta: {
+            requireAuth: false,
+         },
+         props: true,
+      },
+      {
          path: '/twoFactorAuth/loading',
          name: 'loadingEmail',
          component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
@@ -157,10 +166,10 @@ router.beforeEach(async (to) => {
    document.documentElement.classList.remove('menu-open')
    document.documentElement.classList.remove('lock')
    if (to.meta?.requireAuth) {
-     const userToken = Cookies.get('authToken')
-     if (!userToken) {
-        return { name: 'login' }
-     }
+      const userToken = Cookies.get('authToken')
+      if (!userToken) {
+         return { name: 'login' }
+      }
    }
 })
 

@@ -44,7 +44,6 @@ const userData = reactive({
    pass: '',
    passConfirm: '',
 })
-
 const showPassword = ref(false)
 const getEyeCode = computed(() => (showPassword.value ? 'eye-slash' : 'eye'))
 const email = ref('')

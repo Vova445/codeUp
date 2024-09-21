@@ -1,5 +1,8 @@
 <template>
    <div class="reset-pass">
+      <button class="reset-pass__back">
+         <span><font-awesome-icon :icon="['fas', 'arrow-left']" /></span> back
+      </button>
       <div class="form-login">
          <form v-if="!token" class="form-login__container" @submit.prevent="sentEmail">
             <div class="form-login__group">
@@ -23,6 +26,7 @@
                   <font-awesome-icon :icon="['far', getEyeCode]" />
                </span>
             </div>
+
             <button class="form-login__button button" type="button" @click="resetPassword">Reset password</button>
          </form>
       </div>
@@ -31,8 +35,8 @@
 
 <script setup>
 import { computed, reactive, ref } from 'vue'
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
    token: {
@@ -40,7 +44,7 @@ const props = defineProps({
       default: null,
    },
 })
-const router = useRouter();
+const router = useRouter()
 const userData = reactive({
    email: '',
    pass: '',
@@ -54,51 +58,62 @@ function togglePassword() {
 async function sentEmail() {
    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
    try {
-      const response = await axios.post(`${apiUrl}/api/forgot-password`, { email: userData.email }, {
-         headers: {
-            'Content-Type': 'application/json'
-         }
-      });
-      alert(response.data.message);
+      const response = await axios.post(
+         `${apiUrl}/api/forgot-password`,
+         { email: userData.email },
+         {
+            headers: {
+               'Content-Type': 'application/json',
+            },
+         },
+      )
+      alert(response.data.message)
    } catch (error) {
-      const errorMessage = error.response ? error.response.data.message : 'Failed to send reset email';
-      alert(`Error: ${errorMessage}`);
+      const errorMessage = error.response ? error.response.data.message : 'Failed to send reset email'
+      alert(`Error: ${errorMessage}`)
    }
 }
 async function resetPassword() {
-   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-   const { pass, passConfirm } = userData;
+   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+   const { pass, passConfirm } = userData
 
    if (pass !== passConfirm) {
-      alert('Passwords do not match');
-      return;
+      alert('Passwords do not match')
+      return
    }
 
    try {
-      const response = await axios.post(`${apiUrl}/api/reset-password`, {
-         token: props.token,
-         newPassword: pass,
-      }, {
-         headers: {
-            'Content-Type': 'application/json'
-         }
-      });
-      alert(response.data.message);
-      router.push({name: "login"});
+      const response = await axios.post(
+         `${apiUrl}/api/reset-password`,
+         {
+            token: props.token,
+            newPassword: pass,
+         },
+         {
+            headers: {
+               'Content-Type': 'application/json',
+            },
+         },
+      )
+      alert(response.data.message)
+      router.push({ name: 'login' })
    } catch (error) {
-      const errorMessage = error.response ? error.response.data.message : 'Failed to reset password';
-      alert(`Error: ${errorMessage}`);
+      const errorMessage = error.response ? error.response.data.message : 'Failed to reset password'
+      alert(`Error: ${errorMessage}`)
    }
 }
-
 </script>
 
 <style lang="scss" scoped>
 .reset-pass {
    height: 100vh;
    display: flex;
+   flex-direction: column;
    justify-content: center;
    align-items: center;
+   gap: 30px;
+   &__back {
+   }
 }
 .form-login {
    width: 100%;

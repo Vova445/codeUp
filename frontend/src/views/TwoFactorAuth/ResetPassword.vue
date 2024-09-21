@@ -23,7 +23,7 @@
                   <font-awesome-icon :icon="['far', getEyeCode]" />
                </span>
             </div>
-            <button class="form-login__button button" @click="resetPassword">Reset pass</button>
+            <button class="form-login__button button" type="button" @click="resetPassword">Reset password</button>
          </form>
       </div>
    </div>
@@ -31,6 +31,7 @@
 
 <script setup>
 import { computed, reactive, ref } from 'vue'
+import axios from 'axios';
 
 const props = defineProps({
    token: {
@@ -48,7 +49,20 @@ const showPassword = ref(false)
 function togglePassword() {
    showPassword.value = !showPassword.value
 }
-function sentEmail() {}
+async function sentEmail() {
+   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+   try {
+      const response = await axios.post(`${apiUrl}/api/forgot-password`, { email: userData.email }, {
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      });
+      alert(response.data.message);
+   } catch (error) {
+      const errorMessage = error.response ? error.response.data.message : 'Failed to send reset email';
+      alert(`Error: ${errorMessage}`);
+   }
+}
 function resetPassword() {}
 </script>
 

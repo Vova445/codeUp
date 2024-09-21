@@ -127,8 +127,8 @@ const router = createRouter({
          },
       },
       {
-         path: '/reset-path/:token?',
-         name: 'reset-path',
+         path: '/reset-password/:token?',
+         name: 'reset-password',
          component: () => import('../views/TwoFactorAuth/ResetPassword.vue'),
          meta: {
             requireAuth: false,

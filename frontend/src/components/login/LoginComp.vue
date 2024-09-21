@@ -38,7 +38,7 @@ import Cookies from 'js-cookie'
 const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const router = useRouter()
-const { onLogin, onForgotPassword } = usersStore
+const { onLogin } = usersStore
 const userData = reactive({
    mail: '',
    pass: '',
@@ -46,8 +46,7 @@ const userData = reactive({
 })
 const showPassword = ref(false)
 const getEyeCode = computed(() => (showPassword.value ? 'eye-slash' : 'eye'))
-const email = ref('')
-const message = ref('')
+
 
 function togglePassword() {
    showPassword.value = !showPassword.value
@@ -86,8 +85,7 @@ const loginAction = async () => {
    }
 }
 const submitForgotPassword = async () => {
-   const { success, message: responseMessage } = await onForgotPassword(email.value)
-   message.value = responseMessage
+  router.push({ name: 'reset-password' })
 }
 </script>
 <style lang="scss" scoped>

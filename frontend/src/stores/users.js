@@ -44,19 +44,6 @@ export const useUsersStore = defineStore('users', () => {
       }
    }
 
-   async function onForgotPassword(email) {
-      try {
-         const response = await axios.post(`${apiUrl}/api/forgot-password`, { email }, {
-            headers: {
-               'Content-Type': 'application/json'
-            }
-         });
-         return { success: true, message: response.data.message };
-      } catch (error) {
-         const errorMessage = error.response ? error.response.data.message : 'Failed to send reset email';
-         return { success: false, message: errorMessage };
-      }
-   }
 
-   return { onRegister, onLogin, onForgotPassword }
+   return { onRegister, onLogin }
 })

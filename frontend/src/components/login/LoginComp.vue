@@ -19,15 +19,7 @@
                <font-awesome-icon :icon="['far', getEyeCode]" />
             </span>
          </div>
-         <div class="form-login__pass-reset-block">
-         <RouterLink 
-            :to="{ name: 'forgotPassword' }" 
-            class="form-login__forgot-pass form-login__button" 
-            @click="submitForgotPassword">
-            Forgot password
-          </RouterLink>
-         </div>
-
+         <div class="form-login__pass-reset-block"><button class="form-login__forgot-pass" @click="submitForgotPassword">Forgot password</button></div>
          <button type="submit" class="form-login__button">{{ $t('buttons.login') }}</button>
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
@@ -92,12 +84,10 @@ const loginAction = async () => {
       runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
    }
 }
-
 const submitForgotPassword = async () => {
    const { success, message: responseMessage } = await usersStore.onForgotPassword(email.value)
    message.value = responseMessage
 }
-
 
 </script>
 <style lang="scss" scoped>
@@ -109,20 +99,12 @@ const submitForgotPassword = async () => {
 }
 .form-login__forgot-pass {
    font-size: 14px;
-   display: inline-block;
-   padding: 10px 20px;
-   background-color: #00796b;
-   color: white;
-   border: none;
-   border-radius: 5px;
-   text-decoration: none;
-   text-align: center;
-   transition: background-color 0.3s;
 
    text-decoration: underline;
    &:hover {
       text-decoration: none;
-      background-color: #004d40;
    }
 }
 </style>
+
+

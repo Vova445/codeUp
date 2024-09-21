@@ -47,7 +47,6 @@ const userData = reactive({
 const showPassword = ref(false)
 const getEyeCode = computed(() => (showPassword.value ? 'eye-slash' : 'eye'))
 
-
 function togglePassword() {
    showPassword.value = !showPassword.value
 }
@@ -85,7 +84,7 @@ const loginAction = async () => {
    }
 }
 const submitForgotPassword = async () => {
-  router.push({ name: 'reset-password' })
+   router.push({ name: 'reset-password' })
 }
 </script>
 <style lang="scss" scoped>

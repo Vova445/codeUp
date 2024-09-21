@@ -38,9 +38,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const qrCodeUrl = ref('')
 const googleCode = ref('')
-
-
-
 const generateQRCode = async () => {
    try {
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -88,8 +85,8 @@ const verifyGoogleCode = async () => {
       runAlert('twoFactorAuth.qrcodeСonfirmationProblem', 'problem')
    }
 }
-onMounted (() => {
-   generateQRCode();
+onMounted(() => {
+   generateQRCode()
 })
 </script>
 

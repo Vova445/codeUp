@@ -20,20 +20,15 @@ const transporter = nodemailer.createTransport({
 });
 
 forgotPasswordRoutes.post('/forgot-password', async (req, res) => {
-  // const { email } = req.body;
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
+  const { email } = req.body;
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     const resetToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
 
     const apiUrl = process.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -71,10 +66,9 @@ forgotPasswordRoutes.post('/forgot-password', async (req, res) => {
       res.status(200).json({ message: 'Password reset email sent successfully' });
     });
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    res.status(500).json({ message: 'Server error', error: err.toString() });
   }
 });
-
 
 forgotPasswordRoutes.get('/reset-password/:token', async (req, res) => {
   const { token } = req.params;

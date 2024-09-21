@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import qrRoutes from '../routes/2fa/QRTwoFactorRoutes.js';
 import checkTwoFAStatusRoutes from '../routes/2fa/checkTwoFAStatus.js'; 
 import authRouter from '../routes/2fa/googleAuth.js';
-import forgotPasswordRoutes from '../routes/forgotPassword.js';
+import forgotPasswordRoutes from '../routes/forgotPassword.js'
 
 dotenv.config();
 

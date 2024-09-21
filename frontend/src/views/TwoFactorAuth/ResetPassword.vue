@@ -32,6 +32,7 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
    token: {
@@ -39,6 +40,7 @@ const props = defineProps({
       default: null,
    },
 })
+const router = useRouter();
 const userData = reactive({
    email: '',
    pass: '',
@@ -82,6 +84,7 @@ async function resetPassword() {
          }
       });
       alert(response.data.message);
+      router.push({name: "user"});
    } catch (error) {
       const errorMessage = error.response ? error.response.data.message : 'Failed to reset password';
       alert(`Error: ${errorMessage}`);

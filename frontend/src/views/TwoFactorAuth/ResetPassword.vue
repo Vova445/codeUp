@@ -63,7 +63,31 @@ async function sentEmail() {
       alert(`Error: ${errorMessage}`);
    }
 }
-function resetPassword() {}
+async function resetPassword() {
+   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+   const { pass, passConfirm } = userData;
+
+   if (pass !== passConfirm) {
+      alert('Passwords do not match');
+      return;
+   }
+
+   try {
+      const response = await axios.post(`${apiUrl}/api/reset-password`, {
+         token: props.token,
+         newPassword: pass,
+      }, {
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      });
+      alert(response.data.message);
+   } catch (error) {
+      const errorMessage = error.response ? error.response.data.message : 'Failed to reset password';
+      alert(`Error: ${errorMessage}`);
+   }
+}
+
 </script>
 
 <style lang="scss" scoped>

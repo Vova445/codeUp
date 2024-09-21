@@ -19,7 +19,11 @@
                <font-awesome-icon :icon="['far', getEyeCode]" />
             </span>
          </div>
-         <div class="form-login__pass-reset-block"><button class="form-login__forgot-pass">Forgot password</button></div>
+         <div class="form-login__pass-reset-block">
+            <RouterLink :to="{ name: 'forgotPassword' }" class="form-login__forgot-pass" @click="submitForgotPassword">
+               Forgot password
+            </RouterLink>
+         </div>
          <button type="submit" class="form-login__button">{{ $t('buttons.login') }}</button>
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
@@ -36,7 +40,7 @@ import Cookies from 'js-cookie'
 const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const router = useRouter()
-const { onLogin } = usersStore
+const { onLogin, onForgotPassword } = usersStore
 const userData = reactive({
    mail: '',
    pass: '',
@@ -45,6 +49,8 @@ const userData = reactive({
 
 const showPassword = ref(false)
 const getEyeCode = computed(() => (showPassword.value ? 'eye-slash' : 'eye'))
+const email = ref('')
+const message = ref('')
 
 function togglePassword() {
    showPassword.value = !showPassword.value
@@ -82,6 +88,13 @@ const loginAction = async () => {
       runAlert('twoFactorAuth.loginPassOrEmailProblem', 'problem')
    }
 }
+
+const submitForgotPassword = async () => {
+   const { success, message: responseMessage } = await usersStore.onForgotPassword(email.value)
+   message.value = responseMessage
+}
+
+
 </script>
 <style lang="scss" scoped>
 .form-login__pass-reset-block {

@@ -84,7 +84,7 @@ async function resetPassword() {
          }
       });
       alert(response.data.message);
-      router.push({name: "user"});
+      router.push({name: "login"});
    } catch (error) {
       const errorMessage = error.response ? error.response.data.message : 'Failed to reset password';
       alert(`Error: ${errorMessage}`);

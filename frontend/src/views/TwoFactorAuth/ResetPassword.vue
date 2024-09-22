@@ -1,7 +1,7 @@
 <template>
    <div class="reset-pass">
-      <button class="reset-pass__back">
-         <span><font-awesome-icon :icon="['fas', 'arrow-left']" /></span> back
+      <button class="reset-pass__back" @click="onBack">
+         <span><font-awesome-icon :icon="['fas', 'arrow-left']" /></span> {{ $t('buttons.back') }}
       </button>
       <div class="form-login">
          <form v-if="!token" class="form-login__container" @submit.prevent="sentEmail">
@@ -9,7 +9,7 @@
                <input id="mail" v-model="userData.email" required type="email" class="form-login__input" />
                <label for="mail" class="form-login__label">Email</label>
             </div>
-            <button type="submit" class="form-login__button button">send letter on Email to reset password</button>
+            <button type="submit" class="form-login__button button">{{ $t('buttons.emailReset') }}</button>
          </form>
          <form v-else class="form-login__container">
             <div class="form-login__group form-login__group--password">
@@ -27,7 +27,7 @@
                </span>
             </div>
 
-            <button class="form-login__button button" type="button" @click="resetPassword">Reset password</button>
+            <button class="form-login__button button" type="button" @click="resetPassword">{{ $t('buttons.resetPass') }}</button>
          </form>
       </div>
    </div>
@@ -102,6 +102,9 @@ async function resetPassword() {
       alert(`Error: ${errorMessage}`)
    }
 }
+function onBack() {
+   router.back()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -113,6 +116,21 @@ async function resetPassword() {
    align-items: center;
    gap: 30px;
    &__back {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      transition: opacity 0.3s ease;
+
+      span {
+         transition: transform 0.3s ease;
+      }
+      &:hover {
+         opacity: 0.8;
+         span {
+            transform: translate(-5px, 0);
+         }
+      }
    }
 }
 .form-login {

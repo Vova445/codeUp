@@ -20,7 +20,7 @@
             </span>
          </div>
          <div class="form-login__pass-reset-block">
-            <button class="form-login__forgot-pass" type="button" @click="submitForgotPassword">Forgot password</button>
+            <button class="form-login__forgot-pass" type="button" @click="submitForgotPassword">{{ $t('buttons.forgotPass') }}</button>
          </div>
          <button type="submit" class="form-login__button">{{ $t('buttons.login') }}</button>
          <div class="form-login__socials">

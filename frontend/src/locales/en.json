@@ -37,7 +37,11 @@
       "updateProfile": "Update Profile",
       "twoFactorAth": "Two-Factor Authentication",
       "alreadyAuth": "You have already confirmed account",
-      "logout": "Log Out"
+      "logout": "Log Out",
+      "forgotPass": "Forgot password",
+      "back": "Back",
+      "emailReset": "Send letter on Email to reset password",
+      "resetPass": "Set new Password"
    },
    "reasonsSection": {
       "dryTheory": {

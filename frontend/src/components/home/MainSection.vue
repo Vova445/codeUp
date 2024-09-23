@@ -1,5 +1,5 @@
 <template>
-   <section data-watch class="master">
+   <section class="master">
       <div class="master__container">
          <h1 class="master__title title">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">

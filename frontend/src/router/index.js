@@ -178,7 +178,8 @@ router.beforeEach(async (to) => {
          return true;
       } else {
          try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+            const response = await fetch(`${apiUrl}/api/user`, {
                credentials: 'include',
             });
             

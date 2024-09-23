@@ -5,7 +5,6 @@
             <div class="courses-carousal__wrapper swiper-wrapper">
                <div v-for="courseItem in coursesList" :key="courseItem.id" class="courses-carousal__slide swiper-slide">
                   <router-link :to="{ name: courseItem.toName }" class="courses-carousal__link">
-                     <!--<font-awesome-icon :icon="image.icon" :style="{ color: image.color }" />-->
                      <img :src="getImagePath(courseItem.image)" alt="" />
                   </router-link>
                </div>

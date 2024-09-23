@@ -32,6 +32,7 @@ async function createServer() {
         },
         exposedHeaders: ['Authorization'],
         allowedHeaders: ['Content-Type', 'Authorization'],
+        
     }));
     
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

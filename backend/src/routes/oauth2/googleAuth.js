@@ -48,6 +48,8 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     console.log('Generated Token:', token);
     req.user.token = token;
     await req.user.save();
+    res.setHeader('Access-Control-Allow-Origin', 'https://code-up-omega.vercel.app');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.cookie('authToken', token, { httpOnly: true, secure: true });
     res.redirect(req.query.state);
 });

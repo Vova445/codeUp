@@ -24,19 +24,32 @@
          this.getAuthToken();
      },
      methods: {
-         loginWithGoogle() {
-             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-             window.location.href = `${apiUrl}/api/auth/google`;
-         },
-         getAuthToken() {
-             const authToken = Cookies.get('authToken');
-             if (authToken) {
-                 console.log('Token отримано:', authToken);
-             } else {
-                 console.log('Token не знайдено');
-             }
-         }
-     }
+    loginWithGoogle() {
+        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+        window.location.href = `${apiUrl}/api/auth/google`;
+    },
+    async getAuthToken() {
+        const authToken = Cookies.get('authToken');
+        if (authToken) {
+            console.log('Token отримано:', authToken);
+        } else {
+            console.log('Token не знайдено');
+        }
+    },
+    async handleCallback() {
+        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+        const response = await fetch(`${apiUrl}/api/auth/google/callback`);
+        const data = await response.json();
+        
+        if (data.token) {
+            Cookies.set('authToken', data.token, { expires: 1 });
+            console.log('Token отримано:', data.token);
+        } else {
+            console.log('Token не знайдено');
+        }
+    }
+}
+
  };
  </script>
  

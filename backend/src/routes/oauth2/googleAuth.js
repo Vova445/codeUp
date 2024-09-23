@@ -44,11 +44,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     req.user.token = token;
     await req.user.save();
 
-    res.setHeader('Set-Cookie', cookie.serialize('authToken', token, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24, 
-        path: '/'
-    }));
+    res.json({ token });
     res.redirect('https://code-up-omega.vercel.app/user');
 });
 

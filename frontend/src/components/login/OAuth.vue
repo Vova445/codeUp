@@ -17,7 +17,7 @@
  
  <script>
 import Cookies from 'js-cookie';
-
+import { onMounted } from 'vue';
 export default {
     name: 'OAuth',
     setup() {

@@ -49,7 +49,7 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
 }));
 
-googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/api/login' }), (req, res) => {
     res.redirect('https://code-up-omega.vercel.app/user');
 });
 

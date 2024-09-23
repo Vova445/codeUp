@@ -58,9 +58,11 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
 }));
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/api/login' }), async (req, res) => {
-    res.cookie('authToken', req.user.token, {
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production', 
+    console.log('User authenticated:', req.user);
+    const token = req.user.token;
+    res.cookie('authToken', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 3600000,
     });
 

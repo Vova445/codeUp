@@ -28,10 +28,17 @@ export default {
         };
 
         onMounted(() => {
-            const authToken = Cookies.get('authToken');
-            console.log('Auth Token:', authToken);
-            if (authToken) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            if (token) {
+                Cookies.set('authToken', token, { secure: true, sameSite: 'None' });
                 window.location.href = 'https://code-up-omega.vercel.app/user';
+            } else {
+                const authToken = Cookies.get('authToken');
+                console.log('Auth Token:', authToken);
+                if (authToken) {
+                    window.location.href = 'https://code-up-omega.vercel.app/user';
+                }
             }
         });
 

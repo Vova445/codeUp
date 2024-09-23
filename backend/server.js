@@ -21,6 +21,12 @@ async function createServer() {
     const allowedOrigins = [
         'https://code-up-omega.vercel.app',
         'http://localhost:3000',
+        'https://code-up-t9gxb.ondigitalocean.app/api/auth/google/callback',
+        'https://code-up-t9gxb.ondigitalocean.app/api/auth/google',
+        'https://code-up-t9gxb.ondigitalocean.app/api/auth',
+        'https://code-up-t9gxb.ondigitalocean.app/api',
+        'https://code-up-t9gxb.ondigitalocean.app'
+
     ];
     
     app.use(cors({

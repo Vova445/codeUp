@@ -20,14 +20,7 @@
             <span class="password-toggle" @click="togglePassword"><font-awesome-icon :icon="['far', getEyeCode]" /></span>
          </div>
          <button type="submit" class="form-login__button">{{ $t('buttons.register') }}</button>
-         <div class="form-login__socials">
-            <button type="button" class="form-login__social form-login__social--google"><font-awesome-icon :icon="['fab', 'google']" /></button>
-            <button type="button" class="form-login__social form-login__social--facebook"><font-awesome-icon :icon="['fab', 'facebook-f']" /></button>
-            <button type="button" class="form-login__social form-login__social--github"><font-awesome-icon :icon="['fab', 'github']" /></button>
-            <button type="button" class="form-login__social form-login__social--linkedin-in">
-               <font-awesome-icon :icon="['fab', 'linkedin-in']" />
-            </button>
-         </div>
+         <OAuth />
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'login' }" class="form-login__link">{{ $t('buttons.haveAccount') }}</RouterLink>
          </div>
@@ -40,6 +33,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import { computed, reactive, ref } from 'vue'
 import { useUsersStore } from '../../stores/users.js'
 import { useAlertStore } from '../../stores/alert.js'
+import OAuth from './OAuth.vue' 
 const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const { onRegister } = usersStore

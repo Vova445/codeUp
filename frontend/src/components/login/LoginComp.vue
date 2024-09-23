@@ -23,14 +23,7 @@
             <button class="form-login__forgot-pass" type="button" @click="submitForgotPassword">{{ $t('buttons.forgotPass') }}</button>
          </div>
          <button type="submit" class="form-login__button">{{ $t('buttons.login') }}</button>
-         <div class="form-login__socials">
-            <button type="button" class="form-login__social form-login__social--google"><font-awesome-icon :icon="['fab', 'google']" /></button>
-            <button type="button" class="form-login__social form-login__social--facebook"><font-awesome-icon :icon="['fab', 'facebook-f']" /></button>
-            <button type="button" class="form-login__social form-login__social--github"><font-awesome-icon :icon="['fab', 'github']" /></button>
-            <button type="button" class="form-login__social form-login__social--linkedin-in">
-               <font-awesome-icon :icon="['fab', 'linkedin-in']" />
-            </button>
-         </div>
+         <OAuth />
          <div class="form-login__box-link">
             <RouterLink :to="{ name: 'register' }" class="form-login__link">{{ $t('buttons.noAccount') }}</RouterLink>
          </div>
@@ -43,6 +36,7 @@ import { useUsersStore } from '@/stores/users'
 import { useRouter } from 'vue-router'
 import { useAlertStore } from '../../stores/alert.js'
 import Cookies from 'js-cookie'
+import OAuth from './OAuth.vue' 
 const { runAlert } = useAlertStore()
 const usersStore = useUsersStore()
 const router = useRouter()

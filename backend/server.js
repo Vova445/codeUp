@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { setupMiddlewares } from './src/middlewares/middleware.js';
 import connectDB from './src/database/database.js';
+import passport from 'passport';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,9 +33,11 @@ async function createServer() {
     }));
     
     app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
     app.use(morgan('dev'));
     app.use(express.json());
+    app.use(passport.initialize());
+    app.use(passport.session());
+    
 
     await connectDB();
     await setupMiddlewares(app);

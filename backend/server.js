@@ -3,9 +3,11 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import path from 'path';
+import session from 'express-session';
 import { fileURLToPath } from 'url';
 import { setupMiddlewares } from './src/middlewares/middleware.js';
 import connectDB from './src/database/database.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +37,16 @@ async function createServer() {
 
     app.use(morgan('dev'));
     app.use(express.json());
+
+
+    app.use(session({
+        secret: process.env.SESSION_SECRET ,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24
+        }
+    }));
 
     await connectDB();
     await setupMiddlewares(app);

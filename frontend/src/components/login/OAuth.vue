@@ -18,19 +18,13 @@
  <script>
 import { onMounted } from 'vue';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 export default {
     name: 'OAuth',
     setup() {
-        const loginWithGoogle = async () => {
+        const loginWithGoogle = () => {
             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-            try {
-                await axios.get(`${apiUrl}/api/auth/google`, { withCredentials: true });
-                window.location.href = `${apiUrl}/api/auth/google`;
-            } catch (error) {
-                console.error('Error during Google login:', error);
-            }
+            window.location.href = `${apiUrl}/api/auth/google`;
         };
 
         onMounted(() => {

@@ -16,7 +16,7 @@
  </template>
  
  <script>
-
+import Cookies from 'js-cookie';
 
 export default {
     name: 'OAuth',
@@ -26,6 +26,18 @@ export default {
             const googleAuthUrl = `${apiUrl}/api/auth/google`;
             window.location.href = googleAuthUrl;
         };
+        const checkAuthToken = () => {
+            const token = Cookies.get('authToken');
+            if (token) {
+                console.log('Token is present:', token);
+            } else {
+                console.log('No token found');
+            }
+        };
+        onMounted(() => {
+            checkAuthToken();
+        });
+
 
         return {
             loginWithGoogle,

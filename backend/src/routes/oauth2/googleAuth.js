@@ -63,7 +63,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     console.log('Token to be stored in cookie:', token);
     res.cookie('authToken', token, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 3600000,
     });
     console.log('Cookie set:', req.cookies);

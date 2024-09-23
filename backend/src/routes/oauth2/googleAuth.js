@@ -61,6 +61,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     console.log('User authenticated:', req.user);
     const token = req.user.token;
     console.log('Token to be stored in cookie:', token);
+
     res.cookie('authToken', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -68,7 +69,14 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     });
     console.log('Cookie set:', req.cookies);
 
-    res.redirect('https://code-up-omega.vercel.app');
+    res.status(200).json({ message: 'Cookie set, please make the next request to /dashboard.' });
+});
+googleAuth.get('/dashboard', (req, res) => {
+    if (req.cookies.authToken) {
+        res.redirect('https://code-up-omega.vercel.app');
+    } else {
+        res.status(401).json({ message: 'Unauthorized' });
+    }
 });
 
 export default googleAuth;

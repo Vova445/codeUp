@@ -28,8 +28,10 @@ export default {
         };
         const checkAuthToken = () => {
             const token = Cookies.get('authToken');
+            console.log('Current cookies:', Cookies.get());
             if (token) {
                 console.log('Token is present:', token);
+                window.location.href = '/dashboard';
             } else {
                 console.log('No token found');
             }

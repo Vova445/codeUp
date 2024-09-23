@@ -11,8 +11,8 @@ const googleAuth = express.Router();
 googleAuth.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === 'production' }
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production' } 
 }));
 
 googleAuth.use(passport.initialize());

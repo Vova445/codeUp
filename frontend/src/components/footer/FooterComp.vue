@@ -20,7 +20,7 @@
             <div class="footer__item item-footer">
                <h6 class="item-footer__title">{{ $t('header.aboutUs') }}</h6>
                <ul class="item-footer__list">
-                  <li class="item-footer__item"><router-link to="/">FAQ</router-link></li>
+                  <li class="item-footer__item"><router-link :to="{ name: 'faq' }">FAQ</router-link></li>
                   <li class="item-footer__item">
                      <router-link to="/">{{ $t('header.aboutCodeUp') }}</router-link>
                   </li>

@@ -15,39 +15,35 @@
     </div>
 </template>
 
-<script>
+<script type="module">
 import { onMounted } from 'vue';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export default {
     name: 'OAuth',
     setup() {
-        const loginWithGoogle = () => {
+        const loginWithGoogle = async () => {
             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-            window.location.href = `${apiUrl}/api/auth/google`;
+            try {
+                const response = await axios.get(`${apiUrl}/api/auth/google`, { withCredentials: true });
+                const { token } = response.data;
+
+                if (token) {
+                    Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/', httpOnly: true });
+                    window.location.href = 'https://code-up-omega.vercel.app/user';
+                }
+            } catch (error) {
+                console.error('Google login failed:', error);
+            }
         };
 
         onMounted(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    console.log('Token from URL:', token);
-
-    if (token) {
-        Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/', httpOnly: true });
-        console.log('Token set in cookies:', Cookies.get('authToken'));
-        setTimeout(() => {
-            console.log('Redirecting to user page...');
-            window.location.href = 'https://code-up-omega.vercel.app/user';
-        }, 1000);
-    } else {
-        const authToken = Cookies.get('authToken');
-        console.log('Auth Token from cookies:', authToken);
-        if (authToken) {
-            window.location.href = 'https://code-up-omega.vercel.app/user';
-        }
-    }
-});
-
+            const authToken = Cookies.get('authToken');
+            if (authToken) {
+                window.location.href = 'https://code-up-omega.vercel.app/user';
+            }
+        });
 
         return {
             loginWithGoogle,

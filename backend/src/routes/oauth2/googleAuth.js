@@ -12,7 +12,7 @@ const googleAuth = express.Router();
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://code-up-t9gxb.ondigitalocean.app"
+    callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/google/callback"
   }, async (accessToken, refreshToken, profile, done) => {
     try {
       let user = await User.findOne({ googleId: profile.id });
@@ -40,7 +40,6 @@ googleAuth.get('/auth/google', passport.authenticate('google', { scope: ['profil
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    console.log('Токен:', token);
     req.user.token = token;
     await req.user.save();
     res.setHeader('Set-Cookie', cookie.serialize('authToken', token, {

@@ -22,16 +22,12 @@
  export default {
     name: 'OAuth',
     setup() {
-        onMounted(() => {
-            this.getAuthToken(); 
-        });
-    },
-    methods: {
-        loginWithGoogle() {
+        const loginWithGoogle = () => {
             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
             window.location.href = `${apiUrl}/api/auth/google`;
-        },
-        async getAuthToken() {
+        };
+
+        const getAuthToken = async () => {
             console.log("Getting auth token...");
             const authToken = Cookies.get('authToken');
             if (authToken) {
@@ -40,7 +36,15 @@
             } else {
                 console.log('Token не знайдено');
             }
-        }
+        };
+
+        onMounted(() => {
+            getAuthToken(); 
+        });
+
+        return {
+            loginWithGoogle,
+        };
     }
 };
  </script>

@@ -43,8 +43,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     req.user.token = token;
     await req.user.save();
 
-    res.cookie('authToken', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000 });
-    res.redirect('https://code-up-omega.vercel.app/user');
+    res.redirect(`https://code-up-omega.vercel.app/user?token=${token}`);
 });
 
 export default googleAuth;

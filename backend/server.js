@@ -7,6 +7,7 @@ import session from 'express-session';
 import { fileURLToPath } from 'url';
 import { setupMiddlewares } from './src/middlewares/middleware.js';
 import connectDB from './src/database/database.js';
+import cookieParser from 'cookie-parser';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -40,7 +41,7 @@ async function createServer() {
     app.use(morgan('dev'));
     app.use(express.json());
 
-
+    app.use(cookieParser());
     app.use(session({
         secret: process.env.SESSION_SECRET ,
         resave: false,

@@ -51,8 +51,12 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     req.user.token = token;
     await req.user.save();
     console.log('Setting cookie with token:', token);
-    res.cookie('authToken', token, {secure: process.env.NODE_ENV === 'production'});
-    console.log('Cookie set:', req.cookies);
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+  });
+  console.log('Cookies after setting:', req.cookies);
     res.redirect('https://code-up-omega.vercel.app/user');
 });
 

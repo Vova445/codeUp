@@ -16,10 +16,10 @@
  </template>
  
  <script>
- import { onMounted } from 'vue';
- import Cookies from 'js-cookie';
- 
- export default {
+import { onMounted } from 'vue';
+import Cookies from 'js-cookie';
+
+export default {
     name: 'OAuth',
     setup() {
         const loginWithGoogle = () => {
@@ -27,19 +27,11 @@
             window.location.href = `${apiUrl}/api/auth/google`;
         };
 
-        const getAuthToken = async () => {
-            console.log("Getting auth token...");
+        onMounted(() => {
             const authToken = Cookies.get('authToken');
             if (authToken) {
-                console.log('Token отримано:', authToken);
                 window.location.href = 'https://code-up-omega.vercel.app/user';
-            } else {
-                console.log('Token не знайдено');
             }
-        };
-
-        onMounted(() => {
-            getAuthToken(); 
         });
 
         return {
@@ -47,4 +39,4 @@
         };
     }
 };
- </script>
+</script>

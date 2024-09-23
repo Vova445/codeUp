@@ -41,23 +41,17 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-googleAuth.get('/auth/google', (req, res, next) => {
-    const redirectUrl = 'https://code-up-omega.vercel.app/user';
-    passport.authenticate('google', {
-        scope: ['profile', 'email'],
-        state: redirectUrl 
-    })(req, res, next);
-});
+googleAuth.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     console.log('Generated Token:', token);
     req.user.token = token;
     await req.user.save();
-    res.setHeader('Access-Control-Allow-Origin', 'https://code-up-omega.vercel.app');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.cookie('authToken', token, { httpOnly: true, secure: false });
-    res.redirect(req.query.state);
+    res.cookie('authToken', token, { httpOnly: true, secure: true });
+    res.redirect('https://code-up-omega.vercel.app/user');
 });
 
 export default googleAuth;

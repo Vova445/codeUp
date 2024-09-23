@@ -24,21 +24,22 @@ passport.use(new GoogleStrategy({
     }
   }));
   
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser(async (id, done) => {
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
       done(null, user);
     } catch (err) {
       done(err);
     }
-  });
-  
-  googleAuth.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-  
-  googleAuth.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: '/dashboard',
+});
+
+googleAuth.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+googleAuth.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/login'
-  }));
-  
-  export default googleAuth;  
+}), (req, res) => {
+    res.redirect('https://code-up-omega.vercel.app/');
+});
+
+export default googleAuth;

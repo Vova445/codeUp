@@ -57,7 +57,7 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
 }));
 
-googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/api/login' }), async (req, res) => {
+googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     console.log('User authenticated:', req.user);
     const token = req.user.token;
     console.log('Token to be stored in cookie:', token);
@@ -69,7 +69,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     });
     console.log('Cookie set:', req.cookies);
 
-    res.status(200).json({ message: 'Cookie set, please make the next request to /dashboard.' });
+    res.redirect('/dashboard');
 });
 googleAuth.get('/dashboard', (req, res) => {
     if (req.cookies.authToken) {

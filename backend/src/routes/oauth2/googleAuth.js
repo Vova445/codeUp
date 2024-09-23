@@ -9,11 +9,11 @@ import cors from 'cors';
 dotenv.config();
 const googleAuth = express.Router();
 
-googleAuth.use(cors({
-  origin: 'https://code-up-omega.vercel.app',
-  credentials: true,
-}));
-
+googleAuth.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://code-up-omega.vercel.app");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -43,10 +43,13 @@ passport.deserializeUser(async (id, done) => {
 
 googleAuth.get('/auth/google', passport.authenticate('google', {
   scope: ['profile', 'email'],
-  session: false 
+  session: false,
+  prompt: 'consent',
 }));
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session: false }), async (req, res) => {
   const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+  req.user.token = token;
+  await req.user.save();
   res.json({ token }); 
 });
 

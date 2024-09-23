@@ -48,6 +48,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     console.log('Generated Token:', token);
     req.user.token = token;
     await req.user.save();
+    res.cookie('authToken', token, { httpOnly: true, secure: true });
     res.redirect(req.query.state);
 });
 

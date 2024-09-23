@@ -19,24 +19,24 @@
  import Cookies from 'js-cookie';
  
  export default {
-     name: 'OAuth',
-     created() {
-         this.getAuthToken();
-     },
-     methods: {
-         loginWithGoogle() {
-             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-             window.location.href = `${apiUrl}/api/auth/google`;
-         },
-         async getAuthToken() {
-             const authToken = Cookies.get('authToken');
-             if (authToken) {
-                 console.log('Token отримано:', authToken);
-                 window.location.href = 'https://code-up-omega.vercel.app/user';
-             } else {
-                 console.log('Token не знайдено');
-             }
-         }
-     }
- };
+    name: 'OAuth',
+    created() {
+        this.getAuthToken();
+    },
+    methods: {
+        loginWithGoogle() {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            window.location.href = `${apiUrl}/api/auth/google`;
+        },
+        async getAuthToken() {
+            const authToken = Cookies.get('authToken');
+            if (authToken) {
+                console.log('Token отримано:', authToken);
+                window.location.href = 'https://code-up-omega.vercel.app/user';
+            } else {
+                console.log('Token не знайдено');
+            }
+        }
+    }
+};
  </script>

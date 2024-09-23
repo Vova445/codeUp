@@ -173,24 +173,11 @@ router.beforeEach(async (to) => {
    document.documentElement.classList.remove('menu-open')
    document.documentElement.classList.remove('lock')
    if (to.meta?.requireAuth) {
-      const userToken = Cookies.get('authToken');
-      if (userToken) {
-         return true;
-      } else {
-         try {
-            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-            const response = await fetch(`${apiUrl}/api/user`, {
-               credentials: 'include',
-            });
-            
-            const data = await response.json();
-            if (!data.user) {
-               return { name: 'login' };
-            }
-         } catch (error) {
-            return { name: 'login' };
-         }
+      const userToken = Cookies.get('authToken')
+      if (!userToken) {
+         return { name: 'login' }
       }
    }
-});
+})
+
 export default router

@@ -53,12 +53,5 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     res.redirect('https://code-up-omega.vercel.app/user');
 });
 
-googleAuth.get('/user', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json({ user: req.user });
-    } else {
-        res.redirect('/api/login');
-    }
-});
 
 export default googleAuth;

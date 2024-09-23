@@ -33,9 +33,10 @@ export default {
     console.log('Token from URL:', token);
 
     if (token) {
-        Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/' });
+        Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/', httpOnly: true });
         console.log('Token set in cookies:', Cookies.get('authToken'));
         setTimeout(() => {
+            console.log('Redirecting to user page...');
             window.location.href = 'https://code-up-omega.vercel.app/user';
         }, 1000);
     } else {

@@ -1,5 +1,5 @@
 <template>
-   <section data-watch class="reaons">
+   <section class="reaons">
       <div class="reaons__container">
          <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">

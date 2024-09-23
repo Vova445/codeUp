@@ -19,7 +19,7 @@ export function initSliderCarousal() {
          slidesPerView: 5,
          spaceBetween: 100,
          autoHeight: true,
-         allowTouchMove: true,
+         allowTouchMove: false,
          speed: 3000,
          //touchRatio: 0,
          //simulateTouch: false,

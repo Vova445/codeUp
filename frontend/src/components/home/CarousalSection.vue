@@ -5,9 +5,8 @@
             <div class="courses-carousal__wrapper swiper-wrapper">
                <div v-for="courseItem in coursesList" :key="courseItem.id" class="courses-carousal__slide swiper-slide">
                   <router-link :to="{ name: courseItem.toName }" class="courses-carousal__link">
-                     <span v-for="image in courseItem.images" :key="image.id">
-                        <font-awesome-icon :icon="image.icon" :style="{ color: image.color }" />
-                     </span>
+                     <!--<font-awesome-icon :icon="image.icon" :style="{ color: image.color }" />-->
+                     <img :src="getImagePath(courseItem.image)" alt="" />
                   </router-link>
                </div>
             </div>
@@ -25,6 +24,9 @@ const props = defineProps({
       required: true,
    },
 })
+const getImagePath = (imgPath) => {
+   return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
+}
 onMounted(() => {
    initSliderCarousal()
 })
@@ -33,27 +35,36 @@ onMounted(() => {
 <style lang="scss" scoped>
 .courses-carousal {
    &:not(:last-child) {
-      margin-bottom: clamp(6.25rem, 1.559rem + 9.785vw, 9.375rem);
+      margin-bottom: clamp(4.375rem, 1.561rem + 5.871vw, 6.25rem);
    }
    // .courses-carousal__container
    &__container {
+      position: relative;
       max-width: 900px;
-   }
-   // .courses-carousal__slider
-   &__slider {
    }
    // .courses-carousal__wrapper
    &__wrapper {
       transition-timing-function: linear;
       justify-content: space-between;
    }
-   // .courses-carousal__slide
    &__slide {
-      font-size: 40px;
-      height: 40px;
+      position: relative;
+      &::after {
+         content: '';
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background-color: #0c0b0b;
+         opacity: 0.3;
+      }
    }
-   // .courses-carousal__link
    &__link {
+      img {
+         width: 40px;
+         height: 40px;
+      }
    }
 }
 </style>

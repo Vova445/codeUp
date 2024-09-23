@@ -17,6 +17,7 @@ a:active {
    // outline: none;
 }
 html {
+   scroll-behavior: smooth;
    overflow-y: visible !important;
    overflow-x: visible !important;
 }

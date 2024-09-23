@@ -44,7 +44,7 @@
                      <a href="tel:666666666666">+666666666666</a>
                   </li>
                   <li class="item-footer__item item-footer__item--flex">
-                     <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:emai@email.com">emai@email.com</a>
+                     <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:mycodup@gmail.com">mycodup@gmail.com</a>
                   </li>
                </ul>
             </div>

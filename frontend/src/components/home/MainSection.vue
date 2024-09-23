@@ -19,7 +19,8 @@
                         <textPath href="#circlePath" startOffset="25%" text-anchor="middle" dominant-baseline="middle">{{ course.title }}</textPath>
                      </text>
                   </svg>
-                  <font-awesome-icon :icon="course.image" class="icon-center" />
+                  <!--<font-awesome-icon :icon="course.image" class="icon-center" />-->
+                  <img :src="getImagePath(course.image)" class="icon-center" alt="" />
                </div>
             </div>
             <div class="master__content text">
@@ -44,7 +45,7 @@ const props = defineProps({
    },
 })
 const getImagePath = (imgPath) => {
-   return new URL(`../../assets/img/home/${imgPath}`, import.meta.url).href
+   return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
 }
 </script>
 
@@ -227,7 +228,7 @@ const getImagePath = (imgPath) => {
 }
 .c-sharp {
    top: 2%;
-   left: 70%;
+   left: 75%;
    @media (max-width: 992px) {
       left: 65%;
       top: 5%;
@@ -274,6 +275,16 @@ text {
 }
 .icon-center {
    position: absolute;
+   width: 45px;
+   height: 45px;
+   @media (max-width: 992px) {
+      width: clamp(2.188rem, 0.057rem + 4.444vw, 2.813rem);
+      height: clamp(2.188rem, 0.057rem + 4.444vw, 2.813rem);
+   }
+   @media (max-width: 767.98px) {
+      width: 30px;
+      height: 30px;
+   }
    font-size: clamp(1.563rem, 1.09rem + 1.374vw, 2.188rem);
 }
 </style>

@@ -3,7 +3,7 @@
       <main-section :courses-list="coursesData.mainCourses" />
       <reasons-section :reasons-list="coursesData.reasonsList" />
       <steps-section :steps-list="coursesData.stepsList" />
-      <carousal-section :courses-list="coursesData.carouselCoursesList" />
+      <carousal-section :courses-list="coursesData.mainCourses" />
       <questions-section :questions-list="getQuestionsList">
          <div class="faq__footer">
             <router-link :to="{ name: 'faq' }" class="faq__more">

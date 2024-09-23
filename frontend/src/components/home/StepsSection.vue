@@ -44,6 +44,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 :deep() {
    .v-timeline-item__body {
+      //width: 110%;
       padding-inline: 0;
       padding-block-end: 0;
       font-family: 'Inter' !important;
@@ -143,7 +144,7 @@ onMounted(() => {
 }
 .steps {
    &:not(:last-child) {
-      margin-bottom: clamp(6.25rem, 1.559rem + 9.785vw, 9.375rem);
+      margin-bottom: clamp(4.375rem, 1.561rem + 5.871vw, 6.25rem);
    }
    &__title {
       &:not(:last-child) {

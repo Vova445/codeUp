@@ -5,12 +5,17 @@
             <h2 class="news__title title">{{ $t('titles.innovationsNews') }}</h2>
             <div class="news__items">
                <template v-for="newsItem in newsList">
-                  <a v-if="newsItem.cover_image" :key="newsItem.id" class="news__item item-news" target="_blank" :href="newsItem.url">
-                     <!--<div class="item-news__image"><img :src="newsItem.social_image" alt="" /></div>
-                     -->
+                  <a
+                     v-if="newsItem.cover_image || newsItem.social_image"
+                     class="news__item item-news"
+                     target="_blank"
+                     :href="newsItem.url"
+                     :key="newsItem.id"
+                  >
                      <div class="item-news__image">
                         <img :src="newsItem.cover_image || newsItem.social_image" alt="" />
                      </div>
+
                      <h4 class="item-news__title">{{ newsItem.title }}</h4>
                      <div class="item-news__date">published : {{ formatDate(newsItem.published_at) }}</div>
                   </a>

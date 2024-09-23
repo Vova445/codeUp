@@ -5,72 +5,72 @@
          "toName": "home",
          "title": "Python",
          "classAdd": "python",
-         "image": ["fab", "square-js"],
+         "image": "python.svg",
          "scale": "1",
-         "background": "#ffc107"
+         "background": "#20618a"
       },
       {
          "id": "rkeknrenl34knb3",
          "toName": "home",
          "title": "Vue.js",
          "classAdd": "vue",
-         "image": ["fab", "square-js"],
+         "image": "vue.svg",
          "scale": "0.9",
-         "background": "#2eb82e"
+         "background": "#40b681"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "JavaScript",
          "classAdd": "js",
-         "image": ["fab", "square-js"],
+         "image": "js.svg",
          "scale": "1.1",
-         "background": "#ffc107"
+         "background": "#cfb903"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "React",
          "classAdd": "react",
-         "image": ["fab", "square-js"],
+         "image": "react.svg",
          "scale": "1",
-         "background": "#0066ff"
+         "background": "#61dafb"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "Node.js",
          "classAdd": "node",
-         "image": ["fab", "square-js"],
+         "image": "node-js.svg",
          "scale": "0.8",
-         "background": "#cc3300"
+         "background": "#539e43"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "Html,Css",
          "classAdd": "html-css",
-         "image": ["fab", "square-js"],
+         "image": "html-css.svg",
          "scale": "0.8",
-         "background": "#ffc107"
+         "background": "#ff8000"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "C#",
          "classAdd": "c-sharp",
-         "image": ["fab", "square-js"],
+         "image": "c-sharp.svg",
          "scale": "0.8",
-         "background": "#0033cc"
+         "background": "#6d287e"
       },
       {
          "id": "3l4m39jglbmm4kbm04",
          "toName": "home",
          "title": "C++",
          "classAdd": "c-plus",
-         "image": ["fab", "square-js"],
+         "image": "c-plus.svg",
          "scale": "0.9",
-         "background": "#5c00e6"
+         "background": "#084a86"
       }
    ],
    "reasonsList": [

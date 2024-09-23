@@ -20,6 +20,9 @@
  
  export default {
      name: 'OAuth',
+     created() {
+         this.getAuthToken();
+     },
      methods: {
          loginWithGoogle() {
              const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
@@ -33,9 +36,7 @@
                  console.log('Token не знайдено');
              }
          }
-     },
-     mounted() {
-         this.getAuthToken();
      }
  };
  </script>
+ 

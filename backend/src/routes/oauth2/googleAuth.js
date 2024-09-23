@@ -40,8 +40,10 @@ googleAuth.get('/auth/google', passport.authenticate('google', { scope: ['profil
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    console.log('Generated Token:', token);
     req.user.token = token;
     await req.user.save();
+
     res.setHeader('Set-Cookie', cookie.serialize('authToken', token, {
         httpOnly: true,
         maxAge: 60 * 60 * 24, 

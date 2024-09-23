@@ -4,9 +4,15 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 import { User } from '../../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 dotenv.config();
 const googleAuth = express.Router();
+
+googleAuth.use(cors({
+    origin: 'https://code-up-omega.vercel.app',
+    credentials: true
+}));
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -50,7 +56,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     await req.user.save();
     res.setHeader('Access-Control-Allow-Origin', 'https://code-up-omega.vercel.app');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.cookie('authToken', token, { httpOnly: true, secure: true });
+    res.cookie('authToken', token, { httpOnly: true, secure: false });
     res.redirect(req.query.state);
 });
 

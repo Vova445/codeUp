@@ -57,7 +57,7 @@ googleAuth.get('/user', (req, res) => {
     if (req.isAuthenticated()) {
         res.json({ user: req.user });
     } else {
-        res.redirect('/login');
+        res.redirect('/api/login');
     }
 });
 

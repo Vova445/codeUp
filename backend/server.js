@@ -31,6 +31,7 @@ async function createServer() {
                 callback(new Error('Not allowed by CORS'));
             }
         },
+        credentials: true,
         exposedHeaders: ['Authorization'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         

@@ -52,9 +52,9 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     await req.user.save();
     console.log('Setting cookie with token:', token);
     res.cookie('authToken', token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: false,
-      sameSite: 'Lax',
+      sameSite: 'None',
   });
   console.log('Cookies after setting:', req.cookies);
     res.redirect('https://code-up-omega.vercel.app/user');

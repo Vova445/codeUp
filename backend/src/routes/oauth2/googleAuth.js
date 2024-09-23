@@ -66,8 +66,9 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
         secure: false,
         maxAge: 3600000,
     });
+    console.log('Cookie set:', req.cookies);
 
-    res.redirect('https://code-up-omega.vercel.app/user');
+    res.redirect('https://code-up-omega.vercel.app');
 });
 
 export default googleAuth;

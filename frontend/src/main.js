@@ -7,7 +7,7 @@ import { createPinia } from 'pinia'
 import './moduleHelpers/swiper.js'
 
 // localScript
-import './localScript/watcher/watcher.js'
+//import './localScript/watcher/watcher.js'
 import './localScript/localScript.js'
 
 //import i18n

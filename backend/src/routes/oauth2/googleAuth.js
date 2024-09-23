@@ -69,14 +69,8 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     });
     console.log('Cookie set:', req.cookies);
 
-    res.redirect('/dashboard');
+    res.redirect('https://code-up-omega.vercel.app/user');
 });
-googleAuth.get('/dashboard', (req, res) => {
-    if (req.cookies.authToken) {
-        res.redirect('https://code-up-omega.vercel.app');
-    } else {
-        res.status(401).json({ message: 'Unauthorized' });
-    }
-});
+
 
 export default googleAuth;

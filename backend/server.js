@@ -32,8 +32,9 @@ async function createServer() {
             }
         },
         credentials: true,
-        exposedHeaders: ['Authorization'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Authorization', 'Set-Cookie'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
+        
         
     }));
     
@@ -49,7 +50,7 @@ async function createServer() {
         saveUninitialized: false,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
         }
     }));
 

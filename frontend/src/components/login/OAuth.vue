@@ -28,24 +28,25 @@ export default {
         };
 
         onMounted(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-            console.log('Token from URL:', token); 
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    console.log('Token from URL:', token);
 
-            if (token) {
-                Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/' });
-                console.log('Token set in cookies:', Cookies.get('authToken')); 
-                setTimeout(() => {
-                    window.location.href = 'https://code-up-omega.vercel.app/user';
-                }, 1000); 
-            } else {
-                const authToken = Cookies.get('authToken');
-                console.log('Auth Token from cookies:', authToken);
-                if (authToken) {
-                    window.location.href = 'https://code-up-omega.vercel.app/user';
-                }
-            }
-        });
+    if (token) {
+        Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/' });
+        console.log('Token set in cookies:', Cookies.get('authToken'));
+        setTimeout(() => {
+            window.location.href = 'https://code-up-omega.vercel.app/user';
+        }, 1000);
+    } else {
+        const authToken = Cookies.get('authToken');
+        console.log('Auth Token from cookies:', authToken);
+        if (authToken) {
+            window.location.href = 'https://code-up-omega.vercel.app/user';
+        }
+    }
+});
+
 
         return {
             loginWithGoogle,

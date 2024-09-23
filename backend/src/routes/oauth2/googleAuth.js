@@ -11,38 +11,38 @@ const googleAuth = express.Router();
 
 googleAuth.use(cors({
     origin: 'https://code-up-omega.vercel.app',
-    credentials: true
+    credentials: true,
 }));
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/google/callback"
-  }, async (accessToken, refreshToken, profile, done) => {
+}, async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await User.findOne({ googleId: profile.id });
-      if (!user) {
-        user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
-        await user.save();
-      }
-      done(null, user);
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
+            user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
+            await user.save();
+        }
+        done(null, user);
     } catch (err) {
-      done(err, null);
+        done(err, null);
     }
-  }));
+}));
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id);
-      done(null, user);
+        const user = await User.findById(id);
+        done(null, user);
     } catch (err) {
-      done(err);
+        done(err);
     }
 });
 
 googleAuth.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
+    scope: ['profile', 'email']
 }));
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
@@ -50,7 +50,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     console.log('Generated Token:', token);
     req.user.token = token;
     await req.user.save();
-    console.log('Redirecting with token:', token);
+
     res.redirect(`https://code-up-omega.vercel.app/user?token=${token}`);
 });
 

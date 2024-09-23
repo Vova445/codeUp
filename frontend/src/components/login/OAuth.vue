@@ -1,4 +1,4 @@
- <template>
+<template>
     <div class="form-login__socials">
         <button type="button" class="form-login__social form-login__social--google" @click="loginWithGoogle">
             <font-awesome-icon :icon="['fab', 'google']" />
@@ -17,6 +17,7 @@
 
 <script>
 import { onMounted } from 'vue';
+import Cookies from 'js-cookie';
 
 export default {
     name: 'OAuth',
@@ -32,14 +33,14 @@ export default {
             console.log('Token from URL:', token); 
 
             if (token) {
-                localStorage.setItem('authToken', token);
-                console.log('Token set in localStorage:', localStorage.getItem('authToken')); 
+                Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/' });
+                console.log('Token set in cookies:', Cookies.get('authToken')); 
                 setTimeout(() => {
                     window.location.href = 'https://code-up-omega.vercel.app/user';
-                }, 2000);
+                }, 1000); 
             } else {
-                const authToken = localStorage.getItem('authToken');
-                console.log('Auth Token from localStorage:', authToken);
+                const authToken = Cookies.get('authToken');
+                console.log('Auth Token from cookies:', authToken);
                 if (authToken) {
                     window.location.href = 'https://code-up-omega.vercel.app/user';
                 }
@@ -51,5 +52,4 @@ export default {
         };
     }
 };
-
 </script>

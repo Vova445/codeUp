@@ -4,7 +4,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 import { User } from '../../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
 
 dotenv.config();
 const googleAuth = express.Router();
@@ -45,7 +44,6 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     await req.user.save();
 
     res.json({ token });
-    res.redirect('https://code-up-omega.vercel.app/user');
 });
 
 export default googleAuth;

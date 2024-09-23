@@ -17,6 +17,7 @@
  
  <script>
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 export default {
     name: 'OAuth',
@@ -28,16 +29,32 @@ export default {
             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
             window.location.href = `${apiUrl}/api/auth/google`;
         },
-        getAuthToken() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const authToken = urlParams.get('token');
-
+        async getAuthToken() {
+            const authToken = Cookies.get('authToken');
             if (authToken) {
-                Cookies.set('authToken', authToken, { expires: 1 });
                 console.log('Token отримано:', authToken);
                 window.location.href = 'https://code-up-omega.vercel.app/user';
             } else {
                 console.log('Token не знайдено');
+            }
+        },
+        async handleCallback() {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            try {
+                const response = await axios.get(`${apiUrl}/api/auth/google/callback`, {
+                    withCredentials: true 
+                });
+                
+                const data = response.data;
+                if (data.token) {
+                    Cookies.set('authToken', data.token, { expires: 1 });
+                    console.log('Token отримано:', data.token);
+                    window.location.href = 'https://code-up-omega.vercel.app/user';
+                } else {
+                    console.log('Token не знайдено');
+                }
+            } catch (error) {
+                console.error('Помилка при отриманні токена:', error);
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="form-login__socials">
-        <button @click="loginWithGoogle" type="button" class="form-login__social form-login__social--google">
+        <button type="button" class="form-login__social form-login__social--google" @click="loginWithGoogle">
       <font-awesome-icon :icon="['fab', 'google']" />
     </button>
        <button type="button" class="form-login__social form-login__social--facebook">
@@ -16,29 +16,31 @@
  </template>
  
  <script>
+ import { onMounted } from 'vue';
  import Cookies from 'js-cookie';
  
  export default {
     name: 'OAuth',
-    created() {
-        this.getAuthToken();
+    setup() {
+        onMounted(() => {
+            this.getAuthToken(); 
+        });
     },
     methods: {
-    loginWithGoogle() {
-        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-        window.location.href = `${apiUrl}/api/auth/google`;
-    },
-    async getAuthToken() {
-        console.log("Getting auth token...");
-        const authToken = Cookies.get('authToken');
-        if (authToken) {
-            console.log('Token отримано:', authToken);
-            window.location.href = 'https://code-up-omega.vercel.app/user';
-        } else {
-            console.log('Token не знайдено');
+        loginWithGoogle() {
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            window.location.href = `${apiUrl}/api/auth/google`;
+        },
+        async getAuthToken() {
+            console.log("Getting auth token...");
+            const authToken = Cookies.get('authToken');
+            if (authToken) {
+                console.log('Token отримано:', authToken);
+                window.location.href = 'https://code-up-omega.vercel.app/user';
+            } else {
+                console.log('Token не знайдено');
+            }
         }
     }
-}
-
 };
  </script>

@@ -16,41 +16,20 @@
  </template>
  
  <script>
-import { onMounted } from 'vue';
-import Cookies from 'js-cookie';
+
 
 export default {
     name: 'OAuth',
     setup() {
         const loginWithGoogle = () => {
-         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-         const googleAuthUrl = `${apiUrl}/api/auth/google`
-         window.location.href = googleAuthUrl
-      }
-
-        onMounted(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-            console.log('Token from URL:', token);
-
-            if (token) {
-                Cookies.set('authToken', token, { secure: true, sameSite: 'None', path: '/'});
-                console.log('Token set in cookies:', Cookies.get('authToken')); 
-                setTimeout(() => {
-                    window.location.href = 'https://code-up-omega.vercel.app/user';
-                }, 2500); 
-            } else {
-                const authToken = Cookies.get('authToken');
-                console.log('Auth Token from cookies:', authToken);
-                if (authToken) {
-                    window.location.href = 'https://code-up-omega.vercel.app/user';
-                }
-            }
-        });
+            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+            const googleAuthUrl = `${apiUrl}/api/auth/google`;
+            window.location.href = googleAuthUrl;
+        };
 
         return {
             loginWithGoogle,
         };
-    }
+    },
 };
 </script>

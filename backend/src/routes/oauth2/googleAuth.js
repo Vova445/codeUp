@@ -2,11 +2,21 @@ import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
+import session from 'express-session'; 
 import { User } from '../../models/userModel.js';
-import jwt from 'jsonwebtoken';
 
 dotenv.config();
 const googleAuth = express.Router();
+
+googleAuth.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
+googleAuth.use(passport.initialize());
+googleAuth.use(passport.session());
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -35,23 +45,20 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-googleAuth.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://code-up-omega.vercel.app");
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-});
-
 googleAuth.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
-    session: false,
-    prompt: 'consent',
 }));
 
-googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session: false }), async (req, res) => {
-  const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-  req.user.token = token;
-  await req.user.save();
-  res.redirect(`https://code-up-omega.vercel.app/user?token=${token}`);
+googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect('https://code-up-omega.vercel.app/user');
+});
+
+googleAuth.get('/user', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ user: req.user });
+    } else {
+        res.redirect('/login');
+    }
 });
 
 export default googleAuth;

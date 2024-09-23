@@ -10,7 +10,7 @@ import checkTwoFAStatusRoutes from '../routes/2fa/checkTwoFAStatus.js';
 import authRouter from '../routes/2fa/googleAuth.js';
 import forgotPasswordRoutes from '../routes/forgotPassword.js'
 import googleAuth from '../routes/oauth2/googleAuth.js';
-
+import passport from 'passport';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +18,8 @@ const __dirname = path.dirname(__filename);
 
 export async function setupMiddlewares(app) {
   
-
+   app.use(passport.initialize());
+   app.use(passport.session());
    app.use('/api', userRoutes)
    app.use('/api', emailTwoFactorRoutes);
    app.use('/api', qrRoutes);

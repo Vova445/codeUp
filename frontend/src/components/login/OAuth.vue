@@ -20,7 +20,8 @@
    name: 'OAuth',
    methods: {
     loginWithGoogle() {
-      window.location.href = '/api/auth/google';
+        const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+      window.location.href = `${apiUrl}/api/auth/google`;
     }
   }
 };

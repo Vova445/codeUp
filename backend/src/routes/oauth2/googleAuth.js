@@ -2,11 +2,15 @@ import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import session from 'express-session'; 
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
 import { User } from '../../models/userModel.js';
 
 dotenv.config();
 const googleAuth = express.Router();
+
+googleAuth.use(cookieParser());
 
 googleAuth.use(session({
     secret: process.env.SESSION_SECRET,
@@ -27,8 +31,12 @@ passport.use(new GoogleStrategy({
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
             user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
-            await user.save();
         }
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        user.token = token; 
+        await user.save(); 
+
         done(null, user);
     } catch (err) {
         done(err, null);
@@ -49,9 +57,14 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
 }));
 
-googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/api/login' }), (req, res) => {
+googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/api/login' }), async (req, res) => {
+    res.cookie('authToken', req.user.token, {
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production', 
+        maxAge: 3600000,
+    });
+
     res.redirect('https://code-up-omega.vercel.app/user');
 });
-
 
 export default googleAuth;

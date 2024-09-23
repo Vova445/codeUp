@@ -48,10 +48,10 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
 }));
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', session: false }), async (req, res) => {
-    const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
-    req.user.token = token;
-    await req.user.save();
-    res.json({ token });
+  const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+  req.user.token = token;
+  await req.user.save();
+  res.redirect(`https://code-up-omega.vercel.app/user?token=${token}`);
 });
 
 export default googleAuth;

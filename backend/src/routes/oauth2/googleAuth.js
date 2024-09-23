@@ -4,6 +4,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 import { User } from '../../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 
 dotenv.config();
 const googleAuth = express.Router();
@@ -41,7 +42,11 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     req.user.token = token;
     await req.user.save();
-    res.cookie('authToken', token, { httpOnly: true });
+    res.setHeader('Set-Cookie', cookie.serialize('authToken', token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24, 
+        path: '/'
+    }));
     res.redirect('https://code-up-omega.vercel.app/user');
 });
 

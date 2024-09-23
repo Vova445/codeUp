@@ -17,20 +17,25 @@
  
  <script>
  import Cookies from 'js-cookie';
+ 
  export default {
-   name: 'OAuth',
-   methods: {
-    async loginWithGoogle() {
-            const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-            window.location.href = `${apiUrl}/api/auth/google`;
-            const token = this.getTokenFromCookies();
-            if (token) {
-                Cookies.set('authToken', token);
-            }
-        },
-        getTokenFromCookies() {
-            return document.cookie.split('; ').find(row => row.startsWith('authToken='))?.split('=')[1];
-        }
-    }
-};
+     name: 'OAuth',
+     methods: {
+         loginWithGoogle() {
+             const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+             window.location.href = `${apiUrl}/api/auth/google`;
+         },
+         getAuthToken() {
+             const authToken = Cookies.get('authToken');
+             if (authToken) {
+                 console.log('Token отримано:', authToken);
+             } else {
+                 console.log('Token не знайдено');
+             }
+         }
+     },
+     mounted() {
+         this.getAuthToken();
+     }
+ };
  </script>

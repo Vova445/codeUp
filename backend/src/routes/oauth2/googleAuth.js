@@ -52,8 +52,8 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
     await req.user.save();
     console.log('Setting cookie with token:', token);
     res.cookie('authToken', token, {
-      httpOnly: false,
-      secure: false,
+      httpOnly: true,
+      secure: true,
       sameSite: 'None',
   });
   console.log('Cookies after setting:', req.cookies);

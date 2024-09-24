@@ -48,6 +48,7 @@ onMounted(() => {
    }
    &__slide {
       position: relative;
+
       &::after {
          content: '';
          position: absolute;
@@ -60,6 +61,9 @@ onMounted(() => {
       }
    }
    &__link {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
       img {
          width: 40px;
          height: 40px;

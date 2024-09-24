@@ -9,7 +9,7 @@
                   :class="course.classAdd"
                   v-for="course in coursesList"
                   :key="course.id"
-                  :style="[{ backgroundColor: course.background }, { transform: `scale(${course.scale})` }]"
+                  :style="[{ background: course.background }, { transform: `scale(${course.scale})` }]"
                >
                   <svg viewBox="0 0 100 100" class="circle-svg">
                      <defs>
@@ -19,7 +19,6 @@
                         <textPath href="#circlePath" startOffset="25%" text-anchor="middle" dominant-baseline="middle">{{ course.title }}</textPath>
                      </text>
                   </svg>
-                  <!--<font-awesome-icon :icon="course.image" class="icon-center" />-->
                   <img :src="getImagePath(course.image)" class="icon-center" alt="" />
                </div>
             </div>

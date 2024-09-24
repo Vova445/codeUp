@@ -55,19 +55,7 @@ const getImagePath = (imgPath) => {
    &:not(:last-child) {
       margin-bottom: clamp(3.125rem, 1.249rem + 3.914vw, 4.375rem);
    }
-   //&::before {
-   //   content: '';
-   //   position: absolute;
-   //   top: 10%;
-   //   right: 0;
-   //   width: 50%;
-   //   height: 68%;
-   //   opacity: 0.3;
-   //   padding-bottom: 30%;
-   //   //transform: translate(50%, 0);
-   //   background: url('../../assets/img/home/decore-codeUp.svg') 0 0 / clamp(17.5rem, 6.644rem + 54.28vw, 50rem) no-repeat;
 
-   //}
    &__decor {
       position: absolute;
       width: 40%;

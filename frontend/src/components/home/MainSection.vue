@@ -1,5 +1,6 @@
 <template>
    <section class="master">
+      <img class="master__decor" src="../../assets/img/home/decore-codeUp.svg" alt="" />
       <div class="master__container">
          <h1 class="master__title title">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">
@@ -50,8 +51,33 @@ const getImagePath = (imgPath) => {
 
 <style lang="scss" scoped>
 .master {
+   position: relative;
    &:not(:last-child) {
       margin-bottom: clamp(3.125rem, 1.249rem + 3.914vw, 4.375rem);
+   }
+   //&::before {
+   //   content: '';
+   //   position: absolute;
+   //   top: 10%;
+   //   right: 0;
+   //   width: 50%;
+   //   height: 68%;
+   //   opacity: 0.3;
+   //   padding-bottom: 30%;
+   //   //transform: translate(50%, 0);
+   //   background: url('../../assets/img/home/decore-codeUp.svg') 0 0 / clamp(17.5rem, 6.644rem + 54.28vw, 50rem) no-repeat;
+
+   //}
+   &__decor {
+      position: absolute;
+      width: 40%;
+      opacity: 0.2;
+      height: 100%;
+      top: 0;
+      left: 50%;
+      @media (max-width: 630px) {
+         display: none;
+      }
    }
    &__title {
       font-size: clamp(1.375rem, -0.126rem + 3.131vw, 2.375rem);

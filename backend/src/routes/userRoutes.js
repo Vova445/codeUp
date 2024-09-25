@@ -10,6 +10,7 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 // import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GitHubStrategy } from 'passport-github';
+import { Strategy as LinkedInStrategy } from 'passport-linkedin-oauth2';
 
 dotenv.config();
 
@@ -143,6 +144,50 @@ userRoutes.get('/auth/github/callback', passport.authenticate('github', { failur
    const token = req.user.token;
    res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
 });
+
+
+
+
+passport.use(new LinkedInStrategy({
+   clientID: process.env.LINKEDIN_CLIENT_ID,
+   clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/linkedin/callback",
+   scope: ['r_liteprofile', 'r_emailaddress'],
+   state: true 
+}, async (accessToken, refreshToken, profile, done) => {
+   try {
+       let user = await User.findOne({ linkedinId: profile.id });
+       if (!user) {
+           user = new User({
+               linkedinId: profile.id,
+               name: profile.displayName,
+               email: profile.emails[0].value,
+           });
+           console.log("New user created:", user);
+       } else {
+           console.log("Existing user found:", user);
+       }
+
+       const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
+       const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+       user.token = token;
+       user.refreshToken = refreshToken;
+       await user.save();
+
+       done(null, user);
+   } catch (err) {
+       done(err, null);
+   }
+}));
+
+
+userRoutes.get('/auth/linkedin', passport.authenticate('linkedin'));
+
+userRoutes.get('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {
+    const token = req.user.token;
+    res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
+});
+
 
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
    try {

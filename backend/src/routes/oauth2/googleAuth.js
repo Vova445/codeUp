@@ -32,6 +32,10 @@ passport.use(new GoogleStrategy({
         if (!user) {
             user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
         }
+        else{
+            user.name = profile.displayName;
+            user.email = profile.emails[0].value;
+        }
 
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         user.token = token; 

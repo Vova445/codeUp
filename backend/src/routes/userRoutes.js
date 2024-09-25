@@ -118,7 +118,7 @@ passport.use(new GitHubStrategy({
            user = new User({
                githubId: profile.id,
                name: profile.displayName || profile.username,
-               email: profile.emails[0].value
+               email: email
            });
            console.log("New user created:", user);
        } else {

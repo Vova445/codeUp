@@ -59,7 +59,7 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     const token = req.user.token;
-    res.redirect(`https://code-up-omega.vercel.app/user?token=${token}`);
+    res.redirect(`https://code-up-omega.vercel.app?token=${token}`);
 });
 
 export default googleAuth;

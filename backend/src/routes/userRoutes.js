@@ -32,11 +32,16 @@ passport.use(new GoogleStrategy({
    try {
        let user = await User.findOne({ googleId: profile.id });
        if (!user) {
-           user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
-           console.log("New user created:", user);
-       } else {
-           console.log("Existing user found:", user);
-       }
+         user = await User.findOne({ email: profile.emails[0].value });
+         if (!user) {
+             user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
+             console.log("New user created:", user);
+         } else {
+             console.log("Existing user found by email:", user);
+         }
+     } else {
+         console.log("Existing user found by Google ID:", user);
+     }
 
        const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
        const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
@@ -126,16 +131,31 @@ passport.use(new GitHubStrategy({
      const emails = await response.json();
      email = emails[0]?.email;
    }
-       if (!user) {
-           user = new User({
-               githubId: profile.id,
-               name: profile.displayName || profile.username,
-               email: email
-           });
-           console.log("New user created:", user);
-       } else {
-           console.log("Existing user found:", user);
-       }
+   if (!user) {
+      let email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
+
+      if (!email) {
+          const response = await fetch(`https://api.github.com/user/emails`, {
+              headers: { Authorization: `Bearer ${accessToken}` }
+          });
+          const emails = await response.json();
+          email = emails[0]?.email;
+      }
+
+      user = await User.findOne({ email });
+      if (!user) {
+          user = new User({
+              githubId: profile.id,
+              name: profile.displayName || profile.username,
+              email: email
+          });
+          console.log("New user created:", user);
+      } else {
+          console.log("Existing user found by email:", user);
+      }
+  } else {
+      console.log("Existing user found by GitHub ID:", user);
+  }
 
        const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
        const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');

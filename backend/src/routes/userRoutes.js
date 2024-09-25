@@ -11,6 +11,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 // import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GitHubStrategy } from 'passport-github';
 import { Strategy as LinkedInStrategy } from 'passport-linkedin-oauth2';
+import crypto from 'crypto'
 
 dotenv.config();
 
@@ -181,10 +182,14 @@ passport.use(new LinkedInStrategy({
 }));
 
 
+
 userRoutes.get('/auth/linkedin', (req, res, next) => {
-   console.log('Request parameters:', req.query);
-   passport.authenticate('linkedin')(req, res, next);
+    const state = crypto.randomBytes(16).toString('hex');
+    req.session.oauthState = state; 
+    passport.authenticate('linkedin', { state: state })(req, res, next);
 });
+
+
 
 
 userRoutes.get('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {

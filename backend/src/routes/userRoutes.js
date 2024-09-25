@@ -28,10 +28,13 @@ passport.use(new GoogleStrategy({
    try {
        let user = await User.findOne({ googleId: profile.id });
        if (!user) {
-           user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
+           user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value, avatar: profile.photos[0].value });
            console.log("New user created:", user);
        } else {
            console.log("Existing user found:", user);
+           if (!user.avatar) {
+            user.avatar = profile.photos[0].value;
+        }
        }
 
        const token = generateToken(user._id, process.env.JWT_SECRET, '24h');

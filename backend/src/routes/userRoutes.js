@@ -113,7 +113,19 @@ passport.use(new GitHubStrategy({
    callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
    try {
-       let user = await User.findOne({ githubId: profile.id });
+      let user = await User.findOne({ githubId: profile.id });
+      let email = null;
+      if (profile.emails && profile.emails.length > 0) {
+         email = profile.emails[0].value;
+     } else {
+      const response = await fetch(`https://api.github.com/user/emails`, {
+         headers: {
+             Authorization: `Bearer ${accessToken}`
+         }
+     });
+     const emails = await response.json();
+     email = emails[0]?.email;
+   }
        if (!user) {
            user = new User({
                githubId: profile.id,

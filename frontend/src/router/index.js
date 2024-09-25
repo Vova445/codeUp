@@ -146,7 +146,7 @@ const router = createRouter({
       {
          path: '/loading',
          name: 'loading',
-         component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
+         component: () => import('../components/login/loading.vue'),
          meta: {
             requireAuth: false,
          },

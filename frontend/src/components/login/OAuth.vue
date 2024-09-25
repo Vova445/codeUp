@@ -43,6 +43,11 @@ const storeTokenInCookie = () => {
 }
 
 onMounted(() => {
-   storeTokenInCookie()
+   const urlParams = new URLSearchParams(window.location.search);
+   const token = urlParams.get('token');
+   
+   if (token) {
+      storeTokenInCookie();
+   }
 })
 </script>

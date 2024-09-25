@@ -28,14 +28,20 @@ const loginWithGoogle = () => {
    window.location.href = googleAuthUrl
 }
 const storeTokenInCookie = () => {
+   console.log('storeTokenInCookie function called')
    const urlParams = new URLSearchParams(window.location.search);
    const token = urlParams.get('token');
+   console.log('Token from URL:', token);
    if (token) {
-      Cookies.set('authToken', token, { expires: 1, secure: true, sameSite: 'None' });
+      const isProduction = import.meta.env.NODE_ENV === 'production';
+      Cookies.set('authToken', token, { expires: 1, secure: isProduction, sameSite: 'Lax' });
       console.log('Token saved in cookies:', token);
       router.push({ name: 'user' }); 
+   } else {
+      console.error('Token is missing');
    }
 }
+
 onMounted(() => {
    storeTokenInCookie()
 })

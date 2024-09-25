@@ -18,6 +18,9 @@
 <script setup>
 import Cookies from 'js-cookie'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const loginWithGoogle = () => {
    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -26,11 +29,9 @@ const loginWithGoogle = () => {
 }
 const checkAuthToken = () => {
    const token = Cookies.get('authToken')
-   console.log('Current cookies:', Cookies.get())
-   console.log('Current cookies document:', document.cookie);
    if (token) {
       console.log('Token is present:', token)
-      window.location.href = '/dashboard'
+      router.push({name: "user"})
    } else {
       console.log('No token found')
    }

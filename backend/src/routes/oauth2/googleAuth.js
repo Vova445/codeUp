@@ -53,26 +53,17 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-googleAuth.get('/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email'],
-}));
-
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
-    console.log('User authenticated:', req.user);
     const token = req.user.token;
-    console.log('Token to be stored in cookie:', token);
 
     res.cookie('authToken', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600000,
+        maxAge: 3600000, 
         sameSite: 'None',
-        domain: 'https://code-up-omega.vercel.app/',  
     });
-    console.log('Cookie set:', req.cookies);
 
     res.redirect('https://code-up-omega.vercel.app/user');
 });
-
 
 export default googleAuth;

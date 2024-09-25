@@ -53,6 +53,10 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+googleAuth.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+}));
+
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
     const token = req.user.token;
 

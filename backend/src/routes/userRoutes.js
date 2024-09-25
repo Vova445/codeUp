@@ -6,6 +6,8 @@ import { validateRequest } from '../middlewares/validateRequest.js';
 import { User } from '../models/userModel.js';
 import dotenv from 'dotenv';
 import multer from 'multer';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 dotenv.config();
 
@@ -18,24 +20,50 @@ const generateToken = (userId, secret, expiresIn) => {
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+passport.use(new GoogleStrategy({
+   clientID: process.env.GOOGLE_CLIENT_ID,
+   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/google/callback"
+}, async (accessToken, refreshToken, profile, done) => {
+   try {
+       let user = await User.findOne({ googleId: profile.id });
+       if (!user) {
+           user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
+           console.log("New user created:", user);
+       } else {
+           console.log("Existing user found:", user);
+       }
+
+       const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
+       const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+       user.token = token;
+       user.refreshToken = refreshToken;
+       await user.save();
+
+       done(null, user);
+   } catch (err) {
+       done(err, null);
+   }
+}));
+
 userRoutes.post('/register', validateRequest(userSchema), async (req, res) => {
    try {
-      const { name, email, password } = req.body;
-      const newUser = new User({ name, email, password });
-      await newUser.save();
+       const { name, email, password } = req.body;
+       const newUser = new User({ name, email, password });
+       await newUser.save();
 
-      const token = generateToken(newUser._id, process.env.JWT_SECRET, '24h');
-      const refreshToken = generateToken(newUser._id, process.env.JWT_REFRESH_SECRET, '30d');
-      newUser.token = token;
-      newUser.refreshToken = refreshToken;
-      await newUser.save();
+       const token = generateToken(newUser._id, process.env.JWT_SECRET, '24h');
+       const refreshToken = generateToken(newUser._id, process.env.JWT_REFRESH_SECRET, '30d');
+       newUser.token = token;
+       newUser.refreshToken = refreshToken;
+       await newUser.save();
 
-      res.status(201).json({ message: 'User registered successfully!', token, refreshToken });
+       res.status(201).json({ message: 'User registered successfully!', token, refreshToken });
    } catch (err) {
-      console.error('Error registering user:', err);
-      res.status(500).json({ message: 'Error registering user', error: err.message });
+       console.error('Error registering user:', err);
+       res.status(500).json({ message: 'Error registering user', error: err.message });
    }
-});  
+});
 
 userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
    try {
@@ -86,7 +114,14 @@ userRoutes.post('/login', validateRequest(loginSchema), async (req, res) => {
    }
 });
  
+userRoutes.get('/auth/google', passport.authenticate('google', {
+   scope: ['profile', 'email'],
+}));
 
+userRoutes.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+   const token = req.user.token;
+   res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
+});
 
 
 userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => {

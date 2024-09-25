@@ -27,6 +27,7 @@ const loginWithGoogle = () => {
 const checkAuthToken = () => {
    const token = Cookies.get('authToken')
    console.log('Current cookies:', Cookies.get())
+   console.log('Current cookies document:', document.cookie);
    if (token) {
       console.log('Token is present:', token)
       window.location.href = '/dashboard'

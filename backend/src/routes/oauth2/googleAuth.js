@@ -58,19 +58,30 @@ googleAuth.get('/auth/google', passport.authenticate('google', {
 }));
 
 googleAuth.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), async (req, res) => {
-    console.log('User authenticated:', req.user);
-    const token = req.user.token;
-    console.log('Token to be stored in cookie:', token);
+    try {
+        console.log('User authenticated:', req.user);
+        const token = req.user.token;
+        console.log('Token to be stored in cookie:', token);
 
-    res.cookie('authToken', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600000,
-    });
-    console.log('Cookie set:', req.cookies);
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000,
+            sameSite: 'None',
+        });
+        console.log('Cookie set:', req.cookies);
 
-    res.redirect('https://code-up-omega.vercel.app/user');
+        res.redirect('https://code-up-omega.vercel.app/user');
+    } catch (err) {
+        if (err.code === 11000) {
+            const message = encodeURIComponent('E11000 duplicate key error: email already exists');
+            res.redirect(`https://code-up-omega.vercel.app?alert=${message}`);
+        } else {
+            res.status(500).send('Internal Server Error');
+        }
+    }
 });
+
 
 
 export default googleAuth;

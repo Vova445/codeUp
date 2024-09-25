@@ -34,6 +34,7 @@ passport.use(new GoogleStrategy({
            console.log("Existing user found:", user);
            if (!user.avatar) {
             user.avatar = profile.photos[0].value;
+            user.avatarContentType = 'image/jpeg';
         }
        }
 

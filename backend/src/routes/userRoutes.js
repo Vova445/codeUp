@@ -182,7 +182,7 @@ passport.use(new LinkedInStrategy({
 
 
 userRoutes.get('/auth/linkedin', (req, res, next) => {
-   console.log('Client ID:', process.env.LINKEDIN_CLIENT_ID);
+   console.log('Request parameters:', req.query);
    passport.authenticate('linkedin')(req, res, next);
 });
 

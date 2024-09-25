@@ -67,8 +67,7 @@ googleAuth.get('/auth/google/callback', passport.authenticate('google', { failur
         secure: process.env.NODE_ENV === 'production',
         maxAge: 3600000,
         sameSite: 'None',
-        domain: 'https://code-up-omega.vercel.app/', 
-        path: '/' 
+        domain: 'https://code-up-omega.vercel.app/',  
     });
     console.log('Cookie set:', req.cookies);
 

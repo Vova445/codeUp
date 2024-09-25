@@ -35,15 +35,7 @@ const checkAuthToken = () => {
       console.log('No token found')
    }
 }
-const checkAlertMessage = () => {
-   const params = new URLSearchParams(window.location.search)
-   const alertMessage = params.get('alert')
-   if (alertMessage) {
-      alert(decodeURIComponent(alertMessage))
-   }
-}
 onMounted(() => {
    checkAuthToken()
-   checkAlertMessage()
 })
 </script>

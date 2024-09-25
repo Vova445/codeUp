@@ -31,8 +31,7 @@ const storeTokenInCookie = (token) => {
    console.log('storeTokenInCookie function called');
    console.log('Token from URL:', token);
    if (token) {
-      const isProduction = import.meta.env.NODE_ENV === 'production';
-      Cookies.set('authToken', token, { expires: 1, secure: isProduction, sameSite: 'Lax' });
+      Cookies.set('authToken', token);
       console.log('Token saved in cookies:', token);
       router.push({ name: 'user' });
    } else {

@@ -144,6 +144,14 @@ const router = createRouter({
          },
       },
       {
+         path: '/loading',
+         name: 'loading',
+         component: () => import('../components/twoFactor/LoadingAfterAuth.vue'),
+         meta: {
+            requireAuth: false,
+         },
+      },
+      {
          path: '/faq',
          name: 'faq',
          component: () => import('../views/FaqPage.vue'),

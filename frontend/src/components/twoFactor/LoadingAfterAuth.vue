@@ -36,8 +36,10 @@ onMounted(() => {
          elapsed = 0
          const urlParams = new URLSearchParams(window.location.search);
          const token = urlParams.get('token');
+         console.log('Token from URL:', token);
          if (token) {
             Cookies.set('authToken', token);
+            console.log('Token saved in cookies:', token);
             Cookies.remove('tempAuthToken');
          }
 

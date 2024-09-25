@@ -31,10 +31,9 @@ passport.use(new GoogleStrategy({
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
             user = new User({ googleId: profile.id, name: profile.displayName, email: profile.emails[0].value });
-        }
-        else{
-            user.name = profile.displayName;
-            user.email = profile.emails[0].value;
+            console.log("New user created:", user);
+        } else {
+            console.log("Existing user found:", user);
         }
 
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });

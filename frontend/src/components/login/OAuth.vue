@@ -27,25 +27,5 @@ const loginWithGoogle = () => {
    const googleAuthUrl = `${apiUrl}/api/auth/google`
    window.location.href = googleAuthUrl
 }
-// const storeTokenInCookie = (token) => {
-//    console.log('storeTokenInCookie function called');
-//    console.log('Token from URL:', token);
-//    if (token) {
-//       Cookies.set('authToken', token);
-//       console.log('Token saved in cookies:', token);
-//       router.push({ name: 'user' });
-//    } else {
-//       console.error('Token is missing');
-//    }
-// }
 
-// onMounted(() => {
-//    console.log('Component mounted');
-//    const urlParams = new URLSearchParams(window.location.search);
-//    const token = urlParams.get('token');
-//    console.log('Token in URL on mounted:', token);
-//    if (token) {
-//       storeTokenInCookie(token)
-//    }
-// })
 </script>

@@ -3,7 +3,7 @@
       <button type="button" class="form-login__social form-login__social--google" @click="loginWithGoogle">
          <font-awesome-icon :icon="['fab', 'google']" />
       </button>
-      <button type="button" class="form-login__social form-login__social--facebook"  @click="loginWithFacebook">
+      <button type="button" class="form-login__social form-login__social--facebook"  >
          <font-awesome-icon :icon="['fab', 'facebook-f']" />
       </button>
       <button type="button" class="form-login__social form-login__social--github" @click="loginWithGitHub">
@@ -28,11 +28,11 @@ const loginWithGoogle = () => {
    window.location.href = googleAuthUrl
 }
 
-const loginWithFacebook = () => {
-   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-   const facebookAuthUrl = `${apiUrl}/api/auth/facebook`;
-   window.location.href = facebookAuthUrl;
-}
+// const loginWithFacebook = () => {
+//    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+//    const facebookAuthUrl = `${apiUrl}/api/auth/facebook`;
+//    window.location.href = facebookAuthUrl;
+// }
 const loginWithGitHub = () => {
    const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
    const githubAuthUrl = `${apiUrl}/api/auth/github`;

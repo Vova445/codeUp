@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
+// import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GitHubStrategy } from 'passport-github';
 
 dotenv.config();
@@ -64,45 +64,45 @@ passport.deserializeUser(async (id, done) => {
 });
 
 
-passport.use(new FacebookStrategy({
-   // clientID: process.env.FACEBOOK_APP_ID,
-   // clientSecret: process.env.FACEBOOK_APP_SECRET,
-   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/facebook/callback",
-   profileFields: ['id', 'displayName', 'emails']
-}, async (accessToken, refreshToken, profile, done) => {
-   try {
-       let user = await User.findOne({ facebookId: profile.id });
-       if (!user) {
-           user = new User({
-               facebookId: profile.id,
-               name: profile.displayName,
-               email: profile.emails[0].value
-           });
-           console.log("New user created:", user);
-       } else {
-           console.log("Existing user found:", user);
-       }
+// passport.use(new FacebookStrategy({
+//    // clientID: process.env.FACEBOOK_APP_ID,
+//    // clientSecret: process.env.FACEBOOK_APP_SECRET,
+//    callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/facebook/callback",
+//    profileFields: ['id', 'displayName', 'emails']
+// }, async (accessToken, refreshToken, profile, done) => {
+//    try {
+//        let user = await User.findOne({ facebookId: profile.id });
+//        if (!user) {
+//            user = new User({
+//                facebookId: profile.id,
+//                name: profile.displayName,
+//                email: profile.emails[0].value
+//            });
+//            console.log("New user created:", user);
+//        } else {
+//            console.log("Existing user found:", user);
+//        }
 
-       const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
-       const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
-       user.token = token;
-       user.refreshToken = refreshToken;
-       await user.save();
+//        const token = generateToken(user._id, process.env.JWT_SECRET, '24h');
+//        const refreshToken = generateToken(user._id, process.env.JWT_REFRESH_SECRET, '30d');
+//        user.token = token;
+//        user.refreshToken = refreshToken;
+//        await user.save();
 
-       done(null, user);
-   } catch (err) {
-       done(err, null);
-   }
-}));
+//        done(null, user);
+//    } catch (err) {
+//        done(err, null);
+//    }
+// }));
 
-userRoutes.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+// userRoutes.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 
 
-userRoutes.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-   const token = req.user.token;
-   res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
-});
+// userRoutes.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+//    const token = req.user.token;
+//    res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
+// });
 
 
 passport.use(new GitHubStrategy({

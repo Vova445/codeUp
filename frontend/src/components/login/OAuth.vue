@@ -27,16 +27,16 @@ const loginWithGoogle = () => {
    const googleAuthUrl = `${apiUrl}/api/auth/google`
    window.location.href = googleAuthUrl
 }
-const checkAuthToken = () => {
-   const token = Cookies.get('authToken')
+const storeTokenInCookie = () => {
+   const urlParams = new URLSearchParams(window.location.search);
+   const token = urlParams.get('token');
    if (token) {
-      console.log('Token is present:', token)
-      router.push({name: "user"})
-   } else {
-      console.log('No token found')
+      Cookies.set('authToken', token, { expires: 1, secure: true, sameSite: 'None' });
+      console.log('Token saved in cookies:', token);
+      router.push({ name: 'user' }); 
    }
 }
 onMounted(() => {
-   checkAuthToken()
+   storeTokenInCookie()
 })
 </script>

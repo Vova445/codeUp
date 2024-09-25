@@ -63,6 +63,14 @@ const router = createRouter({
          },
       },
       {
+         path: '/all-courses',
+         name: 'all-courses',
+         component: () => import('../views/CoursesDetailed/AllCoursesPage.vue'),
+         meta: {
+            requireAuth: false,
+         },
+      },
+      {
          path: '/two-factor-auth',
          name: 'twoFactorAuth',
          component: () => import('../views/TwoFactorAuth/TwoFactorAuthPage.vue'),

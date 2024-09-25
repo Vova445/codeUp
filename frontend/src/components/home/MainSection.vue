@@ -29,7 +29,14 @@
                   quasi recusandae eos natus fugit laudantium obcaecati harum, ipsa soluta tempora quaerat dignissimos nobis? Lorem, ipsum dolor sit
                   amet consectetur adipisicing elit. Deserunt, nisi?
                </div>
-               <button class="master__button button">detailed</button>
+               <router-link :to="{ name: 'all-courses' }" class="master__button exit-button">
+                  <span class="exit-button__circle" aria-hidden="true">
+                     <span class="exit-button__icon">
+                        <font-awesome-icon :icon="['fas', 'angle-right']" />
+                     </span>
+                  </span>
+                  <span class="exit-button__text">{{ $t('buttons.allCourses') }}</span>
+               </router-link>
             </div>
          </div>
       </div>
@@ -141,30 +148,30 @@ const getImagePath = (imgPath) => {
       }
    }
    &__button {
-      padding: 15px 70px;
-      background: linear-gradient(110deg, #3c776f, #6da086, #3c776f);
-      background-size: 200% 200%;
+      //padding: 15px 70px;
+      //background: linear-gradient(110deg, #3c776f, #6da086, #3c776f);
+      //background-size: 200% 200%;
 
-      animation: gradientShift 5s ease infinite;
-      @keyframes gradientShift {
-         0% {
-            background-position: 0% 50%;
-         }
-         50% {
-            background-position: 100% 50%;
-         }
-         100% {
-            background-position: 0% 50%;
-         }
-      }
-      @media (any-hover: hover) {
-         &:hover {
-            background: linear-gradient(110deg, #3c776f, #3c776f, #3c776f);
-         }
-      }
-      @media (max-width: 630px) {
-         width: 100%;
-      }
+      //animation: gradientShift 5s ease infinite;
+      //@keyframes gradientShift {
+      //   0% {
+      //      background-position: 0% 50%;
+      //   }
+      //   50% {
+      //      background-position: 100% 50%;
+      //   }
+      //   100% {
+      //      background-position: 0% 50%;
+      //   }
+      //}
+      //@media (any-hover: hover) {
+      //   &:hover {
+      //      background: linear-gradient(110deg, #3c776f, #3c776f, #3c776f);
+      //   }
+      //}
+      //@media (max-width: 630px) {
+      //   width: 100%;
+      //}
    }
 }
 
@@ -299,5 +306,106 @@ text {
       height: 30px;
    }
    font-size: clamp(1.563rem, 1.09rem + 1.374vw, 2.188rem);
+}
+
+.exit-button {
+   position: relative;
+   //font-size: clamp(1rem, 0.812rem + 0.392vw, 1.125rem);
+   padding-right: 30px;
+
+   border-radius: 30px;
+   line-height: 1.2;
+   display: inline-flex;
+   align-items: center;
+   gap: 20px;
+   overflow: hidden;
+   .touch & {
+      background-color: #3c776f;
+   }
+   &::before {
+      content: '';
+      border-radius: 30px;
+      //transition: width 0.3s ease 0s;
+      transition: all 0.7s cubic-bezier(0.65, 0, 0.076, 1);
+      position: absolute;
+      z-index: 1;
+      width: 0;
+      height: 100%;
+      background-color: #3c776f;
+   }
+
+   // .exit-button__circle
+   &__circle {
+      display: inline-flex;
+      text-align: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: #3c776f;
+      width: 50px;
+      height: 50px;
+   }
+   // .exit-button__icon
+   &__icon {
+      transition: all 0.5s cubic-bezier(0.65, 0, 0.076, 1);
+      position: relative;
+      z-index: 2;
+      transform: translate(20px, 0);
+
+      &::before {
+         content: '';
+         transition: all 0.5s ease 0s;
+         position: absolute;
+         //left: calc(-100% - 2px);
+         right: 1px;
+         top: calc(50% - 1px);
+         transform: translate(0, -50%);
+         opacity: 0;
+         width: 20px;
+         background-color: #fff;
+         height: 2px;
+         border-radius: 50px;
+      }
+      .touch & {
+         transform: translate(38.75px, 0);
+         &::before {
+            opacity: 1;
+         }
+      }
+   }
+   // .exit-button__text
+   &__text {
+      transition: all 0.3s ease 0.2s;
+      font-weight: 500;
+      color: #88c3bb;
+      position: relative;
+      z-index: 2;
+      .touch & {
+         color: #fff;
+      }
+   }
+   @media (any-hover: hover) {
+      &:hover {
+         &::before {
+            width: 100%;
+         }
+         .exit-button__icon {
+            transform: translate(38.75px, 0);
+            &::before {
+               opacity: 1;
+            }
+         }
+         .exit-button__text {
+            color: #fff;
+         }
+      }
+   }
+}
+.touch {
+   .exit-button {
+      //background-color: #3c776f;
+      //.exit-button__text {
+      //   color: #fff;
+      //}
+   }
 }
 </style>

@@ -323,7 +323,7 @@ userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => 
          return res.status(404).json({ message: 'User not found' });
       }
 
-      const { name, email, phoneNumber } = req.body;
+      const { name, email, phoneNumber, password } = req.body;
 
       if (name !== undefined) user.name = name;
       if (email !== undefined) user.email = email;
@@ -336,7 +336,9 @@ userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => 
             user.phoneNumber = cleanedPhoneNumber;
          }
       }
-
+      if (password) {
+         user.password = await bcrypt.hash(password, 10);
+      }
       if (req.file) {
          user.avatar = req.file.buffer;
          user.avatarContentType = req.file.mimetype;

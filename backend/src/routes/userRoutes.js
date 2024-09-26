@@ -337,7 +337,7 @@ userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => 
          }
       }
       if (password) {
-         user.password = await bcrypt.hash(password, 10);
+         user.password = password;
       }
       if (req.file) {
          user.avatar = req.file.buffer;

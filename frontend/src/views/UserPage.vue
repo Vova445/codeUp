@@ -24,19 +24,6 @@
                      @focus="isEditingPhoneNumber = true"
                   />
                </label>
-
-
-               <label class="user-page__label">
-                  <span class="user-page__label-text">Change Password</span>
-                  <input
-                     v-model="password"
-                     type="password"
-                     class="user-page__input"
-                     placeholder="Enter your new password"
-                  />
-               </label>
-
-
                <label class="user-page__label user-page__file-label">
                   <span class="user-page__label-text">{{ $t('buttons.changeAvatar') }}</span>
                   <input accept="image/*" class="user-page__file-input" type="file" @change="onFileSelected" />
@@ -70,7 +57,6 @@ const { t } = useLocales()
 const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
-const password = ref('')
 const avatar = ref('')
 const selectedFile = ref(null)
 const fileName = ref('')
@@ -117,6 +103,7 @@ function addTwoFactorAuth() {
 const updateProfile = async () => {
    try {
       let token = Cookies.get('authToken')
+      console.log('Token:', token);
       if (!token) return
 
       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
@@ -125,7 +112,6 @@ const updateProfile = async () => {
       formData.append('name', name.value)
       formData.append('email', email.value)
       formData.append('phoneNumber', phoneNumber.value)
-      if (password.value) formData.append('password', password.value)
       if (selectedFile.value) formData.append('avatar', selectedFile.value)
 
       await axios.post(`${apiUrl}/api/update-profile`, formData, {

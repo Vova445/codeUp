@@ -327,10 +327,6 @@ userRoutes.post('/update-profile', upload.single('avatar'), async (req, res) => 
 
       if (name !== undefined) user.name = name;
       if (email !== undefined) user.email = email;
-      if (password) {
-         const hashedPassword = await bcrypt.hash(password, 10);
-         user.password = hashedPassword;
-      }
 
       if (phoneNumber !== undefined) {
          const cleanedPhoneNumber = phoneNumber.replace(/\s+/g, ''); 

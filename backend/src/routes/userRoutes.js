@@ -218,7 +218,7 @@ passport.use(new LinkedInStrategy({
 userRoutes.get('/auth/linkedin', (req, res, next) => {
     const state = crypto.randomBytes(16).toString('hex');
     req.session.oauthState = state; 
-    passport.authenticate('linkedin', { state: state })(req, res, next);
+    passport.authenticate('linkedin', { state: false })(req, res, next);
 });
 
 

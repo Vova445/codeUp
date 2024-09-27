@@ -270,3 +270,8 @@ input {
       box-shadow: 3px 3px 20px #999cb0;
    }
 }
+.course-container {
+   &__title {
+      margin-bottom: 30px;
+   }
+}

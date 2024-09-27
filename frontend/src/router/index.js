@@ -66,6 +66,24 @@ const router = createRouter({
          path: '/all-courses',
          name: 'all-courses',
          component: () => import('../views/CoursesDetailed/AllCoursesPage.vue'),
+         redirect: { name: 'test-one' }, // Додаємо редирект на дочірній маршрут
+         children: [
+            {
+               name: 'test-one',
+               path: 'test-one',
+               component: () => import('../views/CoursesDetailed/TestOne.vue'),
+            },
+            {
+               name: 'test-two',
+               path: 'test-two',
+               component: () => import('../views/CoursesDetailed/TestTwo.vue'),
+            },
+            {
+               name: 'test-three',
+               path: 'test-three',
+               component: () => import('../views/CoursesDetailed/TestTwo.vue'),
+            },
+         ],
          meta: {
             requireAuth: false,
          },

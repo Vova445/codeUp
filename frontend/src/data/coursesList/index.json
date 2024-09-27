@@ -1,0 +1,36 @@
+{
+   "languagesList": [
+      {
+         "id": "kskdjf39kk4m4j3kmgocm3mn5",
+         "title": "JavaScript",
+         "dollarCurrentPrice": 135,
+         "dollarAldPrice": 150,
+         "percentDiscount": 10,
+         "routerName": "home"
+      },
+      {
+         "id": "dnnfdkgnkdkfgndnfkgldkdkgf",
+         "title": "Python",
+         "dollarCurrentPrice": 135,
+         "dollarAldPrice": 150,
+         "percentDiscount": 10,
+         "routerName": "home"
+      },
+      {
+         "id": "mveilgn3ioh949h5i34n5j345j3j34",
+         "title": "c#",
+         "dollarCurrentPrice": 135,
+         "dollarAldPrice": 150,
+         "percentDiscount": 10,
+         "routerName": "home"
+      },
+      {
+         "id": "erkgnk34i35l345nm3n5mn3n9gpdgjo3",
+         "title": "Node.js",
+         "dollarCurrentPrice": 135,
+         "dollarAldPrice": 150,
+         "percentDiscount": 10,
+         "routerName": "home"
+      }
+   ]
+}

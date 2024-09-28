@@ -3,9 +3,16 @@
       <section class="courses-all">
          <div class="courses-all__navigation navigation-courses-all">
             <nav class="navigation-courses-all__container">
-               <router-link class="navigation-courses-all__link" :to="{ name: 'test-one' }">go to route 1</router-link>
-               <router-link class="navigation-courses-all__link" :to="{ name: 'test-two' }">go to route 2</router-link>
-               <router-link class="navigation-courses-all__link" :to="{ name: 'test-three' }">go to route 3</router-link>
+               <router-link
+                  v-for="navigationItem in coursesData.coursesNavigationList"
+                  :key="navigationItem.id"
+                  class="navigation-courses-all__link"
+                  :to="{ name: navigationItem.routeName }"
+                  >{{ navigationItem.title }}</router-link
+               >
+               <div class="navigation-courses-all__select-navigation">
+                  <custom-select v-model="selectedOptionId" :options-list="coursesData.coursesNavigationList" />
+               </div>
             </nav>
          </div>
          <div class="courses-all__content content-courses">
@@ -18,30 +25,47 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import coursesData from '../../data/coursesList/index.json'
+import CustomSelect from '../../components/customModules/CustomSelect.vue'
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
+const selectedOptionId = ref('4355fg34m3m345gfp4lfgb554bllmdfl4o5')
 </script>
 
 <style lang="scss" scoped>
+.courses-all {
+   &:not(:last-child) {
+      margin-bottom: 60px;
+   }
+}
 .navigation-courses-all {
    &:not(:last-child) {
       margin-bottom: 80px;
    }
    // .navigation-courses-all__container
    &__container {
-      padding: 0;
-      background-color: #2b2b2b;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: center;
-      border-radius: 12px;
-      @media (any-hover: hover) {
-         &:hover {
-            .router-link-active {
-               color: #fff;
-               background-color: transparent;
+      @media (min-width: 767.98px) {
+         border-radius: 12px;
+         padding: 0;
+         background-color: #2b2b2b;
+         flex-wrap: wrap;
+         align-items: center;
+         @media (any-hover: hover) {
+            &:hover {
+               .router-link-active {
+                  color: #fff;
+                  background-color: transparent;
+               }
             }
          }
+      }
+      @media (max-width: 767.98px) {
+         max-width: 500px;
+      }
+      @media (max-width: 450px) {
+         display: block;
       }
    }
    &__link {
@@ -62,11 +86,21 @@ import MainMasterPage from '../../masterPages/MainMasterPage.vue'
             }
          }
       }
+
       @media (any-hover: hover) {
          &:hover {
             background-color: #d9d9d9;
             color: #000;
          }
+      }
+      @media (max-width: 767.98px) {
+         display: none;
+      }
+   }
+   &__select-navigation {
+      display: none;
+      @media (max-width: 767.98px) {
+         display: block;
       }
    }
 }

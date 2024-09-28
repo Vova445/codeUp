@@ -18,10 +18,8 @@
       },
       {
          "id": "mveilgn3ioh949h5i34n5j345j3j34",
-         "title": "c#",
-         "dollarCurrentPrice": 135,
-         "dollarAldPrice": 150,
-         "percentDiscount": 10,
+         "title": "C#",
+         "dollarCurrentPrice": 150,
          "routerName": "home"
       },
       {
@@ -31,6 +29,33 @@
          "dollarAldPrice": 150,
          "percentDiscount": 10,
          "routerName": "home"
+      }
+   ],
+   "coursesNavigationList": [
+      {
+         "id": "4355fg34m3m345gfp4lfgb554bllmdfl4o5",
+         "title": "Languages",
+         "routeName": "test-one"
+      },
+      {
+         "id": "4m5knm4io5higlfnhilgfohjop;klnknhl5nl6hn5knk",
+         "title": "Frameworks",
+         "routeName": "test-two"
+      },
+      {
+         "id": "dmfknerghe5huthu5ku45hgkuh4u5huhkjjjtkr",
+         "title": "Libraries",
+         "routeName": "test-three"
+      },
+      {
+         "id": "45m6nmk54lk6ln546n4nk6lkngkjnrjngu4",
+         "title": "Instruments",
+         "routeName": "test-three"
+      },
+      {
+         "id": "kdghgh83958th45b4hu6h54uj6454b5n645n645n",
+         "title": "Others",
+         "routeName": "test-three"
       }
    ]
 }

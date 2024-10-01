@@ -56,8 +56,8 @@ const getImagePath = (imgPath) => {
    }
    // .articles-container__item
    &__item {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: auto 1fr;
       cursor: pointer;
       position: relative;
       transition: all 0.3s ease 0s;
@@ -93,7 +93,7 @@ const getImagePath = (imgPath) => {
       overflow: hidden;
       border-radius: 8px;
       text-align: center;
-      padding: 25px 0px;
+      padding: 30px 0px;
       img {
          transition: all 0.3s ease 0s;
          position: relative;
@@ -116,6 +116,8 @@ const getImagePath = (imgPath) => {
    }
    &__body {
       padding: 0 10px;
+      display: grid;
+      grid-template-rows: 1fr auto;
    }
    // .articles-container__discount
    &__discount {
@@ -150,6 +152,7 @@ const getImagePath = (imgPath) => {
    }
 
    &__title {
+      flex: 1 1 auto;
       color: #cce6ff;
       &:not(:last-child) {
          margin-bottom: clamp(0.938rem, 0.549rem + 1.131vw, 1.25rem);
@@ -158,6 +161,9 @@ const getImagePath = (imgPath) => {
 }
 .container-price {
    font-size: clamp(1rem, 0.937rem + 0.391vw, 1.1rem);
+   @media (max-width: 550px) {
+      font-size: 15px;
+   }
    // .container-price__box
    &__box {
       &:not(:last-child) {

@@ -129,33 +129,63 @@
    "questionsList": [
       {
          "id": "knkldvnl303nbkk3",
-         "question": "questionsSection.schedule.title",
-         "answer": "questionsSection.schedule.text"
+         "title": "questionsSection.schedule.title",
+         "textList": [
+            {
+               "id": "lkmdkgip34tn4j5gjnkl4n5l",
+               "text": "questionsSection.schedule.text"
+            }
+         ]
       },
       {
          "id": "dbmldmlfmbo34m3dfll4",
-         "question": "questionsSection.whenCourseStarts.title",
-         "answer": "questionsSection.whenCourseStarts.text"
+         "title": "questionsSection.whenCourseStarts.title",
+         "textList": [
+            {
+               "id": "lkmdkgip34tn4j5gjnkl4n5l",
+               "text": "questionsSection.whenCourseStarts.text"
+            }
+         ]
       },
       {
-         "id": "lflrk34otrmgk4kltr,g",
-         "question": "questionsSection.studingFormat.title",
-         "answer": "questionsSection.studingFormat.text"
+         "id": "fdmg30go3jgfjdek4k4ob04k0dfgk45",
+         "title": "questionsSection.studingFormat.title",
+         "textList": [
+            {
+               "id": "lkmdkgip34tn4j5gjnkl4n5l",
+               "text": "questionsSection.studingFormat.text"
+            }
+         ]
       },
       {
-         "id": "lflrk34otrmgk4kltr,g",
-         "question": "questionsSection.studingFormat.title",
-         "answer": "questionsSection.studingFormat.text"
+         "id": "dfmkmgop45jj4pnhpi4n435yh54h4",
+         "title": "questionsSection.studingFormat.title",
+         "textList": [
+            {
+               "id": "kmdkngpo540dfgmi3pnjtkert",
+               "text": "questionsSection.studingFormat.text"
+            }
+         ]
       },
       {
-         "id": "lflrk34otrmgk4kltr,g",
-         "question": "questionsSection.studingFormat.title",
-         "answer": "questionsSection.studingFormat.text"
+         "id": "kdfkt3k5340bn3n459pgnk3i5nk",
+         "title": "questionsSection.studingFormat.title",
+         "textList": [
+            {
+               "id": "lkmdkgip34tn4j5gjnkl4n5l",
+               "text": "questionsSection.studingFormat.text"
+            }
+         ]
       },
       {
-         "id": "lflrk34otrmgk4kltr,g",
-         "question": "questionsSection.studingFormat.title",
-         "answer": "questionsSection.studingFormat.text"
+         "id": "dfkgkl43m34m5nm35mm345",
+         "title": "questionsSection.studingFormat.title",
+         "textList": [
+            {
+               "id": "lkmdkgip34tn4j5gjnkl4n5l",
+               "text": "questionsSection.studingFormat.text"
+            }
+         ]
       }
    ],
    "carouselCoursesList": [

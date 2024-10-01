@@ -8,7 +8,7 @@
                   :key="navigationItem.id"
                   class="navigation-courses-all__link"
                   :to="{ name: navigationItem.routeName }"
-                  >{{ navigationItem.title }}</router-link
+                  >{{ $t(navigationItem.title) }}</router-link
                >
                <div class="navigation-courses-all__select-navigation">
                   <custom-select v-model="selectedOptionId" :options-list="coursesData.coursesNavigationList" />
@@ -40,7 +40,7 @@ const selectedOptionId = ref('4355fg34m3m345gfp4lfgb554bllmdfl4o5')
 }
 .navigation-courses-all {
    &:not(:last-child) {
-      margin-bottom: 80px;
+      margin-bottom: clamp(2.813rem, -0.471rem + 6.849vw, 5rem);
    }
    // .navigation-courses-all__container
    &__container {

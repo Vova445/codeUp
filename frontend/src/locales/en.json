@@ -131,5 +131,14 @@
       "selectOneOfTwoAuth": "Select one of the two account confirmation methods",
       "byGoogleCode": "Confirm using the setup key",
       "genrationQrProblem": "Problem generation Qr-code"
+   },
+   "courses": {
+      "navigation": {
+         "languages": "Languages",
+         "frameworks": "Frameworks",
+         "libraries": "Libraries",
+         "instruments": "Instruments",
+         "other": "Other"
+      }
    }
 }

@@ -1,7 +1,7 @@
 <template>
    <div class="custom-select" ref="selectWrapper" :class="{ open: isSelected }">
       <div class="custom-select__selected-option" @click="isSelected = !isSelected">
-         <span class="custom-select__title">{{ selectedOption.title }}</span>
+         <span class="custom-select__title">{{ $t(selectedOption.title) }}</span>
          <span class="custom-select__icon"><font-awesome-icon :icon="['fas', 'angle-up']" /></span>
       </div>
       <div class="custom-select__body">
@@ -13,7 +13,7 @@
                :key="optionItem.id"
                class="custom-select__option"
             >
-               {{ optionItem.title }}
+               {{ $t(optionItem.title) }}
             </router-link>
          </div>
       </div>
@@ -71,6 +71,7 @@ const emit = defineEmits(['update:modelValue'])
    width: 400px;
    position: relative;
    border-radius: 12px;
+
    @media (max-width: 450px) {
       width: 100%;
    }

@@ -21,6 +21,9 @@
    > main {
       padding-top: clamp(5rem, 4.582rem + 2.088vw, 6.25rem);
       flex: 1 1 auto;
+      &:not(:last-child) {
+         margin-bottom: clamp(4.063rem, 1.717rem + 4.892vw, 5.625rem);
+      }
    }
    > * {
       min-width: 0;

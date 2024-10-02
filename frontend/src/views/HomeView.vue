@@ -16,19 +16,21 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import MainMasterPage from '../masterPages/MainMasterPage.vue'
 import MainSection from '../components/home/MainSection.vue'
 import ReasonsSection from '../components/home/ReasonsSection.vue'
 import StepsSection from '../components/home/StepsSection.vue'
-import QuestionsSection from '../components/home/QuestionsSection.vue'
-import CarousalSection from '../components/home/CarousalSection.vue'
+//import QuestionsSection from '../components/home/QuestionsSection.vue'
+//import CarousalSection from '../components/home/CarousalSection.vue'
 import { useMainPageDataStore } from '../stores/mainPageData.js'
 const { mainCourses, reasonsList, stepsList, questionsList, carouselCoursesList } = storeToRefs(useMainPageDataStore())
 const getQuestionsList = computed(() => {
    return questionsList.value.slice(0, 3)
 })
+const QuestionsSection = defineAsyncComponent(() => import('../components/home/QuestionsSection.vue'))
+const CarousalSection = defineAsyncComponent(() => import('../components/home/CarousalSection.vue'))
 </script>
 
 <style lang="scss" scoped>

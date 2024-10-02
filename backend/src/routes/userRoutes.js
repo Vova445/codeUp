@@ -170,10 +170,10 @@ passport.use(new GitHubStrategy({
 }));
 
 
-userRoutes.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+userRoutes.get('/auth/github', passport.authenticate('github', { session: false, scope: ['user:email'] }));
 
 
-userRoutes.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
+userRoutes.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login', session: false }), (req, res) => {
    const token = req.user.token;
    res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
 });

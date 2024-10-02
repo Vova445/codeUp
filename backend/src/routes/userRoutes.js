@@ -115,7 +115,8 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GitHubStrategy({
    clientID: process.env.GITHUB_CLIENT_ID,
    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/github/callback"
+   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/github/callback",
+   passReqToCallback: true
 }, async (accessToken, refreshToken, profile, done) => {
    try {
       let user = await User.findOne({ githubId: profile.id });
@@ -170,10 +171,10 @@ passport.use(new GitHubStrategy({
 }));
 
 
-userRoutes.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+userRoutes.get('/auth/github', passport.authenticate('github', { session: false, scope: ['user:email'] }));
 
 
-userRoutes.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
+userRoutes.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' , session: false,}), (req, res) => {
    const token = req.user.token;
    res.redirect(`https://code-up-omega.vercel.app/loading?token=${token}`);
 });

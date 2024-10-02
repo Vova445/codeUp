@@ -3,7 +3,7 @@
       <div class="faq__container">
          <h2 class="faq__title title">FAQ</h2>
          <div class="faq__list">
-            <custom-spoiler :items-list="data.questionsList" :spoiler-big="true" />
+            <custom-spoiler :items-list="questionsList" :spoiler-big="true" />
          </div>
          <slot></slot>
       </div>
@@ -12,7 +12,6 @@
 
 <script setup>
 import CustomSpoiler from '../../components/customModules/CustomSpoiler.vue'
-import data from '../../data/mainSection/index'
 const props = defineProps({
    questionsList: {
       type: Array,

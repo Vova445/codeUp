@@ -22,7 +22,6 @@
 
 <script setup>
 import { computed, ref, defineEmits, onMounted, onBeforeUnmount } from 'vue'
-import { VListItemMedia } from 'vuetify/lib/components/index.mjs'
 
 const props = defineProps({
    optionsList: {

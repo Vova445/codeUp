@@ -1,9 +1,9 @@
 <template>
    <main-master-page>
-      <main-section :courses-list="coursesData.mainCourses" />
-      <reasons-section :reasons-list="coursesData.reasonsList" />
-      <steps-section :steps-list="coursesData.stepsList" />
-      <carousal-section :courses-list="coursesData.mainCourses" />
+      <main-section :courses-list="mainCourses" />
+      <reasons-section :reasons-list="reasonsList" />
+      <steps-section :steps-list="stepsList" />
+      <carousal-section :courses-list="mainCourses" />
       <questions-section :questions-list="getQuestionsList">
          <div class="faq__footer">
             <router-link :to="{ name: 'faq' }" class="faq__more">
@@ -17,16 +17,17 @@
 
 <script setup>
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import MainMasterPage from '../masterPages/MainMasterPage.vue'
 import MainSection from '../components/home/MainSection.vue'
 import ReasonsSection from '../components/home/ReasonsSection.vue'
 import StepsSection from '../components/home/StepsSection.vue'
 import QuestionsSection from '../components/home/QuestionsSection.vue'
-import coursesData from '../data/mainSection/index'
 import CarousalSection from '../components/home/CarousalSection.vue'
-
+import { useMainPageDataStore } from '../stores/mainPageData.js'
+const { mainCourses, reasonsList, stepsList, questionsList, carouselCoursesList } = storeToRefs(useMainPageDataStore())
 const getQuestionsList = computed(() => {
-   return coursesData.questionsList.slice(0, 3)
+   return questionsList.value.slice(0, 3)
 })
 </script>
 

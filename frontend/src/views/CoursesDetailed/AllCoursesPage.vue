@@ -4,14 +4,14 @@
          <div class="courses-all__navigation navigation-courses-all">
             <nav class="navigation-courses-all__container">
                <router-link
-                  v-for="navigationItem in coursesData.coursesNavigationList"
+                  v-for="navigationItem in coursesNavigationList"
                   :key="navigationItem.id"
                   class="navigation-courses-all__link"
                   :to="{ name: navigationItem.routeName }"
                   >{{ $t(navigationItem.title) }}</router-link
                >
                <div class="navigation-courses-all__select-navigation">
-                  <custom-select v-model="selectedOptionId" :options-list="coursesData.coursesNavigationList" />
+                  <custom-select v-model="selectedOptionId" :options-list="coursesNavigationList" />
                </div>
             </nav>
          </div>
@@ -25,11 +25,13 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import coursesData from '../../data/coursesList/index.json'
 import CustomSelect from '../../components/customModules/CustomSelect.vue'
 import MainMasterPage from '../../masterPages/MainMasterPage.vue'
 const selectedOptionId = ref('4355fg34m3m345gfp4lfgb554bllmdfl4o5')
+import { useCoursesLisStore } from '../../stores/coursesList.js'
+const { coursesNavigationList } = storeToRefs(useCoursesLisStore())
 </script>
 
 <style lang="scss" scoped>

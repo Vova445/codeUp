@@ -115,8 +115,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new GitHubStrategy({
    clientID: process.env.GITHUB_CLIENT_ID,
    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/github/callback",
-   passReqToCallback: true
+   callbackURL: "https://code-up-t9gxb.ondigitalocean.app/api/auth/github/callback"
 }, async (accessToken, refreshToken, profile, done) => {
    try {
       let user = await User.findOne({ githubId: profile.id });

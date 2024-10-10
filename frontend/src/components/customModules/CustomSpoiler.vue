@@ -33,11 +33,8 @@ const prevItemIndx = ref(null)
 const activeIndex = ref(null)
 
 const openSpoiler = (index) => {
-   console.log('index', index)
    const previousIndex = activeIndex.value
-
    activeIndex.value = activeIndex.value === index ? null : index
-
    const item = spoilersItems.value[index]
    if (activeIndex.value !== null) {
       item.style.maxHeight = item.scrollHeight + 'px'

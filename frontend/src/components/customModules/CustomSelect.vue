@@ -76,18 +76,18 @@ const emit = defineEmits(['update:modelValue'])
    }
 
    &__selected-option {
+      position: relative;
+      z-index: 6;
       overflow: hidden;
-      background-color: #e0e0e0;
+      background-color: #333333;
+      color: #fff;
       transition: all 0.5s ease 0s;
       font-weight: 500;
       padding: 10px 7px;
-      color: #000;
       display: flex;
       justify-content: space-between;
       border-radius: 8px;
       .open & {
-         background-color: #4d4d4d;
-         color: #fff;
          border-radius: 8px 8px 0 0;
       }
    }
@@ -105,19 +105,22 @@ const emit = defineEmits(['update:modelValue'])
       pointer-events: none;
       position: absolute;
       transition: all 0.5s ease;
-      background-color: #d9d9d9;
+      background-color: #595959;
+      color: #fff;
       top: 100%;
       left: 0;
+      transform: translate(0, -15%);
       width: 100%;
       border-radius: 8px;
       overflow: hidden;
       transform-origin: top;
       opacity: 0;
-      z-index: 10;
+      z-index: 5;
       border-radius: 0 0 8px 8px;
       .open & {
          pointer-events: all;
          opacity: 1;
+         transform: translate(0, 0);
       }
    }
 
@@ -128,8 +131,8 @@ const emit = defineEmits(['update:modelValue'])
 
    &__option {
       padding: 12px 7px;
-      background-color: #d9d9d9;
-      color: #444;
+      background-color: #595959;
+      color: #fff;
       border: none;
       &:first-child {
          .open & {
@@ -140,7 +143,7 @@ const emit = defineEmits(['update:modelValue'])
          border-radius: 8px 8px 0 0;
       }
       &:not(:last-child) {
-         border-bottom: 1px solid #a6a6a6;
+         border-bottom: 1px solid #404040;
       }
    }
 }

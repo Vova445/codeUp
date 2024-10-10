@@ -5,10 +5,11 @@
          <h1 class="master__title title">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">
             <div class="master__icons-container">
-               <div
+               <router-link
                   class="circle-container"
                   :class="course.classAdd"
                   v-for="course in coursesList"
+                  :to="{ name: course.toName }"
                   :key="course.id"
                   :style="[{ background: course.background }, { transform: `scale(${course.scale})` }]"
                >
@@ -21,7 +22,7 @@
                      </text>
                   </svg>
                   <img :src="getImagePath(course.image)" class="icon-center" alt="" />
-               </div>
+               </router-link>
             </div>
             <div class="master__content text">
                <div class="master__course-description">
@@ -44,7 +45,9 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
 import { defineProps } from 'vue'
+
 const props = defineProps({
    coursesList: {
       type: Array,
@@ -75,6 +78,7 @@ const getImagePath = (imgPath) => {
       }
    }
    &__title {
+      font-weight: 800;
       font-size: clamp(1.375rem, -0.126rem + 3.131vw, 2.375rem);
       &:not(:last-child) {
          margin-bottom: 40px;

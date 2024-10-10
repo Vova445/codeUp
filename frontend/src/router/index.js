@@ -66,27 +66,46 @@ const router = createRouter({
          path: '/all-courses',
          name: 'all-courses',
          component: () => import('../views/CoursesDetailed/AllCoursesPage.vue'),
-         redirect: { name: 'test-one' }, // Додаємо редирект на дочірній маршрут
+         redirect: { name: 'languages' },
          children: [
             {
-               name: 'test-one',
-               path: 'test-one',
-               component: () => import('../views/CoursesDetailed/TestOne.vue'),
+               name: 'languages',
+               path: 'languages',
+               component: () => import('../views/CoursesDetailed/LanguagesLIst.vue'),
             },
             {
-               name: 'test-two',
-               path: 'test-two',
-               component: () => import('../views/CoursesDetailed/TestTwo.vue'),
+               name: 'frameworks',
+               path: 'frameworks',
+               component: () => import('../views/CoursesDetailed/FrameworksList.vue'),
             },
             {
-               name: 'test-three',
-               path: 'test-three',
-               component: () => import('../views/CoursesDetailed/TestTwo.vue'),
+               name: 'libraries',
+               path: 'libraries',
+               component: () => import('../views/CoursesDetailed/LibrariesList.vue'),
+            },
+            {
+               name: 'tools',
+               path: 'tools',
+               component: () => import('../views/CoursesDetailed/ToolsList.vue'),
+            },
+            {
+               name: 'other',
+               path: 'other',
+               component: () => import('../views/CoursesDetailed/OtherList.vue'),
             },
          ],
          meta: {
             requireAuth: false,
          },
+      },
+      {
+         path: '/web-interfaces',
+         name: 'web-interfaces',
+         component: () => import('../views/coursesLanguagesPages/WebInterfacesConstruction.vue'),
+         meta: {
+            requireAuth: false,
+         },
+         props: (route) => ({ additionalList: route.query.additionalList }),
       },
       {
          path: '/two-factor-auth',

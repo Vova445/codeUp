@@ -41,7 +41,8 @@
       "forgotPass": "Forgot password",
       "back": "Back",
       "emailReset": "Send letter on Email to reset password",
-      "resetPass": "Set new Password"
+      "resetPass": "Set new Password",
+      "startStudding": "Start studying"
    },
    "reasonsSection": {
       "dryTheory": {
@@ -137,8 +138,19 @@
          "languages": "Languages",
          "frameworks": "Frameworks",
          "libraries": "Libraries",
-         "instruments": "Instruments",
+         "instruments": "Tools",
          "other": "Other"
+      },
+      "titles": {
+         "courseWith": "Hello, this is CodeUp and this is our course",
+         "additional": "You will also study : ",
+         "aboutCourse": "About course",
+         "start": "start",
+         "growing": "growing",
+         "today": "today"
+      },
+      "coursesDescriptions": {
+         "htmlDercr": "Html and CSS are the basic technologies for creating web pages, the main thing to remember here is that everything you see on websites or web applications rendered using HTML and CSS. HTML is responsible for the structure of the page by defining elements such as headings, paragraphs, and images, and CSS - for the style and location of these elements on different devices. Learning HTML and CSS is a foundation for anyone who wants to learn creation of convenient and adaptive web interfaces."
       }
    }
 }

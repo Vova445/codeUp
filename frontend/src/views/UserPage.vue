@@ -30,7 +30,6 @@
                   <input v-model="password" type="password" class="user-page__input" placeholder="Enter your new password" />
                </label>
 
-
                <label class="user-page__label user-page__file-label">
                   <span class="user-page__label-text">{{ $t('buttons.changeAvatar') }}</span>
                   <input accept="image/*" class="user-page__file-input" type="file" @change="onFileSelected" />
@@ -140,20 +139,20 @@ const updateProfile = async () => {
 }
 
 async function onLogout() {
-   const token = Cookies.get('authToken');
+   const token = Cookies.get('authToken')
    if (token) {
-     try {
-       const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-       await axios.post(`${apiUrl}/api/logout`, null, {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-       });
-     } catch (err) {
-       console.error('Error logging out:', err);
-     }
+      try {
+         const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+         await axios.post(`${apiUrl}/api/logout`, null, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         })
+      } catch (err) {
+         console.error('Error logging out:', err)
+      }
    }
-   Cookies.remove('authToken');
+   Cookies.remove('authToken')
    router.push({ name: 'home' })
 }
 
@@ -260,7 +259,17 @@ axios.interceptors.response.use(
       &:focus {
          box-shadow: 0 0 7px #234c5c;
       }
-
+      &:-webkit-autofill {
+         box-shadow: inset 0 0 0 1000px #1e1e1e !important;
+         -webkit-text-fill-color: #f0f0f0 !important;
+         transition: background-color 5000s ease-in-out 0s;
+      }
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:hover {
+         box-shadow: inset 0 0 0 1000px #1e1e1e !important;
+         -webkit-text-fill-color: #f0f0f0 !important;
+         border: 1px solid #444 !important;
+      }
       &:invalid {
          animation: shake 0.3s ease-out;
       }

@@ -1,6 +1,6 @@
 <template>
    <div class="articles-container">
-      <div v-for="courseItem in courseList" :key="courseItem.id" class="articles-container__item">
+      <router-link v-for="courseItem in courseList" :key="courseItem.id" :to="{ name: courseItem.routerName }" class="articles-container__item">
          <div v-if="courseItem.percentDiscount" class="articles-container__discount">{{ courseItem.percentDiscount }}%</div>
          <div class="articles-container__short-infos">
             <div class="articles-container__info articles-container__info--online">Online</div>
@@ -24,12 +24,14 @@
                </div>
             </div>
          </div>
-      </div>
+      </router-link>
    </div>
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
 import { useGeneralDataStore } from '../../stores/generalData.js'
+
 const { convertUSDtoUAH } = useGeneralDataStore()
 const props = defineProps({
    courseList: {
@@ -93,7 +95,7 @@ const getImagePath = (imgPath) => {
       overflow: hidden;
       border-radius: 8px;
       text-align: center;
-      padding: 30px 0px;
+      padding: clamp(1.375rem, 0.753rem + 1.81vw, 1.875rem) 0px;
       img {
          transition: all 0.3s ease 0s;
          position: relative;
@@ -144,10 +146,15 @@ const getImagePath = (imgPath) => {
       writing-mode: vertical-rl;
       text-orientation: upright;
       letter-spacing: -2px;
+      @media (max-width: 600px) {
+         font-size: 11px;
+         letter-spacing: -3px;
+      }
    }
    &__info {
       padding: 5px;
-      &--online {
+      @media (max-width: 600px) {
+         padding: 4px;
       }
    }
 

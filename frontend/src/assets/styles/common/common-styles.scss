@@ -57,6 +57,7 @@ input {
       color: #fff;
    }
    &--transparent {
+      color: #fff;
       background-color: transparent;
       border: 0.0625rem solid $greenColor;
       padding: 0.625rem 1.25rem;
@@ -85,7 +86,9 @@ input {
 .text {
    line-height: 1.27;
 }
-.subtitile {
+.sub-title {
+   line-height: 1.2;
+   font-size: 1.5rem;
 }
 
 .form-login {

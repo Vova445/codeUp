@@ -52,6 +52,7 @@ onMounted(() => {
       border-radius: 8px;
       //box-shadow: 4px 4px 7px #5b5b5b;
       box-shadow: -7px 8px 20px -6px rgba(91, 91, 91, 1);
+      
 
       p {
          color: #e6e6e6;

@@ -40,6 +40,7 @@
                </router-link>
             </div>
          </div>
+         <button class="button">kfdjgndfjgj dnfjgb dkj</button>
       </div>
    </section>
 </template>
@@ -59,7 +60,7 @@ const getImagePath = (imgPath) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .master {
    position: relative;
    &:not(:last-child) {
@@ -78,12 +79,14 @@ const getImagePath = (imgPath) => {
       }
    }
    &__title {
+      color: $greenColor;
       font-weight: 800;
       font-size: clamp(1.375rem, -0.126rem + 3.131vw, 2.375rem);
       &:not(:last-child) {
          margin-bottom: 40px;
       }
    }
+
    &__box {
       position: relative;
    }

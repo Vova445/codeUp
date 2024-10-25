@@ -1,11 +1,7 @@
 <template>
    <footer class="footer">
       <div class="footer__container">
-         <div class="footer__header">
-            <button class="footer__up button button--transparent" @click="goUp">
-               {{ $t('footer.goUp') }} <span><font-awesome-icon :icon="['fas', 'arrow-up']" /></span>
-            </button>
-         </div>
+         
          <div class="footer__content">
             <div class="footer__item item-footer">
                <h6 class="item-footer__title">{{ $t('footer.courses') }}</h6>
@@ -47,12 +43,18 @@
                      <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:mycodup@gmail.com">mycodup@gmail.com</a>
                   </li>
                </ul>
+               
                <div class="block-actions__actions">
                <a href="#"><img src="@/assets/img/icons/socials/instagram.svg" alt="" /></a>
                <a href="#"><img src="@/assets/img/icons/socials/telegram.svg" alt="" /></a>
                <a href="#"><img src="@/assets/img/icons/socials/youTube.svg" alt="" /></a>
             </div>
             </div>
+            <div class="footer__header">
+            <button class="footer__up button button--transparent" @click="goUp">
+               {{ $t('footer.goUp') }} <span><font-awesome-icon :icon="['fas', 'arrow-up']" /></span>
+            </button>
+         </div>
            
          </div>
          <div class="footer__bottom bottom-footer">
@@ -118,11 +120,11 @@ function goUp() {
       display: grid;
       gap: 30px;
       justify-content: space-between;
-      grid-template-columns: auto auto auto auto;
+      grid-template-columns: auto auto auto auto auto;
       border-bottom: 1px solid $greenColor;
       padding-bottom: 30px;
       margin-bottom: 1.25rem; 
-      @media (max-width: 600px) {
+      @media (max-width: 750px) {
          grid-template-columns: auto auto;
       }
    }

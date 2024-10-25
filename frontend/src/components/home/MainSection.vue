@@ -2,7 +2,7 @@
    <section class="master">
       <img class="master__decor" src="../../assets/img/home/decore-codeUp.svg" alt="" />
       <div class="master__container">
-         <h1 class="master__title title">{{ $t('titles.mainTitle') }}</h1>
+         <h1 class="master__title title title--gradient">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">
             <div class="master__icons-container">
                <router-link

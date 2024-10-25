@@ -2,7 +2,7 @@
    <main-master-page>
       <section class="news">
          <div class="news__container">
-            <h2 class="news__title title">{{ $t('titles.innovationsNews') }}</h2>
+            <h2 class="news__title title title--small">{{ $t('titles.innovationsNews') }}</h2>
             <div class="news__items">
                <template v-for="newsItem in newsList">
                   <a
@@ -66,6 +66,8 @@ onMounted(() => {
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
+      margin-top: 30px;
+      padding-bottom: 30px;
       &:not(:last-child) {
          margin-bottom: 20px;
       }
@@ -78,14 +80,15 @@ onMounted(() => {
 }
 .item-news {
    background-color: #1a1a1a;
-   border-radius: 8px;
-   transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+   border-radius: 15px;
+   transition: all 0.8s ease;
+   border: 1px solid transparent;
    &:hover {
       transform: translateY(-7px);
+      border: 1px solid $greenColor;
       img {
-         transform: scale(1.015);
+         transform: scale(1.05);
+         
       }
    }
    display: block;
@@ -94,9 +97,15 @@ onMounted(() => {
    flex-direction: column;
    &__image {
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 15px;
+      position: relative;
+      padding-bottom: 60%;
       img {
-         max-width: 100%;
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         /* max-width: 100%; */
          object-fit: cover;
          transition: transform 0.3s ease;
       }
@@ -115,7 +124,7 @@ onMounted(() => {
    }
    &__date {
       font-size: 12px;
-      color: #c8c8c8;
+      color: $greenColor;
    }
 }
 </style>

@@ -114,6 +114,13 @@ function goUp() {
             background-color: #fff;
          }
       } */
+       transition: 0.5s ease;
+      &:hover {
+            opacity: 0.8;
+            background-color: $greenColor;
+            color: black;
+            scale: 1.03;
+         }
 
    }
    &__content {

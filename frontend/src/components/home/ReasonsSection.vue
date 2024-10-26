@@ -5,8 +5,8 @@
          <div class="reaons__list list-reasons">
             <div class="decores-item decores-item__01 decore-circle"></div>
             <div class="decores-item decores-item__02 decore-circle"></div>
-            <!-- <div class="decores-item decores-item__03 decore-circle">
-               </div> -->
+             <div class="decores-item decores-item__03 decore-circle">
+               </div>
             <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
@@ -40,6 +40,7 @@ const props = defineProps({
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
    position: relative;
+   
    &__title {
       text-align: center;
       color: $whiteColor;
@@ -73,8 +74,8 @@ const props = defineProps({
       background-color: rgba($color: $whiteColor, $alpha: 0.1);
       border-radius: 8px;
       padding: 20px;
-
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
+      
+      box-shadow: -20px 20px 20px 0px rgba(0, 0, 0, 0.35);
       transition: all 0.5s ease;
       border: 1px solid transparent;
       &:hover {
@@ -95,6 +96,7 @@ const props = defineProps({
 }
 
 .item-reason {
+   
    &__number {
       display: flex;
       align-items: center;
@@ -140,7 +142,7 @@ const props = defineProps({
 }
 .decores-item {
    position: absolute;
-   /* left: -2.8%; */
+   /* left: -2.8%; */ 
 
    &__01 {
       transform: translate(-13.4%, -13.4%);
@@ -157,6 +159,10 @@ const props = defineProps({
       transform: translate(0, 20.5%);
    }
    &__03 {
+      left: 59.31%;
+      width: 13.2%;
+      height: 38.7%;
+
    }
 }
 </style>

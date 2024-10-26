@@ -51,7 +51,9 @@
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
                <router-link v-else :to="{ name: 'register' }" class="header__login-btn button button--transparent">
-                  {{ $t('buttons.registerLogin') }}
+                  <span class="button__text">
+                     {{ $t('buttons.registerLogin') }}
+                  </span>
                </router-link>
             </Teleport>
          </div>

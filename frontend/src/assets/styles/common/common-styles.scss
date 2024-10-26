@@ -56,12 +56,29 @@ input {
    outline: none;
 }
 .button {
+   position: relative;
    padding: 0.8125rem 2.8125rem;
    line-height: 1.25;
    background-color: $greenColor;
    color: #000;
    font-weight: 600;
    border-radius: 0.3125rem;
+   transition: all 0.3s ease 0s;
+   &__text {
+      position: relative;
+      z-index: 1;
+   }
+   &::before {
+      content: '';
+      z-index: 1;
+      transition: all 0.3s ease 0s;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background-color: $greenColor;
+   }
    &--black {
       font-weight: 500;
       color: #fff;
@@ -74,24 +91,25 @@ input {
       padding: 0.625rem 1.25rem;
       @media (any-hover: hover) {
          &:hover {
-            opacity: 0.8;
-            background-color: $greenColor;
-            color: black;
-            scale: 1.03;
+            //background-color: $greenColor;
+            color: #000;
+            &::before {
+               height: 100%;
+            }
          }
       }
    }
 }
 .title {
    line-height: 1.2;
-   font-size: 3rem;
+   font-size: 2.25rem;
    font-weight: 600;
    color: #fff;
    &--small {
-      font-size: 2.25rem;
+      font-size: 2rem;
    }
    &--big {
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: 700;
    }
    &--gradient {
@@ -100,14 +118,6 @@ input {
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      @media (any-hover: hover) {
-         &:hover {
-            opacity: 0.8;
-            background-color: $greenColor;
-            color: black;
-            scale: 1.03;
-         }
-      }
    }
 }
 .text {

@@ -1,7 +1,6 @@
 <template>
    <footer class="footer">
       <div class="footer__container">
-         
          <div class="footer__content">
             <div class="footer__item item-footer">
                <h6 class="item-footer__title">{{ $t('footer.courses') }}</h6>
@@ -43,33 +42,32 @@
                      <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:mycodup@gmail.com">mycodup@gmail.com</a>
                   </li>
                </ul>
-               
+
                <div class="block-actions__actions">
-               <a href="#"><img src="@/assets/img/icons/socials/instagram.svg" alt="" /></a>
-               <a href="#"><img src="@/assets/img/icons/socials/telegram.svg" alt="" /></a>
-               <a href="#"><img src="@/assets/img/icons/socials/youTube.svg" alt="" /></a>
-            </div>
+                  <a href="#"><img src="@/assets/img/icons/socials/instagram.svg" alt="" /></a>
+                  <a href="#"><img src="@/assets/img/icons/socials/telegram.svg" alt="" /></a>
+                  <a href="#"><img src="@/assets/img/icons/socials/youTube.svg" alt="" /></a>
+               </div>
             </div>
             <div class="footer__header">
-            <button class="footer__up button button--transparent" @click="goUp">
-               {{ $t('footer.goUp') }} <span><font-awesome-icon :icon="['fas', 'arrow-up']" /></span>
-            </button>
-         </div>
-           
+               <button class="footer__up button button--transparent" @click="goUp">
+                  <span class="button__text">
+                     {{ $t('footer.goUp') }} <span><font-awesome-icon :icon="['fas', 'arrow-up']" /></span
+                  ></span>
+               </button>
+            </div>
          </div>
          <div class="footer__bottom bottom-footer">
             <div class="footer__action-block block-actions">
-            <div class="block-actions__info">
-               All rights reserved <br />
-               CodeUp, {{ new Date().getFullYear() }}
+               <div class="block-actions__info">
+                  All rights reserved <br />
+                  CodeUp, {{ new Date().getFullYear() }}
+               </div>
             </div>
-            
-         </div>
             <button class="bottom-footer__button">
                {{ $t('header.educationalCourses') }} <span><font-awesome-icon :icon="['fas', 'arrow-right']" /></span>
             </button>
          </div>
-         
       </div>
    </footer>
 </template>
@@ -88,40 +86,11 @@ function goUp() {
    font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
    padding: 20px 0;
    background: transparent;
-   &__container {
-   }
    &__header {
       text-align: right;
       &:not(:last-child) {
          margin-bottom: clamp(1.125rem, -0.001rem + 2.348vw, 1.875rem);
       }
-   }
-   &__up {
-      /* transition: all 0.3s ease 0s;
-      border: 1px solid $greenColor;
-      padding: 7px;
-      border-radius: 5px;
-      display: inline-flex;
-      align-items: center;
-      color: $greenColor ;
-      gap: 5px;
-      span {
-         font-size: 12px;
-      }
-      @media (any-hover: hover) {
-         &:hover {
-            color: #3c776f;
-            background-color: #fff;
-         }
-      } */
-       transition: 0.5s ease;
-      &:hover {
-            opacity: 0.8;
-            background-color: $greenColor;
-            color: black;
-            scale: 1.03;
-         }
-
    }
    &__content {
       display: grid;
@@ -130,7 +99,7 @@ function goUp() {
       grid-template-columns: auto auto auto auto auto;
       border-bottom: 1px solid $greenColor;
       padding-bottom: 30px;
-      margin-bottom: 1.25rem; 
+      margin-bottom: 1.25rem;
       @media (max-width: 750px) {
          grid-template-columns: auto auto;
       }
@@ -144,7 +113,6 @@ function goUp() {
       font-size: 1rem;
       line-height: 1.21;
       padding-bottom: clamp(1.25rem, 0.309rem + 1.961vw, 1.875rem);
-      /* text-align: center; */
       &:not(:last-child) {
          margin-bottom: 7px;
       }
@@ -152,7 +120,6 @@ function goUp() {
    &__item {
       font-size: 1rem;
       line-height: 1.2;
-      /* text-align: center; */
       &:not(:last-child) {
          margin-bottom: 15px;
       }
@@ -236,7 +203,7 @@ function goUp() {
             }
          }
       }
-      img{
+      img {
          width: 1.125rem;
          height: 1.5625rem;
       }

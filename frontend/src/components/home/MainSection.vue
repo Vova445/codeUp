@@ -2,7 +2,7 @@
    <section class="master">
       <img class="master__decor" src="../../assets/img/home/decore-codeUp.svg" alt="" />
       <div class="master__container">
-         <h1 class="master__title title title--gradient">{{ $t('titles.mainTitle') }}</h1>
+         <h1 class="master__title title title--big title--gradient">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">
             <div class="master__icons-container">
                <router-link
@@ -81,7 +81,6 @@ const getImagePath = (imgPath) => {
    &__title {
       color: $greenColor;
       font-weight: 800;
-      font-size: clamp(1.375rem, -0.126rem + 3.131vw, 2.375rem);
       &:not(:last-child) {
          margin-bottom: 40px;
       }

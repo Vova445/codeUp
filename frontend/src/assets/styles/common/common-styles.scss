@@ -16,12 +16,10 @@ $whiteColor: #ffffff;
 
 .decore-circle {
    background: rgba(0, 159, 53, 0.62);
-    filter: blur(75px);
-    border-radius: 50%;
-    width: 257px;
-    height: 257px;
-    z-index: 10;
-    pointer-events: none;
+   filter: blur(75px);
+   border-radius: 50%;
+   z-index: 10;
+   pointer-events: none;
 }
 
 .wrapper {

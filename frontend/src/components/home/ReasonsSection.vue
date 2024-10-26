@@ -5,8 +5,8 @@
          <div class="reaons__list list-reasons">
             <div class="decores-item decores-item__01 decore-circle"></div>
             <div class="decores-item decores-item__02 decore-circle"></div>
-             <div class="decores-item decores-item__03 decore-circle">
-               </div>
+            <div class="decores-item decores-item__03 decore-circle"></div>
+            <div class="decores-item decores-item__04 decore-circle"></div>
             <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
@@ -40,7 +40,7 @@ const props = defineProps({
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
    position: relative;
-   
+
    &__title {
       text-align: center;
       color: $whiteColor;
@@ -54,9 +54,11 @@ const props = defineProps({
    }
    &__list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: clamp(1.25rem, 0.045rem + 3.856vw, 3.125rem);
+      grid-auto-rows: 1fr;
       position: relative;
+
       @media (max-width: 500px) {
          grid-template-columns: 1fr;
       }
@@ -65,16 +67,20 @@ const props = defineProps({
 
 .list-reasons {
    &__item {
+      //&:last-child:not(:nth-child(odd)) {
+      //   grid-column: span 2;
+      //}
+      //height: 500px;
       display: flex;
       gap: 20px;
-      align-items: start;
+
       transition:
          transform 0.3s ease,
          box-shadow 0.3s ease;
       background-color: rgba($color: $whiteColor, $alpha: 0.1);
       border-radius: 8px;
       padding: 20px;
-      
+
       box-shadow: -20px 20px 20px 0px rgba(0, 0, 0, 0.35);
       transition: all 0.5s ease;
       border: 1px solid transparent;
@@ -96,7 +102,6 @@ const props = defineProps({
 }
 
 .item-reason {
-   
    &__number {
       display: flex;
       align-items: center;
@@ -124,7 +129,6 @@ const props = defineProps({
       font-size: 20px;
       font-weight: 700;
       line-height: 1.14;
-
       &:not(:last-child) {
          margin-bottom: 15px;
       }
@@ -142,27 +146,28 @@ const props = defineProps({
 }
 .decores-item {
    position: absolute;
-   /* left: -2.8%; */ 
-
    &__01 {
       transform: translate(-13.4%, -13.4%);
       width: 20.1%;
-      height: 50.3%;
+      padding-bottom: 20.1%;
    }
    &__02 {
-      left: 19.01%;
-      left: 19.47%; /* 24300/1248 */
-      //top: 55.6%;
-      bottom: 0;
-      height: 55.6%;
-      width: 18.9%;
       transform: translate(0, 20.5%);
+      left: 19.47%;
+      bottom: 0;
+      padding-bottom: 18.85%;
+      width: 18.9%;
    }
    &__03 {
       left: 59.31%;
       width: 13.2%;
-      height: 38.7%;
-
+      padding-bottom: 13.2%;
+   }
+   &__04 {
+      right: 0;
+      top: 0;
+      width: 17.2275%;
+      padding-bottom: 17.2275%;
    }
 }
 </style>

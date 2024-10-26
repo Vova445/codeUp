@@ -3,11 +3,9 @@
       <div class="reaons__container">
          <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">
-               <div class="decores-item decores-item__01 decore-circle">
-               </div>
-               <div class="decores-item decores-item__02 decore-circle">
-               </div>
-               <!-- <div class="decores-item decores-item__03 decore-circle">
+            <div class="decores-item decores-item__01 decore-circle"></div>
+            <div class="decores-item decores-item__02 decore-circle"></div>
+            <!-- <div class="decores-item decores-item__03 decore-circle">
                </div> -->
             <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
@@ -41,7 +39,7 @@ const props = defineProps({
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-position: relative;
+   position: relative;
    &__title {
       text-align: center;
       color: $whiteColor;
@@ -72,14 +70,14 @@ position: relative;
       transition:
          transform 0.3s ease,
          box-shadow 0.3s ease;
-      background-color: rgba($color: $whiteColor, $alpha: 0.1); 
+      background-color: rgba($color: $whiteColor, $alpha: 0.1);
       border-radius: 8px;
       padding: 20px;
-      
+
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
       transition: all 0.5s ease;
       border: 1px solid transparent;
-      &:hover{
+      &:hover {
          border: 1px solid $greenColor;
       }
       @media (any-hover: hover) {
@@ -124,7 +122,7 @@ position: relative;
       font-size: 20px;
       font-weight: 700;
       line-height: 1.14;
-      
+
       &:not(:last-child) {
          margin-bottom: 15px;
       }
@@ -140,24 +138,25 @@ position: relative;
       font-size: 15px;
    }
 }
-.decores-item{
+.decores-item {
    position: absolute;
    /* left: -2.8%; */
-   
 
-   &__01{
+   &__01 {
       transform: translate(-13.4%, -13.4%);
       width: 20.1%;
-      height: 50.3% ;
+      height: 50.3%;
    }
-   &__02{
+   &__02 {
       left: 19.01%;
-      top: 55.6%;
-      width: 18.5%;
+      left: 19.47%; /* 24300/1248 */
+      //top: 55.6%;
+      bottom: 0;
       height: 55.6%;
+      width: 18.9%;
+      transform: translate(0, 20.5%);
    }
-   &__03{
-      
+   &__03 {
    }
 }
 </style>

@@ -220,18 +220,8 @@ onUnmounted(() => {
    }
 
    &__login-btn {
-      //transition: background-color 0.3s ease;
       position: relative;
       z-index: 50;
-      //background-color: #3c776f;
-      //border-radius: 12px;
-      //line-height: 1.2;
-      //padding: 10px 20px;
-      //@media (any-hover: hover) {
-      //   &:hover {
-      //      background-color: #2c5852;
-      //   }
-      //}
       @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
@@ -312,11 +302,11 @@ onUnmounted(() => {
       position: relative;
       @media (any-hover: hover) {
          &:hover {
-            color: #f9cf39;
+            color: $greenColor;
          }
       }
       &.open {
-         color: #f9cf39;
+         color: $greenColor;
       }
    }
    &__btn-item {

@@ -15,6 +15,13 @@ $greenLightColor: #00ff55;
 $whiteColor: #ffffff;
 
 .decore-circle {
+    background-color: rgba($color: #009F359E, $alpha: 0.62);
+    filter: blur(100px);
+    border-radius: 50%;
+    width: 257px;
+    height: 257px;
+    z-index: 10;
+    pointer-events: none;
 }
 
 .wrapper {

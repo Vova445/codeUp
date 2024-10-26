@@ -3,6 +3,12 @@
       <div class="reaons__container">
          <h3 class="reaons__title title">{{ $t('titles.whyCodeUp') }}</h3>
          <div class="reaons__list list-reasons">
+               <div class="decores-item decores-item__01 decore-circle">
+               </div>
+               <div class="decores-item decores-item__02 decore-circle">
+               </div>
+               <!-- <div class="decores-item decores-item__03 decore-circle">
+               </div> -->
             <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
@@ -35,7 +41,7 @@ const props = defineProps({
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-
+position: relative;
    &__title {
       text-align: center;
       color: $whiteColor;
@@ -51,6 +57,7 @@ const props = defineProps({
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: clamp(1.25rem, 0.045rem + 3.856vw, 3.125rem);
+      position: relative;
       @media (max-width: 500px) {
          grid-template-columns: 1fr;
       }
@@ -65,10 +72,16 @@ const props = defineProps({
       transition:
          transform 0.3s ease,
          box-shadow 0.3s ease;
-      
+      background-color: rgba($color: $whiteColor, $alpha: 0.1); 
       border-radius: 8px;
       padding: 20px;
+      
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
+      transition: all 0.5s ease;
+      border: 1px solid transparent;
+      &:hover{
+         border: 1px solid $greenColor;
+      }
       @media (any-hover: hover) {
          &:hover {
             transform: translateY(-10px);
@@ -125,6 +138,26 @@ const props = defineProps({
       color: $whiteColor;
       line-height: 1.14;
       font-size: 15px;
+   }
+}
+.decores-item{
+   position: absolute;
+   /* left: -2.8%; */
+   
+
+   &__01{
+      transform: translate(-13.4%, -13.4%);
+      width: 20.1%;
+      height: 50.3% ;
+   }
+   &__02{
+      left: 19.01%;
+      top: 55.6%;
+      width: 18.5%;
+      height: 55.6%;
+   }
+   &__03{
+      
    }
 }
 </style>

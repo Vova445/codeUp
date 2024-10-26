@@ -50,7 +50,7 @@
                   <img v-if="avatar" :src="avatar" alt="User Avatar" class="header__avatar" />
                   <font-awesome-icon v-else :icon="['fas', 'user']" />
                </router-link>
-               <router-link v-else :to="{ name: 'register' }" class="header__login-btn">
+               <router-link v-else :to="{ name: 'register' }" class="header__login-btn button button--transparent">
                   {{ $t('buttons.registerLogin') }}
                </router-link>
             </Teleport>
@@ -88,7 +88,7 @@ const debounce = (func, wait = 100) => {
       timeout = setTimeout(later, wait)
    }
 }
-debounce
+
 function onIconMenu() {
    document.documentElement.classList.toggle('menu-open')
    document.documentElement.classList.toggle('lock')
@@ -154,7 +154,7 @@ onUnmounted(() => {
    transition: opacity 1s ease;
 
    &__container {
-      min-height: clamp(3.75rem, 0.936rem + 5.871vw, 5.625rem);
+      min-height: clamp(4.375rem, 2.022rem + 4.902vw, 5.938rem);
       display: grid;
       align-items: center;
       grid-template-columns: 1fr auto;
@@ -220,18 +220,18 @@ onUnmounted(() => {
    }
 
    &__login-btn {
-      transition: background-color 0.3s ease;
+      //transition: background-color 0.3s ease;
       position: relative;
       z-index: 50;
-      background-color: #3c776f;
-      border-radius: 12px;
-      line-height: 1.2;
-      padding: 10px 20px;
-      @media (any-hover: hover) {
-         &:hover {
-            background-color: #2c5852;
-         }
-      }
+      //background-color: #3c776f;
+      //border-radius: 12px;
+      //line-height: 1.2;
+      //padding: 10px 20px;
+      //@media (any-hover: hover) {
+      //   &:hover {
+      //      background-color: #2c5852;
+      //   }
+      //}
       @media (max-width: 500px) {
          font-size: clamp(1.125rem, 1.036rem + 0.447vw, 1.25rem);
          text-align: center;
@@ -263,7 +263,7 @@ onUnmounted(() => {
             top: 0;
             left: -100%;
             width: 100%;
-            height: 60px;
+            height: 70px;
          }
          .menu-open & {
             left: 0;

@@ -11,11 +11,10 @@
 }
 
 $greenColor: #02fe56;
-$greenLightColor: #00FF55;
-$whiteColor: #FFFFFF;
+$greenLightColor: #00ff55;
+$whiteColor: #ffffff;
 
-.decore-circle{
-   
+.decore-circle {
 }
 
 .wrapper {
@@ -67,6 +66,14 @@ input {
       background-color: transparent;
       border: 0.0625rem solid $greenColor;
       padding: 0.625rem 1.25rem;
+      @media (any-hover: hover) {
+         &:hover {
+            opacity: 0.8;
+            background-color: $greenColor;
+            color: black;
+            scale: 1.03;
+         }
+      }
    }
 }
 .title {
@@ -87,6 +94,14 @@ input {
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
+      @media (any-hover: hover) {
+         &:hover {
+            opacity: 0.8;
+            background-color: $greenColor;
+            color: black;
+            scale: 1.03;
+         }
+      }
    }
 }
 .text {

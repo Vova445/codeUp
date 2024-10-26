@@ -31,17 +31,17 @@ const props = defineProps({
    &:not(:last-child) {
       margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 7rem);
    }
-   background-color: #1a1a1a;
+   /* background-color: #1a1a1a; */
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
 
    &__title {
       text-align: center;
-      color: #f0f0f0;
+      color: $whiteColor;
       text-transform: uppercase;
       letter-spacing: 2px;
-      line-height: 1.2;
+      line-height: 1.14;
       font-weight: 700;
       &:not(:last-child) {
          margin-bottom: clamp(1.875rem, 0.67rem + 3.856vw, 3.75rem);
@@ -65,7 +65,7 @@ const props = defineProps({
       transition:
          transform 0.3s ease,
          box-shadow 0.3s ease;
-      background-color: #2b2b2b;
+      
       border-radius: 8px;
       padding: 20px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
@@ -91,9 +91,10 @@ const props = defineProps({
       width: 50px;
       height: 50px;
       flex: 0 0 50px;
-      background-color: #1e59a0;
-      color: #ffffff;
+      background-color: $greenLightColor;
+      color: #000;
       font-weight: 700;
+      font-size: 32px;
       border-radius: 50%;
       box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
       @media (max-width: 500px) {
@@ -106,8 +107,11 @@ const props = defineProps({
       max-width: 400px;
    }
    &__title {
-      color: #ffffff;
-      font-weight: 600;
+      color: $greenColor;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.14;
+      
       &:not(:last-child) {
          margin-bottom: 15px;
       }
@@ -118,8 +122,9 @@ const props = defineProps({
       }
    }
    &__text {
-      color: #b0b0b0;
-      line-height: 1.5;
+      color: $whiteColor;
+      line-height: 1.14;
+      font-size: 15px;
    }
 }
 </style>

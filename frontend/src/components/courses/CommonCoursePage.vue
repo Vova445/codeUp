@@ -13,7 +13,7 @@
                   <div class="course-header__bc-announcement"><img src="../../assets/img/decore/circle-decore.svg" alt="" /></div>
                </button>
             </div>
-            <div class="course-header__main-image"><img :src="getImgPath()" alt="" /></div>
+            <!--<div class="course-header__main-image"><img :src="getImgPath()" alt="" /></div>-->
             <div class="course-header__bottom">
                <div class="course-header__arrow"><img src="@/assets/img/icons/arrow.gif" alt="" /></div>
                <button class="course-header__start-studding">{{ $t('buttons.startStudding') }}</button>

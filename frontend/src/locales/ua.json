@@ -23,8 +23,14 @@
       "stepByStep": "Як відбуватемется навчання",
       "innovationsNews": "Ось останні інновації у сфері IT",
       "userProfile": "Налаштування Профілю Користувача",
-      "stepsSection": "Як відбувається навчання? Покроково"
+      "stepsSection": "Як відбувається навчання? Покроково",
+      "statisticTitle": "Статистика курсів"
    },
+   "description": {
+      "statisticPurchased": "Кількість куплених курсів",
+      "statisticPassed": "Кількість успішно пройдених курсів"
+   },
+
    "buttons": {
       "allCourses": "Переглянути всі курси",
       "registerLogin": "Увійти / Реєструватися",

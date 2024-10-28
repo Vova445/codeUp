@@ -23,7 +23,12 @@
       "stepByStep": "A Step-by-Step Learning Journey",
       "innovationsNews": "Here are the latest innovations in the field of IT",
       "userProfile": "User Profile Settings",
-      "stepsSection": "How is learning? step by step"
+      "stepsSection": "How is learning? step by step",
+      "statisticTitle": "Course Statistics"
+   },
+   "description": {
+      "statisticPurchased": "Number of courses purchased",
+      "statisticPassed": "Number of successfully completed courses"
    },
    "buttons": {
       "allCourses": "View all courses",

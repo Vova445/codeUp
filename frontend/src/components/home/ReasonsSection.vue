@@ -70,6 +70,11 @@ const props = defineProps({
       &:last-child {
          grid-column: span 2;
       }
+      @media (max-width: 800px) {
+         &:last-child {
+            grid-column: auto;
+         }
+      }
       display: flex;
       gap: 20px;
 

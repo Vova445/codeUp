@@ -2,6 +2,7 @@
    <main-master-page>
       <main-section :courses-list="mainCourses" />
       <reasons-section :reasons-list="reasonsList" />
+      <statistics-section />
       <steps-section :steps-list="stepsList" />
       <carousal-section :courses-list="mainCourses" />
       <questions-section :questions-list="getQuestionsList">
@@ -25,6 +26,7 @@ import StepsSection from '../components/home/StepsSection.vue'
 import QuestionsSection from '../components/home/QuestionsSection.vue'
 import CarousalSection from '../components/home/CarousalSection.vue'
 import { useMainPageDataStore } from '../stores/mainPageData.js'
+import StatisticsSection from '../components/home/StatisticsSection.vue'
 const { mainCourses, reasonsList, stepsList, questionsList } = storeToRefs(useMainPageDataStore())
 const getQuestionsList = computed(() => {
    return questionsList.value.slice(0, 3)

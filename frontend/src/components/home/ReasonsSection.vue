@@ -67,10 +67,9 @@ const props = defineProps({
 
 .list-reasons {
    &__item {
-      //&:last-child:not(:nth-child(odd)) {
-      //   grid-column: span 2;
-      //}
-      //height: 500px;
+      &:last-child {
+         grid-column: span 2;
+      }
       display: flex;
       gap: 20px;
 

@@ -9,6 +9,7 @@ import qrRoutes from '../routes/2fa/QRTwoFactorRoutes.js';
 import checkTwoFAStatusRoutes from '../routes/2fa/checkTwoFAStatus.js'; 
 import authRouter from '../routes/2fa/googleAuth.js';
 import forgotPasswordRoutes from '../routes/forgotPassword.js'
+import statsRouter from '../routes/statisticRoute.js';
 import passport from 'passport';
 dotenv.config();
 
@@ -25,6 +26,7 @@ export async function setupMiddlewares(app) {
    app.use('/api', checkTwoFAStatusRoutes);
    app.use('/api', authRouter);
    app.use('/api', forgotPasswordRoutes);
+   app.use('/api', statsRouter);
 
    if (process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, '../../../frontend/dist')));

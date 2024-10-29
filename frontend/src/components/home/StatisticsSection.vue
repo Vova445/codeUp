@@ -3,19 +3,35 @@
       <!--<h3 class="statistic__title title">{{ $t('titles.statisticTitle') }}</h3>-->
       <div class="statistic__container">
          <div class="statistic__content statistic__content--one">
-            <h4 class="statistic__number">8000+</h4>
+            <h4 class="statistic__number">{{ purchasedCourses }}</h4>
             <p class="statistic__description">{{ $t('description.statisticPurchased') }}</p>
          </div>
          <hr class="statistic__separator" />
          <div class="statistic__content statistic__content--two">
             <p class="statistic__description">{{ $t('description.statisticPassed') }}</p>
-            <h4 class="statistic__number">10000</h4>
+            <h4 class="statistic__number">{{ completedCourses }}</h4>
          </div>
       </div>
    </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
+const purchasedCourses = ref(0);
+const completedCourses = ref(0);
+
+onMounted(async () => {
+   try {
+      const response = await axios.get(`${apiUrl}/api/statistics`);
+      purchasedCourses.value = response.data.purchasedCourses;
+      completedCourses.value = response.data.completedCourses;
+   } catch (error) {
+      console.error('Failed to fetch statistics:', error);
+   }
+});
+</script>
 
 <style lang="scss" scoped>
 .statistic {
@@ -87,3 +103,4 @@
    }
 }
 </style>
+

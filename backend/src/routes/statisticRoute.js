@@ -3,7 +3,7 @@ import { Statistics } from '../models/statisticModel.js';
 
 const statsRouter = express.Router();
 
-statsRouter.get('/api/statistics', async (req, res) => {
+statsRouter.get('/statistics', async (req, res) => {
    try {
       const stats = await Statistics.findOne({});
       res.json(stats);

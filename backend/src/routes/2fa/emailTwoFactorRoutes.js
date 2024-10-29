@@ -96,6 +96,7 @@ emailTwoFactorRoutes.get('/verify-2fa/:token', async (req, res) => {
 
     user.isTwoFAEnabled = true;
     user.tokenEmail = token;
+    user.twoFAMethod = 'email';
     await user.save();
 
     res.redirect(`https://code-up-omega.vercel.app/twoFactorAuth/loading?token=${token}`);

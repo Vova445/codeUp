@@ -243,7 +243,7 @@ onUnmounted(() => {
          left: -100%;
          top: 0;
          overflow: auto;
-         background-color: #000000d8;
+         background-color: #000000ee;
          padding: 150px 20px 20px 20px;
 
          &::before {

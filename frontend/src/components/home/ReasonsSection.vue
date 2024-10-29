@@ -10,7 +10,7 @@
             <div v-for="(reasonItem, index) in reasonsList" :key="reasonItem.id" class="list-reasons__item item-reason">
                <div class="item-reason__number">{{ index + 1 }}</div>
                <div class="item-reason__content">
-                  <h4 class="item-reason__title subtitile">{{ $t(reasonItem.title) }}</h4>
+                  <h4 class="item-reason__title">{{ $t(reasonItem.title) }}</h4>
                   <div class="item-reason__text text">
                      <p>{{ $t(reasonItem.description) }}</p>
                   </div>
@@ -35,7 +35,6 @@ const props = defineProps({
    &:not(:last-child) {
       margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 7rem);
    }
-   /* background-color: #1a1a1a; */
    padding: clamp(1.25rem, 0.447rem + 2.571vw, 2.5rem) clamp(0rem, -0.803rem + 2.571vw, 1.25rem);
    border-radius: 12px;
    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
@@ -56,10 +55,12 @@ const props = defineProps({
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: clamp(1.25rem, 0.045rem + 3.856vw, 3.125rem);
-      grid-auto-rows: 1fr;
+      //grid-auto-rows: 1fr;
       position: relative;
-
-      @media (max-width: 500px) {
+      @media (min-width: 28.125rem) {
+         grid-auto-rows: 1fr;
+      }
+      @media (max-width: 31.25rem) {
          grid-template-columns: 1fr;
       }
    }
@@ -77,7 +78,6 @@ const props = defineProps({
       }
       display: flex;
       gap: 20px;
-
       transition:
          transform 0.3s ease,
          box-shadow 0.3s ease;
@@ -110,27 +110,22 @@ const props = defineProps({
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      flex: 0 0 50px;
+      width: clamp(2.188rem, 1.864rem + 1.616vw, 3.125rem);
+      height: clamp(2.188rem, 1.864rem + 1.616vw, 3.125rem);
+      flex: 0 0 clamp(2.188rem, 1.864rem + 1.616vw, 3.125rem);
       background-color: $greenLightColor;
       color: #000;
       font-weight: 700;
-      font-size: 32px;
+      font-size: clamp(1.125rem, 0.823rem + 1.509vw, 2rem);
       border-radius: 50%;
       box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
-      @media (max-width: 500px) {
-         width: 40px;
-         height: 40px;
-         flex: 0 0 40px;
-      }
    }
    &__content {
-      max-width: 400px;
+      max-width: 500px;
    }
    &__title {
       color: $greenColor;
-      font-size: 20px;
+      font-size: clamp(1.125rem, 1.082rem + 0.216vw, 1.25rem);
       font-weight: 700;
       line-height: 1.14;
       &:not(:last-child) {
@@ -144,7 +139,7 @@ const props = defineProps({
    }
    &__text {
       color: $whiteColor;
-      line-height: 1.14;
+      line-height: 1.2;
       font-size: 15px;
    }
 }

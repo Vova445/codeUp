@@ -1,15 +1,15 @@
 <template>
    <section class="statistic">
-      <h3 class="statistic__title title">{{ $t('titles.statisticTitle') }}</h3>
+      <!--<h3 class="statistic__title title">{{ $t('titles.statisticTitle') }}</h3>-->
       <div class="statistic__container">
-         <div class="statistic__container__contentOne">
-            <h4 class="statistic__container__numberOfCourses">8000+</h4> <!-- Потім додам у базу даних ключ, де після кожного купленого курсу буде робитися лічильник +1, і значення тут змінемо на лічильник з бази даних -->
-            <p class="statistic__container__descriptionOfCourses">{{ $t('description.statisticPurchased') }}</p>
+         <div class="statistic__content statistic__content--one">
+            <h4 class="statistic__number">8000+</h4>
+            <p class="statistic__description">{{ $t('description.statisticPurchased') }}</p>
          </div>
-         <hr />
-         <div class="statistic__container__contentTwo">
-            <p class="statistic__container__descriptionOfCourses">{{ $t('description.statisticPassed') }}</p>
-            <h4 class="statistic__container__numberOfCourses">10000</h4> <!-- Потім додам у базу даних ключ, де після кожного купленого курсу буде робитися лічильник +1, і значення тут змінемо на лічильник з бази даних -->
+         <hr class="statistic__separator" />
+         <div class="statistic__content statistic__content--two">
+            <p class="statistic__description">{{ $t('description.statisticPassed') }}</p>
+            <h4 class="statistic__number">10000</h4>
          </div>
       </div>
    </section>
@@ -19,41 +19,71 @@
 
 <style lang="scss" scoped>
 .statistic {
-   &__title {
-      text-align: center;
-      margin-bottom: 140px;
-      margin-top: 300px;
-   }
+   margin-bottom: 200px;
+   //&__title {
+   //   text-align: center;
+   //   margin: 4.375rem;
+   //}
 
    &__container {
-      margin-bottom: 300px;
+   }
 
-      &__contentOne,
-      &__contentTwo {
-         display: grid;
-         grid-template-columns: clamp(150px, 40%, 500px) auto; 
-         gap: clamp(2rem, 1.5rem + 2vw, 6rem);
-         align-items: center;
+   &__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-content: space-between;
+      align-items: center;
+      gap: clamp(2rem, 1.5rem + 2vw, 6rem);
+      @media (max-width: 34.375rem) {
+         grid-template-columns: 1fr;
+         text-align: center;
+         &--one {
+            .statistic__number {
+               order: 2;
+            }
+            .statistic__description {
+               order: 1;
+            }
+         }
       }
+      @media (min-width: 34.375rem) {
+         &--one {
+            // Styles specific to contentOne
+            .statistic__number {
+               text-align-last: left;
+            }
+            .statistic__description {
+               text-align: right;
+            }
+         }
 
-      &__numberOfCourses {
-         color: $greenColor;
-         font-size: clamp(2.5rem, 0.204rem + 11.482vw, 9.375rem);
-         text-shadow: 0 0 9px $greenColor;
-         text-align: left;
+         &--two {
+            .statistic__number {
+               text-align: right;
+            }
+            .statistic__description {
+               text-align: left;
+            }
+         }
       }
-      
-      &__descriptionOfCourses {
-         font-size: clamp(1rem, 0.499rem + 2.505vw, 2.5rem);
-         color: $whiteColor;
-         text-align: right;
-      }
-      
-      hr {
-         margin-top: 50px;
-         margin-bottom: 50px;
-         border: 1px solid rgba(2, 254, 86, 0.5);
-      }
+   }
+
+   &__number {
+      color: $greenColor;
+      font-size: clamp(3.75rem, 2.457rem + 6.466vw, 7.5rem);
+      text-shadow: 0 0 9px $greenColor;
+   }
+
+   &__description {
+      font-weight: 500;
+      font-size: clamp(1.375rem, 1.095rem + 1.401vw, 2.188rem);
+      color: $whiteColor;
+      line-height: 1.2;
+   }
+
+   &__separator {
+      margin: clamp(1.563rem, 1.024rem + 2.694vw, 3.125rem) 0;
+      border: 1px solid rgba(2, 254, 86, 0.5);
    }
 }
 </style>

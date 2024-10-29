@@ -18,7 +18,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'Vue.js',
          classAdd: 'vue',
          image: 'vue.svg',
-         scale: '0.9',
+         scale: '1.05',
          background: '#40b681',
       },
       {
@@ -27,7 +27,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'JavaScript',
          classAdd: 'js',
          image: 'js.svg',
-         scale: '1.1',
+         scale: '0.85',
          background: '#cfb903',
       },
       {
@@ -36,7 +36,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'React',
          classAdd: 'react',
          image: 'react.svg',
-         scale: '1',
+         scale: '0.8',
          background: '#61dafb',
       },
       {
@@ -45,7 +45,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'Node.js',
          classAdd: 'node',
          image: 'node-js.svg',
-         scale: '0.8',
+         scale: '1',
          background: '#539e43',
       },
       {
@@ -54,7 +54,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'Html,Css',
          classAdd: 'html-css',
          image: 'html-css.svg',
-         scale: '0.8',
+         scale: '1.2',
          background: '#ff8000',
       },
       {
@@ -63,7 +63,7 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          title: 'C#',
          classAdd: 'c-sharp',
          image: 'c-sharp.svg',
-         scale: '0.8',
+         scale: '1.1',
          background: '#6d287e',
       },
       {

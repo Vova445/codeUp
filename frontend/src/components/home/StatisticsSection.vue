@@ -1,6 +1,5 @@
 <template>
    <section class="statistic">
-      <!--<h3 class="statistic__title title">{{ $t('titles.statisticTitle') }}</h3>-->
       <div class="statistic__container">
          <div class="statistic__content statistic__content--one">
             <h4 class="statistic__number">8000+</h4>
@@ -20,11 +19,6 @@
 <style lang="scss" scoped>
 .statistic {
    margin-bottom: 200px;
-   //&__title {
-   //   text-align: center;
-   //   margin: 4.375rem;
-   //}
-
    &__container {
    }
 

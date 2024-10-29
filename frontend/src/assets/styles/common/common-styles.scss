@@ -31,7 +31,7 @@ $whiteColor: #ffffff;
       overflow: clip;
    }
    > main {
-      padding-top: clamp(5rem, 4.582rem + 2.088vw, 6.25rem);
+      padding-top: clamp(6.875rem, 1.889rem + 10.401vw, 11.25rem);
       flex: 1 1 auto;
       &:not(:last-child) {
          margin-bottom: clamp(4.063rem, 1.717rem + 4.892vw, 5.625rem);

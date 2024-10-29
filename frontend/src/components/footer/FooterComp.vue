@@ -118,7 +118,7 @@ function goUp() {
       }
    }
    &__item {
-      font-size: 1rem;
+      font-size: clamp(0.875rem, 0.687rem + 0.392vw, 1rem);
       line-height: 1.2;
       &:not(:last-child) {
          margin-bottom: 15px;

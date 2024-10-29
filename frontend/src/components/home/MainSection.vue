@@ -1,30 +1,9 @@
 <template>
    <section class="master">
-      <img class="master__decor" src="../../assets/img/home/decore-codeUp.svg" alt="" />
       <div class="master__container">
-         <h1 class="master__title title title--big title--gradient">{{ $t('titles.mainTitle') }}</h1>
          <div class="master__box">
-            <div class="master__icons-container">
-               <router-link
-                  class="circle-container"
-                  :class="course.classAdd"
-                  v-for="course in coursesList"
-                  :to="{ name: course.toName }"
-                  :key="course.id"
-                  :style="[{ background: course.background }, { transform: `scale(${course.scale})` }]"
-               >
-                  <svg viewBox="0 0 100 100" class="circle-svg">
-                     <defs>
-                        <path id="circlePath" d="M 50, 51 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
-                     </defs>
-                     <text>
-                        <textPath href="#circlePath" startOffset="25%" text-anchor="middle" dominant-baseline="middle">{{ course.title }}</textPath>
-                     </text>
-                  </svg>
-                  <img :src="getImagePath(course.image)" class="icon-center" alt="" />
-               </router-link>
-            </div>
-            <div class="master__content text">
+            <div class="master__content">
+               <h1 class="master__title title title--big title--gradient">{{ $t('titles.mainTitle') }}</h1>
                <div class="master__course-description">
                   <span>CodeUp</span> - Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates, vero magni? Ullam a ex laboriosam esse
                   quasi recusandae eos natus fugit laudantium obcaecati harum, ipsa soluta tempora quaerat dignissimos nobis? Lorem, ipsum dolor sit
@@ -39,8 +18,19 @@
                   <span class="exit-button__text">{{ $t('buttons.allCourses') }}</span>
                </router-link>
             </div>
+            <div class="icons-block">
+               <router-link
+                  class="icons-block__item"
+                  :class="course.classAdd"
+                  v-for="course in coursesList"
+                  :to="{ name: course.toName }"
+                  :key="course.id"
+                  :style="[{ background: course.background }, { transform: `scale(${course.scale})` }]"
+               >
+                  <img :src="getImagePath(course.image)" alt="icon-course" />
+               </router-link>
+            </div>
          </div>
-         <button class="button">kfdjgndfjgj dnfjgb dkj</button>
       </div>
    </section>
 </template>
@@ -64,261 +54,137 @@ const getImagePath = (imgPath) => {
 .master {
    position: relative;
    &:not(:last-child) {
-      margin-bottom: clamp(3.125rem, 1.249rem + 3.914vw, 4.375rem);
+      margin-bottom: clamp(5rem, 1.235rem + 7.843vw, 7.5rem);
    }
-
-   &__decor {
-      position: absolute;
-      width: 40%;
-      opacity: 0.2;
-      height: 100%;
-      top: 0;
-      left: 50%;
-      @media (max-width: 630px) {
-         display: none;
-      }
+   // .master__container
+   &__container {
    }
+   // .master__title
    &__title {
-      color: $greenColor;
-      font-weight: 800;
       &:not(:last-child) {
-         margin-bottom: 40px;
+         margin-bottom: clamp(1.25rem, -0.363rem + 3.584vw, 2.5rem);
       }
    }
-
+   // .master__box
    &__box {
-      position: relative;
-   }
-   &__icons-container {
-      display: flex;
-      gap: 10px;
-
-      @media (max-width: 767.98px) {
-         overflow: auto;
-         overflow-x: auto;
-         -webkit-overflow-scrolling: touch;
-         padding-bottom: 10px;
-         &::-webkit-scrollbar {
-            height: 1.5px;
-         }
-
-         &::-webkit-scrollbar-thumb {
-            background-color: #333333;
-            border-radius: 4px;
-         }
-
-         &::-webkit-scrollbar-track {
-            background-color: transparent;
-         }
-         &:not(:last-child) {
-            justify-content: space-between;
-            margin-bottom: 25px;
-            gap: 25px;
-         }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.875rem, 0.262rem + 3.584vw, 3.125rem);
+      @media (max-width: 62rem) {
+         grid-template-columns: 1fr;
+      }
+      @media (max-width: 47.9988rem) {
+         gap: 50px;
       }
    }
+   // .master__content
    &__content {
-      padding: 100px 0;
-      max-width: 600px;
-      margin: 0 auto;
-      color: #e6fefe;
-      text-align: center;
-      line-height: 1.6;
-      letter-spacing: 0.3px;
-
-      @media (max-width: 992px) {
-         padding: 200px 0 0 0;
-      }
-      @media (max-width: 767.98px) {
-         padding: 0;
-      }
-
-      @media (max-width: 550px) {
-         //font-size: 14px;
+      @media (max-width: 62rem) {
+         order: 2;
       }
    }
+   // .master__course-description
    &__course-description {
+      font-size: 1.125rem;
+      line-height: 1.35;
       &:not(:last-child) {
-         margin-bottom: 30px;
+         margin-bottom: 2rem;
       }
-      @media (max-width: 630px) {
-         text-align: left;
+   }
+}
+.icons-block {
+   @media (max-width: 62rem) {
+      order: 1;
+      height: 12.5rem;
+      display: grid;
+
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(8, auto);
+   }
+   @media (max-width: 47.9988rem) {
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 0.9375rem;
+      gap: 1.875rem;
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+         height: 2px;
       }
-      span {
-         font-size: 18px;
-         font-weight: 600;
-         color: #66b2a8;
-         @media (max-width: 550px) {
-            font-size: 16px;
+
+      &::-webkit-scrollbar-thumb {
+         background-color: $greenColor;
+         border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+         background-color: #02521d;
+      }
+
+      scroll-behavior: smooth;
+   }
+   position: relative;
+   // .icons-block__item
+   &__item {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5.5rem;
+      height: 5.5rem;
+
+      @media (max-width: 62rem) {
+         position: relative;
+         top: 0 !important;
+         left: 0 !important;
+         width: 5rem;
+         height: 5rem;
+         justify-self: center;
+         align-self: center;
+         &:nth-child(odd) {
+            justify-self: start;
+
+            grid-column: span 2;
+            grid-row: 1;
+            transform: scale(1) !important;
+         }
+
+         // Парні елементи знизу через один стовпець
+         &:nth-child(even) {
+            justify-self: center;
+            grid-column: span 2;
+            grid-row: 2;
+            transform: translate(50%, 0) scale(1) !important;
+         }
+
+         &:last-child {
+            justify-self: end;
+            transform: translate(0, 0) scale(1) !important;
+         }
+      }
+      @media (max-width: 47.9988rem) {
+         width: 4.5rem;
+         height: 4.5rem;
+         flex: 0 0 4.5rem;
+         &:nth-child(even) {
+            transform: translate(0, 0) scale(1) !important;
+         }
+      }
+      img {
+         width: 3.5rem;
+         height: 3.5rem;
+         @media (max-width: 62rem) {
+            width: 3rem;
+            height: 3rem;
          }
       }
    }
-   &__button {
-      //padding: 15px 70px;
-      //background: linear-gradient(110deg, #3c776f, #6da086, #3c776f);
-      //background-size: 200% 200%;
-
-      //animation: gradientShift 5s ease infinite;
-      //@keyframes gradientShift {
-      //   0% {
-      //      background-position: 0% 50%;
-      //   }
-      //   50% {
-      //      background-position: 100% 50%;
-      //   }
-      //   100% {
-      //      background-position: 0% 50%;
-      //   }
-      //}
-      //@media (any-hover: hover) {
-      //   &:hover {
-      //      background: linear-gradient(110deg, #3c776f, #3c776f, #3c776f);
-      //   }
-      //}
-      //@media (max-width: 630px) {
-      //   width: 100%;
-      //}
-   }
-}
-
-.circle-container {
-   color: #fff;
-   position: relative;
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 90px;
-   height: 90px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   background-color: white;
-   border-radius: 50%;
-   @media (max-width: 992px) {
-      width: clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
-      height: clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
-   }
-   @media (max-width: 550px) {
-      width: clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
-      height: clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
-   }
-}
-
-.python {
-   left: 15%;
-   top: 0;
-   @media (max-width: 992px) {
-      left: 0;
-      top: 0;
-   }
-}
-.vue {
-   left: 40%;
-   top: -3%;
-   @media (max-width: 992px) {
-      left: 20%;
-      top: 5%;
-   }
-}
-.react {
-   top: 40%;
-   left: 5%;
-   @media (max-width: 992px) {
-      left: 40%;
-      top: 2%;
-   }
-}
-.node {
-   top: 80%;
-   left: 20%;
-   @media (max-width: 992px) {
-      left: 7%;
-      top: 20%;
-   }
-}
-.js {
-   top: 85%;
-   left: 50%;
-   @media (max-width: 992px) {
-      left: 87%;
-      top: 3%;
-   }
-}
-.html-css {
-   top: 80%;
-   left: 80%;
-   @media (max-width: 992px) {
-      left: 55%;
-      top: 20%;
-   }
-}
-.c-sharp {
-   top: 2%;
-   left: 75%;
-   @media (max-width: 992px) {
-      left: 65%;
-      top: 5%;
-   }
-}
-.circle-svg {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   fill: none;
-}
-.c-plus {
-   left: 85%;
-   top: 40%;
-   @media (max-width: 992px) {
-      left: 76%;
-      top: 19%;
-   }
-}
-text {
-   font-family: Arial, sans-serif;
-   font-size: 18px;
-   fill: #fff;
-   @media (max-width: 550px) {
-      display: none;
-   }
-}
-
-.circle-container {
-   @media (max-width: 992px) {
-      flex: 0 0 clamp(4.375rem, 0.114rem + 8.889vw, 5.625rem);
-   }
-   @media (max-width: 767.98px) {
-      position: relative;
-      top: 0;
-      left: 0;
-      transform: scale(1) !important;
-   }
-   @media (max-width: 550px) {
-      flex: 0 0 clamp(3.438rem, 2.568rem + 4.348vw, 4.063rem);
-   }
-}
-.icon-center {
-   position: absolute;
-   width: 45px;
-   height: 45px;
-   @media (max-width: 992px) {
-      width: clamp(2.188rem, 0.057rem + 4.444vw, 2.813rem);
-      height: clamp(2.188rem, 0.057rem + 4.444vw, 2.813rem);
-   }
-   @media (max-width: 767.98px) {
-      width: 30px;
-      height: 30px;
-   }
-   font-size: clamp(1.563rem, 1.09rem + 1.374vw, 2.188rem);
 }
 
 .exit-button {
    position: relative;
-   //font-size: clamp(1rem, 0.812rem + 0.392vw, 1.125rem);
    padding-right: 30px;
-
    border-radius: 30px;
    line-height: 1.2;
    display: inline-flex;
@@ -326,18 +192,17 @@ text {
    gap: 20px;
    overflow: hidden;
    .touch & {
-      background-color: #3c776f;
+      background-color: $greenColor;
    }
    &::before {
       content: '';
       border-radius: 30px;
-      //transition: width 0.3s ease 0s;
       transition: all 0.7s cubic-bezier(0.65, 0, 0.076, 1);
       position: absolute;
       z-index: 1;
       width: 0;
       height: 100%;
-      background-color: #3c776f;
+      background-color: $greenColor;
    }
 
    // .exit-button__circle
@@ -346,7 +211,7 @@ text {
       text-align: center;
       align-items: center;
       border-radius: 50%;
-      background-color: #3c776f;
+      background-color: $greenColor;
       width: 50px;
       height: 50px;
    }
@@ -355,19 +220,20 @@ text {
       transition: all 0.5s cubic-bezier(0.65, 0, 0.076, 1);
       position: relative;
       z-index: 2;
+      color: #000;
       transform: translate(20px, 0);
 
       &::before {
          content: '';
          transition: all 0.5s ease 0s;
          position: absolute;
-         //left: calc(-100% - 2px);
+         left: calc(-100% - 2px);
          right: 1px;
-         top: calc(50% - 1px);
+         top: calc(50% - 0.5px);
          transform: translate(0, -50%);
          opacity: 0;
          width: 20px;
-         background-color: #fff;
+         background-color: #000;
          height: 2px;
          border-radius: 50px;
       }
@@ -382,11 +248,12 @@ text {
    &__text {
       transition: all 0.3s ease 0.2s;
       font-weight: 500;
-      color: #88c3bb;
+      color: $greenColor;
       position: relative;
+      font-size: clamp(1.125rem, 0.964rem + 0.358vw, 1.25rem);
       z-index: 2;
       .touch & {
-         color: #fff;
+         color: #000;
       }
    }
    @media (any-hover: hover) {
@@ -401,17 +268,45 @@ text {
             }
          }
          .exit-button__text {
-            color: #fff;
+            color: #000;
          }
       }
    }
 }
-.touch {
-   .exit-button {
-      //background-color: #3c776f;
-      //.exit-button__text {
-      //   color: #fff;
-      //}
+
+@media (min-width: 62rem) {
+   .python {
+      left: 25%;
+      top: 5%;
+   }
+   .vue {
+      left: 40%;
+      top: 40%;
+   }
+   .react {
+      top: 40%;
+      left: 5%;
+   }
+   .node {
+      top: 70%;
+      left: 20%;
+   }
+   .js {
+      top: 71%;
+      left: 50%;
+   }
+   .html-css {
+      top: 70%;
+      left: 75%;
+   }
+   .c-sharp {
+      top: 2%;
+      left: 65%;
+   }
+
+   .c-plus {
+      left: 70%;
+      top: 40%;
    }
 }
 </style>

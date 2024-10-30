@@ -1,60 +1,62 @@
 <template>
    <footer class="footer">
       <div class="footer__container">
-         <div class="footer__content">
-            <div class="footer__item item-footer">
-               <h6 class="item-footer__title">{{ $t('footer.courses') }}</h6>
-               <ul class="item-footer__list">
-                  <li class="item-footer__item"><router-link to="/">course 1</router-link></li>
-                  <li class="item-footer__item"><router-link to="/">course 2</router-link></li>
-                  <li class="item-footer__item"><router-link to="/">course 3</router-link></li>
-                  <li class="item-footer__item"><router-link to="/">course 4</router-link></li>
-                  <li class="item-footer__item"><router-link to="/">course 5</router-link></li>
-               </ul>
-            </div>
-            <div class="footer__item item-footer">
-               <h6 class="item-footer__title">{{ $t('header.aboutUs') }}</h6>
-               <ul class="item-footer__list">
-                  <li class="item-footer__item"><router-link :to="{ name: 'faq' }">FAQ</router-link></li>
-                  <li class="item-footer__item">
-                     <router-link to="/">{{ $t('header.aboutCodeUp') }}</router-link>
-                  </li>
-               </ul>
-            </div>
-            <div class="footer__item item-footer">
-               <h6 class="item-footer__title">{{ $t('footer.usingConditions') }}</h6>
-               <ul class="item-footer__list">
-                  <li class="item-footer__item">
-                     <router-link to="/">{{ $t('footer.privacyPolicy') }}</router-link>
-                  </li>
-               </ul>
-            </div>
-            <div class="footer__item item-footer">
-               <h6 class="item-footer__title">{{ $t('header.contacts') }}</h6>
-               <ul class="item-footer__list">
-                  <li class="item-footer__item">
-                     <a href="tel:7777777777">+1234567890</a>
-                  </li>
-                  <li class="item-footer__item">
-                     <a href="tel:666666666666">+1234567890</a>
-                  </li>
-                  <li class="item-footer__item item-footer__item--flex">
-                     <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:mycodup@gmail.com">mycodup@gmail.com</a>
-                  </li>
-               </ul>
-
-               <div class="block-actions__actions">
-                  <a href="#"><img src="@/assets/img/icons/socials/instagram.svg" alt="" /></a>
-                  <a href="#"><img src="@/assets/img/icons/socials/telegram.svg" alt="" /></a>
-                  <a href="#"><img src="@/assets/img/icons/socials/youTube.svg" alt="" /></a>
-               </div>
-            </div>
+         <div class="footer__main-box">
             <div class="footer__header">
                <button class="footer__up button button--transparent" @click="goUp">
                   <span class="button__text">
                      {{ $t('footer.goUp') }} <span><font-awesome-icon :icon="['fas', 'arrow-up']" /></span
                   ></span>
                </button>
+            </div>
+            <div class="footer__content">
+               <div class="footer__item item-footer">
+                  <h6 class="item-footer__title">{{ $t('footer.courses') }}</h6>
+                  <ul class="item-footer__list">
+                     <li class="item-footer__item"><router-link to="/">course 1</router-link></li>
+                     <li class="item-footer__item"><router-link to="/">course 2</router-link></li>
+                     <li class="item-footer__item"><router-link to="/">course 3</router-link></li>
+                     <li class="item-footer__item"><router-link to="/">course 4</router-link></li>
+                     <li class="item-footer__item"><router-link to="/">course 5</router-link></li>
+                  </ul>
+               </div>
+               <div class="footer__item item-footer">
+                  <h6 class="item-footer__title">{{ $t('header.aboutUs') }}</h6>
+                  <ul class="item-footer__list">
+                     <li class="item-footer__item"><router-link :to="{ name: 'faq' }">FAQ</router-link></li>
+                     <li class="item-footer__item">
+                        <router-link to="/">{{ $t('header.aboutCodeUp') }}</router-link>
+                     </li>
+                  </ul>
+               </div>
+               <div class="footer__item item-footer">
+                  <h6 class="item-footer__title">{{ $t('footer.usingConditions') }}</h6>
+                  <ul class="item-footer__list">
+                     <li class="item-footer__item">
+                        <router-link to="/">{{ $t('footer.privacyPolicy') }}</router-link>
+                     </li>
+                  </ul>
+               </div>
+               <div class="footer__item item-footer">
+                  <h6 class="item-footer__title">{{ $t('header.contacts') }}</h6>
+                  <ul class="item-footer__list">
+                     <li class="item-footer__item">
+                        <a href="tel:7777777777">+1234567890</a>
+                     </li>
+                     <li class="item-footer__item">
+                        <a href="tel:666666666666">+1234567890</a>
+                     </li>
+                     <li class="item-footer__item item-footer__item--flex">
+                        <span><font-awesome-icon :icon="['far', 'envelope']" /></span> <a href="mailto:mycodup@gmail.com">mycodup@gmail.com</a>
+                     </li>
+                  </ul>
+
+                  <div class="block-actions__actions">
+                     <a href="#"><img src="@/assets/img/icons/socials/instagram.svg" alt="" /></a>
+                     <a href="#"><img src="@/assets/img/icons/socials/telegram.svg" alt="" /></a>
+                     <a href="#"><img src="@/assets/img/icons/socials/youTube.svg" alt="" /></a>
+                  </div>
+               </div>
             </div>
          </div>
          <div class="footer__bottom bottom-footer">
@@ -86,35 +88,40 @@ function goUp() {
    font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
    padding: 20px 0;
    background: transparent;
+
    &__header {
       text-align: right;
       &:not(:last-child) {
          margin-bottom: clamp(1.125rem, -0.001rem + 2.348vw, 1.875rem);
       }
    }
+
    &__content {
       display: grid;
-      gap: 30px;
+      gap: clamp(0.938rem, -0.474rem + 2.941vw, 1.875rem);
       justify-content: space-between;
-      grid-template-columns: auto auto auto auto auto;
+      grid-template-columns: auto auto auto auto;
       border-bottom: 1px solid $greenColor;
       padding-bottom: 30px;
       margin-bottom: 1.25rem;
-      @media (max-width: 750px) {
+      @media (max-width: 46.875rem) {
          grid-template-columns: auto auto;
+      }
+      @media (max-width: 23.75rem) {
+         grid-template-columns: 1fr;
+         gap: 20px;
       }
    }
 }
 .item-footer {
    &__title {
       font-weight: 600;
-      line-height: 1.25;
       color: $greenColor;
       font-size: 1rem;
       line-height: 1.21;
-      padding-bottom: clamp(1.25rem, 0.309rem + 1.961vw, 1.875rem);
+
       &:not(:last-child) {
-         margin-bottom: 7px;
+         margin-bottom: clamp(0.625rem, -0.316rem + 1.961vw, 1.25rem);
       }
    }
    &__item {
@@ -149,12 +156,8 @@ function goUp() {
 .bottom-footer {
    display: flex;
    align-items: center;
-   gap: 10px;
-   margin-bottom: 4.375rem;
+   gap: 0.625rem;
    justify-content: space-between;
-   &:not(:last-child) {
-      margin-bottom: 20px;
-   }
    &__image {
       font-size: 40px;
    }

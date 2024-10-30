@@ -15,26 +15,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '')
-const purchasedCourses = ref(0);
-const completedCourses = ref(0);
+const purchasedCourses = ref(0)
+const completedCourses = ref(0)
 
 onMounted(async () => {
    try {
-      const response = await axios.get(`${apiUrl}/api/statistics`);
-      purchasedCourses.value = response.data.purchasedCourses;
-      completedCourses.value = response.data.completedCourses;
+      const response = await axios.get(`${apiUrl}/api/statistics`)
+      purchasedCourses.value = response.data.purchasedCourses
+      completedCourses.value = response.data.completedCourses
    } catch (error) {
-      console.error('Failed to fetch statistics:', error);
+      console.error('Failed to fetch statistics:', error)
    }
-});
+})
 </script>
 
 <style lang="scss" scoped>
 .statistic {
-   margin-bottom: 200px;
+   &:not(:last-child) {
+      margin-bottom: clamp(4rem, -0.004rem + 11.742vw, 7rem);
+   }
    &__container {
    }
 
@@ -97,4 +99,3 @@ onMounted(async () => {
    }
 }
 </style>
-

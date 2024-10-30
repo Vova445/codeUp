@@ -74,7 +74,7 @@ const getImagePath = (imgPath) => {
          grid-template-columns: 1fr;
       }
       @media (max-width: 47.9988rem) {
-         gap: 50px;
+         gap: 30px;
       }
    }
    // .master__content
@@ -85,7 +85,9 @@ const getImagePath = (imgPath) => {
    }
    // .master__course-description
    &__course-description {
-      font-size: 1.125rem;
+      //font-size: 1.125rem;
+      font-size: clamp(0.875rem, 0.791rem + 0.418vw, 1.125rem);
+
       line-height: 1.35;
       &:not(:last-child) {
          margin-bottom: 2rem;
@@ -150,7 +152,6 @@ const getImagePath = (imgPath) => {
             transform: scale(1) !important;
          }
 
-         // Парні елементи знизу через один стовпець
          &:nth-child(even) {
             justify-self: center;
             grid-column: span 2;
@@ -164,9 +165,9 @@ const getImagePath = (imgPath) => {
          }
       }
       @media (max-width: 47.9988rem) {
-         width: 4.5rem;
-         height: 4.5rem;
-         flex: 0 0 4.5rem;
+         width: 3.7rem;
+         height: 3.7rem;
+         flex: 0 0 3.7rem;
          &:nth-child(even) {
             transform: translate(0, 0) scale(1) !important;
          }
@@ -178,19 +179,27 @@ const getImagePath = (imgPath) => {
             width: 3rem;
             height: 3rem;
          }
+         @media (max-width: 47.9988rem) {
+            width: 2rem;
+            height: 2rem;
+         }
       }
    }
 }
 
 .exit-button {
    position: relative;
-   padding-right: 30px;
-   border-radius: 30px;
+   padding-right: 1.875rem;
+   border-radius: 1.875rem;
    line-height: 1.2;
    display: inline-flex;
    align-items: center;
-   gap: 20px;
+   gap: 1.25rem;
    overflow: hidden;
+   @media (max-width: 47.9988rem) {
+      gap: 0.625rem;
+      padding-right: 1.5625rem;
+   }
    .touch & {
       background-color: $greenColor;
    }
@@ -212,8 +221,12 @@ const getImagePath = (imgPath) => {
       align-items: center;
       border-radius: 50%;
       background-color: $greenColor;
-      width: 50px;
-      height: 50px;
+      width: 3.125rem;
+      height: 3.125rem;
+      @media (max-width: 47.9988rem) {
+         width: 2.8125rem;
+         height: 2.8125rem;
+      }
    }
    // .exit-button__icon
    &__icon {

@@ -5,6 +5,22 @@
          <div class="steps__box">
             <div class="steps__item item-steps item-steps--top-left">
                <div class="item-steps__content">
+                  <div class="item-steps__bc">
+                     <svg viewBox="0 0 244 244" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                           d="M2 22V222C2 233.046 10.9543 242 22 242H222C233.046 242 242 233.046 242 222V142C242 130.954 233.046 122 222 122H142C130.954 122 122 113.046 122 102V22C122 10.9543 113.046 2 102 2H22C10.9543 2 2 10.9543 2 22Z"
+                           fill="url(#paint0_linear_301_3)"
+                           stroke="rgb(255, 255, 255);"
+                           stroke-width="1"
+                        />
+                        <defs>
+                           <linearGradient id="paint0_linear_301_3" x1="242" y1="21.6144" x2="52.9557" y2="262.393" gradientUnits="userSpaceOnUse">
+                              <stop stop-color="#072515" />
+                              <stop offset="1" stop-color="#000C02" />
+                           </linearGradient>
+                        </defs>
+                     </svg>
+                  </div>
                   <div class="item-steps__letter">F</div>
                   <h6 class="item-steps__title">Title</h6>
                   <div class="item-steps__text">
@@ -86,18 +102,24 @@ onMounted(() => {
 
 .item-steps {
    position: relative;
-   padding: 1.25rem 2.5rem;
-   &::before {
-      content: '';
 
-      border: 0.0625rem solid rgb(255, 255, 255);
+   width: 28.125rem;
+   height: 28.125rem;
+
+   &__bc {
       position: absolute;
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
-      backdrop-filter: blur(3.125rem);
-      background: linear-gradient(-38.77deg, rgba(2, 254, 86, 0.1) 29.123%, rgba(0, 0, 0, 0.1) 84.51%);
+      width: 100%;
+      height: 100%;
+      svg {
+         width: 100%;
+         height: 100%;
+         path {
+            width: 100%;
+            height: 100%;
+         }
+      }
    }
    &__letter {
       font-size: 15.625rem;
@@ -110,6 +132,8 @@ onMounted(() => {
    // .item-steps__title
    &__title,
    &__text {
+      position: relative;
+      z-index: 2;
       text-align: center;
    }
    &__title {
@@ -120,6 +144,9 @@ onMounted(() => {
    &__text {
    }
    &--top-left {
+      .item-steps__bc {
+         transform: rotate(-90deg);
+      }
    }
    &--top-right {
    }

@@ -13,6 +13,7 @@
 $greenColor: #02fe56;
 $greenLightColor: #00ff55;
 $whiteColor: #ffffff;
+$whiteGrayColor: rgb(255, 255, 255);
 
 .decore-circle {
    background: rgba(0, 159, 53, 0.62);
@@ -106,7 +107,7 @@ input {
    font-weight: 600;
    color: #fff;
    &--small {
-      font-size: 2rem;
+      font-size: 1.875rem;
    }
    &--big {
       font-size: clamp(2.063rem, 1.567rem + 2.478vw, 3.5rem);

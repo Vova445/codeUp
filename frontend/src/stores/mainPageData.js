@@ -289,5 +289,55 @@ export const useMainPageDataStore = defineStore('mainPageData', () => {
          count: 22,
       },
    ])
-   return { mainCourses, reasonsList, stepsList, questionsList, webCourseProgram }
+   const purposeCourseList = ref([
+      {
+         id: 'knvljnfioi3sjdjfkjskdfjju',
+         title: 'purposes.junior.title',
+         text: 'purposes.junior.text',
+         color: 'rgb(255, 255, 255)',
+         bcColor: 'rgb(37, 37, 37)',
+         numColor: 'rgb(255, 255, 255)',
+      },
+      {
+         id: 'dnksfshfjshdjf43n3b4b5nbn34',
+         title: 'purposes.jobRotation.title',
+         text: 'purposes.jobRotation.text',
+         color: 'rgb(255, 255, 255)',
+         bcColor: '#000',
+         numColor: 'rgb(2, 254, 86)',
+      },
+      {
+         id: '345nbn34b5nb354n34534m5nn3mn5m',
+         title: 'purposes.students.title',
+         text: 'purposes.students.text',
+         color: 'rgb(255, 255, 255)',
+         bcColor: 'rgba(73, 73, 73, 0.27)',
+         numColor: 'rgb(2, 254, 86)',
+      },
+      {
+         id: '45n6mgfi93fnfudhg83kdfgdgk4berg3',
+         title: 'purposes.onlineJob.title',
+         text: 'purposes.onlineJob.text',
+         color: '#000',
+         bcColor: 'rgb(0, 255, 85)',
+         numColor: '#000',
+      },
+      {
+         id: 'djdjfbjbcabzncn37dg3bdkdnehuueheb',
+         title: 'purposes.programers.title',
+         text: 'purposes.programers.text',
+         color: 'rgb(255, 255, 255)',
+         bcColor: '#000',
+         numColor: 'rgb(2, 254, 86)',
+      },
+      {
+         id: '38374bfnwmfnfo394fmf494f4mf94flmo3',
+         title: 'purposes.entrepreneurs.title',
+         text: 'purposes.entrepreneurs.text',
+         color: 'rgb(255, 255, 255)',
+         bcColor: 'rgba(73, 73, 73, 0.27)',
+         numColor: 'rgb(255, 255, 255)',
+      },
+   ])
+   return { mainCourses, reasonsList, stepsList, questionsList, webCourseProgram, purposeCourseList }
 })

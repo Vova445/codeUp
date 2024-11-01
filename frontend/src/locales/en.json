@@ -24,7 +24,8 @@
       "innovationsNews": "Here are the latest innovations in the field of IT",
       "userProfile": "User Profile Settings",
       "stepsSection": "How is learning? step by step",
-      "statisticTitle": "Course Statistics"
+      "statisticTitle": "Course Statistics",
+      "purposeTitle": "Who are our courses suitable for?"
    },
    "description": {
       "statisticPurchased": "Number of courses purchased",
@@ -96,6 +97,32 @@
          "videoExamples": "Video Examples",
          "practiseInfo": "Practical tasks",
          "duration7": "Duration: 7 months"
+      }
+   },
+   "purposes": {
+      "junior": {
+         "title": "Starting Your Path in IT",
+         "text": "Our courses are suitable for those who have no experience but want to start a career in IT. Our programming, frontend, or backend courses always begin with the basics and require no prior knowledge. For such people, it’s an opportunity to acquire the necessary skills for a career from scratch."
+      },
+      "jobRotation": {
+         "title": "Those Transitioning to IT from Other Fields",
+         "text": "Many adults from other professions decide to change careers and choose the IT field. For example, frontend and backend courses help quickly acquire the skills needed for your new dream profession. These directions are particularly attractive as they allow you to start without prior skills."
+      },
+      "students": {
+         "title": "Students of Technical Specialties",
+         "text": "Courses will be useful for university students studying IT or related fields who want to deepen their knowledge and gain practical skills. This will allow them to acquire strong skills faster and find a job."
+      },
+      "onlineJob": {
+         "title": "Those Who Want to Work Remotely",
+         "text": "Many people are looking for opportunities to work remotely, and the IT field can offer this. Frontend development, web application creation, database work—all these skills are in demand in freelance and remote work."
+      },
+      "programers": {
+         "title": "Experienced Programmers Looking to Deepen Their Knowledge",
+         "text": "Experienced programmers can take courses to learn new technologies or improve existing skills. For example, if a specialist is well-versed in backend, they can learn new frameworks or dive into frontend to create full-fledged web applications."
+      },
+      "entrepreneurs": {
+         "title": "Entrepreneurs and Startup Founders",
+         "text": "People who want to create their own projects can learn the basics of development to understand how modern web applications, mobile apps, and other technologies work. This will help them manage processes more effectively and communicate with programmers."
       }
    },
    "questionsSection": {

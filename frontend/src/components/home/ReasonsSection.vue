@@ -55,7 +55,6 @@ const props = defineProps({
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: clamp(1.25rem, 0.045rem + 3.856vw, 3.125rem);
-      //grid-auto-rows: 1fr;
       position: relative;
       @media (min-width: 28.125rem) {
          grid-auto-rows: 1fr;

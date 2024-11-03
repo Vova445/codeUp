@@ -87,8 +87,7 @@ onMounted(() => {
       transform: translateY(-7px);
       border: 1px solid $greenColor;
       img {
-         transform: scale(1.05);
-         
+         transform: scale(1.03);
       }
    }
    display: block;

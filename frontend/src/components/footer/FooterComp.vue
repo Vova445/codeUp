@@ -88,7 +88,7 @@ function goUp() {
    font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
    padding: 20px 0;
    background: transparent;
-
+   border-top: 0.0625rem solid $greenColor;
    &__header {
       text-align: right;
       &:not(:last-child) {

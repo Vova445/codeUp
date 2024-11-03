@@ -40,6 +40,9 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .purpose {
+   &:not(:last-child) {
+      margin-bottom: clamp(4.375rem, 1.561rem + 5.871vw, 6.25rem);
+   }
    // .purpose__list
    &__list {
       display: grid;

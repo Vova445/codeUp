@@ -102,7 +102,6 @@ onMounted(() => {
 
 .item-steps {
    position: relative;
-
    width: 28.125rem;
    height: 28.125rem;
 

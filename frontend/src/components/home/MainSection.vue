@@ -28,6 +28,9 @@
                   :style="[{ background: course.background }, { transform: `scale(${course.scale})` }]"
                >
                   <img :src="getImagePath(course.image)" alt="icon-course" />
+                  <!--<svg>
+                     <use :href="getImagePath(course.image)" class="icon-use"></use>
+                  </svg>-->
                </router-link>
             </div>
          </div>
@@ -37,7 +40,7 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 
 const props = defineProps({
    coursesList: {
@@ -172,7 +175,8 @@ const getImagePath = (imgPath) => {
             transform: translate(0, 0) scale(1) !important;
          }
       }
-      img {
+      img,
+      svg {
          width: 3.5rem;
          height: 3.5rem;
          @media (max-width: 62rem) {

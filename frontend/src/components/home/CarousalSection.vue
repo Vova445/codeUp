@@ -56,8 +56,6 @@ onMounted(() => {
          left: 0;
          width: 100%;
          height: 100%;
-         background-color: #0c0b0b;
-         opacity: 0.3;
       }
    }
    &__link {

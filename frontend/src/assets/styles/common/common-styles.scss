@@ -35,7 +35,7 @@ $whiteGrayColor: rgb(255, 255, 255);
       padding-top: clamp(6.875rem, 1.889rem + 10.401vw, 11.25rem);
       flex: 1 1 auto;
       &:not(:last-child) {
-         margin-bottom: clamp(4.063rem, 1.717rem + 4.892vw, 5.625rem);
+         margin-bottom: clamp(5.625rem, 2.811rem + 5.871vw, 7.5rem);
       }
    }
    > * {
@@ -45,7 +45,7 @@ $whiteGrayColor: rgb(255, 255, 255);
 body {
    background-color: #000;
    color: #fff;
-   font-family: 'Montserrat';
+   font-family: 'Montserrat', Arial, sans-serif;
    .lock & {
       overflow: hidden;
       touch-action: none;
@@ -81,6 +81,7 @@ input {
       background-color: $greenColor;
    }
    &--black {
+      background-color: #000;
       font-weight: 500;
       color: #fff;
    }

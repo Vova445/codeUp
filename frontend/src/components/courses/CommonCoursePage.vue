@@ -2,21 +2,13 @@
    <main-master-page>
       <section class="course-header">
          <div class="course-header__container">
-            <div class="course-header__top">
-               <h1 class="course-header__title title title--left">{{ $t('courses.titles.courseWith') }} <slot name="title"></slot></h1>
-               <button class="course-header__announcement">
-                  <span class="course-header__text-announcement"
-                     >{{ $t('courses.titles.start') }} <br />
-                     {{ $t('courses.titles.growing') }} <br />
-                     {{ $t('courses.titles.today') }}</span
-                  >
-                  <div class="course-header__bc-announcement"><img src="../../assets/img/decore/circle-decore.svg" alt="" /></div>
-               </button>
+            <div class="course-header__content">
+               <h1 class="course-header__title title">{{ $t('courses.titles.courseWith') }} <slot name="title"></slot></h1>
+               <h4 class="course-header__subtitle">{{ $t('courses.titles.startStuddingToday') }}</h4>
+               <button class="course-header__button button">{{ $t('buttons.startStudding') }}</button>
             </div>
-            <div class="course-header__main-image"><img :src="getImgPath()" alt="" /></div>
-            <div class="course-header__bottom">
-               <!--<div class="course-header__arrow"><img src="@/assets/img/icons/arrow.gif" alt="" /></div>-->
-               <button class="course-header__start-studding">{{ $t('buttons.startStudding') }}</button>
+            <div class="course-header__image">
+               <img class="filter-green" :src="getImgPath()" alt="" />
             </div>
          </div>
       </section>
@@ -132,135 +124,9 @@ function onPay() {}
 </script>
 
 <style lang="scss" scoped>
-.course-header {
-   &:not(:last-child) {
-      margin-bottom: clamp(2.5rem, 0.624rem + 3.914vw, 3.75rem);
-   }
-   // .course-header__container
-   &__container {
-   }
-   // .course-header__top
-   &__top {
-      display: grid;
-      gap: 25px;
-      grid-template-columns: 400px auto;
-      justify-content: space-between;
-
-      &:not(:last-child) {
-         margin-bottom: 40px;
-      }
-      @media (max-width: 767.98px) {
-         grid-template-columns: 1fr;
-      }
-   }
-   // .course-header__title
-   &__title {
-      font-size: clamp(1.5rem, 0.75rem + 1.566vw, 2rem);
-      font-weight: 600;
-
-      @media (max-width: 767.98px) {
-         text-align: center;
-      }
-   }
-   // .course-header__announcement
-   &__announcement {
-      position: relative;
-      width: 220px;
-      height: 220px;
-      text-align: center;
-      @media (any-hover: hover) {
-         &:hover {
-            .course-header__bc-announcement {
-               animation-play-state: paused;
-            }
-         }
-      }
-      @media (max-width: 767.98px) {
-         width: 190px;
-         height: 190px;
-         margin: 0 auto;
-      }
-   }
-   // .course-header__text-announcement
-   &__text-announcement {
-      position: relative;
-      z-index: 1;
-      font-weight: 600;
-      font-size: clamp(1.25rem, 0.781rem + 0.978vw, 1.563rem);
-      line-height: 1.4;
-   }
-   // .course-header__bc-announcement
-   &__bc-announcement {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      img {
-         width: 100%;
-         height: 100%;
-      }
-      animation: spinInfinite 20s infinite linear;
-   }
-   // .course-header__main-image
-   &__main-image {
-      position: relative;
-      padding-bottom: 20%;
-      &:not(:last-child) {
-         margin-bottom: 30px;
-      }
-      img {
-         //max-width: 100%;
-         position: absolute;
-         width: 100%;
-         height: 100%;
-         top: 0;
-         left: 0;
-      }
-      @media (max-width: 550px) {
-         padding-bottom: 25%;
-      }
-   }
-   // .course-header__bottom
-   &__bottom {
-      justify-content: center;
-      display: flex;
-      gap: clamp(0.625rem, -0.001rem + 3.132vw, 2.5rem);
-      align-items: end;
-   }
-   // .course-header__arrow
-   &__arrow {
-      img {
-         max-width: 200px;
-      }
-      @media (max-width: 767.98px) {
-         img {
-            max-width: 150px;
-         }
-      }
-      @media (max-width: 550px) {
-         img {
-            max-width: 100px;
-         }
-      }
-   }
-   // .course-header__start-studding
-   &__start-studding {
-      transition: all 0.3s ease 0s;
-      box-shadow: 0 0 10px #4432c9;
-      border-radius: 18px;
-      padding: 13px clamp(1.125rem, 0.916rem + 1.044vw, 1.75rem);
-      font-weight: 500;
-      background-color: #4432c9;
-      font-size: clamp(1.18rem, 0.875rem + 0.783vw, 1.5rem);
-      @media (any-hover: hover) {
-         &:hover {
-            background-color: #21176a;
-         }
-      }
-   }
+.filter-green {
+   filter: invert(43%) sepia(98%) saturate(1351%) hue-rotate(93deg) brightness(107%) contrast(101%);
 }
-
 .course-info {
    background: linear-gradient(280deg, rgba(37, 27, 111, 1) 0%, rgba(71, 51, 211, 1) 100%);
    padding: clamp(1.125rem, -0.001rem + 2.348vw, 1.875rem) 0;

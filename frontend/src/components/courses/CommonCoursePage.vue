@@ -3,9 +3,11 @@
       <section class="course-header">
          <div class="course-header__container">
             <div class="course-header__content">
-               <h1 class="course-header__title title">{{ $t('courses.titles.courseWith') }} <slot name="title"></slot></h1>
+               <h1 class="course-header__title title title--big title--gradient">{{ $t('courses.titles.courseWith') }} <slot name="title"></slot></h1>
                <h4 class="course-header__subtitle">{{ $t('courses.titles.startStuddingToday') }}</h4>
-               <button class="course-header__button button">{{ $t('buttons.startStudding') }}</button>
+               <button class="course-header__button button button--arrow">
+                  {{ $t('buttons.startStudding') }}
+               </button>
             </div>
             <div class="course-header__image">
                <img class="filter-green" :src="getImgPath()" alt="" />
@@ -124,9 +126,41 @@ function onPay() {}
 </script>
 
 <style lang="scss" scoped>
-.filter-green {
-   filter: invert(43%) sepia(98%) saturate(1351%) hue-rotate(93deg) brightness(107%) contrast(101%);
+.course-header {
+   // .course-header__container
+   &__container {
+      display: flex;
+   }
+   // .course-header__content
+   &__content {
+   }
+   // .course-header__title
+   &__title {
+      &:not(:last-child) {
+         margin-bottom: 1.5rem;
+      }
+   }
+   // .course-header__subtitle
+   &__subtitle {
+      color: $whiteGrayColor;
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.21;
+      &:not(:last-child) {
+         margin-bottom: 1.875rem;
+      }
+   }
+   // .course-header__button
+   &__button {
+   }
+   // .course-header__image
+   &__image {
+      .filter-green {
+         filter: invert(43%) sepia(98%) saturate(1351%) hue-rotate(93deg) brightness(107%) contrast(101%);
+      }
+   }
 }
+
 .course-info {
    background: linear-gradient(280deg, rgba(37, 27, 111, 1) 0%, rgba(71, 51, 211, 1) 100%);
    padding: clamp(1.125rem, -0.001rem + 2.348vw, 1.875rem) 0;

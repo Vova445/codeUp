@@ -180,7 +180,8 @@
          "start": "start",
          "growing": "growing",
          "today": "today",
-         "startStuddingToday": "Start developing today!"
+         "startStuddingToday": "Start developing today!",
+         "whatIs": "What is"
       },
       "coursesDescriptions": {
          "htmlDercr": "Html and CSS are the basic technologies for creating web pages, the main thing to remember here is that everything you see on websites or web applications rendered using HTML and CSS. HTML is responsible for the structure of the page by defining elements such as headings, paragraphs, and images, and CSS - for the style and location of these elements on different devices. Learning HTML and CSS is a foundation for anyone who wants to learn creation of convenient and adaptive web interfaces."

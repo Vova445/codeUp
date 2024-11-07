@@ -1,6 +1,6 @@
 <template>
-   <common-course-page :imgSrc="'html-css.svg'" :course-program="webCourseProgram">
-      <template #title>HTML + Css + JS-Start</template>
+   <common-course-page :imgSrc="'html-css.svg'" :course-program="webCourseProgram" course-descr="courses.coursesDescriptions.htmlDercr">
+      <template #title>HTML + CSS</template>
       <template #course-descr> {{ $t('courses.coursesDescriptions.htmlDercr') }} </template>
    </common-course-page>
 </template>

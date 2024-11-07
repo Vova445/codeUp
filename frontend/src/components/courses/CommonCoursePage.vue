@@ -1,6 +1,7 @@
 <template>
    <main-master-page>
       <section class="course-header">
+         <div class="course-header__decor"><img src="@/assets/img/decore/falling-code.webp" alt="" /></div>
          <div class="course-header__container">
             <div class="course-header__content">
                <h1 class="course-header__title title title--big title--gradient">{{ $t('courses.titles.courseWith') }} <slot name="title"></slot></h1>
@@ -16,15 +17,11 @@
       </section>
       <section class="course-info">
          <div class="course-info__container">
-            <div class="course-info__block">
-               <h3 class="course-info__title">what is HTML and CSS</h3>
-               <div class="course-info__text">
-                  <p>{{ $t('courses.coursesDescriptions.htmlDercr') }}</p>
-               </div>
+            <h3 class="course-info__title title title--small">{{ $t('courses.titles.whatIs') }} <slot name="title"></slot> ?</h3>
+            <div class="course-info__text">
+               <p>{{ $t(courseDescr) }}</p>
             </div>
-            <div class="course-info__block course-info__block--button">
-               <button class="course-info__button">{{ $t('buttons.startStudding') }}</button>
-            </div>
+            <button class="course-info__button button">{{ $t('buttons.startStudding') }}</button>
          </div>
       </section>
       <section class="course-program">
@@ -109,6 +106,9 @@ const props = defineProps({
       type: Array,
       required: true,
    },
+   courseDescr: {
+      type: String,
+   },
 })
 
 function getImgPath() {
@@ -127,9 +127,35 @@ function onPay() {}
 
 <style lang="scss" scoped>
 .course-header {
+   position: relative;
+   overflow: hidden;
+
+   &__decor {
+      transform: translate(0, -200px);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      left: 0;
+      img {
+         //height: 100%;
+         width: 100%;
+      }
+   }
+   &:not(:last-child) {
+      padding-bottom: clamp(6.25rem, 5.415rem + 4.175vw, 8.75rem);
+   }
    // .course-header__container
    &__container {
       display: flex;
+      gap: 1.25rem;
+      @media (max-width: 57rem) {
+         flex-direction: column;
+         gap: 3.75rem;
+      }
+      @media (max-width: 28.125rem) {
+         text-align: center;
+      }
    }
    // .course-header__content
    &__content {
@@ -139,11 +165,14 @@ function onPay() {}
       &:not(:last-child) {
          margin-bottom: 1.5rem;
       }
+      @media (max-width: 28.125rem) {
+         text-align: center;
+      }
    }
    // .course-header__subtitle
    &__subtitle {
       color: $whiteGrayColor;
-      font-size: 2rem;
+      font-size: clamp(1.25rem, 0.999rem + 1.253vw, 2rem);
       font-weight: 500;
       line-height: 1.21;
       &:not(:last-child) {
@@ -155,65 +184,57 @@ function onPay() {}
    }
    // .course-header__image
    &__image {
+      flex: 0 0 39.2%;
       .filter-green {
          filter: invert(43%) sepia(98%) saturate(1351%) hue-rotate(93deg) brightness(107%) contrast(101%);
+      }
+      img {
+         max-width: 100%;
+      }
+      @media (max-width: 57rem) {
+         margin: 0 auto;
       }
    }
 }
 
 .course-info {
-   background: linear-gradient(280deg, rgba(37, 27, 111, 1) 0%, rgba(71, 51, 211, 1) 100%);
-   padding: clamp(1.125rem, -0.001rem + 2.348vw, 1.875rem) 0;
-   &:not(:last-child) {
-      margin-bottom: 30px;
-   }
+   color: #000;
+   background: linear-gradient(142.34deg, rgb(2, 254, 86) -0.91%, rgb(79, 251, 136) 94.761%);
+   padding: clamp(1.75rem, 1.499rem + 1.253vw, 2.5rem) 0;
    // .course-info__container
    &__container {
-      display: grid;
-      gap: 30px;
-      grid-template-columns: 1fr auto;
-      @media (max-width: 767.98px) {
-         grid-template-columns: 1fr;
-      }
-   }
-   // .course-info__block
-   &__block {
-      background-color: #170f50;
-      border-radius: 30px;
-
-      padding: 14px 20px;
-      &--button {
-         display: flex;
-         align-items: center;
-         justify-content: center;
-      }
    }
    // .course-info__title
    &__title {
-      font-weight: 600;
-      font-size: clamp(1.25rem, 0.312rem + 1.957vw, 1.875rem);
-      line-height: 1.3;
+      color: #000;
       &:not(:last-child) {
-         margin-bottom: clamp(0.625rem, 0.156rem + 0.978vw, 0.938rem);
+         margin-bottom: clamp(1.063rem, 0.791rem + 1.357vw, 1.875rem);
       }
    }
    // .course-info__text
    &__text {
-      line-height: 1.4;
+      font-weight: 500;
+      line-height: 1.2;
+      font-size: clamp(0.875rem, 0.75rem + 0.626vw, 1.25rem);
+      &:not(:last-child) {
+         margin-bottom: clamp(1.75rem, 1.499rem + 1.253vw, 2.5rem);
+      }
    }
+   // .course-info__button
    &__button {
+      display: block;
+      background-color: #000;
+      color: #fff;
+      margin: 0 auto;
       transition: all 0.3s ease 0s;
-      box-shadow: 0 0 10px #4432c9;
-      background-color: #4834d4;
-      padding: 18px 30px;
-      border-radius: 0 0 20px 0;
       @media (any-hover: hover) {
          &:hover {
-            background-color: #21176a;
+            background-color: #134d14;
          }
       }
    }
 }
+
 .course-program {
    &:not(:last-child) {
       margin-bottom: clamp(2.5rem, 0.624rem + 3.914vw, 3.75rem);

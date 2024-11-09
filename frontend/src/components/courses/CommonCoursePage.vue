@@ -476,6 +476,7 @@ function onPay() {}
       @media (max-width: 29.6875rem) {
          grid-column-start: 1;
          grid-column-end: 4;
+         text-align: center;
       }
    }
    // .item-studding__item--price

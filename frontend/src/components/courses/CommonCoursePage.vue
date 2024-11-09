@@ -11,7 +11,7 @@
                </button>
             </div>
             <div class="course-header__image">
-               <img class="filter-green" :src="getImgPath()" alt="" />
+               <img class="filter-green" :src="getImgPath" alt="" />
             </div>
          </div>
       </section>
@@ -49,37 +49,47 @@
       </section>
       <section class="studding-with-us">
          <div class="studding-with-us__container">
-            <h3 class="studding-with-us__title">What is studding with us</h3>
-            <div class="studding-with-us__body">
-               <div class="studding-with-us__item">
-                  <div class="studding-with-us__subtitle">+ Bonuses</div>
-                  <div class="studding-with-us__description">Services, libraries, +Js-start</div>
+            <h3 class="studding-with-us__title title">{{ $t('courses.titles.studdingWithUs') }}</h3>
+            <div class="studding-with-us__box">
+               <button class="studding-with-us__item item-studding item-studding__item--certificate">
+                  <div class="item-studding__decor"><img src="@/assets/img/decore/two-stars.svg" alt="" /></div>
+                  <h6 class="item-studding__title">Сертифікат</h6>
+               </button>
+               <div class="studding-with-us__item item-studding item-studding__item--feedback">
+                  <div class="item-studding__top">
+                     <h6 class="item-studding__title">Фідбек</h6>
+                  </div>
+                  <div class="item-studding__bottom">
+                     <div class="item-studding__descr">Допомога з вирішенням тасків та помилок</div>
+                  </div>
                </div>
-               <div class="studding-with-us__item">
-                  <div class="studding-with-us__subtitle">When is start ?</div>
-                  <div class="studding-with-us__description">Whenever you want</div>
+               <div class="studding-with-us__item item-studding item-studding__item--additionally">
+                  <div class="item-studding__decor"><img src="@/assets/img/decore/three-stars.svg" alt="" /></div>
+                  <h6 class="item-studding__title">Додатково</h6>
+                  <div class="item-studding__descr">Бібілотеки , цікаві практики</div>
                </div>
-               <div class="studding-with-us__item">
-                  <div class="studding-with-us__subtitle">Certificate</div>
-                  <div class="studding-with-us__description">Services, libraries, +Js-start</div>
+               <div class="studding-with-us__item item-studding item-studding__item--start">
+                  <h6 class="item-studding__title">Коли навчання?</h6>
+                  <div class="item-studding__descr">У зручний для вас час</div>
                </div>
-               <div class="studding-with-us__item">
-                  <div class="studding-with-us__subtitle">+ Bonuses</div>
-                  <div class="studding-with-us__description">Services, libraries, +Js-start</div>
-               </div>
-               <div class="studding-with-us__item">
-                  <div class="studding-with-us__subtitle">Reviews</div>
-               </div>
-               <div class="studding-with-us__item studding-with-us__item--price">
-                  <div class="studding-with-us__subtitle">150$</div>
-                  <div class="studding-with-us__description">const of course</div>
-               </div>
+               <button class="studding-with-us__item item-studding item-studding__item--price">
+                  <div class="item-studding__content">
+                     <div class="item-studding__price">
+                        <div class="item-studding__text-price">150$</div>
+                        <font-awesome-icon :icon="['fas', 'certificate']" />
+                     </div>
+                     <h6 class="item-studding__title">Ціна за весь курс</h6>
+                  </div>
+                  <div class="item-studding__image">
+                     <img :src="getImgPath" alt="" />
+                  </div>
+               </button>
             </div>
          </div>
       </section>
-      <section class="steps-of-studding">
+      <!--<section class="steps-of-studding">
          <steps-section :steps-list="stepsList" />
-      </section>
+      </section>-->
       <div class="pay-section">
          <div class="pay-section__container">
             <div class="pay-section__body">
@@ -96,6 +106,7 @@ import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { storeToRefs } from 'pinia'
 import StepsSection from '../../components/home/StepsSection.vue'
 import { useMainPageDataStore } from '../../stores/mainPageData.js'
+import { computed } from 'vue'
 const { stepsList } = storeToRefs(useMainPageDataStore())
 const props = defineProps({
    imgSrc: {
@@ -111,9 +122,9 @@ const props = defineProps({
    },
 })
 
-function getImgPath() {
+const getImgPath = computed(() => {
    return new URL(`../../assets/img/courses-logs/${props.imgSrc}`, import.meta.url).href
-}
+})
 function getFirstHalf(arr) {
    const half = Math.ceil(arr.length / 2)
    return arr.slice(0, half)
@@ -131,15 +142,17 @@ function onPay() {}
    overflow: hidden;
 
    &__decor {
-      transform: translate(0, -200px);
+      transform: translate(0, -100px);
       position: absolute;
       width: 100%;
       height: 100%;
-
+      pointer-events: none;
       left: 0;
       img {
-         //height: 100%;
+         //position: absolute;
          width: 100%;
+         height: 100%;
+         object-fit: cover;
       }
    }
    &:not(:last-child) {
@@ -157,13 +170,11 @@ function onPay() {}
          text-align: center;
       }
    }
-   // .course-header__content
-   &__content {
-   }
+
    // .course-header__title
    &__title {
       &:not(:last-child) {
-         margin-bottom: 1.5rem;
+         margin-bottom: clamp(1.25rem, 0.312rem + 1.957vw, 1.875rem);
       }
       @media (max-width: 28.125rem) {
          text-align: center;
@@ -179,20 +190,26 @@ function onPay() {}
          margin-bottom: 1.875rem;
       }
    }
-   // .course-header__button
-   &__button {
-   }
    // .course-header__image
    &__image {
+      width: 100%;
+      position: relative;
       flex: 0 0 39.2%;
+      padding-bottom: 10%;
       .filter-green {
          filter: invert(43%) sepia(98%) saturate(1351%) hue-rotate(93deg) brightness(107%) contrast(101%);
       }
       img {
-         max-width: 100%;
+         pointer-events: none;
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
       }
       @media (max-width: 57rem) {
          margin: 0 auto;
+         padding-bottom: 25%;
       }
    }
 }
@@ -202,7 +219,8 @@ function onPay() {}
    background: linear-gradient(142.34deg, rgb(2, 254, 86) -0.91%, rgb(79, 251, 136) 94.761%);
    padding: clamp(1.75rem, 1.499rem + 1.253vw, 2.5rem) 0;
    // .course-info__container
-   &__container {
+   &:not(:last-child) {
+      margin-bottom: clamp(5.625rem, -0.022rem + 11.765vw, 9.375rem);
    }
    // .course-info__title
    &__title {
@@ -237,23 +255,9 @@ function onPay() {}
 
 .course-program {
    &:not(:last-child) {
-      margin-bottom: clamp(2.5rem, 0.624rem + 3.914vw, 3.75rem);
+      margin-bottom: clamp(5.625rem, -0.022rem + 11.765vw, 9.375rem);
    }
-   @media (min-width: 601px) {
-      position: relative;
-      z-index: 2;
-      &::before {
-         content: '';
-         z-index: 1;
-         position: absolute;
-         top: 5%;
-         left: 0;
-         width: 90%;
-         padding-top: 48%;
-         transform: translate(-10%, 0);
-         background: url('../../assets/img/decore/line-decore.svg') 0 0 / 100% no-repeat;
-      }
-   }
+
    // .course-program__container
    &__container {
    }
@@ -262,7 +266,7 @@ function onPay() {}
       text-align: center;
       font-weight: 700;
       span {
-         color: #4b37d5;
+         color: $greenColor;
       }
       font-size: clamp(1.375rem, -0.314rem + 3.523vw, 2.5rem);
       line-height: 1.3;
@@ -276,9 +280,9 @@ function onPay() {}
       justify-content: space-between;
       grid-template-columns: auto auto;
       gap: 20px;
-      @media (max-width: 600px) {
+      @media (max-width: 37.5rem) {
          grid-template-columns: 1fr;
-         gap: 5px;
+         gap: 0.3125rem;
       }
    }
    // .course-program__column
@@ -294,15 +298,16 @@ function onPay() {}
       z-index: 2;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.625rem;
       &::marker {
          display: none;
       }
       &:not(:last-child) {
-         margin-bottom: 5px;
+         margin-bottom: 0.625rem;
       }
-      @media (max-width: 767.98px) {
-         font-size: 14px;
+      @media (max-width: 47.9988rem) {
+         font-size: 0.875rem;
+         margin-bottom: 0.3125rem;
       }
    }
    // .course-program__number
@@ -311,16 +316,16 @@ function onPay() {}
       align-items: center;
       justify-content: center;
       color: #000;
-      background-color: #4b37d5;
-      border-radius: 10px;
+      background-color: $greenColor;
+      border-radius: 0.625rem;
       font-weight: 700;
-      padding: 10px;
-      width: 35px;
-      height: 35px;
-      @media (max-width: 767.98px) {
-         font-size: 12px;
-         width: 28px;
-         height: 28px;
+      padding: 0.625rem;
+      width: 1.875rem;
+      height: 1.875rem;
+      @media (max-width: 47.9988rem) {
+         font-size: 0.9375rem;
+         width: 1.75rem;
+         height: 1.75rem;
       }
    }
    // .course-program__text
@@ -330,101 +335,203 @@ function onPay() {}
 }
 
 .studding-with-us {
-   padding: clamp(1.25rem, -0.626rem + 3.914vw, 2.5rem) 0;
-
-   background: linear-gradient(229deg, rgba(164, 28, 28, 1) 0%, rgba(23, 21, 111, 1) 100%);
-   // .studding-with-us__container
-   &__container {
-   }
    // .studding-with-us__title
    &__title {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      font-size: clamp(1.375rem, -0.314rem + 3.523vw, 2.5rem);
       &:not(:last-child) {
-         margin-bottom: clamp(1.25rem, 0.312rem + 1.957vw, 1.875rem);
+         margin-bottom: clamp(1.875rem, 0.934rem + 1.961vw, 2.5rem);
       }
    }
-   // .studding-with-us__body
-   &__body {
-      position: relative;
-      z-index: 2;
+   // .studding-with-us__box
+   &__box {
       display: grid;
-      gap: 20px;
-      justify-content: space-between;
-      grid-template-columns: auto auto;
-      @media (max-width: 650px) {
-         grid-template-columns: auto;
-         align-items: center;
-         justify-content: center;
-      }
-   }
-   // .studding-with-us__item
-   &__item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      text-align: center;
-      padding: clamp(1.875rem, 0.937rem + 1.957vw, 2.5rem) clamp(2.5rem, 1.562rem + 1.957vw, 3.125rem);
-
-      &::before {
-         content: '';
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-         opacity: 0.35;
-         background-color: #2c143a;
-      }
-      &--price {
-         .studding-with-us__subtitle {
-            font-size: 30px;
-         }
-         width: 200px;
-         height: 200px;
-         &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('../../assets/img/decore/circle-decore.svg') 0 0/ 100% no-repeat;
-            animation: spinInfinite 20s infinite linear;
-         }
-         @media (max-width: 650px) {
-            margin: 0 auto;
-         }
-      }
-   }
-   // .studding-with-us__subtitle
-   &__subtitle {
-      position: relative;
-      z-index: 2;
-      line-height: 1.3s;
-      font-size: clamp(1.375rem, 1rem + 0.783vw, 1.625rem);
-      font-weight: 600;
-      &:not(:last-child) {
-         margin-bottom: clamp(0.563rem, 0rem + 1.174vw, 0.938rem);
-      }
-   }
-   // .studding-with-us__description
-   &__description {
-      position: relative;
-      z-index: 2;
-      line-height: 1.3;
-      font-size: clamp(0.875rem, 0.687rem + 0.391vw, 1rem);
-   }
-   // .studding-with-us__price
-   &__price {
+      gap: 1.25rem;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
    }
 }
+
+.item-studding {
+   display: flex;
+   flex-direction: column;
+   border-radius: 0.9375rem;
+   padding: clamp(0.938rem, -0.004rem + 1.961vw, 1.563rem) clamp(0.625rem, -0.316rem + 1.961vw, 1.25rem);
+   background: rgba(255, 255, 255, 0.1);
+   // .item-studding__item--certificate
+   &__item--certificate {
+      border: 0.1875rem solid rgba(0, 255, 170, 0.72);
+      background: linear-gradient(177.08deg, rgb(0, 0, 0) 56.737%, rgba(0, 255, 170, 0.72) 158.813%);
+      grid-column-start: 1;
+      grid-column-end: 4;
+      //justify-self: start;
+      .item-studding__decor {
+         img {
+            max-width: 12.5rem;
+         }
+         justify-self: end;
+      }
+      display: grid;
+      .item-studding__title {
+         font-size: clamp(1.75rem, 1.071rem + 2.415vw, 3rem);
+         color: #3ed771;
+         justify-self: start;
+      }
+      @media (any-hover: hover) {
+         &:hover {
+         }
+      }
+   }
+
+   // .item-studding__title
+   &__title {
+      font-size: clamp(1.375rem, 1.035rem + 1.208vw, 2rem);
+      line-height: 1.2;
+      font-weight: 700;
+   }
+   &__descr {
+      line-height: 1.2;
+      font-size: clamp(0.875rem, 0.671rem + 0.725vw, 1.25rem);
+   }
+   // .item-studding__item--feedback
+   &__item--feedback {
+      grid-row-start: 2;
+      grid-row-end: 4;
+      gap: 0.625rem;
+      justify-content: space-between;
+      .item-studding__title {
+         text-align: center;
+         font-size: clamp(1.875rem, 1.365rem + 1.812vw, 2.813rem);
+         &:not(:last-child) {
+            margin-bottom: 0.4375rem;
+         }
+      }
+      .item-studding__descr {
+         font-size: clamp(1.125rem, 0.989rem + 0.483vw, 1.375rem);
+         text-align: center;
+         color: #c2c2c2;
+      }
+      @media (max-width: 47.9988rem) {
+         grid-row-start: 2;
+         grid-row-end: 2;
+         grid-column-start: 1;
+         grid-column-end: 4;
+      }
+   }
+   // .item-studding__item--additionally
+   &__item--additionally {
+      border: 0.1875rem solid rgba(0, 255, 170, 0.72);
+      background: linear-gradient(141.17deg, rgb(0, 0, 0) 7.828%, rgba(0, 255, 170, 0.91) 80.502%);
+      .item-studding__decor {
+         text-align: right;
+         img {
+            max-width: 6.25rem;
+         }
+      }
+      .item-studding__title {
+         &:not(:last-child) {
+            margin-bottom: 0.625rem;
+         }
+      }
+      .item-studding__descr {
+         font-weight: 600;
+         color: #000;
+      }
+      @media (max-width: 47.9988rem) {
+         grid-column-start: 1;
+         grid-column-end: 3;
+      }
+      @media (max-width: 29.6875rem) {
+         grid-column-start: 1;
+         grid-column-end: 4;
+      }
+   }
+   // .item-studding__item--start
+   &__item--start {
+      justify-content: end;
+      .item-studding__title {
+         font-size: clamp(1.563rem, 1.053rem + 1.812vw, 2.5rem);
+         &:not(:last-child) {
+            margin-bottom: clamp(1.125rem, 0.785rem + 1.208vw, 1.75rem);
+         }
+      }
+      .item-studding__descr {
+         color: #c2c2c2;
+      }
+      @media (max-width: 29.6875rem) {
+         grid-column-start: 1;
+         grid-column-end: 4;
+      }
+   }
+   // .item-studding__item--price
+   &__item--price {
+      background: linear-gradient(177.08deg, rgb(0, 0, 0) 56.737%, rgba(0, 255, 170, 0.72) 158.813%);
+      border: 0.1875rem solid rgba(0, 255, 170, 0.72);
+      grid-column-start: 2;
+      grid-column-end: 4;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.625rem;
+      justify-content: space-between;
+      .item-studding__content {
+         height: 100%;
+         display: grid;
+         align-items: end;
+      }
+      .item-studding__price {
+         position: relative;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-weight: 700;
+         font-size: 3.75rem;
+         &:not(:last-child) {
+            margin-bottom: 1.25rem;
+         }
+
+         svg {
+            position: absolute;
+            width: clamp(6.25rem, 4.552rem + 6.039vw, 9.375rem);
+            height: clamp(6.25rem, 4.552rem + 6.039vw, 9.375rem);
+            //opacity: 0.9;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $greenColor;
+
+            animation: spinInfinite 30s infinite linear;
+            @media (any-hover: hover) {
+               &:hover {
+                  animation-play-state: paused;
+               }
+            }
+         }
+         .item-studding__text-price {
+            font-size: clamp(1.75rem, 1.342rem + 1.449vw, 2.5rem);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            color: #000;
+         }
+      }
+      .item-studding__title {
+         align-self: end;
+         position: relative;
+         z-index: 2;
+         font-size: clamp(1.125rem, 0.887rem + 0.845vw, 1.563rem);
+      }
+      .item-studding__image {
+         flex: 0 1 25%;
+         img {
+            max-width: 100%;
+         }
+      }
+      @media (max-width: 47.9988rem) {
+         min-height: 12.5rem;
+         grid-column-start: 1;
+         grid-column-end: 4;
+      }
+   }
+}
+
 .steps-of-studding {
    &:not(:last-child) {
       margin-bottom: clamp(3.75rem, 1.874rem + 3.914vw, 5rem);
@@ -460,10 +567,10 @@ function onPay() {}
 
 @keyframes spinInfinite {
    0% {
-      transform: rotate(0);
+      transform: translate(-50%, -50%) rotate(0);
    }
    100% {
-      transform: rotate(360deg);
+      transform: translate(-50%, -50%) rotate(360deg);
    }
 }
 </style>

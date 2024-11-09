@@ -61,7 +61,7 @@ input {
 }
 .button {
    position: relative;
-   padding: 0.8125rem 2.8125rem;
+   padding: clamp(0.625rem, 0.344rem + 0.587vw, 0.813rem) clamp(2.188rem, 1.249rem + 1.957vw, 2.813rem);
    line-height: 1.25;
    background-color: $greenColor;
    box-shadow: 0 0 15px #00ff55;

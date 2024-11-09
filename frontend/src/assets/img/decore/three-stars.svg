@@ -1,0 +1,62 @@
+<svg width="133.000000" height="141.000092" viewBox="0 0 133 141" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<filter id="filter_11_169_dd" x="0.000000" y="34.219971" width="107.062012" height="103.477814" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feGaussianBlur stdDeviation="5" result="effect_layerBlur_1"/>
+		</filter>
+		<filter id="filter_11_170_dd" x="11.000000" y="49.219971" width="85.062012" height="81.477814" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="4"/>
+			<feGaussianBlur stdDeviation="1.33333"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_11_171_dd" x="50.908081" y="0.000000" width="82.091919" height="79.559998" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+			<feGaussianBlur stdDeviation="5" result="effect_layerBlur_1"/>
+		</filter>
+		<filter id="filter_11_172_dd" x="61.908081" y="15.000000" width="60.091919" height="57.559998" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="4"/>
+			<feGaussianBlur stdDeviation="1.33333"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_11_173_dd" x="77.298828" y="97.600098" width="44.701172" height="43.399994" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="4"/>
+			<feGaussianBlur stdDeviation="1.33333"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+	</defs>
+	<g filter="url(#filter_11_169_dd)">
+		<path id="Vector" d="M56.87 51.66C56.64 50.95 56.2 50.33 55.6 49.89C55 49.45 54.27 49.22 53.53 49.22C52.78 49.21 52.06 49.45 51.45 49.89C50.85 50.33 50.41 50.95 50.18 51.66L42.54 75.81L18.51 75.8C17.76 75.79 17.03 76.03 16.42 76.47C15.82 76.92 15.37 77.54 15.15 78.25C14.93 78.97 14.94 79.73 15.19 80.44C15.44 81.14 15.9 81.75 16.52 82.17L35.78 95.3L28.54 118.15C28.32 118.85 28.33 119.6 28.56 120.29C28.79 120.98 29.23 121.59 29.83 122.02C30.42 122.45 31.13 122.68 31.87 122.68C32.6 122.69 33.32 122.46 33.91 122.04L53.53 108.05L73.12 122.04C73.72 122.47 74.43 122.7 75.17 122.69C75.9 122.69 76.62 122.46 77.21 122.03C77.81 121.6 78.25 120.99 78.48 120.3C78.71 119.6 78.72 118.85 78.5 118.15L71.26 95.3L90.53 82.17C91.15 81.75 91.61 81.14 91.86 80.44C92.11 79.73 92.12 78.97 91.9 78.25C91.68 77.54 91.23 76.92 90.63 76.47C90.03 76.03 89.3 75.79 88.55 75.8L64.5 75.81L56.87 51.66Z" fill="#02FE56" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+	<g filter="url(#filter_11_170_dd)">
+		<path id="Vector" d="M56.87 51.66C56.64 50.95 56.2 50.33 55.6 49.89C55 49.45 54.27 49.22 53.53 49.22C52.78 49.21 52.06 49.45 51.45 49.89C50.85 50.33 50.41 50.95 50.18 51.66L42.54 75.81L18.51 75.8C17.76 75.79 17.03 76.03 16.42 76.47C15.82 76.92 15.37 77.54 15.15 78.25C14.93 78.97 14.94 79.73 15.19 80.44C15.44 81.14 15.9 81.75 16.52 82.17L35.78 95.3L28.54 118.15C28.32 118.85 28.33 119.6 28.56 120.29C28.79 120.98 29.23 121.59 29.83 122.02C30.42 122.45 31.13 122.68 31.87 122.68C32.6 122.69 33.32 122.46 33.91 122.04L53.53 108.05L73.12 122.04C73.72 122.47 74.43 122.7 75.17 122.69C75.9 122.69 76.62 122.46 77.21 122.03C77.81 121.6 78.25 120.99 78.48 120.3C78.71 119.6 78.72 118.85 78.5 118.15L71.26 95.3L90.53 82.17C91.15 81.75 91.61 81.14 91.86 80.44C92.11 79.73 92.12 78.97 91.9 78.25C91.68 77.54 91.23 76.92 90.63 76.47C90.03 76.03 89.3 75.79 88.55 75.8L64.5 75.81L56.87 51.66Z" fill="#02FE56" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+	<g filter="url(#filter_11_171_dd)">
+		<path id="Vector" d="M94.21 16.64C94.06 16.17 93.76 15.75 93.35 15.45C92.94 15.16 92.45 15 91.95 15C91.45 14.99 90.96 15.15 90.55 15.45C90.14 15.75 89.84 16.16 89.69 16.64L84.52 32.94L68.28 32.92C67.77 32.92 67.28 33.08 66.87 33.38C66.46 33.68 66.16 34.1 66.01 34.58C65.86 35.06 65.87 35.58 66.04 36.05C66.2 36.53 66.52 36.94 66.94 37.22L79.95 46.08L75.06 61.49C74.91 61.96 74.92 62.47 75.07 62.93C75.23 63.4 75.53 63.81 75.93 64.1C76.33 64.39 76.81 64.55 77.31 64.55C77.8 64.55 78.29 64.4 78.69 64.11L91.95 54.68L105.19 64.11C105.6 64.4 106.08 64.56 106.58 64.56C107.08 64.55 107.56 64.4 107.96 64.11C108.36 63.82 108.66 63.41 108.82 62.94C108.98 62.47 108.98 61.96 108.83 61.49L103.94 46.08L116.96 37.22C117.38 36.94 117.7 36.53 117.86 36.05C118.03 35.58 118.04 35.06 117.89 34.58C117.74 34.1 117.44 33.68 117.03 33.38C116.62 33.08 116.13 32.92 115.62 32.92L99.37 32.94L94.21 16.64Z" fill="#02FE56" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+	<g filter="url(#filter_11_172_dd)">
+		<path id="Vector" d="M94.21 16.64C94.06 16.17 93.76 15.75 93.35 15.45C92.94 15.16 92.45 15 91.95 15C91.45 14.99 90.96 15.15 90.55 15.45C90.14 15.75 89.84 16.16 89.69 16.64L84.52 32.94L68.28 32.92C67.77 32.92 67.28 33.08 66.87 33.38C66.46 33.68 66.16 34.1 66.01 34.58C65.86 35.06 65.87 35.58 66.04 36.05C66.2 36.53 66.52 36.94 66.94 37.22L79.95 46.08L75.06 61.49C74.91 61.96 74.92 62.47 75.07 62.93C75.23 63.4 75.53 63.81 75.93 64.1C76.33 64.39 76.81 64.55 77.31 64.55C77.8 64.55 78.29 64.4 78.69 64.11L91.95 54.68L105.19 64.11C105.6 64.4 106.08 64.56 106.58 64.56C107.08 64.55 107.56 64.4 107.96 64.11C108.36 63.82 108.66 63.41 108.82 62.94C108.98 62.47 108.98 61.96 108.83 61.49L103.94 46.08L116.96 37.22C117.38 36.94 117.7 36.53 117.86 36.05C118.03 35.58 118.04 35.06 117.89 34.58C117.74 34.1 117.44 33.68 117.03 33.38C116.62 33.08 116.13 32.92 115.62 32.92L99.37 32.94L94.21 16.64Z" fill="#02FE56" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+	<g filter="url(#filter_11_173_dd)">
+		<path id="Vector" d="M101.24 98.77C101.13 98.43 100.92 98.13 100.63 97.92C100.35 97.71 100 97.6 99.65 97.6C99.29 97.59 98.94 97.71 98.66 97.92C98.37 98.13 98.16 98.43 98.05 98.77L94.41 110.41L82.97 110.4C82.61 110.4 82.26 110.52 81.97 110.73C81.69 110.94 81.47 111.24 81.37 111.59C81.26 111.93 81.27 112.3 81.39 112.64C81.5 112.98 81.73 113.27 82.02 113.47L91.19 119.8L87.74 130.81C87.64 131.14 87.64 131.5 87.75 131.84C87.86 132.17 88.07 132.46 88.36 132.67C88.64 132.88 88.98 132.99 89.33 132.99C89.68 132.99 90.02 132.88 90.3 132.68L99.64 125.94L108.98 132.68C109.26 132.89 109.6 133 109.95 133C110.3 132.99 110.64 132.88 110.93 132.67C111.21 132.47 111.42 132.18 111.53 131.84C111.64 131.5 111.64 131.14 111.54 130.81L108.09 119.8L117.27 113.47C117.56 113.27 117.78 112.98 117.9 112.64C118.02 112.3 118.03 111.93 117.92 111.59C117.82 111.24 117.6 110.94 117.32 110.73C117.03 110.52 116.68 110.4 116.32 110.4L104.87 110.41L101.24 98.77Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="nonzero"/>
+	</g>
+</svg>

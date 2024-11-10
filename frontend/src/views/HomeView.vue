@@ -5,7 +5,7 @@
       <statistics-section />
       <steps-section :steps-list="stepsList" />
       <purpose-section :purpose-list="purposeCourseList" />
-      <carousal-section :courses-list="mainCourses" />
+      <!--<carousal-section :courses-list="mainCourses" />-->
       <questions-section :questions-list="getQuestionsList">
          <div class="faq__footer">
             <router-link :to="{ name: 'faq' }" class="faq__more">
@@ -25,7 +25,7 @@ import MainSection from '../components/home/MainSection.vue'
 import ReasonsSection from '../components/home/ReasonsSection.vue'
 import StepsSection from '../components/home/StepsSection.vue'
 import QuestionsSection from '../components/home/QuestionsSection.vue'
-import CarousalSection from '../components/home/CarousalSection.vue'
+//import CarousalSection from '../components/home/CarousalSection.vue'
 import PurposeSection from '../components/home/PurposeSection.vue'
 import { useMainPageDataStore } from '../stores/mainPageData.js'
 import StatisticsSection from '../components/home/StatisticsSection.vue'

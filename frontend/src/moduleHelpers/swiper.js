@@ -6,6 +6,7 @@ import 'swiper/css'
 export function initSliderCarousal() {
    // Список слайдерів
    // Перевіряємо, чи є слайдер на сторінці
+
    if (document.querySelector('.courses-carousal__slider')) {
       // Вказуємо склас потрібного слайдера
       // Створюємо слайдер

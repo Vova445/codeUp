@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { defineProps, nextTick, onMounted } from 'vue'
+import { defineProps, onMounted } from 'vue'
 import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
 const props = defineProps({
    coursesList: {
@@ -27,11 +27,11 @@ const getImagePath = (imgPath) => {
    return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
 }
 onMounted(() => {
-   //nextTick(() => {
-   setTimeout(() => {
-      initSliderCarousal()
-   }, 100)
-   // })
+   window.onload(() => {
+      setTimeout(() => {
+         initSliderCarousal()
+      }, 100)
+   })
 })
 </script>
 

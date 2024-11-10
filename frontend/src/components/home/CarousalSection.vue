@@ -16,7 +16,7 @@
 
 <script setup>
 import { defineProps, onMounted } from 'vue'
-//import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
+import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
 const props = defineProps({
    coursesList: {
       type: Array,
@@ -27,9 +27,7 @@ const getImagePath = (imgPath) => {
    return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
 }
 onMounted(() => {
-   setTimeout(() => {
-      //initSliderCarousal()
-   }, 100)
+   initSliderCarousal()
 })
 </script>
 

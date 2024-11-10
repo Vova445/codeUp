@@ -27,9 +27,11 @@ const getImagePath = (imgPath) => {
    return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
 }
 onMounted(() => {
-   nextTick(() => {
+   //nextTick(() => {
+   setTimeout(() => {
       initSliderCarousal()
-   })
+   }, 100)
+   // })
 })
 </script>
 

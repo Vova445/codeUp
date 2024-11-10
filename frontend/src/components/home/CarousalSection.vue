@@ -16,7 +16,7 @@
 
 <script setup>
 import { defineProps, onMounted } from 'vue'
-import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
+//import { initSliderCarousal } from '../../moduleHelpers/swiper.js'
 const props = defineProps({
    coursesList: {
       type: Array,

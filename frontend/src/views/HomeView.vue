@@ -1,12 +1,12 @@
 <template>
    <main-master-page>
-      <main-section :courses-list="mainCourses" />
+      <!--<main-section :courses-list="mainCourses" />
       <reasons-section :reasons-list="reasonsList" />
       <statistics-section />
       <steps-section :steps-list="stepsList" />
       <purpose-section :purpose-list="purposeCourseList" />
-      <!--<carousal-section :courses-list="mainCourses" />-->
-      <!--<questions-section :questions-list="getQuestionsList">
+      <carousal-section :courses-list="mainCourses" />
+      <questions-section :questions-list="getQuestionsList">
          <div class="faq__footer">
             <router-link :to="{ name: 'faq' }" class="faq__more">
                <div class="faq__text-more">more FAQ</div>
@@ -14,25 +14,26 @@
             </router-link>
          </div>
       </questions-section>-->
+      <h1 class="title">Home page</h1>
    </main-master-page>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import MainMasterPage from '../masterPages/MainMasterPage.vue'
-import MainSection from '../components/home/MainSection.vue'
-import ReasonsSection from '../components/home/ReasonsSection.vue'
-import StepsSection from '../components/home/StepsSection.vue'
+//import { computed } from 'vue'
+//import { storeToRefs } from 'pinia'
+//import MainMasterPage from '../masterPages/MainMasterPage.vue'
+//import MainSection from '../components/home/MainSection.vue'
+//import ReasonsSection from '../components/home/ReasonsSection.vue'
+//import StepsSection from '../components/home/StepsSection.vue'
 //import QuestionsSection from '../components/home/QuestionsSection.vue'
 //import CarousalSection from '../components/home/CarousalSection.vue'
-import PurposeSection from '../components/home/PurposeSection.vue'
-import { useMainPageDataStore } from '../stores/mainPageData.js'
-import StatisticsSection from '../components/home/StatisticsSection.vue'
-const { mainCourses, reasonsList, stepsList, questionsList, purposeCourseList } = storeToRefs(useMainPageDataStore())
-const getQuestionsList = computed(() => {
-   return questionsList.value.slice(0, 3)
-})
+//import PurposeSection from '../components/home/PurposeSection.vue'
+//import { useMainPageDataStore } from '../stores/mainPageData.js'
+//import StatisticsSection from '../components/home/StatisticsSection.vue'
+//const { mainCourses, reasonsList, stepsList, questionsList, purposeCourseList } = storeToRefs(useMainPageDataStore())
+//const getQuestionsList = computed(() => {
+//   return questionsList.value.slice(0, 3)
+//})
 </script>
 
 <style lang="scss" scoped>

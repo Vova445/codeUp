@@ -27,11 +27,9 @@ const getImagePath = (imgPath) => {
    return new URL(`../../assets/img/courses-logs/${imgPath}`, import.meta.url).href
 }
 onMounted(() => {
-   window.onload(() => {
-      setTimeout(() => {
-         initSliderCarousal()
-      }, 100)
-   })
+   setTimeout(() => {
+      //initSliderCarousal()
+   }, 100)
 })
 </script>
 

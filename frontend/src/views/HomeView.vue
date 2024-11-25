@@ -1,7 +1,7 @@
 <template>
    <main-master-page>
       <main-section :courses-list="mainCourses" />
-      <!--<reasons-section :reasons-list="reasonsList" />
+      <reasons-section :reasons-list="reasonsList" />
       <statistics-section />
       <steps-section :steps-list="stepsList" />
       <purpose-section :purpose-list="purposeCourseList" />
@@ -13,7 +13,7 @@
                <font-awesome-icon :icon="['fas', 'arrow-right-long']" />
             </router-link>
          </div>
-      </questions-section>-->
+      </questions-section>
    </main-master-page>
 </template>
 
@@ -22,17 +22,17 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import MainMasterPage from '../masterPages/MainMasterPage.vue'
 import MainSection from '../components/home/MainSection.vue'
-//import ReasonsSection from '../components/home/ReasonsSection.vue'
-//import StepsSection from '../components/home/StepsSection.vue'
-//import QuestionsSection from '../components/home/QuestionsSection.vue'
-//import CarousalSection from '../components/home/CarousalSection.vue'
-//import PurposeSection from '../components/home/PurposeSection.vue'
+import ReasonsSection from '../components/home/ReasonsSection.vue'
+import StepsSection from '../components/home/StepsSection.vue'
+import QuestionsSection from '../components/home/QuestionsSection.vue'
+import CarousalSection from '../components/home/CarousalSection.vue'
+import PurposeSection from '../components/home/PurposeSection.vue'
 import { useMainPageDataStore } from '../stores/mainPageData.js'
-//import StatisticsSection from '../components/home/StatisticsSection.vue'
+import StatisticsSection from '../components/home/StatisticsSection.vue'
 const { mainCourses, reasonsList, stepsList, questionsList, purposeCourseList } = storeToRefs(useMainPageDataStore())
-//const getQuestionsList = computed(() => {
-//   return questionsList.value.slice(0, 3)
-//})
+const getQuestionsList = computed(() => {
+   return questionsList.value.slice(0, 3)
+})
 </script>
 
 <style lang="scss" scoped>

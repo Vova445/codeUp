@@ -6,15 +6,7 @@
       </div>
       <div class="custom-select__body">
          <div class="custom-select__selects-list">
-            <router-link
-               v-for="optionItem in getOptionsList"
-               :to="{ name: optionItem.routeName }"
-               @click="toggleOptionSelect(optionItem)"
-               :key="optionItem.id"
-               class="custom-select__option"
-            >
-               {{ $t(optionItem.title) }}
-            </router-link>
+            <custom-select />
          </div>
       </div>
    </div>
@@ -22,7 +14,7 @@
 
 <script setup>
 import { computed, ref, defineEmits, onMounted, onBeforeUnmount } from 'vue'
-
+import CustomSelect from '../../components/customModules/CustomSelect.vue'
 const props = defineProps({
    optionsList: {
       type: Array,

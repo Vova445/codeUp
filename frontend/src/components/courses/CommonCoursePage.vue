@@ -49,6 +49,8 @@
       </section>
       <section class="studding-with-us">
          <div class="studding-with-us__container">
+            <div class="studding-with-us__decor-one decore-circle"></div>
+            <div class="studding-with-us__decor-two decore-circle"></div>
             <h3 class="studding-with-us__title title">{{ $t('courses.titles.studdingWithUs') }}</h3>
             <div class="studding-with-us__box">
                <button class="studding-with-us__item item-studding item-studding__item--certificate">
@@ -92,9 +94,50 @@
       </section>-->
       <div class="pay-section">
          <div class="pay-section__container">
+            <div class="pay-section__decor pay-section__decor--1 decore-circle"></div>
+            <div class="pay-section__decor pay-section__decor--2 decore-circle"></div>
+            <div class="pay-section__decor pay-section__decor--3 decore-circle"></div>
             <div class="pay-section__body">
-               <h6 class="pay-section__title">Pay for course</h6>
-               <button @click="onPay" class="pay-section__pay">Pay -></button>
+               <div class="pay-section__box">
+                  <h4 class="pay-section__title title">Pay for course</h4>
+                  <form class="pay-section__form form-pay-section" action="">
+                     <div class="form-pay-section__box">
+                        <div class="form-pay-section__item">
+                           <label class="form-pay-section__label sub-title">
+                              <input class="form-pay-section__input" name="payAgreements" type="checkbox" />
+                              <svg class="svg-checkbox" viewBox="0 0 24 24">
+                                 <rect x="2" y="2" width="20" height="20" rx="5" />
+                                 <path d="M6 12l4 4 8-8" />
+                              </svg>
+                              <span> Я даю згоду на обробку персональних данних </span></label
+                           >
+                        </div>
+                        <div class="form-pay-section__item">
+                           <label class="form-pay-section__label sub-title">
+                              <input class="form-pay-section__input" name="payAgreements" type="checkbox" />
+                              <svg class="svg-checkbox" viewBox="0 0 24 24">
+                                 <rect x="2" y="2" width="20" height="20" rx="5" />
+                                 <path d="M6 12l4 4 8-8" />
+                              </svg>
+                              <span> Я даю згоду на обробку персональних данних </span></label
+                           >
+                        </div>
+                        <div class="form-pay-section__item">
+                           <label class="form-pay-section__label sub-title">
+                              <input class="form-pay-section__input" name="payAgreements" type="checkbox" />
+                              <svg class="svg-checkbox" viewBox="0 0 24 24">
+                                 <rect x="2" y="2" width="20" height="20" rx="5" />
+                                 <path d="M6 12l4 4 8-8" />
+                              </svg>
+                              <span> Я даю згоду на обробку персональних данних </span></label
+                           >
+                        </div>
+                     </div>
+                     <button class="form-pay-section__button">
+                        Оплатити <span><font-awesome-icon :icon="['fas', 'arrow-right-long']" /></span>
+                     </button>
+                  </form>
+               </div>
             </div>
          </div>
       </div>
@@ -104,7 +147,6 @@
 <script setup>
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { storeToRefs } from 'pinia'
-import StepsSection from '../../components/home/StepsSection.vue'
 import { useMainPageDataStore } from '../../stores/mainPageData.js'
 import { computed } from 'vue'
 const { stepsList } = storeToRefs(useMainPageDataStore())
@@ -335,6 +377,32 @@ function onPay() {}
 }
 
 .studding-with-us {
+   &:not(:last-child) {
+      margin-bottom: clamp(6.25rem, 4.242rem + 6.427vw, 9.375rem);
+   }
+   &__container {
+      position: relative;
+   }
+   &__decor-one,
+   &__decor-two {
+      position: absolute;
+      top: 0;
+   }
+   &__decor-one {
+      width: 24.14%;
+      top: 40%;
+      left: 0;
+      padding-bottom: 24.1%;
+      transform: translate(-31%, 0);
+   }
+   &__decor-two {
+      width: 20.73%;
+      top: 50%;
+      padding-bottom: 20.7%;
+      right: 0;
+      transform: translate(27%, 0);
+   }
+
    // .studding-with-us__title
    &__title {
       &:not(:last-child) {
@@ -349,7 +417,6 @@ function onPay() {}
       grid-template-rows: repeat(3, 1fr);
    }
 }
-
 .item-studding {
    display: flex;
    flex-direction: column;
@@ -550,36 +617,149 @@ function onPay() {}
    }
 }
 
-.steps-of-studding {
-   &:not(:last-child) {
-      margin-bottom: clamp(3.75rem, 1.874rem + 3.914vw, 5rem);
-   }
-}
 .pay-section {
    // .pay-section__container
-
    &__container {
       position: relative;
-      z-index: 10;
-      text-align: center;
-      max-width: 540px;
-      padding: 30px;
-      border-radius: 20px;
-      background-color: #000;
+   }
+   // .form-pay-section__decor--1
+   &__decor--1 {
+      bottom: 0;
+      left: 0;
+      width: 14.8%;
+      padding-bottom: 14.8%;
+      transform: translate(-45%, 0);
+   }
+   // .form-pay-section__decor--2
+   &__decor--2 {
+      top: 0;
+      right: 0;
+      width: 25.3%;
+      padding-bottom: 25.3%;
+      transform: translate(30%, 20%);
+   }
+   // .form-pay-section__decor--3
+   &__decor--3 {
+      bottom: 0;
+      right: 9.7%;
+      width: 11.89%;
+      padding-bottom: 11.89%;
+      transform: translate(0, 40%);
+   }
+   // .form-pay-section__decor
+   &__decor {
+      position: absolute;
+   }
+
+   &__body {
+      padding: 0 0.625rem;
+      border-radius: 0.9375rem;
+      border: 0.0625rem solid rgb(2, 254, 86);
+      background: rgba(255, 255, 255, 0.1);
+   }
+   .form-pay-section {
+   }
+
+   &__box {
+      max-width: 37.5rem;
+      padding-top: clamp(2.813rem, 1.407rem + 4.499vw, 5rem);
+      padding-bottom: clamp(1.875rem, 0.991rem + 2.828vw, 3.25rem);
+      margin: 0 auto;
    }
    // .pay-section__title
    &__title {
-      font-weight: 700;
+      text-transform: uppercase;
+      color: $greenColor;
       &:not(:last-child) {
-         margin-bottom: 30px;
+         margin-bottom: clamp(2.5rem, 1.295rem + 3.856vw, 4.375rem);
       }
-      font-size: clamp(1.563rem, 1.093rem + 0.978vw, 1.875rem);
    }
-   // .pay-section__pay
-   &__pay {
-      padding: 20px 40px;
-      background-color: #4432c9;
-      border-radius: 0 0 20px 0;
+   // .pay-section__form
+   &__form {
+   }
+}
+.form-pay-section {
+   &__box {
+      &:not(:last-child) {
+         margin-bottom: clamp(3.125rem, 1.518rem + 5.141vw, 5.625rem);
+      }
+   }
+   // .form-pay-section__item
+   &__item {
+      &:not(:last-child) {
+         margin-bottom: clamp(0.625rem, 0.424rem + 0.643vw, 0.938rem);
+      }
+   }
+   // .form-pay-section__input
+   &__input {
+   }
+   // .form-pay-section__label
+   &__label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: clamp(0.813rem, 0.411rem + 1.285vw, 1.438rem);
+      span {
+         line-height: 1.2;
+      }
+      input[type='checkbox'] {
+         display: none;
+      }
+
+      .svg-checkbox {
+         width: 1.5rem;
+         height: 1.5rem;
+         cursor: pointer;
+      }
+
+      .svg-checkbox rect {
+         fill: transparent;
+         stroke: #02fe56;
+         stroke-width: 2;
+         transition: fill 0.2s ease-in-out;
+      }
+      .svg-checkbox path {
+         stroke: black;
+         stroke-width: 1;
+         fill: none;
+         stroke-dasharray: 60;
+         stroke-dashoffset: 60;
+         transition: stroke-dashoffset 0.3s ease-in-out;
+      }
+
+      input[type='checkbox']:checked + .svg-checkbox rect {
+         fill: #02fe56;
+      }
+
+      input[type='checkbox']:checked + .svg-checkbox path {
+         stroke-dashoffset: 0;
+      }
+   }
+   // .form-pay-section__button
+   &__button {
+      display: block;
+      color: #000;
+      font-size: clamp(1.125rem, 0.563rem + 1.799vw, 2rem);
+      font-weight: 600;
+      margin: 0 auto;
+      border-radius: 0.3125rem;
+      transition: all 0.3s ease 0s;
+      background: linear-gradient(128.47deg, rgb(0, 255, 85) -1.744%, rgb(122, 255, 166) 108.687%);
+      padding: clamp(1rem, 0.759rem + 0.771vw, 1.375rem) clamp(1.125rem, 0.884rem + 0.771vw, 1.5rem);
+      display: flex;
+      align-items: center;
+      gap: clamp(0.625rem, 0.223rem + 1.285vw, 1.25rem);
+      border: 0.0625rem solid transparent;
+      span {
+         transition: all 0.3s ease 0s;
+      }
+      @media (any-hover: hover) {
+         &:hover {
+            span {
+               transform: translate(5px, 0);
+            }
+         }
+      }
    }
 }
 

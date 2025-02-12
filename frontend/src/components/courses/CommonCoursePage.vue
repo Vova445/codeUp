@@ -100,7 +100,7 @@
             <div class="pay-section__body">
                <div class="pay-section__box">
                   <h4 class="pay-section__title title">Pay for course</h4>
-                  <form class="pay-section__form form-pay-section" action="">
+                  <form class="pay-section__form form-pay-section" action="" @submit.prevent="onPay">
                      <div class="form-pay-section__box">
                         <div class="form-pay-section__item">
                            <label class="form-pay-section__label sub-title">
@@ -175,7 +175,10 @@ function getSecondHalf(arr) {
    const half = Math.ceil(arr.length / 2)
    return arr.slice(half)
 }
-function onPay() {}
+const paymentStatus = ref(null)
+
+function onPay() {
+}
 </script>
 
 <style lang="scss" scoped>

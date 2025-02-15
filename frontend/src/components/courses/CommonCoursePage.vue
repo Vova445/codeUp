@@ -260,7 +260,7 @@ onMounted(() => {
   const canvas = document.getElementById('myCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width = 1500;
-  canvas.height = 1500;
+  canvas.height = 2000;
   function lerp(a, b, t) {
     return a + (b - a) * t;
   }
@@ -412,16 +412,16 @@ onMounted(() => {
     requestAnimationFrame(animate);
   }
 
-  function resizeCanvas() {
-    const container = snapContainer.getBoundingClientRect();
-    canvas.width = Math.min(2000, container.width);
-    canvas.height = Math.min(3000, container.width * 1.5);
-    drawCanvas(animatedPoint);
-  }
+//   function resizeCanvas() {
+//     const container = snapContainer.getBoundingClientRect();
+//     canvas.width = Math.min(2000, container.width);
+//     canvas.height = Math.min(3000, container.width * 1.5);
+//     drawCanvas(animatedPoint);
+//   }
 
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  window.removeEventListener('resize', resizeCanvas);
+//   window.addEventListener('resize', resizeCanvas);
+//   resizeCanvas();
+//   window.removeEventListener('resize', resizeCanvas);
 
   function handleWheel(e) {
    if (

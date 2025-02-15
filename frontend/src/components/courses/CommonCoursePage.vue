@@ -332,7 +332,7 @@ onMounted(() => {
         ctx.fillText(step.header, step.descPos.x, step.descPos.y);
         ctx.font = `${textFontSize}px Arial`;
         const headerHeight = headerFontSize;
-        let currentY = step.descPos.y + headerHeight + 3 * scale;
+        let currentY = step.descPos.y + headerHeight - 5 * scale;
         if (step.text) {
           const paragraphs = step.text.split('\n');
           paragraphs.forEach((paragraph) => {

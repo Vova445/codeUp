@@ -185,8 +185,12 @@ function onPay() {
 
 
 onMounted(() => {
-  const scale = 2; // приклад масштабу
+  const scale = 2; 
   const isMobile = window.innerWidth <= 768; 
+
+  const digitFontSize = isMobile ? 64 * scale : 64 * scale;
+  const headerFontSize = isMobile ? 32 * scale : 20 * scale;
+  const textFontSize = isMobile ? 16 * scale : 14 * scale;
 
   const stepsData = [
     {
@@ -241,6 +245,7 @@ onMounted(() => {
     { x: 180 * scale, y: 650 * scale },
     { x: 650 * scale, y: 800 * scale }
   ];
+
   const polylinePoints = [
     { x: 150 * scale, y: 100 * scale },
     { x: 150 * scale, y: 200 * scale },
@@ -254,7 +259,6 @@ onMounted(() => {
     { x: 180 * scale, y: 800 * scale },
     { x: 650 * scale, y: 800 * scale }
   ];
-
   let currentSnapIndex = isMobile ? stepsData.length - 1 : 0;
   let isAnimating = false;
   let animatedPoint = { x: snapPoints[currentSnapIndex].x, y: snapPoints[currentSnapIndex].y };
@@ -262,7 +266,6 @@ onMounted(() => {
   const snapContainer = document.querySelector('.snap-container');
   const canvas = document.getElementById('myCanvas');
   const ctx = canvas.getContext('2d');
-
   canvas.width = 1900;
   canvas.height = 2000;
 
@@ -311,10 +314,9 @@ onMounted(() => {
     ctx.lineTo(650 * scale, 800 * scale);
     ctx.stroke();
     ctx.closePath();
-
     stepsData.forEach((step, index) => {
       ctx.save();
-      ctx.font = `${64 * scale}px Montserrat`;
+      ctx.font = `${digitFontSize}px Montserrat`;
       ctx.fillStyle = '#02FE56';
       ctx.shadowColor = '#00ff00';
       ctx.shadowBlur = 10 * scale;
@@ -325,11 +327,11 @@ onMounted(() => {
         ctx.save();
         ctx.shadowBlur = 0;
         ctx.shadowColor = 'transparent';
-        ctx.font = `700 ${20 * scale}px Arial`;
+        ctx.font = `700 ${headerFontSize}px Arial`;
         ctx.fillStyle = '#ffff';
         ctx.fillText(step.header, step.descPos.x, step.descPos.y);
-        ctx.font = `${14 * scale}px Arial`;
-        const headerHeight = 20 * scale;
+        ctx.font = `${textFontSize}px Arial`;
+        const headerHeight = headerFontSize;
         let currentY = step.descPos.y + headerHeight + 3 * scale;
         if (step.text) {
           const paragraphs = step.text.split('\n');
@@ -403,8 +405,8 @@ onMounted(() => {
         const circleYOnPage = canvasRect.top + animatedPoint.y;
         if (circleYOnPage > window.innerHeight) {
           window.scrollBy({ top: circleYOnPage - window.innerHeight + 80, behavior: 'smooth' });
-        } else if (circleYOnPage < 0) {
-          window.scrollBy({ top: circleYOnPage - 200, behavior: 'smooth' });
+        } else if (circleYOnPage <= 150) {
+          window.scrollBy({ top: circleYOnPage - 300, behavior: 'smooth' });
         }
         if (progress < 1) {
           requestAnimationFrame(animate);
@@ -448,6 +450,7 @@ onMounted(() => {
     });
   }
 });
+
 
 
 </script>

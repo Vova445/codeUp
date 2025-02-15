@@ -47,6 +47,7 @@
             </div>
          </div>
       </section>
+      
       <section class="studding-with-us">
          <div class="studding-with-us__container">
             <div class="studding-with-us__decor-one decore-circle"></div>
@@ -89,9 +90,11 @@
             </div>
          </div>
       </section>
-      <!--<section class="steps-of-studding">
-         <steps-section :steps-list="stepsList" />
-      </section>-->
+     <section class="steps-of-studding">
+      <div class="snap-container">
+        <canvas id="myCanvas"></canvas>
+      </div>
+    </section>
       <div class="pay-section">
          <div class="pay-section__container">
             <div class="pay-section__decor pay-section__decor--1 decore-circle"></div>
@@ -148,7 +151,7 @@
 import MainMasterPage from '@/masterPages/MainMasterPage.vue'
 import { storeToRefs } from 'pinia'
 import { useMainPageDataStore } from '../../stores/mainPageData.js'
-import { computed } from 'vue'
+import { onMounted, onUnmounted, computed } from 'vue'
 const { stepsList } = storeToRefs(useMainPageDataStore())
 const props = defineProps({
    imgSrc: {
@@ -175,10 +178,285 @@ function getSecondHalf(arr) {
    const half = Math.ceil(arr.length / 2)
    return arr.slice(half)
 }
-const paymentStatus = ref(null)
+// const paymentStatus = ref(null)
 
 function onPay() {
 }
+
+
+onMounted(() => {
+  const scale = 2;
+  const stepsData = [
+    {
+      number: '01',
+      numberPos: { x: 120 * scale, y: 80 * scale },
+      descPos: { x: 200 * scale, y: 50 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    },
+    {
+      number: '02',
+      numberPos: { x: 610 * scale, y: 160 * scale },
+      descPos: { x: 710 * scale, y: 120 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    },
+    {
+      number: '03',
+      numberPos: { x: 210 * scale, y: 320 * scale },
+      descPos: { x: 290 * scale, y: 270 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    },
+    {
+      number: '04',
+      numberPos: { x: 560 * scale, y: 470 * scale },
+      descPos: { x: 670 * scale, y: 440 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    },
+    {
+      number: '05',
+      numberPos: { x: 140 * scale, y: 620 * scale },
+      descPos: { x: 240 * scale, y: 570 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    },
+    {
+      number: '06',
+      numberPos: { x: 560 * scale, y: 770 * scale },
+      descPos: { x: 650 * scale, y: 720 * scale },
+      header: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
+    }
+  ];
+  const snapPoints = [
+    { x: 150 * scale, y: 100 * scale }, // Крок 1
+    { x: 700 * scale, y: 200 * scale }, // Крок 2
+    { x: 250 * scale, y: 350 * scale }, // Крок 3
+    { x: 600 * scale, y: 500 * scale }, // Крок 4
+    { x: 180 * scale, y: 650 * scale }, // Крок 5
+    { x: 650 * scale, y: 800 * scale }  // Крок 6
+  ];
+  const polylinePoints = [
+    { x: 150 * scale, y: 100 * scale }, // Старт
+    { x: 150 * scale, y: 200 * scale }, // Вниз (01)
+    { x: 700 * scale, y: 200 * scale }, // Вправо
+    { x: 700 * scale, y: 350 * scale }, // Вниз (02)
+    { x: 250 * scale, y: 350 * scale }, // Вліво
+    { x: 250 * scale, y: 500 * scale }, // Вниз (03)
+    { x: 600 * scale, y: 500 * scale }, // Вправо
+    { x: 600 * scale, y: 650 * scale }, // Вниз (04)
+    { x: 180 * scale, y: 650 * scale }, // Вліво
+    { x: 180 * scale, y: 800 * scale }, // Вниз (05)
+    { x: 650 * scale, y: 800 * scale }  // Вправо (06)
+  ];
+
+  let currentSnapIndex = 0;
+  let isAnimating = false;
+  let animatedPoint = { x: snapPoints[0].x, y: snapPoints[0].y };
+
+  const snapContainer = document.querySelector('.snap-container');
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 1500;
+  canvas.height = 1500;
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+  function distance(p1, p2) {
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+  function wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const testWidth = ctx.measureText(testLine).width;
+      if (testWidth > maxWidth && line !== '') {
+        lines.push(line);
+        line = words[n] + ' ';
+      } else {
+        line = testLine;
+      }
+    }
+    lines.push(line);
+    return lines;
+  }
+  function drawCanvas(animatedPos) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#02FE56';
+    ctx.lineWidth = 1.5 * scale;
+    ctx.beginPath();
+    ctx.moveTo(150 * scale, 100 * scale);   // Старт
+    ctx.lineTo(150 * scale, 200 * scale);     // Вниз (01)
+    ctx.lineTo(700 * scale, 200 * scale);     // Вправо
+    ctx.lineTo(700 * scale, 350 * scale);     // Вниз (02)
+    ctx.lineTo(250 * scale, 350 * scale);     // Вліво
+    ctx.lineTo(250 * scale, 500 * scale);     // Вниз (03)
+    ctx.lineTo(600 * scale, 500 * scale);     // Вправо
+    ctx.lineTo(600 * scale, 650 * scale);     // Вниз (04)
+    ctx.lineTo(180 * scale, 650 * scale);     // Вліво
+    ctx.lineTo(180 * scale, 800 * scale);     // Вниз (05)
+    ctx.lineTo(650 * scale, 800 * scale);     // Вправо (06)
+    ctx.stroke();
+    ctx.closePath();
+    stepsData.forEach((step, index) => {
+      ctx.save();
+      ctx.font = `${64 * scale}px Montserrat`;
+      ctx.fillStyle = '#02FE56';
+      ctx.shadowColor = '#00ff00';
+      ctx.shadowBlur = 10 * scale;
+      ctx.fillText(step.number, step.numberPos.x, step.numberPos.y);
+      ctx.restore();
+      if (index === currentSnapIndex) {
+        ctx.save();
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
+        ctx.font = `700 ${20 * scale}px Arial`;
+        ctx.fillStyle = '#ffff';
+        ctx.fillText(step.header, step.descPos.x, step.descPos.y);
+        ctx.font = `${14 * scale}px Arial`;
+        const headerHeight = 20 * scale;
+        let currentY = step.descPos.y + headerHeight + 3 * scale;
+        if (step.text) {
+          const paragraphs = step.text.split('\n');
+          paragraphs.forEach((paragraph) => {
+            const lines = wrapText(ctx, paragraph, 200 * scale);
+            lines.forEach((line) => {
+              ctx.fillText(line, step.descPos.x, currentY);
+              currentY += 16 * scale;
+            });
+            currentY += 10 * scale;
+          });
+        }
+        ctx.restore();
+      }
+    });
+    const pointToDraw = animatedPos || snapPoints[currentSnapIndex];
+    ctx.beginPath();
+    ctx.fillStyle = '#00ff00';
+    ctx.shadowColor = '#00ff00';
+    ctx.shadowBlur = 20 * scale;
+    ctx.arc(pointToDraw.x, pointToDraw.y, 12 * scale, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  drawCanvas(animatedPoint);
+  function animateAlongPath(fromSnapIndex, toSnapIndex, duration) {
+    if (fromSnapIndex === toSnapIndex) {
+      isAnimating = false;
+      drawCanvas(animatedPoint);
+      return;
+    }
+
+    let startTime = null;
+    const forward = toSnapIndex > fromSnapIndex;
+    const p0 = polylinePoints[forward ? fromSnapIndex * 2 : fromSnapIndex * 2];
+    const p1 = polylinePoints[forward ? (fromSnapIndex * 2 + 1) : (fromSnapIndex * 2 - 1)];
+    const p2 = polylinePoints[forward ? (toSnapIndex * 2) : (toSnapIndex * 2)];
+    const d1 = distance(p0, p1);
+    const d2 = distance(p1, p2);
+    const totalDistance = d1 + d2;
+
+    function animate(time) {
+      if (!startTime) startTime = time;
+      const elapsed = time - startTime;
+      let progress = elapsed / duration;
+      if (progress > 1) progress = 1;
+
+      const currentDistance = progress * totalDistance;
+      let currentPos;
+      if (currentDistance <= d1) {
+        const t = d1 === 0 ? 0 : currentDistance / d1;
+        currentPos = {
+          x: lerp(p0.x, p1.x, t),
+          y: lerp(p0.y, p1.y, t)
+        };
+      } else {
+        const t = d2 === 0 ? 0 : (currentDistance - d1) / d2;
+        currentPos = {
+          x: lerp(p1.x, p2.x, t),
+          y: lerp(p1.y, p2.y, t)
+        };
+      }
+
+      animatedPoint = currentPos;
+      drawCanvas(animatedPoint);
+
+
+      const canvasRect = canvas.getBoundingClientRect();
+      const circleYOnPage = canvasRect.top + animatedPoint.y;
+      if (circleYOnPage > window.innerHeight) {
+         window.scrollBy({ top: circleYOnPage - window.innerHeight + 80, behavior: 'smooth' });
+      }
+      else if (circleYOnPage < 0) {
+         window.scrollBy({ top: circleYOnPage - 200, behavior: 'smooth' });
+      }
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+         animatedPoint = snapPoints[toSnapIndex];
+         currentSnapIndex = toSnapIndex;
+         isAnimating = false;
+         drawCanvas(animatedPoint);
+      //   if (currentSnapIndex >= snapPoints.length - 1) {
+      //     snapContainer.removeEventListener('wheel', handleWheel, { passive: false });
+      //   }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function resizeCanvas() {
+    const container = snapContainer.getBoundingClientRect();
+    canvas.width = Math.min(2000, container.width);
+    canvas.height = Math.min(3000, container.width * 1.5);
+    drawCanvas(animatedPoint);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  window.removeEventListener('resize', resizeCanvas);
+
+  function handleWheel(e) {
+   if (
+    (currentSnapIndex >= snapPoints.length - 1 && e.deltaY > 0) ||
+    (currentSnapIndex <= 0 && e.deltaY < 0)
+  ) {
+    isAnimating = false;
+    return;
+  }
+  e.preventDefault();
+  if (isAnimating) return;
+  isAnimating = true;
+
+  const fromIndex = currentSnapIndex;
+  let toIndex = currentSnapIndex;
+  if (e.deltaY > 0 && currentSnapIndex < snapPoints.length - 1) {
+    toIndex = currentSnapIndex + 1;
+  } else if (e.deltaY < 0 && currentSnapIndex > 0) {
+    toIndex = currentSnapIndex - 1;
+  }
+  animateAlongPath(fromIndex, toIndex, 500);
+}
+
+  if (snapContainer) {
+    snapContainer.addEventListener('wheel', handleWheel, { passive: false });
+  }
+
+  onUnmounted(() => {
+    if (snapContainer) {
+      snapContainer.removeEventListener('wheel', handleWheel, { passive: false });
+    }
+  });
+});
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -475,7 +753,7 @@ function onPay() {
       justify-content: space-between;
       .item-studding__title {
          text-align: center;
-         font-size: clamp(1.875rem, 1.365rem + 1.812vw, 2.813rem);
+         font-size: clamp(1.875rem, 1.365рем + 1.812vw, 2.813rem);
          &:not(:last-child) {
             margin-bottom: 0.4375rem;
          }
@@ -774,4 +1052,32 @@ function onPay() {
       transform: translate(-50%, -50%) rotate(360deg);
    }
 }
+.steps-of-studding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* padding: 4rem 0; */
+}
+
+.snap-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* max-height: 100vh; */
+  overflow: hidden;
+  margin: 0 auto;
+  /* transform: translateY(0px); */
+}
+
+
+
+#myCanvas {
+  width: 100%;
+  aspect-ratio: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+
 </style>

@@ -9,7 +9,7 @@
            <div class="item-steps__inner">
              <div class="item-steps__content">
                <h6 class="item-steps__content__title">Familiarization with the Topic</h6>
-               <p>Тут текст про ознайомлення з темою.</p>
+               <p>When starting a new topic, you should first familiarize yourself with the new material. This is to ensure that you understand why this topic is important and where to apply it</p>
              </div>
              <div class="item-steps__letter">F</div>
  
@@ -39,7 +39,7 @@
                  <path
                    d="M2 22V222C2 233.046 10.9543 242 22 242H222C233.046 242 242 233.046 242 222V142C242 130.954 233.046 122 222 122H142C130.954 122 122 113.046 122 102V22C122 10.9543 113.046 2 102 2H22C10.9543 2 2 10.9543 2 22Z"
                    fill="url(#paint0_linear_tl)"
-                   fill-opacity="0.5"
+                   fill-opacity="0.9"
                    stroke="#fff"
                    stroke-width="1"
                  />
@@ -53,7 +53,7 @@
            <div class="item-steps__inner">
              <div class="item-steps__content">
                <h6>Practice</h6>
-               <p>Тут текст про практику.</p>
+               <p>The main stage of learning is practice, and you will have plenty of opportunities for that, as you'll be provided with numerous practical tasks of varying difficulty.</p>
              </div>
  
              <div class="item-steps__letter">P</div>
@@ -72,14 +72,14 @@
                      y2="262.393"
                      gradientUnits="userSpaceOnUse"
                    >
-                   <stop stop-color="#1a1a1a" />
-                   <stop offset="1" stop-color="#191919" />
+                   <stop stop-color="#02FE56" />
+                   <stop offset="1" stop-color="#0000" />
                    </linearGradient>
                  </defs>
                  <path
                    d="M2 22V222C2 233.046 10.9543 242 22 242H222C233.046 242 242 233.046 242 222V142C242 130.954 233.046 122 222 122H142C130.954 122 122 113.046 122 102V22C122 10.9543 113.046 2 102 2H22C10.9543 2 2 10.9543 2 22Z"
                    fill="url(#paint0_linear_tr)"
-                   fill-opacity="0.7"
+                   fill-opacity="0.9"
                    stroke="#fff"
                    stroke-width="1"
                  />
@@ -93,7 +93,7 @@
            <div class="item-steps__inner">
              <div class="item-steps__content">
                <h6>Video Examples</h6>
-               <p>Тут текст про відео приклади.</p>
+               <p>After familiarizing yourself, you should watch visual examples that will help you better grasp the topic. However, it's even better if you not only watch them but also try to repeat the steps.</p>
              </div>
  
              <div class="item-steps__letter">V</div>
@@ -119,7 +119,7 @@
                  <path
                    d="M2 22V222C2 233.046 10.9543 242 22 242H222C233.046 242 242 233.046 242 222V142C242 130.954 233.046 122 222 122H142C130.954 122 122 113.046 122 102V22C122 10.9543 113.046 2 102 2H22C10.9543 2 2 10.9543 2 22Z"
                    fill="url(#paint0_linear_bl)"
-                   fill-opacity="0.7"
+                   fill-opacity="0.9"
                    stroke="#fff"
                    stroke-width="1"
                  />
@@ -133,7 +133,7 @@
            <div class="item-steps__inner">
              <div class="item-steps__content">
                <h6>Moving on</h6>
-               <p>Тут текст про наступні кроки.</p>
+               <p>Once you've completed all the tasks and feel confident that you fully understand the topic, it's time to move on to the next one. Good luck!</p>
              </div>
  
              <div class="item-steps__letter">M</div>
@@ -159,7 +159,7 @@
                  <path
                    d="M2 22V222C2 233.046 10.9543 242 22 242H222C233.046 242 242 233.046 242 222V142C242 130.954 233.046 122 222 122H142C130.954 122 122 113.046 122 102V22C122 10.9543 113.046 2 102 2H22C10.9543 2 2 10.9543 2 22Z"
                    fill="url(#paint0_linear_br)"
-                   fill-opacity="0.7"
+                   fill-opacity="0.9"
                    stroke="#fff"
                    stroke-width="1"
                  />
@@ -223,7 +223,7 @@
   &__content {
     position: absolute;
     z-index: 3;
-    width: 60%;
+    width: 100%;
     color: #fff;
     text-align: left;
   }
@@ -231,7 +231,14 @@
    text-align: center;
    font-size: 24px;
    font-weight: 600;
-   width: 255;
+   margin-bottom: 30px;
+  }
+  &__content p{
+   text-align: center;
+   font-size: 16px;
+   font-weight: 400;
+   letter-spacing: 2%;
+   line-height: 18.24px;
   }
   &__letter {
     position: absolute;
@@ -269,20 +276,24 @@
     transform: rotate(90deg);
   }
   &--top-left .item-steps__content {
-    bottom: 15%;
-    right: 10%;
+    bottom: 5%;
+    padding: 20px 40px;
+    /* right: 10%; */
   }
   &--top-right .item-steps__content {
-    bottom: 15%;
-    left: 10%;
+    bottom: 5%;
+    padding: 20px 40px;
+    /* left: 10%; */
   }
   &--bottom-left .item-steps__content {
-    top: 15%;
-    right: 10%;
+    top: 5%;
+    padding: 20px 40px;
+    /* right: 10%; */
   }
   &--bottom-right .item-steps__content {
-    top: 15%;
-    left: 10%;
+    top: 5%;
+    padding: 20px 40px;
+    /* left: 10%; */
   }
   &--top-left .item-steps__letter {
     top: 10%;

@@ -185,7 +185,9 @@ function onPay() {
 
 
 onMounted(() => {
-  const scale = 2;
+  const scale = 2; // приклад масштабу
+  const isMobile = window.innerWidth <= 768; 
+
   const stepsData = [
     {
       number: '01',
@@ -230,37 +232,40 @@ onMounted(() => {
       text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, id numquam!'
     }
   ];
+
   const snapPoints = [
-    { x: 150 * scale, y: 100 * scale }, // Крок 1
-    { x: 700 * scale, y: 200 * scale }, // Крок 2
-    { x: 250 * scale, y: 350 * scale }, // Крок 3
-    { x: 600 * scale, y: 500 * scale }, // Крок 4
-    { x: 180 * scale, y: 650 * scale }, // Крок 5
-    { x: 650 * scale, y: 800 * scale }  // Крок 6
+    { x: 150 * scale, y: 100 * scale },
+    { x: 700 * scale, y: 200 * scale },
+    { x: 250 * scale, y: 350 * scale },
+    { x: 600 * scale, y: 500 * scale },
+    { x: 180 * scale, y: 650 * scale },
+    { x: 650 * scale, y: 800 * scale }
   ];
   const polylinePoints = [
-    { x: 150 * scale, y: 100 * scale }, // Старт
-    { x: 150 * scale, y: 200 * scale }, // Вниз (01)
-    { x: 700 * scale, y: 200 * scale }, // Вправо
-    { x: 700 * scale, y: 350 * scale }, // Вниз (02)
-    { x: 250 * scale, y: 350 * scale }, // Вліво
-    { x: 250 * scale, y: 500 * scale }, // Вниз (03)
-    { x: 600 * scale, y: 500 * scale }, // Вправо
-    { x: 600 * scale, y: 650 * scale }, // Вниз (04)
-    { x: 180 * scale, y: 650 * scale }, // Вліво
-    { x: 180 * scale, y: 800 * scale }, // Вниз (05)
-    { x: 650 * scale, y: 800 * scale }  // Вправо (06)
+    { x: 150 * scale, y: 100 * scale },
+    { x: 150 * scale, y: 200 * scale },
+    { x: 700 * scale, y: 200 * scale },
+    { x: 700 * scale, y: 350 * scale },
+    { x: 250 * scale, y: 350 * scale },
+    { x: 250 * scale, y: 500 * scale },
+    { x: 600 * scale, y: 500 * scale },
+    { x: 600 * scale, y: 650 * scale },
+    { x: 180 * scale, y: 650 * scale },
+    { x: 180 * scale, y: 800 * scale },
+    { x: 650 * scale, y: 800 * scale }
   ];
 
-  let currentSnapIndex = 0;
+  let currentSnapIndex = isMobile ? stepsData.length - 1 : 0;
   let isAnimating = false;
-  let animatedPoint = { x: snapPoints[0].x, y: snapPoints[0].y };
+  let animatedPoint = { x: snapPoints[currentSnapIndex].x, y: snapPoints[currentSnapIndex].y };
 
   const snapContainer = document.querySelector('.snap-container');
   const canvas = document.getElementById('myCanvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = 2000;
+
+  canvas.width = 1900;
   canvas.height = 2000;
+
   function lerp(a, b, t) {
     return a + (b - a) * t;
   }
@@ -286,24 +291,27 @@ onMounted(() => {
     lines.push(line);
     return lines;
   }
+
   function drawCanvas(animatedPos) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.strokeStyle = '#02FE56';
     ctx.lineWidth = 1.5 * scale;
     ctx.beginPath();
-    ctx.moveTo(150 * scale, 100 * scale);   // Старт
-    ctx.lineTo(150 * scale, 200 * scale);     // Вниз (01)
-    ctx.lineTo(700 * scale, 200 * scale);     // Вправо
-    ctx.lineTo(700 * scale, 350 * scale);     // Вниз (02)
-    ctx.lineTo(250 * scale, 350 * scale);     // Вліво
-    ctx.lineTo(250 * scale, 500 * scale);     // Вниз (03)
-    ctx.lineTo(600 * scale, 500 * scale);     // Вправо
-    ctx.lineTo(600 * scale, 650 * scale);     // Вниз (04)
-    ctx.lineTo(180 * scale, 650 * scale);     // Вліво
-    ctx.lineTo(180 * scale, 800 * scale);     // Вниз (05)
-    ctx.lineTo(650 * scale, 800 * scale);     // Вправо (06)
+    ctx.moveTo(150 * scale, 100 * scale);
+    ctx.lineTo(150 * scale, 200 * scale);
+    ctx.lineTo(700 * scale, 200 * scale);
+    ctx.lineTo(700 * scale, 350 * scale);
+    ctx.lineTo(250 * scale, 350 * scale);
+    ctx.lineTo(250 * scale, 500 * scale);
+    ctx.lineTo(600 * scale, 500 * scale);
+    ctx.lineTo(600 * scale, 650 * scale);
+    ctx.lineTo(180 * scale, 650 * scale);
+    ctx.lineTo(180 * scale, 800 * scale);
+    ctx.lineTo(650 * scale, 800 * scale);
     ctx.stroke();
     ctx.closePath();
+
     stepsData.forEach((step, index) => {
       ctx.save();
       ctx.font = `${64 * scale}px Montserrat`;
@@ -312,7 +320,8 @@ onMounted(() => {
       ctx.shadowBlur = 10 * scale;
       ctx.fillText(step.number, step.numberPos.x, step.numberPos.y);
       ctx.restore();
-      if (index === currentSnapIndex) {
+
+      if (isMobile || index === currentSnapIndex) {
         ctx.save();
         ctx.shadowBlur = 0;
         ctx.shadowColor = 'transparent';
@@ -336,124 +345,108 @@ onMounted(() => {
         ctx.restore();
       }
     });
-    const pointToDraw = animatedPos || snapPoints[currentSnapIndex];
-    ctx.beginPath();
-    ctx.fillStyle = '#00ff00';
-    ctx.shadowColor = '#00ff00';
-    ctx.shadowBlur = 20 * scale;
-    ctx.arc(pointToDraw.x, pointToDraw.y, 12 * scale, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
+
+    if (!isMobile) {
+      const pointToDraw = animatedPos || snapPoints[currentSnapIndex];
+      ctx.beginPath();
+      ctx.fillStyle = '#00ff00';
+      ctx.shadowColor = '#00ff00';
+      ctx.shadowBlur = 20 * scale;
+      ctx.arc(pointToDraw.x, pointToDraw.y, 12 * scale, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.closePath();
+    }
   }
 
   drawCanvas(animatedPoint);
-  function animateAlongPath(fromSnapIndex, toSnapIndex, duration) {
-    if (fromSnapIndex === toSnapIndex) {
-      isAnimating = false;
-      drawCanvas(animatedPoint);
-      return;
+
+  if (!isMobile) {
+    function animateAlongPath(fromSnapIndex, toSnapIndex, duration) {
+      if (fromSnapIndex === toSnapIndex) {
+        isAnimating = false;
+        drawCanvas(animatedPoint);
+        return;
+      }
+      let startTime = null;
+      const forward = toSnapIndex > fromSnapIndex;
+      const p0 = polylinePoints[forward ? fromSnapIndex * 2 : fromSnapIndex * 2];
+      const p1 = polylinePoints[forward ? (fromSnapIndex * 2 + 1) : (fromSnapIndex * 2 - 1)];
+      const p2 = polylinePoints[forward ? (toSnapIndex * 2) : (toSnapIndex * 2)];
+      const d1 = distance(p0, p1);
+      const d2 = distance(p1, p2);
+      const totalDistance = d1 + d2;
+
+      function animate(time) {
+        if (!startTime) startTime = time;
+        const elapsed = time - startTime;
+        let progress = elapsed / duration;
+        if (progress > 1) progress = 1;
+        const currentDistance = progress * totalDistance;
+        let currentPos;
+        if (currentDistance <= d1) {
+          const t = d1 === 0 ? 0 : currentDistance / d1;
+          currentPos = {
+            x: lerp(p0.x, p1.x, t),
+            y: lerp(p0.y, p1.y, t)
+          };
+        } else {
+          const t = d2 === 0 ? 0 : (currentDistance - d1) / d2;
+          currentPos = {
+            x: lerp(p1.x, p2.x, t),
+            y: lerp(p1.y, p2.y, t)
+          };
+        }
+        animatedPoint = currentPos;
+        drawCanvas(animatedPoint);
+
+        const canvasRect = canvas.getBoundingClientRect();
+        const circleYOnPage = canvasRect.top + animatedPoint.y;
+        if (circleYOnPage > window.innerHeight) {
+          window.scrollBy({ top: circleYOnPage - window.innerHeight + 80, behavior: 'smooth' });
+        } else if (circleYOnPage < 0) {
+          window.scrollBy({ top: circleYOnPage - 200, behavior: 'smooth' });
+        }
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          animatedPoint = snapPoints[toSnapIndex];
+          currentSnapIndex = toSnapIndex;
+          isAnimating = false;
+          drawCanvas(animatedPoint);
+        }
+      }
+      requestAnimationFrame(animate);
     }
 
-    let startTime = null;
-    const forward = toSnapIndex > fromSnapIndex;
-    const p0 = polylinePoints[forward ? fromSnapIndex * 2 : fromSnapIndex * 2];
-    const p1 = polylinePoints[forward ? (fromSnapIndex * 2 + 1) : (fromSnapIndex * 2 - 1)];
-    const p2 = polylinePoints[forward ? (toSnapIndex * 2) : (toSnapIndex * 2)];
-    const d1 = distance(p0, p1);
-    const d2 = distance(p1, p2);
-    const totalDistance = d1 + d2;
-
-    function animate(time) {
-      if (!startTime) startTime = time;
-      const elapsed = time - startTime;
-      let progress = elapsed / duration;
-      if (progress > 1) progress = 1;
-
-      const currentDistance = progress * totalDistance;
-      let currentPos;
-      if (currentDistance <= d1) {
-        const t = d1 === 0 ? 0 : currentDistance / d1;
-        currentPos = {
-          x: lerp(p0.x, p1.x, t),
-          y: lerp(p0.y, p1.y, t)
-        };
-      } else {
-        const t = d2 === 0 ? 0 : (currentDistance - d1) / d2;
-        currentPos = {
-          x: lerp(p1.x, p2.x, t),
-          y: lerp(p1.y, p2.y, t)
-        };
+    function handleWheel(e) {
+      if (
+        (currentSnapIndex >= snapPoints.length - 1 && e.deltaY > 0) ||
+        (currentSnapIndex <= 0 && e.deltaY < 0)
+      ) {
+        isAnimating = false;
+        return;
       }
-
-      animatedPoint = currentPos;
-      drawCanvas(animatedPoint);
-
-
-      const canvasRect = canvas.getBoundingClientRect();
-      const circleYOnPage = canvasRect.top + animatedPoint.y;
-      if (circleYOnPage > window.innerHeight) {
-         window.scrollBy({ top: circleYOnPage - window.innerHeight + 80, behavior: 'smooth' });
+      e.preventDefault();
+      if (isAnimating) return;
+      isAnimating = true;
+      const fromIndex = currentSnapIndex;
+      let toIndex = currentSnapIndex;
+      if (e.deltaY > 0 && currentSnapIndex < snapPoints.length - 1) {
+        toIndex = currentSnapIndex + 1;
+      } else if (e.deltaY < 0 && currentSnapIndex > 0) {
+        toIndex = currentSnapIndex - 1;
       }
-      else if (circleYOnPage < 0) {
-         window.scrollBy({ top: circleYOnPage - 200, behavior: 'smooth' });
-      }
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-         animatedPoint = snapPoints[toSnapIndex];
-         currentSnapIndex = toSnapIndex;
-         isAnimating = false;
-         drawCanvas(animatedPoint);
-      //   if (currentSnapIndex >= snapPoints.length - 1) {
-      //     snapContainer.removeEventListener('wheel', handleWheel, { passive: false });
-      //   }
-      }
+      animateAlongPath(fromIndex, toIndex, 500);
     }
-    requestAnimationFrame(animate);
-  }
-
-//   function resizeCanvas() {
-//     const container = snapContainer.getBoundingClientRect();
-//     canvas.width = Math.min(2000, container.width);
-//     canvas.height = Math.min(3000, container.width * 1.5);
-//     drawCanvas(animatedPoint);
-//   }
-
-//   window.addEventListener('resize', resizeCanvas);
-//   resizeCanvas();
-//   window.removeEventListener('resize', resizeCanvas);
-
-  function handleWheel(e) {
-   if (
-    (currentSnapIndex >= snapPoints.length - 1 && e.deltaY > 0) ||
-    (currentSnapIndex <= 0 && e.deltaY < 0)
-  ) {
-    isAnimating = false;
-    return;
-  }
-  e.preventDefault();
-  if (isAnimating) return;
-  isAnimating = true;
-
-  const fromIndex = currentSnapIndex;
-  let toIndex = currentSnapIndex;
-  if (e.deltaY > 0 && currentSnapIndex < snapPoints.length - 1) {
-    toIndex = currentSnapIndex + 1;
-  } else if (e.deltaY < 0 && currentSnapIndex > 0) {
-    toIndex = currentSnapIndex - 1;
-  }
-  animateAlongPath(fromIndex, toIndex, 500);
-}
-
-  if (snapContainer) {
-    snapContainer.addEventListener('wheel', handleWheel, { passive: false });
-  }
-
-  onUnmounted(() => {
     if (snapContainer) {
-      snapContainer.removeEventListener('wheel', handleWheel, { passive: false });
+      snapContainer.addEventListener('wheel', handleWheel, { passive: false });
     }
-  });
+    onUnmounted(() => {
+      if (snapContainer) {
+        snapContainer.removeEventListener('wheel', handleWheel, { passive: false });
+      }
+    });
+  }
 });
 
 

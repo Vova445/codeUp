@@ -259,7 +259,7 @@ onMounted(() => {
   const snapContainer = document.querySelector('.snap-container');
   const canvas = document.getElementById('myCanvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = 1500;
+  canvas.width = 2000;
   canvas.height = 2000;
   function lerp(a, b, t) {
     return a + (b - a) * t;
